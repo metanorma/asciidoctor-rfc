@@ -1,0 +1,36 @@
+= Requirements
+
+The aim is to create a new Ruby gem called asciidoctor-rfc that outputs an RFC XML document, as an asciidoctor backend.
+
+RFC XML is defined in these two documents:
+
+* https://tools.ietf.org/html/rfc7749[RFC 7749]
+* https://tools.ietf.org/html/rfc7991[RFC 7991]
+
+This new gem should allow the following work flow:
+
+1. RFC-XML-enabled AsciiDoc (we can call this "`AsciiDoc-RFC`")
+2. Converts to RFC XML via asciidoctor-rfc
+3. RFC XML can convert to TXT or HTML via the tool https://xml2rfc.tools.ietf.org/[`xml2rfc` (v2)]
+4. Round-tripping:
+** from AsciiDoc-RFC to RFC XML, then back to AsciiDoc using https://github.com/riboseinc/rfc2md[`rfc2adoc`]
+
+There are other tools that create XML RFCs, such as https://github.com/miekg/mmark[MMark] which uses Markdown
+(conversely https://github.com/riboseinc/rfc2md[`rfc2md`]).
+
+You will need to define and implement some new asciidoctor commands specifically pertaining to the RFC XML format, such as to support the header fields (author, license, etc.), RFC / Internet Draft citations, etc.
+
+Work needed:
+
+1. Creation of the asciidoctor-rfc gem:
+
+** contains necessary commands to create the RFC XML in v2 and v3 formats
+** output must be acceptable to the `xml2rfc` tool to create TXT and HTML from there
+
+2 Recreate RFC 6350 and RFC 5545 in the new AsciiDoc format
+
+** that can be generated into the same RFC through AsciiDoc-RFC -> RFC XML -> RFC HTML
+
+3. Any bugfixes or minor enhancements on asciidoctor and asciidoctor-pdf:
+
+** Should be done through our GitHub account, submit PR to main repo, follow-up and ensure acceptance to the mainline. Code and PR must be attributed to Ribose Inc.
