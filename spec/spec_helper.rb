@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "ascii_doctor_rfc"
+require "asciidoctor/rfc"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
