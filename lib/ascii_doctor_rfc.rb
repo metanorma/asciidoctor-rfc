@@ -1,1 +1,3 @@
-# todo
+module AsciiDoctorRFC
+  # todo
+end
