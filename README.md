@@ -10,7 +10,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "ascii_doctor_rfc"
+gem "asciidoctor-rfc"
 ```
 
 And then execute:
@@ -22,7 +22,7 @@ $ bundle
 Or install it yourself as:
 
 ```sh
-$ gem install ascii_doctor_rfc
+$ gem install asciidoctor-rfc
 ```
 
 ## Usage

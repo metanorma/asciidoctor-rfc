@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ascii_doctor_rfc/version"
+require "asciidoctor/rfc/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ascii_doctor_rfc"
-  spec.version       = AsciiDoctorRFC::VERSION
+  spec.name          = "asciidoctor-rfc"
+  spec.version       = Asciidoctor::Rfc::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
   spec.summary       = %q{todo: AsciiDoctorRFC description.}
