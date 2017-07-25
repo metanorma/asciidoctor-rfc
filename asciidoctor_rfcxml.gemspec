@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ascii_doctor_rfc/version'
+require 'asciidoctor_rfcxml/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ascii_doctor_rfc"
-  spec.version       = AsciiDoctorRFC::VERSION
+  spec.name          = "asciidoctor_rfcxml"
+  spec.version       = AsciidoctorRfcXml::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
-  spec.summary       = %q{todo: AsciiDoctorRFC description.}
-  spec.homepage      = "https://github.com/riboseinc/asciidoctor-rfc"
+  spec.summary       = %q{todo: AsciiDoctorRfcXml description.}
+  spec.homepage      = "https://github.com/riboseinc/asciidoctor-rfcxml"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -31,4 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.6"
+  spec.add_runtime_dependency "asciidoctor", '~> 1.5', '>= 1.5.4'
+  spec.add_runtime_dependency "nokogiri", '~> 1.8.0'
 end
