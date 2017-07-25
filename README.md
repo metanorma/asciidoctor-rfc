@@ -13,7 +13,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ascii_doctor_rfc'
+gem 'asciidoctor_rfcxml'
 ```
 
 And then execute:
@@ -22,11 +22,36 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ascii_doctor_rfc
+    $ gem install asciidoctor_rfcxml
 
 ## Usage
 
-TODO: Write usage instructions here
+The gem can be used via the command line as well as from ruby command. 
+
+The usage via the command line:
+
+    asciidoctor_rfcxml SOURCE_FILE [options] FORMATS...
+
+
+The options will be:
+
+
+    -h           --help              show the help message and exit
+    -n           --no-dtd            disable DTD validation step
+    -N           --no-network        don't use the network to resolve references
+    -q           --quiet             dont print anything
+    -v           --verbose           print extra information
+    -V           --version           display the version number and exit
+
+    -b BASENAME  --basename=BASENAME specify the base name for output files
+    -D DATE      --date=DATE         run as if todays date is DATE (format: yyyy-mm-dd)
+    -d DTD       --dtd=DTD           specify an alternate dtd file
+    -o FILENAME  --out=FILENAME      specify an output filename
+
+
+    FORMATS:
+    --txt
+    --html
 
 ## Development
 
