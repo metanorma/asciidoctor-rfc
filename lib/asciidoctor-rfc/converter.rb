@@ -55,17 +55,31 @@ module Asciidoctor
         preptime = set_header_attribute "preptime", 
           sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)
         version = set_header_attribute "version", "3"
-        # submissionType
-        #
+        # TODO submissionType
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}#{version}>)
-        #result << (document_info_element node)
+        result << (link node)
+        result << (front node)
+        result << "<middle>"
         result << node.content if node.blocks?
-        unless (footer_docinfo = node.docinfo :footer).empty?
-          result << footer_docinfo
-        end
-        result << '</rfc>'
+        result << "</middle>"
+        result << (back node)
+        result << "</rfc>"
 
         result * "\n"
+      end
+
+      def link node
+        # TODO
+      end
+
+      def front node
+        result = []
+        result << "<title>#{node.doctitle}</title>"
+        # TODO
+      end
+
+      def back node
+        # TODO
       end
 
       def preamble node
