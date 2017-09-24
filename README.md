@@ -27,8 +27,13 @@ $ gem install asciidoctor-rfc
 
 ## Usage
 
-TODO: Write usage instructions here
+Converting to RFC XML is a simple as running the ./bin/asciidoctor-rfc script using Ruby and passing our AsciiDoc document as the first argument.
 
+```
+$ ruby ./bin/asciidoctor-rfc example.adoc
+```
+
+When the script completes, you should see the file `example.xml` in the same directory.
 
 ## Development
 
