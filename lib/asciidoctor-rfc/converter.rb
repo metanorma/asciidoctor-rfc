@@ -66,32 +66,67 @@ Author
 :obsoletes
 :updates
 :submissionType
+:indexInclude
+:iprExtract
+:sortRefs
+:symRefs
+:tocInclude
 =end
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         ipr = get_header_attribute node, "ipr"
         obsoletes = get_header_attribute node, "obsoletes"
         updates = get_header_attribute node, "updates"
+        indexInclude = get_header_attribute node, "indexInclude"
+        iprExtract = get_header_attribute node, "indexInclude"
+        sortRefs = get_header_attribute node, "sortRefs"
+        symRefs = get_header_attribute node, "symRefs"
+        tocInclude = get_header_attribute node, "tocInclude"
         submissionType = get_header_attribute node, "submisionType", "IETF"
         t = Time.now.getutc
         preptime = set_header_attribute "preptime", 
           sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)
         version = set_header_attribute "version", "3"
-        result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}#{version}#{submissionType}>)
+        result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}
+        #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}>)
         result << (link node)
         result << (front node)
-        result << "<middle>"
+        result << "</front><middle1>"
         result << node.content if node.blocks?
         result << "</middle>"
         result << (back node)
         result << "</rfc>"
 
+        # <middle> needs to move after preamble
+        if result.any? { |e| e == "</front><middle>" } and result.any? { |e| e == "</front><middle1>" }
+          result = result.reject { |e| e == "</front><middle1>" }
+        else
+          result = result.map { |e| e == "</front><middle1>" ? "</front><middle>" : e }
+        end
+
         result * "\n"
       end
 
       def link node
-        # TODO
-        nil
+=begin
+= Title
+Author
+:link href,href rel
+=end
+        result = []
+        links = node.attr "link"
+        links.split(/,/).each do |l|
+          m = /^(\S+)\s+(\S+)$/.match(l)
+          if m.nil?  
+            href = set_header_attribute "href", l
+            result << "<link#{href}/>"
+          else
+            href = set_header_attribute "href", m[1]
+            rel = set_header_attribute "rel", m[2]
+            result << "<link#{href}#{rel}/>"
+          end
+        end 
+        result
       end
 
       def front node
@@ -101,15 +136,15 @@ Author
 :METADATA
 =end
         result = []
-        abbrev = get_header_attribute node, "abbrev"
         result << "<front>"
         abbrev = get_header_attribute node, "abbrev"
         result << "<title#{abbrev}>#{node.doctitle}</title>"
         result << (series_info node)
         result << (author node)
         result << (date node)
-        result << "</front>"
-        # TODO area workgroup keyword abstract note boilerplate
+        result << (area node)
+        result << (workgroup node)
+        result << (keyword node)
       end
 
       def series_info node
@@ -277,15 +312,56 @@ Author
         unless revdate.nil?
           begin
             revdate.gsub!(/T.*$/, "")
-                d = Date.iso8601 revdate
-                pp d
-                day = set_header_attribute "day", d.day
-                month = set_header_attribute "month", d.month
-                year = set_header_attribute "year", d.year
-                result << "<date#{day}#{month}#{year}/>"
-               rescue
-                 # nop
-               end
+            d = Date.iso8601 revdate
+            day = set_header_attribute "day", d.day
+            month = set_header_attribute "month", d.month
+            year = set_header_attribute "year", d.year
+            result << "<date#{day}#{month}#{year}/>"
+          rescue
+            # nop
+          end
+        end
+        result
+      end
+
+      def area node
+=begin
+= Title
+Author
+:area x, y
+=end
+        result = []
+        area = node.attr("area")
+        unless area.nil?
+          area.split(/, ?/).each { |a| result << "<area>#{a}</area>" }
+        end
+        result
+      end
+
+      def workgroup node
+=begin
+= Title
+Author
+:workgroup x, y
+=end
+        result = []
+        workgroup = node.attr("workgroup")
+        unless workgroup.nil?
+          workgroup.split(/, ?/).each { |a| result << "<workgroup>#{a}</workgroup>" }
+        end
+        result
+      end
+
+      def keyword node
+=begin
+= Title
+Author
+:keyword x, y
+=end
+        result = []
+        keyword = node.attr("keyword")
+        unless keyword.nil?
+          keyword.split(/, ?/).each { |a| result << "<keyword>#{a}</keyword>" }
         end
         result
       end
@@ -294,19 +370,202 @@ Author
         # TODO
       end
 
-      def preamble node
-        warn "preamble material is ignored in conversion #{node.content}"
-        nil
+      def inline_break node
+        %(#{node.text}<br/>)
+      end
+
+      def inline_quoted node
+        case node.type
+        when :emphasis
+          "<em>#{node.text}</em>"
+        when :strong
+          "<strong>#{node.text}</strong>"
+        when :monospaced
+          "<tt>#{node.text}</tt>"
+        when :double
+          "\"#{node.text}\""
+        when :single
+          "'#{node.text}'"
+        when :superscript
+          "<sup>#{node.text}</sup>"
+        when :subscript
+          "<sub>#{node.text}</sub>"
+        else
+          node.text
+        end
       end
 
       def paragraph node
-        node.content
+=begin
+[[id]]
+[keepWithNext=true,keepWithPrevious=true] (optional)
+Text
+=end
+        result = []
+        id = set_header_attribute "anchor", node.id
+        if node.parent.context == :preamble
+          result << "<abstract#{id}>"
+          result << node.content
+          result << "</abstract>"
+        else
+          id = set_header_attribute "anchor", node.id
+          keepWithNext = get_header_attribute node, "keepWithNext"
+          keepWithPrevious = get_header_attribute node, "keepWithPrevious"
+          result << "<t#{id}#{keepWithNext}#{keepWithPrevious}>#{node.content}</t>"
+        end
+        result
+      end
+
+      def paragraph1 node
+        result = []
+        result1 = node.content
+        if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
+          result = result1
+        else
+          id = set_header_attribute "anchor", node.id
+          result << "<t#{id}>"
+          result << result1
+          result << "</t>"
+        end
+        result
+      end
+
+      def admonition node
+=begin
+= Title
+Author
+:HEADER
+
+ABSTRACT
+
+NOTE: note
+
+[NOTE]
+.Title
+====
+Content
+====
+
+[NOTE,removeInRFC=true]
+.Title
+====
+Content
+====
+=end
+        result = []
+        if node.parent.context == :preamble
+          removeInRFC = get_header_attribute node, "removeInRFC"
+          result << "<note#{removeInRFC}>"
+          result << "<name>#{node.title}</name>" unless node.title.nil?
+          # TODO cref, eref, relref, tt, xref within name
+          result << (paragraph1 node)
+          # TODO dl ol ul
+          result << "</note>"
+        else
+          # TODO
+          result << "<note1>"
+          result << node.content
+          result << "</note1>"
+        end
+        result
       end
 
       def section node
-        node.content
+=begin
+[[id]]
+[removeInRFC=true,toc=include|exclude|default] (optional)
+== title
+Content
+=end
+        result = []
+        id = set_header_attribute "anchor", node.id
+        removeInRFC = get_header_attribute node, "removeInRFC"
+        toc = get_header_attribute node, "toc"
+        numbered = set_header_attribute "numbered", node.attr?("sectnums")
+        result << "<section#{id}#{removeInRFC}#{toc}#{numbered}>"
+        result << "<name>#{node.title}</name>" unless node.title.nil?
+        result << node.content
+        result << "</section>"
+        result
       end
 
+      def ulist node
+        # TODO
+        result = []
+        id = set_header_attribute "anchor", node.id
+        result << "<ul#{id}>"
+        node.items.each do |item|
+          if item.blocks?
+            id = set_header_attribute "anchor", item.id
+            result << "<li#{id}>"
+            result << item.content 
+            result << "</li>"
+          else
+            result << "<li>#{item.text}</li>"
+          end
+        end
+        result << "</ul>"
+        result
+      end
+
+      def preamble node
+=begin
+= Title
+Author
+:HEADER
+
+ABSTRACT
+
+NOTE: note
+
+(boilerplate is ignored)
+=end
+        result = []
+        result << node.content
+        result << "</front><middle>"
+        result
+      end
     end
+
+=begin
+TODO
+2.3. <annotation> ..............................................12
+2.5. <artwork> .................................................13
+2.6. <aside> ...................................................17
+2.8. <back> ....................................................19
+2.9. <bcp14> ...................................................20
+2.10. <blockquote> .............................................20
+2.11. <boilerplate> ............................................22
+2.16. <cref> ...................................................23
+2.18. <dd> .....................................................25
+2.19. <displayreference> .......................................27
+2.20. <dl> .....................................................27
+2.21. <dt> .....................................................29
+2.24. <eref> ...................................................31
+2.25. <figure> .................................................32
+2.27. <iref> ...................................................35
+2.29. <li> .....................................................36
+2.32. <name> ...................................................39
+2.34. <ol> .....................................................40
+2.39. <refcontent> .............................................44
+2.40. <reference> ..............................................45
+2.41. <referencegroup> .........................................46
+2.42. <references> .............................................46
+2.44. <relref> .................................................47
+2.48. <sourcecode> .............................................59
+2.53. <t> ......................................................64
+2.54. <table> ..................................................66
+2.55. <tbody> ..................................................67
+2.56. <td> .....................................................67
+2.57. <tfoot> ..................................................69
+2.58. <th> .....................................................69
+2.59. <thead> ..................................................71
+2.60. <title> ..................................................72
+2.61. <tr> .....................................................72
+2.63. <ul> .....................................................74
+2.64. <uri> ....................................................75
+2.66. <xref> ...................................................75
+=end
+
   end
 end
