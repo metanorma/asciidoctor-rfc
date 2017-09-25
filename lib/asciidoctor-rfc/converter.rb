@@ -204,25 +204,77 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
 :organization
 :email
 :role
+:fax
+:uri
+:phone
+:postalLine (mutually exclusive with street city etc) (lines broken up by ")\ "
+:street
+:city
+:region
+:country
+:code
 =end
         result = []
         authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
         surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
         initials = set_header_attribute "initials", node.attr("firstname#{suffix}")[0]
         role = set_header_attribute "role", node.attr("role#{suffix}")
-        result << "<author#{authorname}#{initials}#{surname}#{role}>"
         organization = node.attr("organization#{suffix}")
+        postalline = node.attr("postalline#{suffix}")
+        street = node.attr("street#{suffix}")
+        city = node.attr("city#{suffix}")
+        region = node.attr("region#{suffix}")
+        country = node.attr("country#{suffix}")
+        code = node.attr("code#{suffix}")
+        phone = node.attr("phone#{suffix}")
+        email = node.attr("email#{suffix}")
+        facsimile = node.attr("fax#{suffix}")
+        uri = node.attr("uri#{suffix}")
+
+        result << "<author#{authorname}#{initials}#{surname}#{role}>"
         if not organization.nil?
           result << "<organization>#{organization}</organization>"
         end
-        email = node.attr("email#{suffix}")
-        if not email.nil?
+
+        if not email.nil? or not facsimile.nil? or not uri.nil? or not phone.nil? or 
+          not postalline.nil? or not street.nil?
           result << "<address>"
+          if not postalline.nil? or not street.nil?
+            result << "<postal>"
+            if not postalline.nil?
+              postalline.split("\\ ").each { |p| result << "<postalLine>#{p}</postalLine>" }
+            else
+              if not street.nil?
+                result << "<street>#{street}</street>"
+              end
+              if not city.nil?
+                result << "<city>#{city}</city>"
+              end
+              if not region.nil?
+                result << "<region>#{region}</region>"
+              end
+              if not code.nil?
+                result << "<code>#{code}</code>"
+              end
+              if not country.nil?
+                result << "<country>#{country}</country>"
+              end
+            end
+            result << "</postal>"
+          end
+          if not phone.nil?
+            result << "<phone>#{phone}</phone>"
+          end
+          if not facsimile.nil?
+            result << "<facsimile>#{facsimile}</facsimile>"
+          end
           if not email.nil?
             result << "<email>#{email}</email>"
           end
+          if not uri.nil?
+            result << "<uri>#{uri}</uri>"
+          end
           result << "</address>"
-          # TODO postal phone facsimile uri
         end
         result << "</author>"
         result
