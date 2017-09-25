@@ -35,12 +35,21 @@ module Asciidoctor
       end
 
       def get_header_attribute node, attr, default = nil
-        (node.attr? attr) ? %( #{attr}="#{node.attr attr}") : 
-          default.nil? ? nil : %( #{attr}="#{default}")
+        if (node.attr? attr) 
+          %( #{attr}="#{node.attr attr}") 
+        elsif default.nil? 
+          nil 
+        else 
+          %( #{attr}="#{default}")
+        end
       end
 
       def set_header_attribute attr, val
-        %( #{attr}="#{val}")
+        if val.nil? 
+          nil 
+        else
+          %( #{attr}="#{val}")
+        end
       end
 
       def document_ns_attributes doc
@@ -95,6 +104,7 @@ Author
         abbrev = get_header_attribute node, "abbrev"
         result << "<title#{abbrev}>#{node.doctitle}</title>"
         result << (series_info node)
+        result << (author node)
         result << "</front>"
       end
 
@@ -151,7 +161,71 @@ Author
           end
         end
         result
-        # TODO
+      end
+
+      def author node
+=begin
+= Title
+Author;Author_2;Author_3
+:fullname
+:lastname
+:organization
+:email
+:fullname_2
+:lastname_2
+:organization_2
+:email_2
+:fullname_3
+:lastname_3
+:organization_3
+:email_3
+=end
+        # recurse: author, author_2, author_3...
+        result = []
+        result << author1(node, "")
+        i = 2
+        loop do
+          suffix = "_#{i}"
+          author = node.attr("author#{suffix}")
+          if author.nil?
+            break
+          end
+          result << author1(node, suffix)
+        end
+        result.flatten
+      end
+
+      def author1 node, suffix
+=begin
+= Title
+Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
+:fullname
+:lastname
+:organization
+:email
+:role
+=end
+        result = []
+        authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
+        surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
+        initials = set_header_attribute "initials", node.attr("firstname#{suffix}")[0]
+        role = set_header_attribute "role", node.attr("role#{suffix}")
+        result << "<author#{authorname}#{initials}#{surname}#{role}>"
+        organization = node.attr("organization#{suffix}")
+        if not organization.nil?
+          result << "<organization>#{organization}</organization>"
+        end
+        email = node.attr("email#{suffix}")
+        if not email.nil?
+          result << "<address>"
+          if not email.nil?
+            result << "<email>#{email}</email>"
+          end
+          result << "</address>"
+          # TODO postal phone facsimile uri
+        end
+        result << "</author>"
+        result
       end
 
       def back node
