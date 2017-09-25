@@ -1,3 +1,4 @@
+require "Date"
 require "pp"
 
 module Asciidoctor
@@ -90,13 +91,14 @@ Author
 
       def link node
         # TODO
+        nil
       end
 
       def front node
 =begin
 = Title
 Author
-:stream
+:METADATA
 =end
         result = []
         abbrev = get_header_attribute node, "abbrev"
@@ -105,7 +107,9 @@ Author
         result << "<title#{abbrev}>#{node.doctitle}</title>"
         result << (series_info node)
         result << (author node)
+        result << (date node)
         result << "</front>"
+        # TODO area workgroup keyword abstract note boilerplate
       end
 
       def series_info node
@@ -123,7 +127,7 @@ Author
         stream = get_header_attribute node, "stream", "IETF"
         name = node.attr "docname"
         rfc = true
-        if not name.nil? and not name.empty?
+        unless name.nil? and not name.empty?
           if name =~ /^rfc-?/i
             name = name.gsub(/^rfc-?/i, "")
             nameattr = set_header_attribute "name", "RFC"
@@ -137,13 +141,14 @@ Author
           result << "<seriesInfo#{nameattr}#{status}#{stream}#{value}/>"
 
           intendedstatus = node.attr("intendedstatus")
-          if not intendedstatus.nil? and not rfc
+          unless intendedstatus.nil? and not rfc
             status = set_header_attribute "status", intendedstatus
             nameattr = set_header_attribute "name", ""
             result << "<seriesInfo#{nameattr}#{status}#{value}/>"
           end
+
           rfcstatus = node.attr("rfcstatus")
-          if not rfcstatus.nil? and rfc
+          unless rfcstatus.nil? and rfc
             m = /^(\S+) (\d+)$/.match(rfcstatus)
             if m.nil?  
               nameattr = set_header_attribute "name", ""
@@ -207,7 +212,7 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
 :fax
 :uri
 :phone
-:postalLine (mutually exclusive with street city etc) (lines broken up by ")\ "
+:postalLine (mutually exclusive with street city etc) (lines broken up by "\ ")
 :street
 :city
 :region
@@ -232,51 +237,56 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
         uri = node.attr("uri#{suffix}")
 
         result << "<author#{authorname}#{initials}#{surname}#{role}>"
-        if not organization.nil?
-          result << "<organization>#{organization}</organization>"
-        end
+        result << "<organization>#{organization}</organization>" unless organization.nil?
 
         if not email.nil? or not facsimile.nil? or not uri.nil? or not phone.nil? or 
           not postalline.nil? or not street.nil?
           result << "<address>"
           if not postalline.nil? or not street.nil?
             result << "<postal>"
-            if not postalline.nil?
-              postalline.split("\\ ").each { |p| result << "<postalLine>#{p}</postalLine>" }
+            if postalline.nil?
+              result << "<street>#{street}</street>" unless street.nil?
+              result << "<city>#{city}</city>" unless city.nil?
+              result << "<region>#{region}</region>" unless region.nil?
+              result << "<code>#{code}</code>" unless code.nil?
+              result << "<country>#{country}</country>" unless country.nil?
             else
-              if not street.nil?
-                result << "<street>#{street}</street>"
-              end
-              if not city.nil?
-                result << "<city>#{city}</city>"
-              end
-              if not region.nil?
-                result << "<region>#{region}</region>"
-              end
-              if not code.nil?
-                result << "<code>#{code}</code>"
-              end
-              if not country.nil?
-                result << "<country>#{country}</country>"
-              end
+              postalline.split("\\ ").each { |p| result << "<postalLine>#{p}</postalLine>" }
             end
             result << "</postal>"
           end
-          if not phone.nil?
-            result << "<phone>#{phone}</phone>"
-          end
-          if not facsimile.nil?
-            result << "<facsimile>#{facsimile}</facsimile>"
-          end
-          if not email.nil?
-            result << "<email>#{email}</email>"
-          end
-          if not uri.nil?
-            result << "<uri>#{uri}</uri>"
-          end
+          result << "<phone>#{phone}</phone>" unless phone.nil?
+          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
+          result << "<email>#{email}</email>"  unless email.nil?
+          result << "<uri>#{uri}</uri>"  unless uri.nil?
           result << "</address>"
         end
         result << "</author>"
+        result
+      end
+
+      def date node
+=begin
+= Title
+Author
+:revdate or :date
+=end
+        result = []
+        revdate = node.attr("revdate")
+        revdate = node.attr("date") if revdate.nil?
+        unless revdate.nil?
+          begin
+            revdate.gsub!(/T.*$/, "")
+                d = Date.iso8601 revdate
+                pp d
+                day = set_header_attribute "day", d.day
+                month = set_header_attribute "month", d.month
+                year = set_header_attribute "year", d.year
+                result << "<date#{day}#{month}#{year}/>"
+               rescue
+                 # nop
+               end
+        end
         result
       end
 
