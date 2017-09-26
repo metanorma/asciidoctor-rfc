@@ -370,6 +370,32 @@ Author
         # TODO
       end
 
+      def inline_anchor node
+        case node.type
+        when :xref
+          # format attribute not supported
+          unless (text = node.text) || (text = node.attributes['path'])
+            refid = node.attributes['refid']
+            text = %([#{refid}])
+          end
+          %(<xref target="#{node.target}">#{text}</a>)
+        when :ref
+=begin
+          %(<a id="#{node.id}"></a>)
+=end
+        when :link
+          %(<eref href="#{node.target}">#{node.text}</eref>)
+        when :bibref
+=begin
+          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
+          %(<a id="#{node.id}"></a>#{node.text})
+=end
+        else
+          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
+        end
+      end
+
+
       def inline_break node
         %(#{node.text}<br/>)
       end
@@ -397,9 +423,9 @@ Author
 
       def paragraph node
 =begin
-[[id]]
-[keepWithNext=true,keepWithPrevious=true] (optional)
-Text
+   [[id]]
+   [keepWithNext=true,keepWithPrevious=true] (optional)
+   Text
 =end
         result = []
         id = set_header_attribute "anchor", node.id
@@ -432,25 +458,25 @@ Text
 
       def admonition node
 =begin
-= Title
-Author
-:HEADER
+   = Title
+   Author
+   :HEADER
 
-ABSTRACT
+   ABSTRACT
 
 NOTE: note
 
-[NOTE]
-.Title
-====
-Content
-====
+   [NOTE]
+   .Title
+   ====
+     Content
+   ====
 
-[NOTE,removeInRFC=true]
-.Title
-====
-Content
-====
+     [NOTE,removeInRFC=true]
+   .Title
+   ====
+     Content
+   ====
 =end
         result = []
         if node.parent.context == :preamble
@@ -472,10 +498,10 @@ Content
 
       def section node
 =begin
-[[id]]
-[removeInRFC=true,toc=include|exclude|default] (optional)
-== title
-Content
+   [[id]]
+   [removeInRFC=true,toc=include|exclude|default] (optional)
+   == title
+   Content
 =end
         result = []
         id = set_header_attribute "anchor", node.id
@@ -490,35 +516,112 @@ Content
       end
 
       def ulist node
-        # TODO
+=begin
+   [[id]]
+   [empty=true,compact] (optional)
+   * A
+   * B
+=end
         result = []
         id = set_header_attribute "anchor", node.id
-        result << "<ul#{id}>"
+        empty = get_header_attribute node, "empty"
+        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        result << "<ul#{id}#{empty}#{spacing}>"
         node.items.each do |item|
+          id = set_header_attribute "anchor", item.id
           if item.blocks?
-            id = set_header_attribute "anchor", item.id
             result << "<li#{id}>"
             result << item.content 
             result << "</li>"
           else
-            result << "<li>#{item.text}</li>"
+            result << "<li#{id}>#{item.text}</li>"
           end
         end
         result << "</ul>"
         result
       end
 
+      (OLIST_TYPES = {
+        arabic:     "1",
+        # decimal:    "1", # not supported
+        loweralpha: "a",
+        # lowergreek: "lower-greek", # not supported
+        lowerroman: "i",
+        upperalpha: "A",
+        upperroman: "I"
+      }).default = "1"
+
+      def olist node
+=begin
+   [[id]]
+   [empty=true,compact,start=n,group=n] (optional)
+   . A
+   . B
+=end
+        result = []
+        id = set_header_attribute "anchor", node.id
+        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        start = get_header_attribute node, "start"
+        group = get_header_attribute node, "group"
+        type = set_header_attribute node, "type", OLIST_TYPES[node.style]
+        result << "<ol#{id}#{empty}#{spacing}#{start}#{group}#{type}>"
+        node.items.each do |item|
+          id = set_header_attribute "anchor", item.id
+          if item.blocks?
+            result << "<li#{id}>"
+            result << item.content
+            result << "</li>"
+          else
+            result << "<li#{id}>#{item.text}</li>"
+          end
+        end
+        result << "</ol>"
+        result
+      end
+
+      def dlist node
+=begin
+   [[id]]
+   [horizontal,compact] (optional)
+   A:: B
+   C:: D
+=end
+        result = []
+        id = set_header_attribute "anchor", node.id
+        hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
+        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        result << "<dl#{id}#{hanging}#{spacing}>"
+        node.items.each do |terms, dd|
+          [*terms].each do |dt|
+            id = set_header_attribute "anchor", dt.id
+            result << "<dt#{id}>#{dt.text}</dt>"
+          end
+          if item.blocks?
+            id = set_header_attribute "anchor", item.id
+            result << "<dd#{id}>"
+            result << dd.content
+            result << "</dd>"
+          else
+            result << "<dd>#{item.text}</dd>"
+          end
+        end
+        result << "</dl>"
+        result
+      end
+
+
+
       def preamble node
 =begin
-= Title
-Author
-:HEADER
+   = Title
+   Author
+   :HEADER
 
-ABSTRACT
+   ABSTRACT
 
 NOTE: note
 
-(boilerplate is ignored)
+   (boilerplate is ignored)
 =end
         result = []
         result << node.content
@@ -529,42 +632,32 @@ NOTE: note
 
 =begin
 TODO
-2.3. <annotation> ..............................................12
-2.5. <artwork> .................................................13
-2.6. <aside> ...................................................17
-2.8. <back> ....................................................19
-2.9. <bcp14> ...................................................20
-2.10. <blockquote> .............................................20
-2.11. <boilerplate> ............................................22
-2.16. <cref> ...................................................23
-2.18. <dd> .....................................................25
-2.19. <displayreference> .......................................27
-2.20. <dl> .....................................................27
-2.21. <dt> .....................................................29
-2.24. <eref> ...................................................31
-2.25. <figure> .................................................32
-2.27. <iref> ...................................................35
-2.29. <li> .....................................................36
-2.32. <name> ...................................................39
-2.34. <ol> .....................................................40
-2.39. <refcontent> .............................................44
-2.40. <reference> ..............................................45
-2.41. <referencegroup> .........................................46
-2.42. <references> .............................................46
-2.44. <relref> .................................................47
-2.48. <sourcecode> .............................................59
-2.53. <t> ......................................................64
-2.54. <table> ..................................................66
-2.55. <tbody> ..................................................67
-2.56. <td> .....................................................67
-2.57. <tfoot> ..................................................69
-2.58. <th> .....................................................69
-2.59. <thead> ..................................................71
-2.60. <title> ..................................................72
-2.61. <tr> .....................................................72
-2.63. <ul> .....................................................74
-2.64. <uri> ....................................................75
-2.66. <xref> ...................................................75
+   2.3. <annotation> ..............................................12
+   2.5. <artwork> .................................................13
+   2.6. <aside> ...................................................17
+   2.8. <back> ....................................................19
+   2.9. <bcp14> ...................................................20
+   2.10. <blockquote> .............................................20
+   2.11. <boilerplate> ............................................22
+   2.16. <cref> ...................................................23
+   2.19. <displayreference> .......................................27
+   2.25. <figure> .................................................32
+   2.27. <iref> ...................................................35
+   2.32. <name> ...................................................39
+   2.39. <refcontent> .............................................44
+   2.40. <reference> ..............................................45
+   2.41. <referencegroup> .........................................46
+   2.42. <references> .............................................46
+   2.44. <relref> .................................................47
+   2.48. <sourcecode> .............................................59
+   2.53. <t> ......................................................64
+   2.54. <table> ..................................................66
+   2.55. <tbody> ..................................................67
+   2.56. <td> .....................................................67
+   2.57. <tfoot> ..................................................69
+   2.58. <th> .....................................................69
+   2.59. <thead> ..................................................71
+   2.61. <tr> .....................................................72
 =end
 
   end
