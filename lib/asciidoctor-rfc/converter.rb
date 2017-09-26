@@ -379,10 +379,6 @@ Author
             text = %([#{refid}])
           end
           %(<xref target="#{node.target}">#{text}</a>)
-        when :ref
-=begin
-          %(<a id="#{node.id}"></a>)
-=end
         when :link
           %(<eref href="#{node.target}">#{node.text}</eref>)
         when :bibref
@@ -630,6 +626,56 @@ NOTE: note
       end
     end
 
+    def table node
+=begin
+[[id]]
+.Title
+|===
+|col | col
+|===
+=end
+      has_body = false
+      result = []
+      #rules = (node.attr 'grid') ? 'all' : 'none'
+      id = set_header_attribute "anchor", node.id
+      result << %(<table#{id}">)
+      result << %(<name>#{node.title}</name>) if node.title?
+      # TODO iref belongs here
+      [:head, :foot, :body].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+        has_body = true if tblsec == :body
+        # id = set_header_attribute "anchor", tblsec.id
+        # not supported
+        result << %(<t#{tblsec}>)
+        node.rows[tblsec].each do |row|
+          id = set_header_attribute "anchor", row.id
+          result << "<tr#{id}>"
+          row.each do |cell|
+            id = set_header_attribute "anchor", row.id
+            colspan_attribute = set_header_attribute "colspan", cell.colspan
+            rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
+            align = set_header_attribute("align", cell.attr("halign"))
+            cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
+            entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
+            cell_content = if cell.blocks?
+                             cell.content
+                           else
+                             cell.text
+                           end
+            result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
+          end
+          result << "</tr>"
+        end
+        result << %(</t#{tblsec}>)
+      end
+      result << "</table>"
+
+      warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
+      result 
+    end
+
+
+
+
 =begin
 TODO
    2.3. <annotation> ..............................................12
@@ -651,13 +697,6 @@ TODO
    2.44. <relref> .................................................47
    2.48. <sourcecode> .............................................59
    2.53. <t> ......................................................64
-   2.54. <table> ..................................................66
-   2.55. <tbody> ..................................................67
-   2.56. <td> .....................................................67
-   2.57. <tfoot> ..................................................69
-   2.58. <th> .....................................................69
-   2.59. <thead> ..................................................71
-   2.61. <tr> .....................................................72
 =end
 
   end
