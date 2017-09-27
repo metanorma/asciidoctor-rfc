@@ -41,11 +41,14 @@ When the script completes, you should see the file `example.xml` in the same dir
 
 The converter tries to follow native Asciidoc formatting as much as possible, including built-in attributes and styles. On occasion, it introduces additional attributes for RFC XML that are not present in Asciidoc.
 
-The following is a walkthrough of Asciidoc features as they map to RFC XML v3; mappings are given in curly brackets
+The following Asciidoc elements are not supported:
+* front/boilerplate
+
+The following is a walkthrough of Asciidoc features as they map to RFC XML v3; mappings are given in curly brackets.
 
 ```asciidoc
 [abbrev=x] {front/title@abbrev}
-=DOCUMENT TITLE {front/title}
+= DOCUMENT TITLE {front/title}
 Author;Author_2;Author_3 
   format of each entry: Firstname Middlename(s) Lastname <Email>
 :ipr {rfc@ipr}
@@ -128,8 +131,119 @@ Any admonitions between the abstract and the first section.
 [removeInRFC=true,toc=include|exclude|default,sectnums] 
   {middle/section@removeInRFC, middle/section@toc, middle/section@numbered}
 == Section title {middle/section/name}
-Content
+Content content content {middle/section/t}
+<<crossreference>> {.../xref@target}
+<<crossreference,text>> {<xref target="crossreference">text</xref>}
+http://example.com/[linktext] {<eref href="http://example.com/">linktext</eref>}
 
+=== Subsection title {middle/section/section}
+This ((<indexterm>)) {iref@item} is visible in the text,
+this one is not (((indexterm, index-subterm))) {<iref item="indexterm" subitem="index-subterm"/>}.
+Linebreak + {<br/>}
+_Italic_ {.../em} *Bold* {.../strong} `Monospace` {.../tt}
+~subscript~ {.../sub} ^superscript^ {.../sup}
+[bcp14]#MUST NOT# {.../bcp14}
+
+[[id]] {.../t@anchor}
+[keepWithNext=true,keepWithPrevious=true] {.../t@keepWithNext, .../t@keepWithPrevious}
+Paragraph text {.../t}
+
+[[id]] {.../blockquote@anchor}
+[quote, attribution, citation info] {.../blockquote@quotedFron, .../blockquote@cite}
+# citation info is limited to a URL
+Quotation {.../blockquote}
+
+[[id]] {.../cref@anchor}
+[NOTE,display=true|false,source=name] {.../cref@display, .../cref@source}
+.Title {.../cref/name}
+====
+Any admonition inside the body of the text is a comment. {.../cref}
+// Note that actual Asciidoc comments are ignored by the converter.
+====
+
+[[id]] {.../figure/sourcecode@anchor}
+.Source code listing {.../figure/sourcecode@name}
+[source,type,src=uri] {.../figure/sourcecode@type, {.../figure/sourcecode@src}}
+# (src is mutually exclusive with listing content)
+----
+begin() { 
+  Source code listing
+}
+----
+
+[[id]] {.../figure@anchor}
+.Figure 1 {.../figure/name}
+====
+[[id]] {.../figure/artwork@anchor}
+[align=left|center|right,alt=alt_text] {.../figure/artwork@align, .../figure/artwork@alt}
+....
+Figures are only permitted to contain listings (sourcecode), images (artwork), 
+or literal (artwork) {.../figure/artwork} 
+....
+
+[[id]] 
+.Figure 2
+[link=xxx,align=left|center|righti,alt=alt_text]
+  {.../figure/artwork@src, .../figure/artwork@algn, .../figure/artwork@alt}
+image::filename[] {.../figure/artwork}
+
+====
+
+
+[[id]] {.../ul@anchor}
+[empty=true,compact] {.../ul@empty, .../ul@spacing}
+* Unordered list 1 {.../ul/li}
+* [[id]] {.../ul/li@anchor} Unordered list 2
+
+[[id]] {.../ol@anchor}
+[compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] 
+  {.../ol@empty, .../ol@start, .../ol@group, .../ol@type}
+. A {.../ol/li}
+. B
+
+[[id]] {.../dl@anchor}
+[horizontal,compact] {.../dl@hanging, ..../dl@spacing}
+A:: {.../dl/dt} B {.../dl/dd}
+[[id]] {.../dl/dt@anchor} C:: [[id]] {.../dl/dd@anchor} D
+
+[[id]] {.../table@anchor}
+.Table Title {.../table/name}
+|===
+|head | head {.../table/thead/tr/td}
+
+[[id]] {.../table/tbody/tr@anchor}
+h|head {.../table/tbody/tr/th} | [[id]] {.../table/tbody/tr/td@anchor} body {.../table/tbody/tr/td}
+|respects colspan, rowspan| and (horizontal) align attributes of cells
+
+[[id]] {.../table/tbody/tr@anchor}
+|foot | foot {.../table/tfoot/tr/td}
+|===
+
+[[id]] {.../aside@anchor}
+****
+Sidebar {.../aside}
+****
+
+[[id]] {back/references@anchor}
+[bibliography]
+== Normative References
+* [[[crossref]]] {back/references/reference@anchor} Reference1 {back/references/reference/refcontent}
+[quoteTitle=false,target=uri,annotation=xyz]
+  {back/references/reference/refcontent@quoteTitle, back/references/reference/refcontent@target,
+  back/references/reference/refcontent@annotation}
+* [[[crossref2,xreftext]]] Reference2
+
+[[id]] {back/references@anchor}
+[bibliography]
+== Informative References
+* [[[crossref3]]] {back/references/referencegroup, back/references/referencegroup@anchor}
+** [[[crossref4]]] Reference4 {back/references/referencegroup/reference/refcontent}
+** [[[crossref5]]] Reference5
+
+[[id]] {back/section@anchor}
+[appendix]
+== Appendix 
+Content {back/section}
 
 ```
 
