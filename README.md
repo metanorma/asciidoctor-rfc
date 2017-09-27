@@ -184,7 +184,7 @@ or literal (artwork) {.../figure/artwork}
 [[id]] 
 .Figure 2
 [link=xxx,align=left|center|righti,alt=alt_text]
-  {.../figure/artwork@src, .../figure/artwork@algn, .../figure/artwork@alt}
+  {.../figure/artwork@src, .../figure/artwork@align, .../figure/artwork@alt}
 image::filename[] {.../figure/artwork}
 
 ====
