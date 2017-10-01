@@ -22,6 +22,7 @@ module Asciidoctor
         super
         #basebackend 'html'
         outfilesuffix '.xml'
+
       end
 
       def convert node, transform = nil, opts = {}
@@ -50,6 +51,7 @@ module Asciidoctor
       alias :inline_button :skip
       alias :inline_kbd :skip
       alias :inline_menu :skip
+      alias :inline_callout :content
 
       def get_header_attribute node, attr, default = nil
         if (node.attr? attr) 
@@ -472,19 +474,6 @@ Author
           end
         end
       end
-
-      # comments realised as callouts; asciidoc comments do not get rendered by converter
-      def inline_callout node
-        if node.document.attr? 'icons', 'font'
-          %(<i class="conum" data-value="#{node.text}"></i><b>(#{node.text})</b>)
-        elsif node.document.attr? 'icons'
-          src = node.icon_uri("callouts/#{node.text}")
-          %(<img src="#{src}" alt="#{node.text}"#{@void_element_slash}>)
-        else
-          %(<b class="conum">(#{node.text})</b>)
-        end
-      end
-
 
       def paragraph node
 =begin
