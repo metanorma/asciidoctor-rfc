@@ -405,7 +405,7 @@ Author
           end
           %(<xref target="#{node.target}">#{text}</xref>)
         when :link
-          %(<eref href="#{node.target}">#{node.text}</eref>)
+          %(<eref target="#{node.target}">#{node.text}</eref>)
         when :bibref
           unless node.xreftext.nil?
             x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
