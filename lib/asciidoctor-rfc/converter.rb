@@ -802,7 +802,7 @@ NOTE: note
       result << %(<table#{id}">)
       result << %(<name>#{node.title}</name>) if node.title?
       # TODO iref belongs here
-      [:head, :foot, :body].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+      [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
         has_body = true if tblsec == :body
         # id = set_header_attribute "anchor", tblsec.id
         # not supported
