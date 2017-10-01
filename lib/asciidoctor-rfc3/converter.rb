@@ -110,7 +110,7 @@ CONTENT
         obsoletes = get_header_attribute node, "obsoletes"
         updates = get_header_attribute node, "updates"
         indexInclude = get_header_attribute node, "indexInclude"
-        iprExtract = get_header_attribute node, "indexInclude"
+        iprExtract = get_header_attribute node, "iprExtract"
         sortRefs = get_header_attribute node, "sortRefs"
         symRefs = get_header_attribute node, "symRefs"
         tocInclude = get_header_attribute node, "tocInclude"
@@ -400,7 +400,7 @@ Author
       def inline_anchor node
         case node.type
         when :xref
-          # format attribute not supported
+          # NOTE format attribute not supported
           unless (text = node.text) || (text = node.attributes['path'])
             refid = node.attributes['refid']
             text = %([#{refid}])
@@ -439,7 +439,9 @@ Author
           item = set_header_attribute "item", terms[0]
           item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil )
           terms = node.attr "terms"
-          "#{node.text}<iref#{item}#{subitem}/>"
+          "<iref#{item}#{subitem}/>"
+          "<iref#{item}#{subitem}/>"
+          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(": ")}") if terms.size > 2
         end
       end
 
@@ -596,8 +598,9 @@ NOTE: note
           else
             quoteTitle = get_header_attribute node, "quoteTitle"
             target = get_header_attribute node, "target"
+            annotation = get_header_attribute node, "annotation"
             # Bug: [[[x]]] within embedded list is processed as [<bibref>]
-            result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{quoteTitle}#{target} anchor=\"\\1\"><refcontent>")
+            result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{quoteTitle}#{target}#{annotation} anchor=\"\\1\"><refcontent>")
           end
         end
         result
@@ -936,12 +939,6 @@ image::filename[]
     def verse 
       quote node
     end
-
-=begin
-TODO
-   2.3. <annotation> ..............................................12
-   2.44. <relref> .................................................47
-=end
 
   end
 end

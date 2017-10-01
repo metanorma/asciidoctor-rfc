@@ -40,7 +40,7 @@ module Asciidoctor
 
       alias :pass :content
       alias :embedded :content
-	  alias :sidebar :content
+      alias :sidebar :content
       alias :audio :skip
       alias :colist :skip
       alias :floating_title :skip
@@ -51,8 +51,8 @@ module Asciidoctor
       alias :inline_button :skip
       alias :inline_kbd :skip
       alias :inline_menu :skip
-	  alias :verse :content
-	  alias :quote :content
+      alias :verse :content
+      alias :quote :content
 
       def get_header_attribute node, attr, default = nil
         if (node.attr? attr) 
@@ -124,7 +124,7 @@ CONTENT
         seriesNo = get_header_attribute node, "seriesNo"
         submissionType = get_header_attribute node, "submisionType", "IETF"
         xmllang = get_header_attribute node, "xml:lang"
-		
+
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{category}
         #{consensus}#{submissionType}#{iprExtract}#{docName}#{number}#{seriesNo}#{xmllang}>)
         result << (front node)
@@ -237,11 +237,11 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
           result << "<address>"
           if not street.nil?
             result << "<postal>"
-			street.split("\\ ").each { |p| result << "<street>#{p}</street>" } unless street.nil?
-              result << "<city>#{city}</city>" unless city.nil?
-              result << "<region>#{region}</region>" unless region.nil?
-              result << "<code>#{code}</code>" unless code.nil?
-              result << "<country>#{country}</country>" unless country.nil?
+            street.split("\\ ").each { |p| result << "<street>#{p}</street>" } unless street.nil?
+            result << "<city>#{city}</city>" unless city.nil?
+            result << "<region>#{region}</region>" unless region.nil?
+            result << "<code>#{code}</code>" unless code.nil?
+            result << "<country>#{country}</country>" unless country.nil?
             result << "</postal>"
           end
           result << "<phone>#{phone}</phone>" unless phone.nil?
@@ -320,7 +320,6 @@ Author
         result
       end
 
-	  @@@
       def inline_anchor node
         case node.type
         when :xref
@@ -342,12 +341,7 @@ Author
           # NOTE technically node.text should be node.reftext, but subs have already been applied to text
           %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
         when :ref
-          # If this is within referencegroup, output as bibanchor anyway
-          if $processing_reflist
-            %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-          else
-            warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
-          end
+          warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
         else
           warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
         end
@@ -384,7 +378,7 @@ Author
         when :single
           "'#{node.text}'"
         else
-            node.text
+          node.text
         end
       end
 
@@ -460,39 +454,23 @@ NOTE: note
         result
       end
 
- 	  @@@
-     # ulist repurposed as reference list
+      # ulist repurposed as reference list
       def reflist node
 =begin
    * [[[ref1]]] A
-   [quoteTitle=false,target=uri,annotation=] (optional)
+   [target=uri] (optional)
    * [[[ref2]]] B
-   * [[[ref3]]] (Referencegroup: no content)
-     * [[[ref4]]] C
-     * [[[ref4]]] D
 =end
-        # TODO reference/front not supported
-        # TODO reference/annotation not supported
+        # TODO push through references as undigested XML
         result = []
         node.items.each do |item|
           # we expect the biblio anchor to be right at the start of the reference
-          if item.blocks?
-            # we expect any list to be embedded, and only one level of embedding
-            # we expect no content in the referencegroup line other than the bibliographic anchor
-            result << "<referencegroup>#{item.text}".gsub(/<referencegroup>\s*\[?<bibanchor="([^"]+)">\]?.*$/, "<referencegroup anchor=\"\\1\">")
-            item.blocks.each { |b| result << reflist(b) }
-            result << "</referencegroup>"
-          else
-            quoteTitle = get_header_attribute node, "quoteTitle"
-            target = get_header_attribute node, "target"
-            # Bug: [[[x]]] within embedded list is processed as [<bibref>]
-            result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{quoteTitle}#{target} anchor=\"\\1\"><refcontent>")
-          end
+          target = get_header_attribute node, "target"
+          result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\"><refcontent>")
         end
         result
       end
 
-	  @@@
       def section node
 =begin
 [[id]]
@@ -517,9 +495,6 @@ Content
           # require that references be given in a ulist
           node.blocks.each { |b| result << reflist(b) }
           result << "</references>"
-          unless $xreftext.empty?
-            result.unshift( $xreftext.keys.map { | k | %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
-          end
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false
           $seen_back_matter = true
@@ -529,7 +504,7 @@ Content
             result << "</middle><back>" unless $seen_back_matter
             $seen_back_matter = true
           end
-		  title = set_header_attribute "title", node.title
+          title = set_header_attribute "title", node.title
           result << "<section#{id}#{title}>"
           result << node.content
           result << "</section>"
@@ -537,7 +512,7 @@ Content
         result
       end
 
-     def listing node
+      def listing node
 =begin
 .name
 [source,type,src=uri,align,alt] (src is mutually exclusive with listing content)
@@ -552,7 +527,7 @@ code
         name = set_header_attribute "name", node.title
         type = set_header_attribute "type", node.attr("language")
         src = set_header_attribute "src", node.attr("src")
-		alt = set_header_attribute "alt", node.alt
+        alt = set_header_attribute "alt", node.alt
 
         result << "<artwork#{id}#{align}#{name}#{type}#{src}#{alt}>"
         if src.nil?
@@ -603,7 +578,7 @@ code
 =end
         result = []
         counter = set_header_attribute node, "counter", node.attr("start")
-		# TODO did I understand spec of @counter correctly?
+        # TODO did I understand spec of @counter correctly?
         type = set_header_attribute node, "type", OLIST_TYPES[node.style]
         result << "<list#{counter}#{style}>"
         node.items.each do |item|
@@ -620,7 +595,7 @@ code
         result
       end
 
-     def dlist node
+      def dlist node
 =begin
    [hangIndent=n] (optional)
    A:: B
@@ -631,17 +606,17 @@ code
         style = set_header_attribute "style", "hanging"
         result << "<list#{hangIndent}#{style}>"
         node.items.each do |terms, dd|
-		  hangtext =[]
-		  id = nil
+          hangtext =[]
+          id = nil
           [*terms].each do |dt|
-		  # we collapse multiple potential ids into the last seen
+            # we collapse multiple potential ids into the last seen
             id = set_header_attribute "anchor", dt.id unless dt.id.nil?
-           hangtext << dt.text
+            hangtext << dt.text
           end
-		  unless item.id.nil?
-          id = set_header_attribute "anchor", item.id
-          hangText = set_header_attribute "hangText", hangText.join(", ")
-		  end
+          unless item.id.nil?
+            id = set_header_attribute "anchor", item.id
+            hangText = set_header_attribute "hangText", hangText.join(", ")
+          end
           if item.blocks?
             result << "<t#{id}#{hangText}>"
             result << item.content
@@ -686,43 +661,43 @@ NOTE: note
       result = []
       id = set_header_attribute "anchor", node.id
       title = set_header_attribute "title", node.title
-     suppresstitle = get_header_attribute node, "suppress-title"
-     align = get_header_attribute node, "align"
-     style = get_header_attribute node, "style"
-     result << %(<table#{id}#{title}#{suppresstitle}#{align}#{style}">)
-	 # preamble, postamble elements not supported
-	 
-	 [:head].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+      suppresstitle = get_header_attribute node, "suppress-title"
+      align = get_header_attribute node, "align"
+      style = get_header_attribute node, "style"
+      result << %(<table#{id}#{title}#{suppresstitle}#{align}#{style}">)
+      # preamble, postamble elements not supported
+
+      [:head].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
         has_body = true if tblsec == :body
         # id = set_header_attribute "anchor", tblsec.id
         # not supported
-		if node.rows[tblsec] > 1
-			warn "asciidoctor: WARNING: RFC XML v2 tables only support a single header row"
-		end
-		widths = []
-		 node.columns.each do |col|
-            widths << col.attr "colpcwidth"
-          end
+        if node.rows[tblsec] > 1
+          warn "asciidoctor: WARNING: RFC XML v2 tables only support a single header row"
         end
-        node.rows[tblsec].each do |row|
-          row.each_with_index do |cell, i|
-            id = set_header_attribute "anchor", row.id
-             align = set_header_attribute("align", cell.attr("halign"))
-			 if   !node.option? "autowidth" and  i < widths.size
-             width =  set_header_attribute("width", widths[i])
-			 else
-			 width = nil
-			 end
-            entry_start = %(<ttcol#{id}#{align}#{width}>)
-            cell_content = if cell.blocks?
-                             cell.content
-                           else
-                             cell.text
-                           end
-            result << %(#{entry_start}#{cell_content}</ttcol>)
-          end
+        widths = []
+        node.columns.each do |col|
+          widths << col.attr "colpcwidth"
         end
-	 
+      end
+      node.rows[tblsec].each do |row|
+        row.each_with_index do |cell, i|
+          id = set_header_attribute "anchor", row.id
+          align = set_header_attribute("align", cell.attr("halign"))
+          if   !node.option? "autowidth" and  i < widths.size
+            width =  set_header_attribute("width", widths[i])
+          else
+            width = nil
+          end
+          entry_start = %(<ttcol#{id}#{align}#{width}>)
+          cell_content = if cell.blocks?
+                           cell.content
+                         else
+                           cell.text
+                         end
+          result << %(#{entry_start}#{cell_content}</ttcol>)
+        end
+      end
+
       [:body,:foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
         has_body = true if tblsec == :body
         # id = set_header_attribute "anchor", tblsec.id
@@ -755,21 +730,21 @@ Example
 =end
       result = []
       id = set_header_attribute "anchor", node.id
-       alt = set_header_attribute "alt", node.alt
-       title = set_header_attribute "title", node.title
-       suppresstitle = get_header_attribute node, "suppress-title"
-       align = get_header_attribute node, "align"
-     result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
-	 seen_artwork = false
+      alt = set_header_attribute "alt", node.alt
+      title = set_header_attribute "title", node.title
+      suppresstitle = get_header_attribute node, "suppress-title"
+      align = get_header_attribute node, "align"
+      result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
+      seen_artwork = false
       # TODO iref 
       result.blocks.each do |b|
         if b == :listing or b == :image or b == :literal
-			result << node.content
-			seen_artwork = true
-		else
-		  result << seen_artwork ? "<preamble>" : "<postamble>"
           result << node.content
-		  result << seen_artwork ? "</preamble>" : "</postamble>"
+          seen_artwork = true
+        else
+          result << seen_artwork ? "<preamble>" : "<postamble>"
+          result << node.content
+          result << seen_artwork ? "</preamble>" : "</postamble>"
         end
       end
       result << "</figure>"
@@ -790,13 +765,13 @@ literal
       align = get_header_attribute node, "align"
       alt = set_header_attribute "alt", node.alt
       type = get_header_attribute node, "type"
-        name = set_header_attribute "name", node.title
- 
-        result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
-        if src.nil?
-          result << node.text.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
-        end
-        result << "</artwork>"
+      name = set_header_attribute "name", node.title
+
+      result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
+      if src.nil?
+        result << node.text.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+      end
+      result << "</artwork>"
 
       result << "</figure>" if node.parent.context != :example
       result
@@ -821,7 +796,7 @@ literal
 [link=xxx,align=left|center|right,alt=alt_text,type]
 image::filename[]
 =end
-		# ignoring width, height attributes
+      # ignoring width, height attributes
       result = []
       result << "<figure>" if node.parent.context != :example
       id = set_header_attribute "anchor", node.id
