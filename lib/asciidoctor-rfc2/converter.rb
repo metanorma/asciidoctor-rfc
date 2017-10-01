@@ -188,6 +188,7 @@ Author;Author_2;Author_3
             break
           end
           result << author1(node, suffix)
+          i += 1
         end
         result.flatten
       end
@@ -676,7 +677,7 @@ NOTE: note
         end
         widths = []
         node.columns.each do |col|
-          widths << col.attr "colpcwidth"
+          widths << col.attr("colpcwidth")
         end
       end
       node.rows[tblsec].each do |row|

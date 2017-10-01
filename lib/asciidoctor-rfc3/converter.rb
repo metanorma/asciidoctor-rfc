@@ -258,10 +258,12 @@ Author;Author_2;Author_3
         loop do
           suffix = "_#{i}"
           author = node.attr("author#{suffix}")
+          puts author
           if author.nil?
             break
           end
           result << author1(node, suffix)
+          i += 1
         end
         result.flatten
       end
