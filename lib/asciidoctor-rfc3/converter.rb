@@ -2,7 +2,7 @@ require "Date"
 require "pp"
 
 module Asciidoctor
-  module Rfc
+  module Rfc3
     # A {Converter} implementation that generates RFC XML output, a format used to 
     # format RFC proposals (https://tools.ietf.org/html/rfc7991)
     #
@@ -13,7 +13,7 @@ module Asciidoctor
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
 
-      register_for 'rfc'
+      register_for 'rfc3'
 
       $seen_back_matter = false
       $xreftext = {}

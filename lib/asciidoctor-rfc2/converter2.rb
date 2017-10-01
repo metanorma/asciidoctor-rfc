@@ -2,7 +2,7 @@ require "Date"
 require "pp"
 
 module Asciidoctor
-  module Rfc
+  module Rfc2
     # A {Converter} implementation that generates RFC XML 2 output, a format used to 
     # format RFC proposals (https://tools.ietf.org/html/rfc7749)
     #
