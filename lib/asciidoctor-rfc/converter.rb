@@ -757,7 +757,7 @@ code
           if item.blocks?
             id = set_header_attribute "anchor", item.id
             result << "<dd#{id}>"
-            result << dd.content
+            result << item.content
             result << "</dd>"
           else
             result << "<dd>#{item.text}</dd>"
