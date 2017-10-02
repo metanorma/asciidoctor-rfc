@@ -13,7 +13,7 @@ module Asciidoctor
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
 
-      register_for 'rfc'
+      register_for 'rfc2'
 
       $seen_back_matter = false
       $xreftext = {}
