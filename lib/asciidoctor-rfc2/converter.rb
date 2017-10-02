@@ -475,7 +475,6 @@ NOTE: note
       def section node
 =begin
 [[id]]
-[removeInRFC=true,toc=include|exclude|default] (optional)
 == title
 Content
 
@@ -665,7 +664,7 @@ NOTE: note
       suppresstitle = get_header_attribute node, "suppress-title"
       align = get_header_attribute node, "align"
       style = get_header_attribute node, "style"
-      result << %(<table#{id}#{title}#{suppresstitle}#{align}#{style}">)
+      result << %(<texttable#{id}#{title}#{suppresstitle}#{align}#{style}">)
       # preamble, postamble elements not supported
 
       [:head].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
@@ -714,7 +713,7 @@ NOTE: note
           end
         end
       end
-      result << "</table>"
+      result << "</texttable>"
 
       warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
       result 
@@ -755,7 +754,8 @@ Example
     def literal node
 =begin
 [[id]]
-[align=left|center|right,alt=alt_text,name,type] (optional)
+.Name
+[align=left|center|right,alt=alt_text,type] (optional)
 ....
 literal
 ....

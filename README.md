@@ -32,17 +32,36 @@ $ gem install asciidoctor-rfc
 Converting to RFC XML is a simple as running the ./bin/asciidoctor-rfc script using Ruby and passing our AsciiDoc document as the first argument.
 
 ```
-$ ruby ./bin/asciidoctor-rfc example.adoc
+$ ruby ./bin/asciidoctor-rfc3 example.adoc  # RFC XML 3 output
+$ ruby ./bin/asciidoctor-rfc2 example.adoc  # RFC XML 2 output
 ```
 
 When the script completes, you should see the file `example.xml` in the same directory.
 
-## Syntax
+## Syntax, v3
 
 The converter tries to follow native Asciidoc formatting as much as possible, including built-in attributes and styles. On occasion, it introduces additional attributes for RFC XML that are not present in Asciidoc.
 
-The following Asciidoc elements are not supported:
+The following RFC XML v3 elements are not supported:
 * front/boilerplate
+* xref@format
+* iref@primary
+* reference/front
+
+The following Asciidoc features are not supported in the mapping to RFC XML v3:
+* Tertiary index terms
+* quote citations other than URLs
+* ordered list types decimal, lowergreek
+* audio
+* colist
+* floating title
+* page break
+* thematic break
+* video
+* inline button
+* inline keyboard
+* inline menu
+* callout
 
 The following is a walkthrough of Asciidoc features as they map to RFC XML v3; mappings are given in curly brackets.
 
@@ -167,7 +186,7 @@ Any admonition inside the body of the text is a comment. {.../cref}
 # (src is mutually exclusive with listing content)
 ----
 begin() { 
-  Source code listing
+  Source code listing {.../figure/sourcecode}
 }
 ----
 
@@ -239,6 +258,208 @@ Sidebar {.../aside}
 * [[[crossref3]]] {back/references/referencegroup, back/references/referencegroup@anchor}
 ** [[[crossref4]]] Reference4 {back/references/referencegroup/reference/refcontent}
 ** [[[crossref5]]] Reference5
+
+[[id]] {back/section@anchor}
+[appendix]
+== Appendix 
+Content {back/section}
+
+```
+
+## Syntax, v2
+
+The converter tries to follow native Asciidoc formatting as much as possible, including built-in attributes and styles. On occasion, it introduces additional attributes for RFC XML that are not present in Asciidoc.
+
+The following RFC XML v2 elements are not supported:
+* front/boilerplate
+* xref@format
+* iref@primary
+* reference/* (all children of reference)
+* table/preamble
+* table/postamble
+* artwork@width
+@ artwork@height
+
+The following Asciidoc features are not supported in the mapping to RFC XML v2:
+* Tertiary index terms
+* quote citations other than URLs
+* ordered list types decimal, lowergreek
+* distinction between table body and table footer
+* multiple table header rows
+* audio
+* colist
+* floating title
+* page break
+* thematic break
+* video
+* inline button
+* inline keyboard
+* inline menu
+* callout
+* quote, verse (rendered as normal paragraph)
+* sidebar (rendered as normal paragraph)
+
+The following is a walkthrough of Asciidoc features as they map to RFC XML v2; mappings are given in curly brackets.
+
+```asciidoc
+[abbrev=x] {front/title@abbrev}
+= DOCUMENT TITLE {front/title}
+Author;Author_2;Author_3 
+  format of each entry: Firstname Middlename(s) Lastname <Email>
+:category {rfc@category}
+:consensus {rfc@consensus}
+:docName {rfc@docName}
+:number {rfc@number}
+:ipr {rfc@ipr}
+:obsoletes {rfc@obsoletes}
+:updates {rfc@updates}
+:submissionType {rfc@submissionType} (default is "IETF")
+:iprExtract {rfc@iprExtract}
+:seriesNo {rfc@seriesNo}
+:xmllang {rfc@xml:lang}
+
+:fullname {front/author@fullname} (redundant with author line above)
+:firstname {first letter used in front/author@initials}
+:lastname {front/author@surname} (redundant with author line above)
+:role {front/author@role}
+:organization {front/author/organization}
+:organization_abbrev {front/author/organization@abbrev}
+:email {front/author/address/email} (redundant with author line above)
+:fax {front/author/address/facsimile}
+:uri {front/author/address/uri}
+:phone {front/author/address/phone}
+:street {front/author/address/postal/street}  (concatenated with "\ ") 
+:city {front/author/address/postal/city} 
+:region {front/author/address/postal/region} 
+:country {front/author/address/postal/country} 
+:code {front/author/address/postal/code} 
+
+:fullname_2 {front/author@fullname} (redundant with second entry in author line above)
+:firstname_2 {first letter used in front/author@initials}
+:lastname_2 {front/author@surname} (redundant with second entry in author line above)
+:role_2 {front/author@role}
+:organization_2 {front/author/organization}
+:email_2 {front/author/address/email} (redundant with second entry in author line above)
+:fax_2 {front/author/address/facsimile}
+:uri_2 {front/author/address/uri}
+:phone_2 {front/author/address/phone}
+:postalLine_2 {front/author/address/postal/postalline} (concatenated with "\ ") 
+  (mutually exclusive with following address fields)
+:street_2 {front/author/address/postal/street} 
+:city_2 {front/author/address/postal/city} 
+:region_2 {front/author/address/postal/region} 
+:country_2 {front/author/address/postal/country} 
+:code_2 {front/author/address/postal/code} 
+
+:revdate {front/date@day, front/date@month, front/date@year}
+:area {front/area} (comma delimited)
+:workgroup {front/workgroup} (comma delimited)
+:keyword {front/keyword} (comma delimited)
+
+:link URL {<front/link href=URL/>},URL REL {<front/link href=URL rel=REL/>} 
+  (for REL see https://tools.ietf.org/html/rfc7669)
+
+[abstract] {front/abstract}
+The first paragraph between the document header is automatically parsed as an abstract, 
+whether or not it is in abstract style.
+
+NOTE: note
+
+[NOTE] 
+.Title {front/note@title}
+===
+Any admonitions between the abstract and the first section.
+===
+
+[[id]] {middle/section@anchor}
+== Section title {middle/section@title}
+Content content content {middle/section/t}
+<<crossreference>> {.../xref@target}
+<<crossreference,text>> {<xref target="crossreference">text</xref>}
+http://example.com/[linktext] {<eref href="http://example.com/">linktext</eref>}
+
+=== Subsection title {middle/section/section}
+This ((<indexterm>)) {iref@item} is visible in the text,
+this one is not (((indexterm, index-subterm))) {<iref item="indexterm" subitem="index-subterm"/>}.
+Linebreak + {<vspace/>}
+_Italic_ {.../spanx[style="emph"]} *Bold* {.../spanx[style="strong"]} `Monospace` {.../spanx[style="verb"]}
+
+[[id]] {.../t@anchor}
+Paragraph text {.../t}
+
+[[id]] {.../cref@anchor}
+[NOTE,source=name] { .../cref@source}
+====
+Any admonition inside the body of the text is a comment. {.../cref}
+// Note that actual Asciidoc comments are ignored by the converter.
+====
+
+[[id]] {.../figure/artwork@anchor}
+.Source code listing {.../figure/artwork@name}
+[source,type,src=uri,align,alt] {.../figure/artwork@type, .../figure/artwork@src, ../figure/artwork@align, ../figure/artwork@alt}
+# (src is mutually exclusive with listing content)
+----
+begin() { 
+  Source code listing {.../figure/artwork}
+}
+----
+
+[[id]] {.../figure@anchor}
+.Figure 1 {.../figure/name}
+[align,alt,suppress-title] {.../figure@align, .../figure@alt, .../figure@supress-title}
+====
+preamble {.../figure/preamble}
+
+[[id]] {.../figure/artwork@anchor}
+[align=left|center|right,alt=alt_text,type] {.../figure/artwork@align, .../figure/artwork@alt, .../figure/artwork@type}
+....
+Figures are only permitted to contain listings (sourcecode), images (artwork), 
+or literal (artwork) {.../figure/artwork} 
+....
+
+[[id]]  {.../figure/artwork@anchor}
+.Figure 2 {.../figure/artwork@name}
+[link=xxx,align=left|center|right,alt=alt_text,type]
+  {.../figure/artwork@src, .../figure/artwork@align, .../figure/artwork@alt, .../figure/artwork@type}
+image::filename[] {.../figure/artwork}
+
+postamble {.../figure/postamble}
+====
+
+
+* Unordered list 1 {.../list[@style="symbols"]/t}
+* [[id]] {.../list/t@anchor} Unordered list 2
+
+[start=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] 
+  {.../list@start, .../list@type}
+. A {.../list/t}
+. B
+
+[hangIndent=n] {.../list@hangIndent}
+A:: {.../list[@style="hanging"]/t@hangText} B {.../list[@style="hanging"]/t}
+[[id]] {.../list/t@anchor} C:: [[id]] {.../list/t@anchor} D
+
+[[id]] {.../texttable@anchor}
+.Table Title {.../texttable@title}
+[suppress-title,align,style] {.../texttable@supress-title, .../texttable@align, .../texttable@style}
+|===
+|[[id]] {.../texttable/ttcol@id} head | head {.../texttable/ttcol}
+
+h|head {.../texttable/c} | body {texttable/c}
+|respects (horizontal) align attributes of cells
+
+|foot | foot {.../texttable/c}
+|===
+
+[[id]] {back/references@anchor}
+[bibliography]
+== Normative References
+* [[[crossref]]] {back/references/reference@anchor} Reference1 +++(raw XML)+++
+
+[[id]] {back/references@anchor}
+[bibliography]
+== Informative References
+* [[[crossref2]]] Reference2 +++(raw XML)+++
 
 [[id]] {back/section@anchor}
 [appendix]

@@ -580,14 +580,13 @@ NOTE: note
       def reflist node
 =begin
    * [[[ref1]]] A
-   [quoteTitle=false,target=uri,annotation=] (optional)
+   [quoteTitle=false,target=uri,annotation=x] (optional)
    * [[[ref2]]] B
    * [[[ref3]]] (Referencegroup: no content)
      * [[[ref4]]] C
      * [[[ref4]]] D
 =end
         # TODO reference/front not supported
-        # TODO reference/annotation not supported
         result = []
         node.items.each do |item|
           # we expect the biblio anchor to be right at the start of the reference
