@@ -441,7 +441,7 @@ NOTE: note
         # admonitions within preamble are notes. Elsewhere, they are comments.
         result = []
         if node.parent.context == :preamble
-          title = set_header_attribute node, "title", node.title
+          title = set_header_attribute "title", node.title
           result << "<note#{title}>"
           result << (paragraph1 node)
           result << "</note>"
@@ -467,7 +467,7 @@ NOTE: note
         node.items.each do |item|
           # we expect the biblio anchor to be right at the start of the reference
           target = get_header_attribute node, "target"
-          result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\"><refcontent>")
+          result << "<reference>#{item.text}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
         end
         result
       end
@@ -557,7 +557,7 @@ code
             result << "<t#{id}>#{item.text}</t>"
           end
         end
-        result << "</t>"
+        result << "</list>"
         result
       end
 
