@@ -177,6 +177,7 @@ Author;Author_2;Author_3
 :organization_3
 :email_3
 =end
+pp node
         # recurse: author, author_2, author_3...
         result = []
         result << author1(node, "")
@@ -458,16 +459,20 @@ NOTE: note
       # ulist repurposed as reference list
       def reflist node
 =begin
-   * [[[ref1]]] A
-   [target=uri] (optional)
-   * [[[ref2]]] B
+++++
+<xml>
+++++
 =end
         # TODO push through references as undigested XML
         result = []
-        node.items.each do |item|
+pp node
+        node.lines.each do |item|
           # we expect the biblio anchor to be right at the start of the reference
           target = get_header_attribute node, "target"
-          result << "<reference>#{item.text}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
+          # undo XML substitution
+          ref = item.gsub(/\&lt;/,"<").gsub(/\&gt;/,">").gsub(/\&amp;/,"&")
+          #result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
+          result << ref
         end
         result
       end
@@ -642,6 +647,7 @@ NOTE: note
    (boilerplate is ignored)
 =end
         result = []
+pp node.content
         result << node.content
         result << "</front><middle>"
         result

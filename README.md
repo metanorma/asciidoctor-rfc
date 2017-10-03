@@ -454,12 +454,16 @@ h|head {.../texttable/c} | body {texttable/c}
 [[id]] {back/references@anchor}
 [bibliography]
 == Normative References
-* [[[crossref]]] {back/references/reference@anchor} Reference1 +++(raw XML)+++
+++++
+(raw XML)
+++++ {back/references/reference}
 
 [[id]] {back/references@anchor}
 [bibliography]
 == Informative References
-* [[[crossref2]]] Reference2 +++(raw XML)+++
+++++
+(raw XML)
+++++ {back/references/reference}
 
 [[id]] {back/section@anchor}
 [appendix]
