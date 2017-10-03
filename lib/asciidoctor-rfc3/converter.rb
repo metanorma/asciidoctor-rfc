@@ -698,7 +698,7 @@ Content
       has_body = false
       result = []
       id = set_header_attribute "anchor", node.id
-      result << %(<table#{id}">)
+      result << %(<table#{id}>)
       result << %(<name>#{node.title}</name>) if node.title?
       # TODO iref belongs here
       [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
@@ -716,7 +716,7 @@ Content
             align = set_header_attribute("align", cell.attr("halign"))
             cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
             entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
-            cell_content = cell.content
+            cell_content = cell.text
             result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
           end
           result << "</tr>"

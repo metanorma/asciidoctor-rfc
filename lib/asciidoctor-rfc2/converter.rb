@@ -564,7 +564,6 @@ Content
 |col | col
 |===
 =end
-pp node
       has_body = false
       result = []
       id = set_header_attribute "anchor", node.id
@@ -596,7 +595,7 @@ pp node
               width = nil
             end
             entry_start = %(<ttcol#{id}#{align}#{width}>)
-            cell_content = cell.content
+            cell_content = cell.text
             result << %(#{entry_start}#{cell_content}</ttcol>)
           end
         end
@@ -608,7 +607,7 @@ pp node
         # not supported
         node.rows[tblsec].each do |row|
           row.each do |cell|
-            cell_content = cell.content
+            cell_content = cell.text
             result << %(<c>#{cell_content}</c>)
           end
         end
