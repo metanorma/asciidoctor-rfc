@@ -28,4 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug", "~> 9.1"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
+  spec.add_development_dependency "timecop", "~> 0.9"
+
 end
