@@ -1,9 +1,6 @@
 require 'spec_helper'
 
-require 'asciidoctor'
-require 'asciidoctor-rfc'
-
-describe 'rfc3 converter backend' do
+describe Asciidoctor::Rfc3::Converter do
   it 'renders a paragraph' do
     expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3).to match <<~'OUTPUT'.chomp
       [[id]]
