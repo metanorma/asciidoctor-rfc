@@ -19,7 +19,11 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 2.1.9")
 
+  spec.add_dependency "asciidoctor"
+
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.6"
+  spec.add_development_dependency "simplecov", "~> 0.15"
+  spec.add_development_dependency "byebug", "~> 9.1"
 end
