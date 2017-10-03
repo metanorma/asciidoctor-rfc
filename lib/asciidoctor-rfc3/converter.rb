@@ -707,20 +707,16 @@ Content
         # not supported
         result << %(<t#{tblsec}>)
         node.rows[tblsec].each do |row|
-          id = set_header_attribute "anchor", row.id
-          result << "<tr#{id}>"
+          # id not supported on row
+          result << "<tr>"
           row.each do |cell|
-            id = set_header_attribute "anchor", row.id
+            id = set_header_attribute "anchor", cell.id
             colspan_attribute = set_header_attribute "colspan", cell.colspan
             rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
             align = set_header_attribute("align", cell.attr("halign"))
             cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
             entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
-            cell_content = if cell.blocks?
-                             cell.content
-                           else
-                             cell.text
-                           end
+            cell_content = cell.content
             result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
           end
           result << "</tr>"

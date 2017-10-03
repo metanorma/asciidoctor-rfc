@@ -564,6 +564,7 @@ Content
 |col | col
 |===
 =end
+pp node
       has_body = false
       result = []
       id = set_header_attribute "anchor", node.id
@@ -590,7 +591,7 @@ Content
             id = set_header_attribute "anchor", cell.id
             align = set_header_attribute("align", cell.attr("halign"))
             if   !node.option? "autowidth" and  i < widths.size
-              width =  set_header_attribute("width", widths[i])
+              width =  set_header_attribute("width", "#{widths[i]}%")
             else
               width = nil
             end
