@@ -769,7 +769,7 @@ code
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id
           if item.blocks?
-            result << "<li#{id}>"
+            result << "<li#{id}>#{item.text}"
             result << item.content 
             result << "</li>"
           else
@@ -793,7 +793,7 @@ code
       def olist node
 =begin
    [[id]]
-   [empty=true,compact,start=n,group=n] (optional)
+   [compact,start=n,group=n] (optional)
    . A
    . B
 =end
@@ -802,12 +802,12 @@ code
         spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
         start = get_header_attribute node, "start"
         group = get_header_attribute node, "group"
-        type = set_header_attribute node, "type", OLIST_TYPES[node.style]
-        result << "<ol#{id}#{empty}#{spacing}#{start}#{group}#{type}>"
+        type = set_header_attribute "type", OLIST_TYPES[node.style]
+        result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id
           if item.blocks?
-            result << "<li#{id}>"
+            result << "<li#{id}>#{item.text}"
             result << item.content
             result << "</li>"
           else
@@ -837,7 +837,7 @@ code
           end
           if dd.blocks?
             id = set_header_attribute "anchor", dd.id
-            result << "<dd#{id}>"
+            result << "<dd>#{dd.text}"
             result << dd.content
             result << "</dd>"
           else

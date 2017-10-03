@@ -657,7 +657,7 @@ code
       node.items.each do |item|
         id = set_header_attribute "anchor", item.id
         if item.blocks?
-          result << "<t#{id}>"
+          result << "<t#{id}>#{item.text}"
           result << item.content 
           result << "</t>"
         else
@@ -685,14 +685,14 @@ code
    . B
 =end
       result = []
-      counter = set_header_attribute node, "counter", node.attr("start")
+      counter = set_header_attribute "counter", node.attr("start")
       # TODO did I understand spec of @counter correctly?
-      type = set_header_attribute node, "type", OLIST_TYPES[node.style]
-      result << "<list#{counter}#{style}>"
+      type = set_header_attribute "type", OLIST_TYPES[node.style]
+      result << "<list#{counter}#{type}>"
       node.items.each do |item|
         id = set_header_attribute "anchor", item.id
         if item.blocks?
-          result << "<t#{id}>"
+          result << "<t#{id}>#{item.text}"
           result << item.content
           result << "</t>"
         else
@@ -726,7 +726,7 @@ code
         end
         hangText = set_header_attribute "hangText", hangtext.join(", ")
         if dd.blocks?
-          result << "<t#{id}#{hangText}>"
+          result << "<t#{id}#{hangText}>#{dd.text}"
           result << dd.content
           result << "</t>"
         else
