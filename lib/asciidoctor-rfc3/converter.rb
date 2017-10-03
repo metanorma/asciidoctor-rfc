@@ -16,6 +16,7 @@ module Asciidoctor
       register_for 'rfc3'
 
       $seen_back_matter = false
+      $seen_abstract = false
       $xreftext = {}
 
       def initialize backend, opts
@@ -515,17 +516,14 @@ Author
    Text
 =end
         result = []
-        id = set_header_attribute "anchor", node.id
-        if node.parent.context == :preamble
-          result << "<abstract#{id}>"
-          result << node.content
-          result << "</abstract>"
-        else
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
+        end
           id = set_header_attribute "anchor", node.id
           keepWithNext = get_header_attribute node, "keepWithNext"
           keepWithPrevious = get_header_attribute node, "keepWithPrevious"
           result << "<t#{id}#{keepWithNext}#{keepWithPrevious}>#{node.content}</t>"
-        end
         result
       end
 
@@ -593,6 +591,10 @@ NOTE: note
         # admonitions within preamble are notes. Elsewhere, they are comments.
         result = []
         if node.parent.context == :preamble
+          if $seen_abstract
+            $seen_abstract = false
+            result << "</abstract>"
+          end
           removeInRFC = get_header_attribute node, "removeInRFC"
           result << "<note#{removeInRFC}>"
           result << "<name>#{node.title}</name>" unless node.title.nil?
@@ -762,6 +764,10 @@ code
    * B
 =end
         result = []
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
+        end
         id = set_header_attribute "anchor", node.id
         empty = get_header_attribute node, "empty"
         spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
@@ -798,6 +804,10 @@ code
    . B
 =end
         result = []
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
+        end
         id = set_header_attribute "anchor", node.id
         spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
         start = get_header_attribute node, "start"
@@ -826,6 +836,10 @@ code
    C:: D
 =end
         result = []
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
+        end
         id = set_header_attribute "anchor", node.id
         hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
         spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
@@ -863,7 +877,11 @@ NOTE: note
    (boilerplate is ignored)
 =end
         result = []
+        $seen_abstract = false
         result << node.content
+        if $seen_abstract
+          result << "</abstract>"
+        end
         result << "</front><middle>"
         result
       end

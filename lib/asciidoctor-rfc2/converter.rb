@@ -16,6 +16,7 @@ module Asciidoctor
       register_for 'rfc2'
 
       $seen_back_matter = false
+      $seen_abstract = false
       $xreftext = {}
 
       def initialize backend, opts
@@ -414,6 +415,7 @@ Author
         result << "</figure>" if node.parent.context != :example
         result
       end
+
       def stem node
         literal node
       end
@@ -425,14 +427,12 @@ Author
    Text
 =end
         result = []
-        if node.parent.context == :preamble
+        if node.parent.context == :preamble and not $seen_abstract
           result << "<abstract>"
-          result << node.content
-          result << "</abstract>"
-        else
-          id = set_header_attribute "anchor", node.id
-          result << "<t#{id}>#{node.content}</t>"
+          $seen_abstract = true
         end
+        id = set_header_attribute "anchor", node.id
+        result << "<t#{id}>#{node.content}</t>"
         result
       end
 
@@ -481,6 +481,10 @@ NOTE: note
         # admonitions within preamble are notes. Elsewhere, they are comments.
         result = []
         if node.parent.context == :preamble
+          if $seen_abstract
+            result << "</abstract>"
+            $seen_abstract = false
+          end
           title = set_header_attribute "title", node.title
           result << "<note#{title}>"
           result << (paragraph1 node)
@@ -555,7 +559,7 @@ Content
         result
       end
 
-    def table node
+      def table node
 =begin
 [[id]]
 .Title
@@ -564,61 +568,61 @@ Content
 |col | col
 |===
 =end
-      has_body = false
-      result = []
-      id = set_header_attribute "anchor", node.id
-      title = set_header_attribute "title", node.title
-      suppresstitle = get_header_attribute node, "suppress-title"
-      align = get_header_attribute node, "align"
-      style = get_header_attribute node, "style"
-      result << %(<texttable#{id}#{title}#{suppresstitle}#{align}#{style}>)
-      # preamble, postamble elements not supported
+        has_body = false
+        result = []
+        id = set_header_attribute "anchor", node.id
+        title = set_header_attribute "title", node.title
+        suppresstitle = get_header_attribute node, "suppress-title"
+        align = get_header_attribute node, "align"
+        style = get_header_attribute node, "style"
+        result << %(<texttable#{id}#{title}#{suppresstitle}#{align}#{style}>)
+        # preamble, postamble elements not supported
 
-      [:head].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
-        has_body = true if tblsec == :body
-        # id = set_header_attribute "anchor", tblsec.id
-        # not supported
-        if node.rows[tblsec].size > 1
-          warn "asciidoctor: WARNING: RFC XML v2 tables only support a single header row"
-        end
-        widths = []
-        node.columns.each do |col|
-          widths << col.attr("colpcwidth")
-        end
-        node.rows[tblsec].each do |row|
-          row.each_with_index do |cell, i|
-            id = set_header_attribute "anchor", cell.id
-            align = set_header_attribute("align", cell.attr("halign"))
-            if   !node.option? "autowidth" and  i < widths.size
-              width =  set_header_attribute("width", "#{widths[i]}%")
-            else
-              width = nil
+        [:head].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+          has_body = true if tblsec == :body
+          # id = set_header_attribute "anchor", tblsec.id
+          # not supported
+          if node.rows[tblsec].size > 1
+            warn "asciidoctor: WARNING: RFC XML v2 tables only support a single header row"
+          end
+          widths = []
+          node.columns.each do |col|
+            widths << col.attr("colpcwidth")
+          end
+          node.rows[tblsec].each do |row|
+            row.each_with_index do |cell, i|
+              id = set_header_attribute "anchor", cell.id
+              align = set_header_attribute("align", cell.attr("halign"))
+              if   !node.option? "autowidth" and  i < widths.size
+                width =  set_header_attribute("width", "#{widths[i]}%")
+              else
+                width = nil
+              end
+              entry_start = %(<ttcol#{id}#{align}#{width}>)
+              cell_content = cell.text
+              result << %(#{entry_start}#{cell_content}</ttcol>)
             end
-            entry_start = %(<ttcol#{id}#{align}#{width}>)
-            cell_content = cell.text
-            result << %(#{entry_start}#{cell_content}</ttcol>)
           end
         end
-      end
 
-      [:body,:foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
-        has_body = true if tblsec == :body
-        # id = set_header_attribute "anchor", tblsec.id
-        # not supported
-        node.rows[tblsec].each do |row|
-          row.each do |cell|
-            cell_content = cell.text
-            result << %(<c>#{cell_content}</c>)
+        [:body,:foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+          has_body = true if tblsec == :body
+          # id = set_header_attribute "anchor", tblsec.id
+          # not supported
+          node.rows[tblsec].each do |row|
+            row.each do |cell|
+              cell_content = cell.text
+              result << %(<c>#{cell_content}</c>)
+            end
           end
         end
+        result << "</texttable>"
+
+        warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
+        result 
       end
-      result << "</texttable>"
 
-      warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
-      result 
-    end
-
-    def listing node
+      def listing node
 =begin
 .name
 [source,type,src=uri,align,alt] (src is mutually exclusive with listing content)
@@ -626,118 +630,118 @@ Content
 code
 ----
 =end
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      id = set_header_attribute "anchor", node.id
-      align = set_header_attribute "align", node.title
-      name = set_header_attribute "name", node.title
-      type = set_header_attribute "type", node.attr("language")
-      src = set_header_attribute "src", node.attr("src")
-      alt = set_header_attribute "alt", node.alt
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        id = set_header_attribute "anchor", node.id
+        align = set_header_attribute "align", node.title
+        name = set_header_attribute "name", node.title
+        type = set_header_attribute "type", node.attr("language")
+        src = set_header_attribute "src", node.attr("src")
+        alt = set_header_attribute "alt", node.alt
 
-      result << "<artwork#{id}#{align}#{name}#{type}#{src}#{alt}>"
-      if src.nil?
-        node.lines.each do |line| 
-          result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+        result << "<artwork#{id}#{align}#{name}#{type}#{src}#{alt}>"
+        if src.nil?
+          node.lines.each do |line| 
+            result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+          end
         end
+        result << "</artwork>"
+        result << "</figure>" if node.parent.context != :example
+        result
       end
-      result << "</artwork>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
 
-    def ulist node
+      def ulist node
 =begin
    * A
    * B
 =end
-      result = []
-      style = set_header_attribute "style", "symbols"
-      result << "<list#{style}>"
-      node.items.each do |item|
-        id = set_header_attribute "anchor", item.id
-        if item.blocks?
-          result << "<t#{id}>#{item.text}"
-          result << item.content 
-          result << "</t>"
-        else
-          result << "<t#{id}>#{item.text}</t>"
+        result = []
+        style = set_header_attribute "style", "symbols"
+        result << "<list#{style}>"
+        node.items.each do |item|
+          id = set_header_attribute "anchor", item.id
+          if item.blocks?
+            result << "<t#{id}>#{item.text}"
+            result << item.content 
+            result << "</t>"
+          else
+            result << "<t#{id}>#{item.text}</t>"
+          end
         end
+        result << "</list>"
+        result
       end
-      result << "</list>"
-      result
-    end
 
-    (OLIST_TYPES = {
-      arabic:     "numbers",
-      # decimal:    "1", # not supported
-      loweralpha: "format %c",
-      # lowergreek: "lower-greek", # not supported
-      lowerroman: "format %i",
-      upperalpha: "format %C",
-      upperroman: "format %I"
-    }).default = "numbers"
+      (OLIST_TYPES = {
+        arabic:     "numbers",
+        # decimal:    "1", # not supported
+        loweralpha: "format %c",
+        # lowergreek: "lower-greek", # not supported
+        lowerroman: "format %i",
+        upperalpha: "format %C",
+        upperroman: "format %I"
+      }).default = "numbers"
 
-    def olist node
+      def olist node
 =begin
    [start=n] (optional)
    . A
    . B
 =end
-      result = []
-      counter = set_header_attribute "counter", node.attr("start")
-      # TODO did I understand spec of @counter correctly?
-      type = set_header_attribute "type", OLIST_TYPES[node.style]
-      result << "<list#{counter}#{type}>"
-      node.items.each do |item|
-        id = set_header_attribute "anchor", item.id
-        if item.blocks?
-          result << "<t#{id}>#{item.text}"
-          result << item.content
-          result << "</t>"
-        else
-          result << "<t#{id}>#{item.text}</li>"
+        result = []
+        counter = set_header_attribute "counter", node.attr("start")
+        # TODO did I understand spec of @counter correctly?
+        type = set_header_attribute "type", OLIST_TYPES[node.style]
+        result << "<list#{counter}#{type}>"
+        node.items.each do |item|
+          id = set_header_attribute "anchor", item.id
+          if item.blocks?
+            result << "<t#{id}>#{item.text}"
+            result << item.content
+            result << "</t>"
+          else
+            result << "<t#{id}>#{item.text}</li>"
+          end
         end
+        result << "</list>"
+        result
       end
-      result << "</list>"
-      result
-    end
 
-    def dlist node
+      def dlist node
 =begin
    [hangIndent=n] (optional)
    A:: B
    C:: D
 =end
-      result = []
-      hangIndent = get_header_attribute  node, "hangIndent"
-      style = set_header_attribute "style", "hanging"
-      result << "<list#{hangIndent}#{style}>"
-      node.items.each do |terms, dd|
-        hangtext =[]
-        id = nil
-        [*terms].each do |dt|
-          # we collapse multiple potential ids into the last seen
-          id = set_header_attribute "anchor", dt.id unless dt.id.nil?
-          hangtext << dt.text
+        result = []
+        hangIndent = get_header_attribute  node, "hangIndent"
+        style = set_header_attribute "style", "hanging"
+        result << "<list#{hangIndent}#{style}>"
+        node.items.each do |terms, dd|
+          hangtext =[]
+          id = nil
+          [*terms].each do |dt|
+            # we collapse multiple potential ids into the last seen
+            id = set_header_attribute "anchor", dt.id unless dt.id.nil?
+            hangtext << dt.text
+          end
+          unless dd.id.nil?
+            id = set_header_attribute "anchor", dd.id
+          end
+          hangText = set_header_attribute "hangText", hangtext.join(", ")
+          if dd.blocks?
+            result << "<t#{id}#{hangText}>#{dd.text}"
+            result << dd.content
+            result << "</t>"
+          else
+            result << "<t#{id}#{hangText}>#{dd.text}</t>"
+          end
         end
-        unless dd.id.nil?
-          id = set_header_attribute "anchor", dd.id
-        end
-        hangText = set_header_attribute "hangText", hangtext.join(", ")
-        if dd.blocks?
-          result << "<t#{id}#{hangText}>#{dd.text}"
-          result << dd.content
-          result << "</t>"
-        else
-          result << "<t#{id}#{hangText}>#{dd.text}</t>"
-        end
+        result << "</list>"
+        result
       end
-      result << "</list>"
-      result
-    end
 
-    def preamble node
+      def preamble node
 =begin
    = Title
    Author
@@ -749,14 +753,17 @@ NOTE: note
 
    (boilerplate is ignored)
 =end
-      result = []
-      result << node.content
-      result << "</front><middle>"
-      result
-    end
-    end
+        result = []
+        $seen_abstract = false
+        result << node.content
+        if $seen_abstract
+          result << "</abstract>"
+        end
+        result << "</front><middle>"
+        result
+      end
 
-    def example node
+      def example node
 =begin
 [[id]]
 .Title
@@ -765,62 +772,63 @@ NOTE: note
 Example
 ====
 =end
-      result = []
-      id = set_header_attribute "anchor", node.id
-      alt = set_header_attribute "alt", node.alt
-      title = set_header_attribute "title", node.title
-      suppresstitle = get_header_attribute node, "suppress-title"
-      align = get_header_attribute node, "align"
-      result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
-      seen_artwork = false
-      # TODO iref 
-      result.blocks.each do |b|
-        if b == :listing or b == :image or b == :literal
-          result << node.content
-          seen_artwork = true
-        else
-          result << seen_artwork ? "<preamble>" : "<postamble>"
-          result << node.content
-          result << seen_artwork ? "</preamble>" : "</postamble>"
+        result = []
+        id = set_header_attribute "anchor", node.id
+        alt = set_header_attribute "alt", node.alt
+        title = set_header_attribute "title", node.title
+        suppresstitle = get_header_attribute node, "suppress-title"
+        align = get_header_attribute node, "align"
+        result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
+        seen_artwork = false
+        # TODO iref 
+        result.blocks.each do |b|
+          if b == :listing or b == :image or b == :literal
+            result << node.content
+            seen_artwork = true
+          else
+            result << seen_artwork ? "<preamble>" : "<postamble>"
+            result << node.content
+            result << seen_artwork ? "</preamble>" : "</postamble>"
+          end
         end
+        result << "</figure>"
+        result
       end
-      result << "</figure>"
-      result
-    end
 
-    def inline_image node
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      align = get_header_attribute node, "align"
-      alt = get_header_attribute node, "alt"
-      link =  (node.image_uri node.target)
-      src = set_header_attribute node, "src", link
-      result << "<artwork#{align}#{alt}#{src}/>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
+      def inline_image node
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        align = get_header_attribute node, "align"
+        alt = get_header_attribute node, "alt"
+        link =  (node.image_uri node.target)
+        src = set_header_attribute node, "src", link
+        result << "<artwork#{align}#{alt}#{src}/>"
+        result << "</figure>" if node.parent.context != :example
+        result
+      end
 
-    def image node
+      def image node
 =begin
 [[id]]
 .Name
 [link=xxx,align=left|center|right,alt=alt_text,type]
 image::filename[]
 =end
-      # ignoring width, height attributes
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      id = set_header_attribute "anchor", node.id
-      align = get_header_attribute node, "align"
-      alt = set_header_attribute "alt", node.alt
-      link =  (node.image_uri node.target)
-      src = set_header_attribute node, "src", link
-      type = get_header_attribute node, "type"
-      name = get_header_attribute node, "name"
-      result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
+        # ignoring width, height attributes
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        id = set_header_attribute "anchor", node.id
+        align = get_header_attribute node, "align"
+        alt = set_header_attribute "alt", node.alt
+        link =  (node.image_uri node.target)
+        src = set_header_attribute node, "src", link
+        type = get_header_attribute node, "type"
+        name = get_header_attribute node, "name"
+        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
+        result << "</figure>" if node.parent.context != :example
+        result
+      end
 
+    end
   end
 end
