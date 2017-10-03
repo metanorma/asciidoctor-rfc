@@ -555,7 +555,7 @@ Text
         id = set_header_attribute "anchor", node.id
         quotedFrom = set_header_attribute "quotedFrom", node.attr("attribution")
         citationInfo = node.attr "citetitle"
-        if !citationInfo.nil && citationInfo =~  URI::DEFAULT_PARSER.make_regexp
+        if !citationInfo.nil? && citationInfo =~  URI::DEFAULT_PARSER.make_regexp
           cite = set_header_attribute "cite", citationInfo
         end
         result << "<blockquote#{id}#{quotedFrom}#{cite}>"
