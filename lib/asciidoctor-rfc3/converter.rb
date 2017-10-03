@@ -44,7 +44,6 @@ module Asciidoctor
       alias :audio :skip
       alias :colist :skip
       alias :floating_title :skip
-      alias :open :content
       alias :page_break :skip
       alias :thematic_break :skip
       alias :video :skip
@@ -129,10 +128,11 @@ CONTENT
         result << "</rfc>"
 
         # <middle> needs to move after preamble
-        if result.any? { |e| e == "</front><middle>" } and result.any? { |e| e == "</front><middle1>" }
-          result = result.reject { |e| e == "</front><middle1>" }
+        result = result.flatten
+        if result.any? { |e| e =~ /<\/front><middle>/ } and result.any? { |e| e =~ /<\/front><middle1>/ }
+          result = result.reject { |e| e =~ /<\/front><middle1>/ }
         else
-          result = result.map { |e| e == "</front><middle1>" ? "</front><middle>" : e }
+          result = result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
         end
 
         result * "\n"
@@ -146,6 +146,7 @@ Author
 =end
         result = []
         links = node.attr "link"
+        return result if links.nil?
         links.split(/,/).each do |l|
           m = /^(\S+)\s+(\S+)$/.match(l)
           if m.nil?  
@@ -479,6 +480,34 @@ Author
         end
       end
 
+      def literal node
+=begin
+[[id]]
+[align=left|center|right,alt=alt_text] (optional)
+....
+  literal
+....
+=end
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        id = set_header_attribute "anchor", node.id
+        align = get_header_attribute node, "align"
+        alt = set_header_attribute "alt", node.alt
+        type = set_header_attribute "type", "ascii-art"
+        result << "<artwork#{id}#{align}#{alt}#{type}>"
+        node.lines.each do |line|
+          result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+        end
+        result << "</artwork>"
+        result << "</figure>" if node.parent.context != :example
+        result
+      end
+
+      def stem node
+        literal node
+      end
+
+
       def paragraph node
 =begin
    [[id]]
@@ -498,6 +527,10 @@ Author
           result << "<t#{id}#{keepWithNext}#{keepWithPrevious}>#{node.content}</t>"
         end
         result
+      end
+
+      def open node
+        paragraph node
       end
 
       def paragraph1 node
@@ -654,6 +687,52 @@ Content
         result
       end
 
+    def table node
+=begin
+[[id]]
+.Title
+|===
+|col | col
+|===
+=end
+      has_body = false
+      result = []
+      id = set_header_attribute "anchor", node.id
+      result << %(<table#{id}">)
+      result << %(<name>#{node.title}</name>) if node.title?
+      # TODO iref belongs here
+      [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+        has_body = true if tblsec == :body
+        # id = set_header_attribute "anchor", tblsec.id
+        # not supported
+        result << %(<t#{tblsec}>)
+        node.rows[tblsec].each do |row|
+          id = set_header_attribute "anchor", row.id
+          result << "<tr#{id}>"
+          row.each do |cell|
+            id = set_header_attribute "anchor", row.id
+            colspan_attribute = set_header_attribute "colspan", cell.colspan
+            rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
+            align = set_header_attribute("align", cell.attr("halign"))
+            cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
+            entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
+            cell_content = if cell.blocks?
+                             cell.content
+                           else
+                             cell.text
+                           end
+            result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
+          end
+          result << "</tr>"
+        end
+        result << %(</t#{tblsec}>)
+      end
+      result << "</table>"
+
+      warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
+      result 
+    end
+
       def listing node
 =begin
 .name
@@ -670,7 +749,9 @@ code
         src = set_header_attribute "src", node.attr("src")
         result << "<sourcecode#{id}#{name}#{type}#{src}>"
         if src.nil?
-          result << node.text.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+          node.lines.each do |line| 
+            result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+          end
         end
         result << "</sourcecode>"
         result << "</figure>" if node.parent.context != :example
@@ -758,13 +839,13 @@ code
             id = set_header_attribute "anchor", dt.id
             result << "<dt#{id}>#{dt.text}</dt>"
           end
-          if item.blocks?
-            id = set_header_attribute "anchor", item.id
+          if dd.blocks?
+            id = set_header_attribute "anchor", dd.id
             result << "<dd#{id}>"
-            result << item.content
+            result << dd.content
             result << "</dd>"
           else
-            result << "<dd>#{item.text}</dd>"
+            result << "<dd>#{dd.text}</dd>"
           end
         end
         result << "</dl>"
@@ -792,51 +873,6 @@ NOTE: note
       end
     end
 
-    def table node
-=begin
-[[id]]
-.Title
-|===
-|col | col
-|===
-=end
-      has_body = false
-      result = []
-      id = set_header_attribute "anchor", node.id
-      result << %(<table#{id}">)
-      result << %(<name>#{node.title}</name>) if node.title?
-      # TODO iref belongs here
-      [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
-        has_body = true if tblsec == :body
-        # id = set_header_attribute "anchor", tblsec.id
-        # not supported
-        result << %(<t#{tblsec}>)
-        node.rows[tblsec].each do |row|
-          id = set_header_attribute "anchor", row.id
-          result << "<tr#{id}>"
-          row.each do |cell|
-            id = set_header_attribute "anchor", row.id
-            colspan_attribute = set_header_attribute "colspan", cell.colspan
-            rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
-            align = set_header_attribute("align", cell.attr("halign"))
-            cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
-            entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
-            cell_content = if cell.blocks?
-                             cell.content
-                           else
-                             cell.text
-                           end
-            result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
-          end
-          result << "</tr>"
-        end
-        result << %(</t#{tblsec}>)
-      end
-      result << "</table>"
-
-      warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
-      result 
-    end
 
     def sidebar node
 =begin
@@ -876,28 +912,6 @@ Example
       result
     end
 
-    def literal node
-=begin
-[[id]]
-[align=left|center|right,alt=alt_text] (optional)
-....
-literal
-....
-=end
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      id = set_header_attribute "anchor", node.id
-      align = get_header_attribute node, "align"
-      alt = set_header_attribute "alt", node.alt
-      type = set_header_attribute "type", "ascii-art"
-      result << "<artwork#{id}#{align}#{alt}#{type}>"
-      result << node.text.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
-      result << "</artwork>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
-
-
     def inline_image node
       result = []
       result << "<figure>" if node.parent.context != :example
@@ -933,9 +947,6 @@ image::filename[]
       result
     end
 
-    def stem node
-      literal node
-    end
 
     def verse 
       quote node
