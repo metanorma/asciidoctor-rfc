@@ -9,7 +9,7 @@ describe Asciidoctor::Rfc3::Converter do
       :workgroup: first_workgroup, second_workgroup
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submisionType="IETF">
+      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>

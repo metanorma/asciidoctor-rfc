@@ -9,7 +9,7 @@ describe Asciidoctor::Rfc3::Converter do
       :link: http://foo.bar,http://baz.qux baz_qux_rel
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submisionType="IETF">
+      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
 
       <link href="http://foo.bar"/>
       <link href="http://baz.qux" rel="baz_qux_rel"/>
