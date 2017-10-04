@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Asciidoctor::Rfc3::Converter do
   it 'renders the minimal document' do
-    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to match <<~'OUTPUT'.chomp
+    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to be_equivalent_to <<~'OUTPUT'
       = Minimal valid document
       John Doe <john.doe@email.com>
       :docName: rfc-000000
