@@ -59,8 +59,9 @@ module Asciidoctor
       end
 
       def get_header_attribute node, attr, default = nil
+        byebug
         if (node.attr? dash(attr)) 
-          %( #{attr}="#{node.attr attr}") 
+          %( #{attr}="#{node.attr dash(attr)}") 
         elsif default.nil? 
           nil 
         else 
@@ -120,6 +121,7 @@ CONTENT
         symRefs = get_header_attribute node, "symRefs"
         tocInclude = get_header_attribute node, "tocInclude"
         submissionType = get_header_attribute node, "submissionType", "IETF"
+        byebug
         t = Time.now.getutc
         preptime = set_header_attribute "preptime", 
           sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)

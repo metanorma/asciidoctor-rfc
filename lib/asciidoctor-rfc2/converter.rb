@@ -61,7 +61,7 @@ module Asciidoctor
 
       def get_header_attribute node, attr, default = nil
         if (node.attr? dash(attr)) 
-          %( #{attr}="#{node.attr attr}") 
+          %( #{attr}="#{node.attr dash(attr)}") 
         elsif default.nil? 
           nil 
         else 
