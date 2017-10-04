@@ -54,8 +54,13 @@ module Asciidoctor
       alias :verse :content
       alias :quote :content
 
+      # TODO: this ought to be private
+      def dash(camel_cased_word)
+        camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
+      end
+
       def get_header_attribute node, attr, default = nil
-        if (node.attr? attr) 
+        if (node.attr? dash(attr)) 
           %( #{attr}="#{node.attr attr}") 
         elsif default.nil? 
           nil 
@@ -122,7 +127,7 @@ CONTENT
         obsoletes = get_header_attribute node, "obsoletes"
         updates = get_header_attribute node, "updates"
         seriesNo = get_header_attribute node, "seriesNo"
-        submissionType = get_header_attribute node, "submisionType", "IETF"
+        submissionType = get_header_attribute node, "submissionType", "IETF"
         xmllang = get_header_attribute node, "xml:lang"
 
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{category}

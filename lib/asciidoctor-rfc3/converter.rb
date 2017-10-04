@@ -53,8 +53,13 @@ module Asciidoctor
       alias :inline_menu :skip
       alias :inline_callout :content
 
+      # TODO: this ought to be private
+      def dash(camel_cased_word)
+        camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
+      end
+
       def get_header_attribute node, attr, default = nil
-        if (node.attr? attr) 
+        if (node.attr? dash(attr)) 
           %( #{attr}="#{node.attr attr}") 
         elsif default.nil? 
           nil 
@@ -114,7 +119,7 @@ CONTENT
         sortRefs = get_header_attribute node, "sortRefs"
         symRefs = get_header_attribute node, "symRefs"
         tocInclude = get_header_attribute node, "tocInclude"
-        submissionType = get_header_attribute node, "submisionType", "IETF"
+        submissionType = get_header_attribute node, "submissionType", "IETF"
         t = Time.now.getutc
         preptime = set_header_attribute "preptime", 
           sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)
