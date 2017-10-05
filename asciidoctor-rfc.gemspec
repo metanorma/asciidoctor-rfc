@@ -1,15 +1,20 @@
 # coding: utf-8
+
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "asciidoctor-rfc3/version"
 require "asciidoctor-rfc2/version"
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = "asciidoctor-rfc"
   spec.version       = Asciidoctor::Rfc3::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
-  spec.summary       = %q{todo: AsciiDoctorRFC description.}
+
+  spec.summary       = "todo: AsciiDoctorRFC summary."
+  spec.description   = <<~DESCRIPTION
+  DESCRIPTION
+
   spec.homepage      = "https://github.com/riboseinc/asciidoctor-rfc"
   spec.license       = "MIT"
 
@@ -17,9 +22,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.files         = `git ls-files`.split("\n")
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.1.9")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.add_dependency "asciidoctor"
+  spec.add_dependency "asciidoctor", "~> 1.5.6"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 12.0"
@@ -31,5 +36,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "timecop", "~> 0.9"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
   spec.add_development_dependency "rubocop", "~> 0.50"
-
 end
