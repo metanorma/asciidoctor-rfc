@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/asciidoctor-rfc'
-require 'asciidoctor/cli'
+require_relative "../lib/asciidoctor-rfc"
+require "asciidoctor/cli"
 
-options = Asciidoctor::Cli::Options.new backend: 'rfc3', header_footer: true
+options = Asciidoctor::Cli::Options.new backend: "rfc3", header_footer: true
 # FIXME This is a really bizarre API. Please make me simpler.
 if (options.parse! ARGV) == 0
   exit 0

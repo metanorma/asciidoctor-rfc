@@ -1,5 +1,5 @@
-directories %w(. lib spec) \
- .select{|d| Dir.exists?(d) ? d : UI.warning("Directory #{d} does not exist")}
+directories %w(. lib spec). \
+  select { |d| Dir.exists?(d) ? d : UI.warning("Directory #{d} does not exist") }
 
 guard :rspec, cmd: "bundle exec rspec" do
   require "guard/rspec/dsl"

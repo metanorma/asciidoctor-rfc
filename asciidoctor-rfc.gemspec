@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "asciidoctor-rfc3/version"
 require "asciidoctor-rfc2/version"
 
-Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
+Gem::Specification.new do |spec|
   spec.name          = "asciidoctor-rfc"
   spec.version       = Asciidoctor::Rfc3::VERSION
   spec.authors       = ["Ribose Inc."]

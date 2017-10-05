@@ -3,7 +3,7 @@ require "pp"
 
 module Asciidoctor
   module Rfc2
-    # A {Converter} implementation that generates RFC XML 2 output, a format used to 
+    # A {Converter} implementation that generates RFC XML 2 output, a format used to
     # format RFC proposals (https://tools.ietf.org/html/rfc7749)
     #
     # Features drawn from https://github.com/miekg/mmark/wiki/Syntax and
@@ -13,28 +13,28 @@ module Asciidoctor
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
 
-      register_for 'rfc2'
+      register_for "rfc2"
 
       $seen_back_matter = false
       $seen_abstract = false
       $xreftext = {}
 
-      def initialize backend, opts
+      def initialize(backend, opts)
         super
-        #basebackend 'html'
-        outfilesuffix '.xml'
+        # basebackend 'html'
+        outfilesuffix ".xml"
       end
 
-      def convert node, transform = nil, opts = {}
+      def convert(node, transform = nil, opts = {})
         transform ||= node.node_name
         opts.empty? ? (send transform, node) : (send transform, node, opts)
       end
 
-      def content node
+      def content(node)
         node.content
       end
 
-      def skip node, name = nil
+      def skip(node, name = nil)
         warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
         nil
       end
@@ -56,72 +56,70 @@ module Asciidoctor
 
       # TODO: this ought to be private
       def dash(camel_cased_word)
-        camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
+        camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
       end
 
-      def get_header_attribute node, attr, default = nil
-        if (node.attr? dash(attr)) 
-          %( #{attr}="#{node.attr dash(attr)}") 
-        elsif default.nil? 
-          nil 
-        else 
+      def get_header_attribute(node, attr, default = nil)
+        if node.attr? dash(attr)
+          %( #{attr}="#{node.attr dash(attr)}")
+        elsif default.nil?
+          nil
+        else
           %( #{attr}="#{default}")
         end
       end
 
-      def set_header_attribute attr, val
-        if val.nil? 
-          nil 
+      def set_header_attribute(attr, val)
+        if val.nil?
+          nil
         else
           %( #{attr}="#{val}")
         end
       end
 
-      def document_ns_attributes doc
-        #' xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its"'
+      def document_ns_attributes(_doc)
+        # ' xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its"'
         nil
       end
 
-      def document node
-=begin
-=Title
-Author
-:category
-:consensus
-:docName
-:number
-
-:ipr
-:obsoletes
-:updates
-:submissionType
-:indexInclude
-:iprExtract
-:sortRefs
-:symRefs
-:tocInclude
-
-ABSTRACT
-
-NOTEs
-
-==first title
-CONTENT
-
-[bibliography] # start of back matter
-== Bibliography
-
-[appendix] # start of back matter if not already started
-== Appendix
-
-=end
+      def document(node)
+        # =Title
+        # Author
+        # :category
+        # :consensus
+        # :docName
+        # :number
+        #
+        # :ipr
+        # :obsoletes
+        # :updates
+        # :submissionType
+        # :indexInclude
+        # :iprExtract
+        # :sortRefs
+        # :symRefs
+        # :tocInclude
+        #
+        # ABSTRACT
+        #
+        # NOTEs
+        #
+        # ==first title
+        # CONTENT
+        #
+        # [bibliography] # start of back matter
+        # == Bibliography
+        #
+        # [appendix] # start of back matter if not already started
+        # == Appendix
+        #
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         category = get_header_attribute node, "category"
         consensus = get_header_attribute node, "consensus"
         docName = get_header_attribute node, "docName"
         number = get_header_attribute node, "number"
-        warn "asciidoctor: WARNING: both docName and number attributes present" unless number.nil? or docName.nil?
+        warn "asciidoctor: WARNING: both docName and number attributes present" unless number.nil? || docName.nil?
         ipr = get_header_attribute node, "ipr"
         iprExtract = get_header_attribute node, "indexInclude"
         obsoletes = get_header_attribute node, "obsoletes"
@@ -140,7 +138,7 @@ CONTENT
 
         # <middle> needs to move after preamble
         result = result.flatten
-        if result.any? { |e| e =~ /<\/front><middle>/ } and result.any? { |e| e =~ /<\/front><middle1>/ }
+        if result.any? { |e| e =~ /<\/front><middle>/ } && result.any? { |e| e =~ /<\/front><middle1>/ }
           result = result.reject { |e| e =~ /<\/front><middle1>/ }
         else
           result = result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
@@ -149,12 +147,10 @@ CONTENT
         result * "\n"
       end
 
-      def front node
-=begin
-= Title
-Author
-:METADATA
-=end
+      def front(node)
+        # = Title
+        # Author
+        # :METADATA
         result = []
         result << "<front>"
         abbrev = get_header_attribute node, "abbrev"
@@ -166,23 +162,21 @@ Author
         result << (keyword node)
       end
 
-      def author node
-=begin
-= Title
-Author;Author_2;Author_3
-:fullname
-:lastname
-:organization
-:email
-:fullname_2
-:lastname_2
-:organization_2
-:email_2
-:fullname_3
-:lastname_3
-:organization_3
-:email_3
-=end
+      def author(node)
+        # = Title
+        # Author;Author_2;Author_3
+        # :fullname
+        # :lastname
+        # :organization
+        # :email
+        # :fullname_2
+        # :lastname_2
+        # :organization_2
+        # :email_2
+        # :fullname_3
+        # :lastname_3
+        # :organization_3
+        # :email_3
         # recurse: author, author_2, author_3...
         result = []
         result << author1(node, "")
@@ -199,25 +193,23 @@ Author;Author_2;Author_3
         result.flatten
       end
 
-      def author1 node, suffix
-=begin
-= Title
-Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
-:fullname
-:lastname
-:organization
-:organization_abbrev
-:email
-:role
-:fax
-:uri
-:phone
-:street (lines broken up by "\ ")
-:city
-:region
-:country
-:code
-=end
+      def author1(node, suffix)
+        # = Title
+        # Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
+        # :fullname
+        # :lastname
+        # :organization
+        # :organization_abbrev
+        # :email
+        # :role
+        # :fax
+        # :uri
+        # :phone
+        # :street (lines broken up by "\ ")
+        # :city
+        # :region
+        # :country
+        # :code
         result = []
         authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
         surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
@@ -239,12 +231,12 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
         abbrev = set_header_attribute "abbrev", organization_abbrev
         result << "<organization#{abbrev}>#{organization}</organization>" unless organization.nil?
 
-        if not email.nil? or not facsimile.nil? or not uri.nil? or not phone.nil? or 
-          not street.nil?
+        if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
+            (not street.nil?)
           result << "<address>"
           if not street.nil?
             result << "<postal>"
-            street.split("\\ ").each { |p| result << "<street>#{p}</street>" } unless street.nil?
+            street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
             result << "<city>#{city}</city>" unless city.nil?
             result << "<region>#{region}</region>" unless region.nil?
             result << "<code>#{code}</code>" unless code.nil?
@@ -253,20 +245,18 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
           end
           result << "<phone>#{phone}</phone>" unless phone.nil?
           result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
-          result << "<email>#{email}</email>"  unless email.nil?
-          result << "<uri>#{uri}</uri>"  unless uri.nil?
+          result << "<email>#{email}</email>" unless email.nil?
+          result << "<uri>#{uri}</uri>" unless uri.nil?
           result << "</address>"
         end
         result << "</author>"
         result
       end
 
-      def date node
-=begin
-= Title
-Author
-:revdate or :date
-=end
+      def date(node)
+        # = Title
+        # Author
+        # :revdate or :date
         result = []
         revdate = node.attr("revdate")
         revdate = node.attr("date") if revdate.nil?
@@ -285,54 +275,42 @@ Author
         result
       end
 
-      def area node
-=begin
-= Title
-Author
-:area x, y
-=end
+      def area(node)
+        # = Title
+        # Author
+        # :area x, y
         result = []
         area = node.attr("area")
-        unless area.nil?
-          area.split(/, ?/).each { |a| result << "<area>#{a}</area>" }
-        end
+        area&.split(/, ?/)&.each { |a| result << "<area>#{a}</area>" }
         result
       end
 
-      def workgroup node
-=begin
-= Title
-Author
-:workgroup x, y
-=end
+      def workgroup(node)
+        # = Title
+        # Author
+        # :workgroup x, y
         result = []
         workgroup = node.attr("workgroup")
-        unless workgroup.nil?
-          workgroup.split(/, ?/).each { |a| result << "<workgroup>#{a}</workgroup>" }
-        end
+        workgroup&.split(/, ?/)&.each { |a| result << "<workgroup>#{a}</workgroup>" }
         result
       end
 
-      def keyword node
-=begin
-= Title
-Author
-:keyword x, y
-=end
+      def keyword(node)
+        # = Title
+        # Author
+        # :keyword x, y
         result = []
         keyword = node.attr("keyword")
-        unless keyword.nil?
-          keyword.split(/, ?/).each { |a| result << "<keyword>#{a}</keyword>" }
-        end
+        keyword&.split(/, ?/)&.each { |a| result << "<keyword>#{a}</keyword>" }
         result
       end
 
-      def inline_anchor node
+      def inline_anchor(node)
         case node.type
         when :xref
           # format attribute not supported
-          unless (text = node.text) || (text = node.attributes['path'])
-            refid = node.attributes['refid']
+          unless (text = node.text) || (text = node.attributes["path"])
+            refid = node.attributes["refid"]
             text = %([#{refid}])
           end
           %(<xref target="#{node.target}">#{text}</xref>)
@@ -354,26 +332,25 @@ Author
         end
       end
 
-
-      def inline_indexterm node
+      def inline_indexterm(node)
         # supports only primary and secondary terms
         # primary attribute (highlighted major entry) not supported
-        if node.type == :visible 
+        if node.type == :visible
           item = set_header_attribute "item", node.text
           "#{node.text}<iref#{item}/>"
         else
           item = set_header_attribute "item", terms[0]
-          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil )
+          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
           terms = node.attr "terms"
           "#{node.text}<iref#{item}#{subitem}/>"
         end
       end
 
-      def inline_break node
+      def inline_break(node)
         %(#{node.text}<vspace/>)
       end
 
-      def inline_quoted node
+      def inline_quoted(node)
         case node.type
         when :emphasis
           %(<spanx style="emph">#{node.text}</spanx>)
@@ -394,15 +371,13 @@ Author
         end
       end
 
-      def literal node
-=begin
-[[id]]
-.Name
-[align=left|center|right,alt=alt_text,type] (optional)
-....
-  literal
-....
-=end
+      def literal(node)
+        # [[id]]
+        # .Name
+        # [align=left|center|right,alt=alt_text,type] (optional)
+        # ....
+        #   literal
+        # ....
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -413,7 +388,7 @@ Author
 
         result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
         node.lines.each do |line|
-          result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
         end
         result << "</artwork>"
 
@@ -421,18 +396,15 @@ Author
         result
       end
 
-      def stem node
+      def stem(node)
         literal node
       end
 
-
-      def paragraph node
-=begin
-   [[id]]
-   Text
-=end
+      def paragraph(node)
+        #    [[id]]
+        #    Text
         result = []
-        if node.parent.context == :preamble and not $seen_abstract
+        if (node.parent.context == :preamble) && (not $seen_abstract)
           result << "<abstract>"
           $seen_abstract = true
         end
@@ -441,11 +413,11 @@ Author
         result
       end
 
-      def open node
+      def open(node)
         paragraph node
       end
 
-      def paragraph1 node
+      def paragraph1(node)
         result = []
         result1 = node.content
         if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
@@ -459,30 +431,28 @@ Author
         result
       end
 
-      def admonition node
-=begin
-   = Title
-   Author
-   :HEADER
-
-   ABSTRACT
-
-NOTE: note
-
-   [NOTE]
-   .Title (in preamble)
-   ====
-     Content
-   ====
-
-     [NOTE] (in preamble)
-     [NOTE,source=name] (in body)
-   .Title
-   ====
-     Content
-   ====
-
-=end
+      def admonition(node)
+        #    = Title
+        #    Author
+        #    :HEADER
+        #
+        #    ABSTRACT
+        #
+        # NOTE: note
+        #
+        #    [NOTE]
+        #    .Title (in preamble)
+        #    ====
+        #      Content
+        #    ====
+        #
+        #      [NOTE] (in preamble)
+        #      [NOTE,source=name] (in body)
+        #    .Title
+        #    ====
+        #      Content
+        #    ====
+        #
         # admonitions within preamble are notes. Elsewhere, they are comments.
         result = []
         if node.parent.context == :preamble
@@ -505,38 +475,34 @@ NOTE: note
       end
 
       # ulist repurposed as reference list
-      def reflist node
-=begin
-++++
-<xml>
-++++
-=end
+      def reflist(node)
+        # ++++
+        # <xml>
+        # ++++
         # TODO push through references as undigested XML
         result = []
         node.lines.each do |item|
           # we expect the biblio anchor to be right at the start of the reference
           target = get_header_attribute node, "target"
           # undo XML substitution
-          ref = item.gsub(/\&lt;/,"<").gsub(/\&gt;/,">").gsub(/\&amp;/,"&")
-          #result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
+          ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">").gsub(/\&amp;/, "&")
+          # result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
           result << ref
         end
         result
       end
 
-      def section node
-=begin
-[[id]]
-== title
-Content
-
-[[id]]
-[bibliography]
-== Normative|Informative References
-* [[[ref1]]] Ref [must provide references as list]
-* [[[ref2]]] Ref
-
-=end
+      def section(node)
+        # [[id]]
+        # == title
+        # Content
+        #
+        # [[id]]
+        # [bibliography]
+        # == Normative|Informative References
+        # * [[[ref1]]] Ref [must provide references as list]
+        # * [[[ref2]]] Ref
+        #
         result = []
         if node.attr("style") == "bibliography"
           $xreftext = {}
@@ -564,15 +530,13 @@ Content
         result
       end
 
-      def table node
-=begin
-[[id]]
-.Title
-[suppress-title,align,style]
-|===
-|col | col
-|===
-=end
+      def table(node)
+        # [[id]]
+        # .Title
+        # [suppress-title,align,style]
+        # |===
+        # |col | col
+        # |===
         has_body = false
         result = []
         id = set_header_attribute "anchor", node.id
@@ -583,7 +547,7 @@ Content
         result << %(<texttable#{id}#{title}#{suppresstitle}#{align}#{style}>)
         # preamble, postamble elements not supported
 
-        [:head].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+        [:head].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
           has_body = true if tblsec == :body
           # id = set_header_attribute "anchor", tblsec.id
           # not supported
@@ -598,11 +562,9 @@ Content
             row.each_with_index do |cell, i|
               id = set_header_attribute "anchor", cell.id
               align = set_header_attribute("align", cell.attr("halign"))
-              if   !node.option? "autowidth" and  i < widths.size
-                width =  set_header_attribute("width", "#{widths[i]}%")
-              else
-                width = nil
-              end
+              width = if !node.option?("autowidth") && (i < widths.size)
+                        set_header_attribute("width", "#{widths[i]}%")
+                      end
               entry_start = %(<ttcol#{id}#{align}#{width}>)
               cell_content = cell.text
               result << %(#{entry_start}#{cell_content}</ttcol>)
@@ -610,7 +572,7 @@ Content
           end
         end
 
-        [:body,:foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+        [:body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
           has_body = true if tblsec == :body
           # id = set_header_attribute "anchor", tblsec.id
           # not supported
@@ -624,17 +586,15 @@ Content
         result << "</texttable>"
 
         warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
-        result 
+        result
       end
 
-      def listing node
-=begin
-.name
-[source,type,src=uri,align,alt] (src is mutually exclusive with listing content)
-----
-code
-----
-=end
+      def listing(node)
+        # .name
+        # [source,type,src=uri,align,alt] (src is mutually exclusive with listing content)
+        # ----
+        # code
+        # ----
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -646,8 +606,8 @@ code
 
         result << "<artwork#{id}#{align}#{name}#{type}#{src}#{alt}>"
         if src.nil?
-          node.lines.each do |line| 
-            result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+          node.lines.each do |line|
+            result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
           end
         end
         result << "</artwork>"
@@ -655,11 +615,9 @@ code
         result
       end
 
-      def ulist node
-=begin
-   * A
-   * B
-=end
+      def ulist(node)
+        #    * A
+        #    * B
         result = []
         style = set_header_attribute "style", "symbols"
         result << "<list#{style}>"
@@ -667,7 +625,7 @@ code
           id = set_header_attribute "anchor", item.id
           if item.blocks?
             result << "<t#{id}>#{item.text}"
-            result << item.content 
+            result << item.content
             result << "</t>"
           else
             result << "<t#{id}>#{item.text}</t>"
@@ -684,15 +642,13 @@ code
         # lowergreek: "lower-greek", # not supported
         lowerroman: "format %i",
         upperalpha: "format %C",
-        upperroman: "format %I"
-      }).default = "numbers"
+        upperroman: "format %I",
+      }.freeze).default = "numbers"
 
-      def olist node
-=begin
-   [start=n] (optional)
-   . A
-   . B
-=end
+      def olist(node)
+        #    [start=n] (optional)
+        #    . A
+        #    . B
         result = []
         counter = set_header_attribute "counter", node.attr("start")
         # TODO did I understand spec of @counter correctly?
@@ -712,18 +668,16 @@ code
         result
       end
 
-      def dlist node
-=begin
-   [hangIndent=n] (optional)
-   A:: B
-   C:: D
-=end
+      def dlist(node)
+        #    [hangIndent=n] (optional)
+        #    A:: B
+        #    C:: D
         result = []
-        hangIndent = get_header_attribute  node, "hangIndent"
+        hangIndent = get_header_attribute node, "hangIndent"
         style = set_header_attribute "style", "hanging"
         result << "<list#{hangIndent}#{style}>"
         node.items.each do |terms, dd|
-          hangtext =[]
+          hangtext = []
           id = nil
           [*terms].each do |dt|
             # we collapse multiple potential ids into the last seen
@@ -746,18 +700,16 @@ code
         result
       end
 
-      def preamble node
-=begin
-   = Title
-   Author
-   :HEADER
-
-   ABSTRACT
-
-NOTE: note
-
-   (boilerplate is ignored)
-=end
+      def preamble(node)
+        #    = Title
+        #    Author
+        #    :HEADER
+        #
+        #    ABSTRACT
+        #
+        # NOTE: note
+        #
+        #    (boilerplate is ignored)
         result = []
         $seen_abstract = false
         result << node.content
@@ -768,15 +720,13 @@ NOTE: note
         result
       end
 
-      def example node
-=begin
-[[id]]
-.Title
-[align,alt,suppress-title]
-====
-Example
-====
-=end
+      def example(node)
+        # [[id]]
+        # .Title
+        # [align,alt,suppress-title]
+        # ====
+        # Example
+        # ====
         result = []
         id = set_header_attribute "anchor", node.id
         alt = set_header_attribute "alt", node.alt
@@ -785,9 +735,9 @@ Example
         align = get_header_attribute node, "align"
         result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
         seen_artwork = false
-        # TODO iref 
+        # TODO iref
         result.blocks.each do |b|
-          if b == :listing or b == :image or b == :literal
+          if (b == :listing) || (b == :image) || (b == :literal)
             result << node.content
             seen_artwork = true
           else
@@ -800,32 +750,30 @@ Example
         result
       end
 
-      def inline_image node
+      def inline_image(node)
         result = []
         result << "<figure>" if node.parent.context != :example
         align = get_header_attribute node, "align"
         alt = get_header_attribute node, "alt"
-        link =  (node.image_uri node.target)
+        link = (node.image_uri node.target)
         src = set_header_attribute node, "src", link
         result << "<artwork#{align}#{alt}#{src}/>"
         result << "</figure>" if node.parent.context != :example
         result
       end
 
-      def image node
-=begin
-[[id]]
-.Name
-[link=xxx,align=left|center|right,alt=alt_text,type]
-image::filename[]
-=end
+      def image(node)
+        # [[id]]
+        # .Name
+        # [link=xxx,align=left|center|right,alt=alt_text,type]
+        # image::filename[]
         # ignoring width, height attributes
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
         align = get_header_attribute node, "align"
         alt = set_header_attribute "alt", node.alt
-        link =  (node.image_uri node.target)
+        link = (node.image_uri node.target)
         src = set_header_attribute node, "src", link
         type = get_header_attribute node, "type"
         name = get_header_attribute node, "name"
@@ -833,7 +781,6 @@ image::filename[]
         result << "</figure>" if node.parent.context != :example
         result
       end
-
     end
   end
 end
