@@ -1,6 +1,3 @@
-require "Date"
-require "pp"
-
 module Asciidoctor
   module Rfc2
     # A {Converter} implementation that generates RFC XML 2 output, a format used to
