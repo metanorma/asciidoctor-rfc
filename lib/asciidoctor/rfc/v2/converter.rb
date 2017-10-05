@@ -1,5 +1,5 @@
 module Asciidoctor
-  module Rfc2
+  module RFC::V2
     # A {Converter} implementation that generates RFC XML 2 output, a format used to
     # format RFC proposals (https://tools.ietf.org/html/rfc7749)
     #

@@ -1,12 +1,12 @@
 require "spec_helper"
 
-xdescribe Asciidoctor::Rfc3::Converter do
-  it "renders an example" do
+xdescribe Asciidoctor::RFC::V3::Converter do
+  it "renders a sidebar" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
-      .Title
-      ====
-      Example
-      ====
+      [[id]]
+      ****
+      Sidebar
+      ****
     INPUT
       Lipsum
     OUTPUT

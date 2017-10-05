@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe Asciidoctor::Rfc3::Converter do
-  it "renders keywords" do
+describe Asciidoctor::RFC::V3::Converter do
+  it "renders workgroups" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
       Author
-      :keyword: first_keyword, second_keyword
+      :workgroup: first_workgroup, second_workgroup
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
@@ -17,8 +17,8 @@ describe Asciidoctor::Rfc3::Converter do
       <author fullname="Author" initials="A">
       </author>
 
-      <keyword>first_keyword</keyword>
-      <keyword>second_keyword</keyword>
+      <workgroup>first_workgroup</workgroup>
+      <workgroup>second_workgroup</workgroup>
 
       </front><middle>
       </middle>

@@ -1,7 +1,7 @@
 require "spec_helper"
 require "byebug"
 
-describe Asciidoctor::Rfc3::Converter do
+describe Asciidoctor::RFC::V3::Converter do
   it "renders the minimal document w/ default values" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title

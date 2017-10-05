@@ -1,7 +1,7 @@
 require "spec_helper"
 
 # TODO: not convinced by middle/surname and initials
-describe Asciidoctor::Rfc3::Converter do
+describe Asciidoctor::RFC::V3::Converter do
   it "renders all options with short author syntax" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title

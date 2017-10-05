@@ -1,5 +1,5 @@
 module Asciidoctor
-  module Rfc3
+  module RFC::V3
     # A {Converter} implementation that generates RFC XML output, a format used to 
     # format RFC proposals (https://tools.ietf.org/html/rfc7991)
     #
@@ -512,9 +512,9 @@ Author
 
       def paragraph node
 =begin
-   [[id]]
-   [keepWithNext=true,keepWithPrevious=true] (optional)
-   Text
+  [[id]]
+  [keepWithNext=true,keepWithPrevious=true] (optional)
+  Text
 =end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
@@ -567,26 +567,26 @@ Text
 
       def admonition node
 =begin
-   = Title
-   Author
-   :HEADER
+  = Title
+  Author
+  :HEADER
 
-   ABSTRACT
+  ABSTRACT
 
 NOTE: note
 
-   [NOTE]
-   .Title (in preamble)
-   ====
-     Content
-   ====
+  [NOTE]
+  .Title (in preamble)
+  ====
+    Content
+  ====
 
-     [NOTE,removeInRFC=true] (in preamble)
-     [NOTE,display=true|false,source=name] (in body)
-   .Title
-   ====
-     Content
-   ====
+    [NOTE,removeInRFC=true] (in preamble)
+    [NOTE,display=true|false,source=name] (in body)
+  .Title
+  ====
+    Content
+  ====
 
 =end
         # admonitions within preamble are notes. Elsewhere, they are comments.
@@ -615,12 +615,12 @@ NOTE: note
       # ulist repurposed as reference list
       def reflist node
 =begin
-   * [[[ref1]]] A
-   [quoteTitle=false,target=uri,annotation=x] (optional)
-   * [[[ref2]]] B
-   * [[[ref3]]] (Referencegroup: no content)
-     * [[[ref4]]] C
-     * [[[ref4]]] D
+  * [[[ref1]]] A
+  [quoteTitle=false,target=uri,annotation=x] (optional)
+  * [[[ref2]]] B
+  * [[[ref3]]] (Referencegroup: no content)
+    * [[[ref4]]] C
+    * [[[ref4]]] D
 =end
         # TODO reference/front not supported
         result = []
@@ -759,10 +759,10 @@ code
 
       def ulist node
 =begin
-   [[id]]
-   [empty=true,compact] (optional)
-   * A
-   * B
+  [[id]]
+  [empty=true,compact] (optional)
+  * A
+  * B
 =end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
@@ -799,10 +799,10 @@ code
 
       def olist node
 =begin
-   [[id]]
-   [compact,start=n,group=n] (optional)
-   . A
-   . B
+  [[id]]
+  [compact,start=n,group=n] (optional)
+  . A
+  . B
 =end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
@@ -831,10 +831,10 @@ code
 
       def dlist node
 =begin
-   [[id]]
-   [horizontal,compact] (optional)
-   A:: B
-   C:: D
+  [[id]]
+  [horizontal,compact] (optional)
+  A:: B
+  C:: D
 =end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
@@ -867,15 +867,15 @@ code
 
       def preamble node
 =begin
-   = Title
-   Author
-   :HEADER
+  = Title
+  Author
+  :HEADER
 
-   ABSTRACT
+  ABSTRACT
 
 NOTE: note
 
-   (boilerplate is ignored)
+  (boilerplate is ignored)
 =end
         result = []
         $seen_abstract = false

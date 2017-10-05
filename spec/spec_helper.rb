@@ -4,7 +4,7 @@ SimpleCov.start do
 end
 
 require "asciidoctor"
-require "asciidoctor-rfc"
+require "asciidoctor/rfc"
 
 require "timecop"
 
