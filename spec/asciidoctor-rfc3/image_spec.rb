@@ -8,6 +8,7 @@ xdescribe Asciidoctor::Rfc3::Converter do
       [link=xxx,align=left|center|righti,alt=alt_text]
       image::filename[]
     INPUT
+      foobar
     OUTPUT
   end
 end
