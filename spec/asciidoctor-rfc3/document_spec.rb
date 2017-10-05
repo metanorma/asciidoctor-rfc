@@ -1,9 +1,9 @@
-require 'spec_helper'
-require 'byebug'
+require "spec_helper"
+require "byebug"
 
 describe Asciidoctor::Rfc3::Converter do
-  it 'renders the minimal document w/ default values' do
-    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to be_equivalent_to <<~'OUTPUT'
+  it "renders the minimal document w/ default values" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
       Author
@@ -22,8 +22,8 @@ describe Asciidoctor::Rfc3::Converter do
     OUTPUT
   end
 
-  it 'renders all document attributes' do
-    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to be_equivalent_to <<~'OUTPUT'
+  it "renders all document attributes" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
       Author
@@ -61,8 +61,8 @@ describe Asciidoctor::Rfc3::Converter do
     OUTPUT
   end
 
-  it 'renders back matter' do
-    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to be_equivalent_to <<~'OUTPUT'
+  it "renders back matter" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
       Author

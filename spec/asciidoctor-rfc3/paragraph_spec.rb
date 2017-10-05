@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Asciidoctor::Rfc3::Converter do
-  it 'renders a paragraph' do
-    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3).to be_equivalent_to <<~'OUTPUT'
+  it "renders a paragraph" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
       [keep-with-next=true, keep-with-previous=true, foo=bar]
       Lorem ipsum.

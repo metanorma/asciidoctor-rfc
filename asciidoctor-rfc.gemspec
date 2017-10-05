@@ -30,5 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "timecop", "~> 0.9"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
+  spec.add_development_dependency "rubocop", "~> 0.50"
 
 end

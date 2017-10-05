@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
 xdescribe Asciidoctor::Rfc3::Converter do
-  it 'renders defaults if docName is empty' do
-    expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to be_equivalent_to <<~'OUTPUT'
+  it "renders defaults if docName is empty" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :status: status_value
