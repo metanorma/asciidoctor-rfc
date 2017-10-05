@@ -1,23 +1,22 @@
 require 'spec_helper'
 
-describe Asciidoctor::Rfc3::Converter do
-  it 'renders the minimal document' do
+xdescribe Asciidoctor::Rfc3::Converter do
+  it 'renders defaults if docName is empty' do
     expect(Asciidoctor.convert <<~'INPUT', backend: :rfc3, header_footer: true).to be_equivalent_to <<~'OUTPUT'
-      = Minimal valid document
-      John Doe <john.doe@email.com>
-      :docName: rfc-000000
+      = Document title
+      Author
+      :status: status_value
+      :stream: stream_value
+      :docName:
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc preptime="1970-01-01T00:00:00Z"
                version="3" submissionType="IETF">
       <front>
-      <title>Minimal valid document</title>
+      <title>Document title</title>
       <seriesInfo name="RFC" stream="IETF" value="000000"/>
       <seriesInfo name="" value="000000"/>
-      <author fullname="John Doe" initials="J" surname="Doe">
-      <address>
-      <email>john.doe@email.com</email>
-      </address>
+      <author fullname="Author" initials="A">
       </author>
       </front><middle>
       </middle>
