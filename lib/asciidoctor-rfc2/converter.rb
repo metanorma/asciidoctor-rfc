@@ -643,7 +643,7 @@ module Asciidoctor
         lowerroman: "format %i",
         upperalpha: "format %C",
         upperroman: "format %I",
-      }.freeze).default = "numbers"
+      }).default = "numbers"
 
       def olist(node)
         #    [start=n] (optional)
