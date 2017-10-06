@@ -1,5 +1,5 @@
 = A Standard for the Transmission of IP Datagrams on Avian Carriers
-David Waitzman <dwaitzman@BBN.COM>
+David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
 :abbrev: IP Datagrams on Avian Carriers
 :category: info
 :docName: rfc-1149
@@ -9,11 +9,17 @@ David Waitzman <dwaitzman@BBN.COM>
 :keyword: this, that
 :date: 1990-04-01T00:00:00Z
 :organization: BBN STC
-:email: dwaitzman@BBN.COM
 :phone: (617) 873-4323
+:uri: http://bbn.com
 :street: 10 Moulton Street
 :city: Cambridge
 :code: MA 02238
+:organization_2: BBN STC
+:phone_2: (617) 873-4323
+:street_2: 10 Moulton Street
+:city_2: Cambridge
+:code_2: MA 02238
+:uri_2: http://opoudjis.net
 :link: http://example1.com,http://example2.com author
 
 [[AbstractID]]
@@ -88,10 +94,12 @@ are used in a tactical environment.<<pp>>
 [bibliography]
 == References
 
+* <bib><text>1</text></bib>
+* +++<bib><text>1</text></bib>+++
 * [[[pp]]] 
 ** [[[xxx]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
   From Journeyman to Master. Addison-Wesley. 1999.
 ** [[[xxxx]]] 1ac Gidday.
 * [[[gof,2]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides. Design Patterns:
   Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
-
+* <bib><text>1</text></bib>
