@@ -288,108 +288,35 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
 =end
         result = []
         result << Asciidoctor::RFC::Common.authorname(node, suffix)
-
-        organization = node.attr("organization#{suffix}")
-        result << "<organization>#{organization}</organization>" unless organization.nil?
-
-        postalline = node.attr("postalline#{suffix}")
-        street = node.attr("street#{suffix}")
-        city = node.attr("city#{suffix}")
-        region = node.attr("region#{suffix}")
-        country = node.attr("country#{suffix}")
-        code = node.attr("code#{suffix}")
-        phone = node.attr("phone#{suffix}")
-        email = node.attr("email#{suffix}")
-        facsimile = node.attr("fax#{suffix}")
-        uri = node.attr("uri#{suffix}")
-        if not email.nil? or not facsimile.nil? or not uri.nil? or not phone.nil? or 
-          not postalline.nil? or not street.nil?
-          result << "<address>"
-          if not postalline.nil? or not street.nil?
-            result << "<postal>"
-            if postalline.nil?
-              result << "<street>#{street}</street>" unless street.nil?
-              result << "<city>#{city}</city>" unless city.nil?
-              result << "<region>#{region}</region>" unless region.nil?
-              result << "<code>#{code}</code>" unless code.nil?
-              result << "<country>#{country}</country>" unless country.nil?
-            else
-              postalline.split("\\ ").each { |p| result << "<postalLine>#{p}</postalLine>" }
-            end
-            result << "</postal>"
-          end
-          result << "<phone>#{phone}</phone>" unless phone.nil?
-          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
-          result << "<email>#{email}</email>"  unless email.nil?
-          result << "<uri>#{uri}</uri>"  unless uri.nil?
-          result << "</address>"
-        end
+        result << Asciidoctor::RFC::Common.organization(node, suffix, 3)
+        result << Asciidoctor::RFC::Common.address(node, suffix, 3)
         result << "</author>"
         result
+
       end
 
       def date node
-        result = Asciidoctor::RFC::Common.date(node)
+        Asciidoctor::RFC::Common.date(node)
       end
 
       def area node
-        result = Asciidoctor::RFC::Common.area(node)
+        Asciidoctor::RFC::Common.area(node)
       end
 
       def workgroup node
-        result = Asciidoctor::RFC::Common.workgroup(node)
+        Asciidoctor::RFC::Common.workgroup(node)
       end
 
       def keyword node
-        result = Asciidoctor::RFC::Common.keyword(node)
+        Asciidoctor::RFC::Common.keyword(node)
       end
 
-      def inline_anchor node
-        case node.type
-        when :xref
-          # NOTE format attribute not supported
-          unless (text = node.text) || (text = node.attributes['path'])
-            refid = node.attributes['refid']
-            text = %([#{refid}])
-          end
-          %(<xref target="#{node.target}">#{text}</xref>)
-        when :link
-          %(<eref target="#{node.target}">#{node.text}</eref>)
-        when :bibref
-          unless node.xreftext.nil?
-            x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
-            if node.id != x
-              $xreftext[node.id] = x
-            end
-          end
-          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
-          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-        when :ref
-          # If this is within referencegroup, output as bibanchor anyway
-          if $processing_reflist
-            %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-          else
-            warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
-          end
-        else
-          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
-        end
+      def inline_anchor(node)
+        Asciidoctor::RFC::Common.inline_anchor(node)
       end
 
       def inline_indexterm node
-        # supports only primary and secondary terms
-        # primary attribute (highlighted major entry) not supported
-        if node.type == :visible 
-          item = set_header_attribute "item", node.text
-          "#{node.text}<iref#{item}/>"
-        else
-          item = set_header_attribute "item", terms[0]
-          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil )
-          terms = node.attr "terms"
-          "<iref#{item}#{subitem}/>"
-          "<iref#{item}#{subitem}/>"
-          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(": ")}") if terms.size > 2
-        end
+        Asciidoctor::RFC::Common.inline_indexterm(node)
       end
 
       def inline_break node
@@ -463,29 +390,15 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
           $seen_abstract = true
           result << "<abstract>"
         end
-          id = set_header_attribute "anchor", node.id
-          keepWithNext = get_header_attribute node, "keepWithNext"
-          keepWithPrevious = get_header_attribute node, "keepWithPrevious"
-          result << "<t#{id}#{keepWithNext}#{keepWithPrevious}>#{node.content}</t>"
+        id = set_header_attribute "anchor", node.id
+        keepWithNext = get_header_attribute node, "keepWithNext"
+        keepWithPrevious = get_header_attribute node, "keepWithPrevious"
+        result << "<t#{id}#{keepWithNext}#{keepWithPrevious}>#{node.content}</t>"
         result
       end
 
       def open node
         paragraph node
-      end
-
-      def paragraph1 node
-        result = []
-        result1 = node.content
-        if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
-          result = result1
-        else
-          id = set_header_attribute "anchor", node.id
-          result << "<t#{id}>"
-          result << result1
-          result << "</t>"
-        end
-        result
       end
 
       def quote node
@@ -541,7 +454,7 @@ NOTE: note
           removeInRFC = get_header_attribute node, "removeInRFC"
           result << "<note#{removeInRFC}>"
           result << "<name>#{node.title}</name>" unless node.title.nil?
-          result << (paragraph1 node)
+          result << (Asciidoctor::RFC::Common.paragraph1 node)
           result << "</note>"
         else
           id = set_header_attribute "anchor", node.id
@@ -632,7 +545,7 @@ Content
         result
       end
 
-    def table node
+      def table node
 =begin
 [[id]]
 .Title
@@ -640,181 +553,160 @@ Content
 |col | col
 |===
 =end
-      has_body = false
-      result = []
-      id = set_header_attribute "anchor", node.id
-      result << %(<table#{id}>)
-      result << %(<name>#{node.title}</name>) if node.title?
-      # TODO iref belongs here
-      [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
-        has_body = true if tblsec == :body
-        # id = set_header_attribute "anchor", tblsec.id
-        # not supported
-        result << %(<t#{tblsec}>)
-        node.rows[tblsec].each_with_index do |row, i|
-          # id not supported on row
-          result << "<tr>"
-          rowlength = 0
-          result1 = []
-          row.each do |cell|
-            id = set_header_attribute "anchor", cell.id
-            colspan_attribute = set_header_attribute "colspan", cell.colspan
-            rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
-            align = set_header_attribute("align", cell.attr("halign"))
-            cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
-            entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
-            cell_content = cell.text
-            rowlength += cell_content.size
-            result1 << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
+        has_body = false
+        result = []
+        id = set_header_attribute "anchor", node.id
+        result << %(<table#{id}>)
+        result << %(<name>#{node.title}</name>) if node.title?
+        # TODO iref belongs here
+        [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+          has_body = true if tblsec == :body
+          # id = set_header_attribute "anchor", tblsec.id
+          # not supported
+          result << %(<t#{tblsec}>)
+          node.rows[tblsec].each_with_index do |row, i|
+            # id not supported on row
+            result << "<tr>"
+            rowlength = 0
+            result1 = []
+            row.each do |cell|
+              id = set_header_attribute "anchor", cell.id
+              colspan_attribute = set_header_attribute "colspan", cell.colspan
+              rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
+              align = set_header_attribute("align", cell.attr("halign"))
+              cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
+              entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
+              cell_content = cell.text
+              rowlength += cell_content.size
+              result1 << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
+            end
+            result << result1
+            if rowlength > 72
+              warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters:\n#{result1}"
+            end
+            result << "</tr>"
           end
-          result << result1
-          if rowlength > 72
-            warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters:\n#{result1}"
-          end
-          result << "</tr>"
+          result << %(</t#{tblsec}>)
         end
-        result << %(</t#{tblsec}>)
+        result << "</table>"
+
+        warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
+        result 
       end
-      result << "</table>"
 
-      warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
-      result 
-    end
-
-    def listing node
-=begin
-.name
-[source,type,src=uri] (src is mutually exclusive with listing content)
-----
-code
-----
-=end
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      id = set_header_attribute "anchor", node.id
-      name = set_header_attribute "name", node.title
-      type = set_header_attribute "type", node.attr("language")
-      src = set_header_attribute "src", node.attr("src")
-      result << "<sourcecode#{id}#{name}#{type}#{src}>"
-      if src.nil?
-        node.lines.each do |line| 
-          result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
-        end
+      def listing node
+        Asciidoctor::RFC::Common.inline_image(node, 3)
       end
-      result << "</sourcecode>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
 
-    def ulist node
+      def ulist node
 =begin
   [[id]]
   [empty=true,compact] (optional)
   * A
   * B
 =end
-      result = []
-      if node.parent.context == :preamble and not $seen_abstract
-        $seen_abstract = true
-        result << "<abstract>"
-      end
-      id = set_header_attribute "anchor", node.id
-      empty = get_header_attribute node, "empty"
-      spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
-      result << "<ul#{id}#{empty}#{spacing}>"
-      node.items.each do |item|
-        id = set_header_attribute "anchor", item.id
-        if item.blocks?
-          result << "<li#{id}>#{item.text}"
-          result << item.content 
-          result << "</li>"
-        else
-          result << "<li#{id}>#{item.text}</li>"
+        result = []
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
         end
+        id = set_header_attribute "anchor", node.id
+        empty = get_header_attribute node, "empty"
+        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        result << "<ul#{id}#{empty}#{spacing}>"
+        node.items.each do |item|
+          id = set_header_attribute "anchor", item.id
+          if item.blocks?
+            result << "<li#{id}>#{item.text}"
+            result << item.content 
+            result << "</li>"
+          else
+            result << "<li#{id}>#{item.text}</li>"
+          end
+        end
+        result << "</ul>"
+        result
       end
-      result << "</ul>"
-      result
-    end
 
-    (OLIST_TYPES = {
-      arabic:     "1",
-      # decimal:    "1", # not supported
-      loweralpha: "a",
-      # lowergreek: "lower-greek", # not supported
-      lowerroman: "i",
-      upperalpha: "A",
-      upperroman: "I"
-    }).default = "1"
+      (OLIST_TYPES = {
+        arabic:     "1",
+        # decimal:    "1", # not supported
+        loweralpha: "a",
+        # lowergreek: "lower-greek", # not supported
+        lowerroman: "i",
+        upperalpha: "A",
+        upperroman: "I"
+      }).default = "1"
 
-    def olist node
+      def olist node
 =begin
   [[id]]
   [compact,start=n,group=n] (optional)
   . A
   . B
 =end
-      result = []
-      if node.parent.context == :preamble and not $seen_abstract
-        $seen_abstract = true
-        result << "<abstract>"
-      end
-      id = set_header_attribute "anchor", node.id
-      spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
-      start = get_header_attribute node, "start"
-      group = get_header_attribute node, "group"
-      type = set_header_attribute "type", OLIST_TYPES[node.style]
-      result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
-      node.items.each do |item|
-        id = set_header_attribute "anchor", item.id
-        if item.blocks?
-          result << "<li#{id}>#{item.text}"
-          result << item.content
-          result << "</li>"
-        else
-          result << "<li#{id}>#{item.text}</li>"
+        result = []
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
         end
+        id = set_header_attribute "anchor", node.id
+        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        start = get_header_attribute node, "start"
+        group = get_header_attribute node, "group"
+        type = set_header_attribute "type", OLIST_TYPES[node.style]
+        result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
+        node.items.each do |item|
+          id = set_header_attribute "anchor", item.id
+          if item.blocks?
+            result << "<li#{id}>#{item.text}"
+            result << item.content
+            result << "</li>"
+          else
+            result << "<li#{id}>#{item.text}</li>"
+          end
+        end
+        result << "</ol>"
+        result
       end
-      result << "</ol>"
-      result
-    end
 
-    def dlist node
+      def dlist node
 =begin
   [[id]]
   [horizontal,compact] (optional)
   A:: B
   C:: D
 =end
-      result = []
-      if node.parent.context == :preamble and not $seen_abstract
-        $seen_abstract = true
-        result << "<abstract>"
-      end
-      id = set_header_attribute "anchor", node.id
-      hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
-      spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
-      result << "<dl#{id}#{hanging}#{spacing}>"
-      node.items.each do |terms, dd|
-        [*terms].each do |dt|
-          id = set_header_attribute "anchor", dt.id
-          result << "<dt#{id}>#{dt.text}</dt>"
+        result = []
+        if node.parent.context == :preamble and not $seen_abstract
+          $seen_abstract = true
+          result << "<abstract>"
         end
-        if dd.blocks?
-          id = set_header_attribute "anchor", dd.id
-          result << "<dd>#{dd.text}"
-          result << dd.content
-          result << "</dd>"
-        else
-          result << "<dd>#{dd.text}</dd>"
+        id = set_header_attribute "anchor", node.id
+        hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
+        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        result << "<dl#{id}#{hanging}#{spacing}>"
+        node.items.each do |terms, dd|
+          [*terms].each do |dt|
+            id = set_header_attribute "anchor", dt.id
+            result << "<dt#{id}>#{dt.text}</dt>"
+          end
+          if dd.blocks?
+            id = set_header_attribute "anchor", dd.id
+            result << "<dd>#{dd.text}"
+            result << dd.content
+            result << "</dd>"
+          else
+            result << "<dd>#{dd.text}</dd>"
+          end
         end
+        result << "</dl>"
+        result
       end
-      result << "</dl>"
-      result
-    end
 
 
 
-    def preamble node
+      def preamble node
 =begin
   = Title
   Author
@@ -826,15 +718,15 @@ NOTE: note
 
   (boilerplate is ignored)
 =end
-      result = []
-      $seen_abstract = false
-      result << node.content
-      if $seen_abstract
-        result << "</abstract>"
+        result = []
+        $seen_abstract = false
+        result << node.content
+        if $seen_abstract
+          result << "</abstract>"
+        end
+        result << "</front><middle>"
+        result
       end
-      result << "</front><middle>"
-      result
-    end
     end
 
 
@@ -877,38 +769,11 @@ Example
     end
 
     def inline_image node
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      align = get_header_attribute node, "align"
-      alt = get_header_attribute node, "alt"
-      link =  (node.image_uri node.target)
-      src = set_header_attribute node, "src", link
-      type = set_header_attribute node, "type", 
-        link =~ /\.svg$/ ? "svg" : "binary-art"
-      result << "<artwork#{align}#{alt}#{type}#{src}/>"
-      result << "</figure>" if node.parent.context != :example
-      result
+      Asciidoctor::RFC::Common.inline_image(node, 3)
     end
 
     def image node
-=begin
-[[id]]
-.Title
-[link=xxx,align=left|center|righti,alt=alt_text]
-image::filename[]
-=end
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      id = set_header_attribute "anchor", node.id
-      align = get_header_attribute node, "align"
-      alt = set_header_attribute "alt", node.alt
-      link =  (node.image_uri node.target)
-      src = set_header_attribute node, "src", link
-      type = set_header_attribute node, "type", 
-        link =~ /\.svg$/ ? "svg" : "binary-art"
-      result << "<artwork#{id}#{align}#{alt}#{type}#{src}/>"
-      result << "</figure>" if node.parent.context != :example
-      result
+      Asciidoctor::RFC::Common.image(node, 3)
     end
 
 

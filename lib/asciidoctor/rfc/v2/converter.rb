@@ -196,98 +196,34 @@ module Asciidoctor
         # :code
         result = []
         result << Asciidoctor::RFC::Common.authorname(node, suffix)
-
-        organization = node.attr("organization#{suffix}")
-        organization_abbrev = node.attr("organization_abbrev#{suffix}")
-        abbrev = set_header_attribute "abbrev", organization_abbrev
-        result << "<organization#{abbrev}>#{organization}</organization>" unless organization.nil?
-
-        street = node.attr("street#{suffix}")
-        city = node.attr("city#{suffix}")
-        region = node.attr("region#{suffix}")
-        country = node.attr("country#{suffix}")
-        code = node.attr("code#{suffix}")
-        phone = node.attr("phone#{suffix}")
-        email = node.attr("email#{suffix}")
-        facsimile = node.attr("fax#{suffix}")
-        uri = node.attr("uri#{suffix}")
-        if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
-            (not street.nil?)
-          result << "<address>"
-          if not street.nil?
-            result << "<postal>"
-            street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
-            result << "<city>#{city}</city>" unless city.nil?
-            result << "<region>#{region}</region>" unless region.nil?
-            result << "<code>#{code}</code>" unless code.nil?
-            result << "<country>#{country}</country>" unless country.nil?
-            result << "</postal>"
-          end
-          result << "<phone>#{phone}</phone>" unless phone.nil?
-          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
-          result << "<email>#{email}</email>" unless email.nil?
-          result << "<uri>#{uri}</uri>" unless uri.nil?
-          result << "</address>"
-        end
+        result << Asciidoctor::RFC::Common.organization(node, suffix, 2)
+        result << Asciidoctor::RFC::Common.address(node, suffix, 2)
         result << "</author>"
         result
       end
 
       def date node
-        result = Asciidoctor::RFC::Common.date(node)
+        Asciidoctor::RFC::Common.date(node)
       end
 
       def area node
-        result = Asciidoctor::RFC::Common.area(node)
+        Asciidoctor::RFC::Common.area(node)
       end
 
       def workgroup node
-        result = Asciidoctor::RFC::Common.workgroup(node)
+        Asciidoctor::RFC::Common.workgroup(node)
       end
 
       def keyword node
-        result = Asciidoctor::RFC::Common.keyword(node)
+        Asciidoctor::RFC::Common.keyword(node)
       end
 
       def inline_anchor(node)
-        case node.type
-        when :xref
-          # format attribute not supported
-          unless (text = node.text) || (text = node.attributes["path"])
-            refid = node.attributes["refid"]
-            text = %([#{refid}])
-          end
-          %(<xref target="#{node.target}">#{text}</xref>)
-        when :link
-          %(<eref target="#{node.target}">#{node.text}</eref>)
-        when :bibref
-          unless node.xreftext.nil?
-            x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
-            if node.id != x
-              $xreftext[node.id] = x
-            end
-          end
-          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
-          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-        when :ref
-          warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
-        else
-          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
-        end
+        Asciidoctor::RFC::Common.inline_anchor(node)
       end
 
       def inline_indexterm(node)
-        # supports only primary and secondary terms
-        # primary attribute (highlighted major entry) not supported
-        if node.type == :visible
-          item = set_header_attribute "item", node.text
-          "#{node.text}<iref#{item}/>"
-        else
-          item = set_header_attribute "item", terms[0]
-          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
-          terms = node.attr "terms"
-          "#{node.text}<iref#{item}#{subitem}/>"
-        end
+        Asciidoctor::RFC::Common.inline_indexterm(node)
       end
 
       def inline_break(node)
@@ -361,20 +297,6 @@ module Asciidoctor
         paragraph node
       end
 
-      def paragraph1(node)
-        result = []
-        result1 = node.content
-        if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
-          result = result1
-        else
-          id = set_header_attribute "anchor", node.id
-          result << "<t#{id}>"
-          result << result1
-          result << "</t>"
-        end
-        result
-      end
-
       def admonition(node)
         #    = Title
         #    Author
@@ -406,7 +328,7 @@ module Asciidoctor
           end
           title = set_header_attribute "title", node.title
           result << "<note#{title}>"
-          result << (paragraph1 node)
+          result << (Asciidoctor::RFC::Common.paragraph1 node)
           result << "</note>"
         else
           id = set_header_attribute "anchor", node.id
@@ -504,7 +426,7 @@ module Asciidoctor
           end
           node.rows[tblsec].each do |row|
             rowlength = 0
-              result1 = []
+            result1 = []
             row.each_with_index do |cell, i|
               id = set_header_attribute "anchor", cell.id
               align = set_header_attribute("align", cell.attr("halign"))
@@ -548,29 +470,7 @@ module Asciidoctor
       end
 
       def listing(node)
-        # .name
-        # [source,type,src=uri,align,alt] (src is mutually exclusive with listing content)
-        # ----
-        # code
-        # ----
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = set_header_attribute "align", node.title
-        name = set_header_attribute "name", node.title
-        type = set_header_attribute "type", node.attr("language")
-        src = set_header_attribute "src", node.attr("src")
-        alt = set_header_attribute "alt", node.alt
-
-        result << "<artwork#{id}#{align}#{name}#{type}#{src}#{alt}>"
-        if src.nil?
-          node.lines.each do |line|
-            result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
-          end
-        end
-        result << "</artwork>"
-        result << "</figure>" if node.parent.context != :example
-        result
+        Asciidoctor::RFC::Common.inline_image(node, 2)
       end
 
       def ulist(node)
@@ -709,35 +609,11 @@ module Asciidoctor
       end
 
       def inline_image(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = get_header_attribute node, "align"
-        alt = get_header_attribute node, "alt"
-        link = (node.image_uri node.target)
-        src = set_header_attribute node, "src", link
-        result << "<artwork#{align}#{alt}#{src}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
+        Asciidoctor::RFC::Common.inline_image(node, 2)
       end
 
       def image(node)
-        # [[id]]
-        # .Name
-        # [link=xxx,align=left|center|right,alt=alt_text,type]
-        # image::filename[]
-        # ignoring width, height attributes
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        link = (node.image_uri node.target)
-        src = set_header_attribute node, "src", link
-        type = get_header_attribute node, "type"
-        name = get_header_attribute node, "name"
-        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
+        Asciidoctor::RFC::Common.image(node, 2)
       end
     end
   end
