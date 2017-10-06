@@ -351,7 +351,7 @@ module Asciidoctor
           # we expect the biblio anchor to be right at the start of the reference
           target = get_header_attribute node, "target"
           # undo XML substitution
-          ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">").gsub(/\&amp;/, "&")
+          ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
           # result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
           result << ref
         end
@@ -519,7 +519,7 @@ module Asciidoctor
             result << item.content
             result << "</t>"
           else
-            result << "<t#{id}>#{item.text}</li>"
+            result << "<t#{id}>#{item.text}</t>"
           end
         end
         result << "</list>"
