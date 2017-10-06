@@ -1,3 +1,5 @@
+require_relative "../common"
+
 module Asciidoctor
   module RFC::V3
     # A {Converter} implementation that generates RFC XML output, a format used to 
@@ -16,25 +18,23 @@ module Asciidoctor
       $seen_abstract = false
       $xreftext = {}
 
-      def initialize backend, opts
+      def initialize(backend, opts)
         super
-        #basebackend 'html'
+        # basebackend 'html'
         outfilesuffix '.xml'
-
       end
 
-      def convert node, transform = nil, opts = {}
+      def convert(node, transform = nil, opts = {})
         transform ||= node.node_name
         opts.empty? ? (send transform, node) : (send transform, node, opts)
       end
 
       def content node
-        node.content
+        Asciidoctor::RFC::Common.content node
       end
 
       def skip node, name = nil
-        warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
-        nil
+        Asciidoctor::RFC::Common.skip node, name
       end
 
       alias :pass :content
@@ -49,11 +49,6 @@ module Asciidoctor
       alias :inline_kbd :skip
       alias :inline_menu :skip
       alias :inline_callout :content
-
-      # TODO: this ought to be private
-      def dash(camel_cased_word)
-        camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
-      end
 
       def get_header_attribute node, attr, default = nil
         if (node.attr? dash(attr)) 
@@ -292,11 +287,11 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
 :code
 =end
         result = []
-        authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
-        surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
-        initials = set_header_attribute "initials", node.attr("forename_initials#{suffix}")
-        role = set_header_attribute "role", node.attr("role#{suffix}")
+        result << Asciidoctor::RFC::Common.authorname(node, suffix)
+
         organization = node.attr("organization#{suffix}")
+        result << "<organization>#{organization}</organization>" unless organization.nil?
+
         postalline = node.attr("postalline#{suffix}")
         street = node.attr("street#{suffix}")
         city = node.attr("city#{suffix}")
@@ -307,10 +302,6 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
         email = node.attr("email#{suffix}")
         facsimile = node.attr("fax#{suffix}")
         uri = node.attr("uri#{suffix}")
-
-        result << "<author#{authorname}#{initials}#{surname}#{role}>"
-        result << "<organization>#{organization}</organization>" unless organization.nil?
-
         if not email.nil? or not facsimile.nil? or not uri.nil? or not phone.nil? or 
           not postalline.nil? or not street.nil?
           result << "<address>"
@@ -338,69 +329,19 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
       end
 
       def date node
-=begin
-= Title
-Author
-:revdate or :date
-=end
-        result = []
-        revdate = node.attr("revdate")
-        revdate = node.attr("date") if revdate.nil?
-        unless revdate.nil?
-          begin
-            revdate.gsub!(/T.*$/, "")
-            d = Date.iso8601 revdate
-            day = set_header_attribute "day", d.day
-            month = set_header_attribute "month", d.month
-            year = set_header_attribute "year", d.year
-            result << "<date#{day}#{month}#{year}/>"
-          rescue
-            # nop
-          end
-        end
-        result
+        result = Asciidoctor::RFC::Common.date(node)
       end
 
       def area node
-=begin
-= Title
-Author
-:area x, y
-=end
-        result = []
-        area = node.attr("area")
-        unless area.nil?
-          area.split(/, ?/).each { |a| result << "<area>#{a}</area>" }
-        end
-        result
+        result = Asciidoctor::RFC::Common.area(node)
       end
 
       def workgroup node
-=begin
-= Title
-Author
-:workgroup x, y
-=end
-        result = []
-        workgroup = node.attr("workgroup")
-        unless workgroup.nil?
-          workgroup.split(/, ?/).each { |a| result << "<workgroup>#{a}</workgroup>" }
-        end
-        result
+        result = Asciidoctor::RFC::Common.workgroup(node)
       end
 
       def keyword node
-=begin
-= Title
-Author
-:keyword x, y
-=end
-        result = []
-        keyword = node.attr("keyword")
-        unless keyword.nil?
-          keyword.split(/, ?/).each { |a| result << "<keyword>#{a}</keyword>" }
-        end
-        result
+        result = Asciidoctor::RFC::Common.keyword(node)
       end
 
       def inline_anchor node
