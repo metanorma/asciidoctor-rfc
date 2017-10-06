@@ -470,7 +470,7 @@ module Asciidoctor
       end
 
       def listing(node)
-        Asciidoctor::RFC::Common.inline_image(node, 2)
+        Asciidoctor::RFC::Common.listing(node, 2)
       end
 
       def ulist(node)

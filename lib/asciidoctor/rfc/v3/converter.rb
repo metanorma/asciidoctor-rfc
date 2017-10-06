@@ -595,7 +595,7 @@ Content
       end
 
       def listing node
-        Asciidoctor::RFC::Common.inline_image(node, 3)
+        Asciidoctor::RFC::Common.listing(node, 3)
       end
 
       def ulist node
