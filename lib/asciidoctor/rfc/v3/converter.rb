@@ -296,7 +296,7 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
       end
 
       def date node
-        Asciidoctor::RFC::Common.date(node)
+        Asciidoctor::RFC::Common.date(node, 3)
       end
 
       def area node

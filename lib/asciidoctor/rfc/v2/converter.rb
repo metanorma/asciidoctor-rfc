@@ -203,7 +203,7 @@ module Asciidoctor
       end
 
       def date node
-        Asciidoctor::RFC::Common.date(node)
+        Asciidoctor::RFC::Common.date(node, 2)
       end
 
       def area node
@@ -477,6 +477,7 @@ module Asciidoctor
         #    * A
         #    * B
         result = []
+        result << "<t>" if node.parent.context != :paragraph
         style = set_header_attribute "style", "symbols"
         result << "<list#{style}>"
         node.items.each do |item|
@@ -490,6 +491,7 @@ module Asciidoctor
           end
         end
         result << "</list>"
+        result << "</t>" if node.parent.context != :paragraph
         result
       end
 
@@ -508,6 +510,7 @@ module Asciidoctor
         #    . A
         #    . B
         result = []
+        result << "<t>" if node.parent.context != :paragraph
         counter = set_header_attribute "counter", node.attr("start")
         # TODO did I understand spec of @counter correctly?
         type = set_header_attribute "type", OLIST_TYPES[node.style]
@@ -523,6 +526,7 @@ module Asciidoctor
           end
         end
         result << "</list>"
+        result << "</t>" if node.parent.context != :paragraph
         result
       end
 
@@ -531,6 +535,7 @@ module Asciidoctor
         #    A:: B
         #    C:: D
         result = []
+        result << "<t>" if node.parent.context != :paragraph
         hangIndent = get_header_attribute node, "hangIndent"
         style = set_header_attribute "style", "hanging"
         result << "<list#{hangIndent}#{style}>"
@@ -555,6 +560,7 @@ module Asciidoctor
           end
         end
         result << "</list>"
+        result << "</t>" if node.parent.context != :paragraph
         result
       end
 

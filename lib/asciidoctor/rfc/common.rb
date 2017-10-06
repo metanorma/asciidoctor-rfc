@@ -1,3 +1,4 @@
+require "date"
 require "asciidoctor"
 
 module Asciidoctor
@@ -98,13 +99,19 @@ module Asciidoctor
       end
 
 
-      def date(node)
+      def date(node, version)
         # = Title
         # Author
         # :revdate or :date
         result = []
         revdate = node.attr("revdate")
         revdate = node.attr("date") if revdate.nil?
+        if version == 2
+        # date is mandatory in v2: use today
+        revdate = DateTime.now.iso8601 if revdate.nil?
+        warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date) 
+        puts revdate
+        end
         unless revdate.nil?
           begin
             revdate.gsub!(/T.*$/, "")
@@ -158,9 +165,10 @@ module Asciidoctor
             refid = node.attributes['refid']
             text = %([#{refid}])
           end
-          %(<xref target="#{node.target}">#{text}</xref>)
+          target = node.target.gsub(/^#/,"")
+          %(<xref target="#{target}">#{text}</xref>)
         when :link
-          %(<eref target="#{node.target}">#{node.text}</eref>)
+          %(<eref target="#{target}">#{node.text}</eref>)
         when :bibref
           unless node.xreftext.nil?
             x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
