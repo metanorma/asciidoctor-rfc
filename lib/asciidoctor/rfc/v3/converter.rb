@@ -277,6 +277,7 @@ Author;Author_2;Author_3
 Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
 :fullname
 :lastname
+:forename_initials (excludes surname, unlike Asciidoc "initials" attribute)
 :organization
 :email
 :role
@@ -293,7 +294,7 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
         result = []
         authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
         surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
-        initials = set_header_attribute "initials", node.attr("firstname#{suffix}")[0]
+        initials = set_header_attribute "initials", node.attr("forename_initials#{suffix}")
         role = set_header_attribute "role", node.attr("role#{suffix}")
         organization = node.attr("organization#{suffix}")
         postalline = node.attr("postalline#{suffix}")

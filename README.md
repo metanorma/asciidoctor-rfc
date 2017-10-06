@@ -92,7 +92,8 @@ Author;Author_2;Author_3
 :stream {front/seriesInfo@stream} (default is "IETF")
 
 :fullname {front/author@fullname} (redundant with author line above)
-:firstname {first letter used in front/author@initials}
+:forename_initials {front/author@initials} 
+  (distinct from Asciidoc :initials attribute, which includes surname)
 :lastname {front/author@surname} (redundant with author line above)
 :role {front/author@role}
 :organization {front/author/organization}
@@ -109,7 +110,8 @@ Author;Author_2;Author_3
 :code {front/author/address/postal/code} 
 
 :fullname_2 {front/author@fullname} (redundant with second entry in author line above)
-:firstname_2 {first letter used in front/author@initials}
+:forename_initials_2 {front/author@initials} 
+  (distinct from Asciidoc :initials attribute, which includes surname)
 :lastname_2 {front/author@surname} (redundant with second entry in author line above)
 :role_2 {front/author@role}
 :organization_2 {front/author/organization}
@@ -319,7 +321,8 @@ Author;Author_2;Author_3
 :xmllang {rfc@xml:lang}
 
 :fullname {front/author@fullname} (redundant with author line above)
-:firstname {first letter used in front/author@initials}
+:forename_initials {front/author@initials} 
+  (distinct from Asciidoc :initials attribute, which includes surname)
 :lastname {front/author@surname} (redundant with author line above)
 :role {front/author@role}
 :organization {front/author/organization}
@@ -335,7 +338,8 @@ Author;Author_2;Author_3
 :code {front/author/address/postal/code} 
 
 :fullname_2 {front/author@fullname} (redundant with second entry in author line above)
-:firstname_2 {first letter used in front/author@initials}
+:forename_initials_2 {front/author@initials} 
+  (distinct from Asciidoc :initials attribute, which includes surname)
 :lastname_2 {front/author@surname} (redundant with second entry in author line above)
 :role_2 {front/author@role}
 :organization_2 {front/author/organization}
