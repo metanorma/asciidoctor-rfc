@@ -558,6 +558,7 @@ module Asciidoctor
           end
           node.rows[tblsec].each do |row|
             rowlength = 0
+              result1 = []
             row.each_with_index do |cell, i|
               id = set_header_attribute "anchor", cell.id
               align = set_header_attribute("align", cell.attr("halign"))
@@ -567,11 +568,12 @@ module Asciidoctor
               entry_start = %(<ttcol#{id}#{align}#{width}>)
               cell_content = cell.text
               rowlength += cell_content.size 
-              result << %(#{entry_start}#{cell_content}</ttcol>)
+              result1 << %(#{entry_start}#{cell_content}</ttcol>)
             end
-          end
-          if rowlength > 1
-            warn "asciidoctor: WARNING: header row of table is longer than 72 ascii characters"
+            result << result1
+            if rowlength > 72
+              warn "asciidoctor: WARNING: header row of table is longer than 72 ascii characters:\n#{result1}"
+            end
           end
         end
 
@@ -581,13 +583,15 @@ module Asciidoctor
           # not supported
           node.rows[tblsec].each_with_index do |row, i|
             rowlength = 0
+            result1 = []
             row.each do |cell|
               cell_content = cell.text
               rowlength += cell_content.size 
-              result << %(<c>#{cell_content}</c>)
+              result1 << %(<c>#{cell_content}</c>)
             end
-            if rowlength > 1
-              warn "asciidoctor: WARNING: row #{i} of table is longer than 72 ascii characters"
+            result << result1
+            if rowlength > 72
+              warn "asciidoctor: WARNING: row #{i} of table is longer than 72 ascii characters:\n#{result1}"
             end
           end
         end

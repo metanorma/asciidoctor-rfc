@@ -714,6 +714,7 @@ Content
           # id not supported on row
           result << "<tr>"
           rowlength = 0
+          result1 = []
           row.each do |cell|
             id = set_header_attribute "anchor", cell.id
             colspan_attribute = set_header_attribute "colspan", cell.colspan
@@ -723,10 +724,11 @@ Content
             entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
             cell_content = cell.text
             rowlength += cell_content.size
-            result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
+            result1 << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
           end
+          result << result1
           if rowlength > 72
-            warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters"
+            warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters:\n#{result1}"
           end
           result << "</tr>"
         end
