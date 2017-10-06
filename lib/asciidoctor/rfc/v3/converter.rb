@@ -710,9 +710,10 @@ Content
         # id = set_header_attribute "anchor", tblsec.id
         # not supported
         result << %(<t#{tblsec}>)
-        node.rows[tblsec].each do |row|
+        node.rows[tblsec].each_with_index do |row, i|
           # id not supported on row
           result << "<tr>"
+          rowlength = 0
           row.each do |cell|
             id = set_header_attribute "anchor", cell.id
             colspan_attribute = set_header_attribute "colspan", cell.colspan
@@ -721,7 +722,11 @@ Content
             cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
             entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
             cell_content = cell.text
+            rowlength += cell_content.size
             result << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
+          end
+          if rowlength > 72
+            warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters"
           end
           result << "</tr>"
         end
@@ -733,7 +738,7 @@ Content
       result 
     end
 
-      def listing node
+    def listing node
 =begin
 .name
 [source,type,src=uri] (src is mutually exclusive with listing content)
@@ -741,132 +746,132 @@ Content
 code
 ----
 =end
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        name = set_header_attribute "name", node.title
-        type = set_header_attribute "type", node.attr("language")
-        src = set_header_attribute "src", node.attr("src")
-        result << "<sourcecode#{id}#{name}#{type}#{src}>"
-        if src.nil?
-          node.lines.each do |line| 
-            result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
-          end
+      result = []
+      result << "<figure>" if node.parent.context != :example
+      id = set_header_attribute "anchor", node.id
+      name = set_header_attribute "name", node.title
+      type = set_header_attribute "type", node.attr("language")
+      src = set_header_attribute "src", node.attr("src")
+      result << "<sourcecode#{id}#{name}#{type}#{src}>"
+      if src.nil?
+        node.lines.each do |line| 
+          result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
         end
-        result << "</sourcecode>"
-        result << "</figure>" if node.parent.context != :example
-        result
       end
+      result << "</sourcecode>"
+      result << "</figure>" if node.parent.context != :example
+      result
+    end
 
-      def ulist node
+    def ulist node
 =begin
   [[id]]
   [empty=true,compact] (optional)
   * A
   * B
 =end
-        result = []
-        if node.parent.context == :preamble and not $seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-        id = set_header_attribute "anchor", node.id
-        empty = get_header_attribute node, "empty"
-        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
-        result << "<ul#{id}#{empty}#{spacing}>"
-        node.items.each do |item|
-          id = set_header_attribute "anchor", item.id
-          if item.blocks?
-            result << "<li#{id}>#{item.text}"
-            result << item.content 
-            result << "</li>"
-          else
-            result << "<li#{id}>#{item.text}</li>"
-          end
-        end
-        result << "</ul>"
-        result
+      result = []
+      if node.parent.context == :preamble and not $seen_abstract
+        $seen_abstract = true
+        result << "<abstract>"
       end
+      id = set_header_attribute "anchor", node.id
+      empty = get_header_attribute node, "empty"
+      spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+      result << "<ul#{id}#{empty}#{spacing}>"
+      node.items.each do |item|
+        id = set_header_attribute "anchor", item.id
+        if item.blocks?
+          result << "<li#{id}>#{item.text}"
+          result << item.content 
+          result << "</li>"
+        else
+          result << "<li#{id}>#{item.text}</li>"
+        end
+      end
+      result << "</ul>"
+      result
+    end
 
-      (OLIST_TYPES = {
-        arabic:     "1",
-        # decimal:    "1", # not supported
-        loweralpha: "a",
-        # lowergreek: "lower-greek", # not supported
-        lowerroman: "i",
-        upperalpha: "A",
-        upperroman: "I"
-      }).default = "1"
+    (OLIST_TYPES = {
+      arabic:     "1",
+      # decimal:    "1", # not supported
+      loweralpha: "a",
+      # lowergreek: "lower-greek", # not supported
+      lowerroman: "i",
+      upperalpha: "A",
+      upperroman: "I"
+    }).default = "1"
 
-      def olist node
+    def olist node
 =begin
   [[id]]
   [compact,start=n,group=n] (optional)
   . A
   . B
 =end
-        result = []
-        if node.parent.context == :preamble and not $seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-        id = set_header_attribute "anchor", node.id
-        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
-        start = get_header_attribute node, "start"
-        group = get_header_attribute node, "group"
-        type = set_header_attribute "type", OLIST_TYPES[node.style]
-        result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
-        node.items.each do |item|
-          id = set_header_attribute "anchor", item.id
-          if item.blocks?
-            result << "<li#{id}>#{item.text}"
-            result << item.content
-            result << "</li>"
-          else
-            result << "<li#{id}>#{item.text}</li>"
-          end
-        end
-        result << "</ol>"
-        result
+      result = []
+      if node.parent.context == :preamble and not $seen_abstract
+        $seen_abstract = true
+        result << "<abstract>"
       end
+      id = set_header_attribute "anchor", node.id
+      spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+      start = get_header_attribute node, "start"
+      group = get_header_attribute node, "group"
+      type = set_header_attribute "type", OLIST_TYPES[node.style]
+      result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
+      node.items.each do |item|
+        id = set_header_attribute "anchor", item.id
+        if item.blocks?
+          result << "<li#{id}>#{item.text}"
+          result << item.content
+          result << "</li>"
+        else
+          result << "<li#{id}>#{item.text}</li>"
+        end
+      end
+      result << "</ol>"
+      result
+    end
 
-      def dlist node
+    def dlist node
 =begin
   [[id]]
   [horizontal,compact] (optional)
   A:: B
   C:: D
 =end
-        result = []
-        if node.parent.context == :preamble and not $seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-        id = set_header_attribute "anchor", node.id
-        hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
-        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
-        result << "<dl#{id}#{hanging}#{spacing}>"
-        node.items.each do |terms, dd|
-          [*terms].each do |dt|
-            id = set_header_attribute "anchor", dt.id
-            result << "<dt#{id}>#{dt.text}</dt>"
-          end
-          if dd.blocks?
-            id = set_header_attribute "anchor", dd.id
-            result << "<dd>#{dd.text}"
-            result << dd.content
-            result << "</dd>"
-          else
-            result << "<dd>#{dd.text}</dd>"
-          end
-        end
-        result << "</dl>"
-        result
+      result = []
+      if node.parent.context == :preamble and not $seen_abstract
+        $seen_abstract = true
+        result << "<abstract>"
       end
+      id = set_header_attribute "anchor", node.id
+      hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
+      spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+      result << "<dl#{id}#{hanging}#{spacing}>"
+      node.items.each do |terms, dd|
+        [*terms].each do |dt|
+          id = set_header_attribute "anchor", dt.id
+          result << "<dt#{id}>#{dt.text}</dt>"
+        end
+        if dd.blocks?
+          id = set_header_attribute "anchor", dd.id
+          result << "<dd>#{dd.text}"
+          result << dd.content
+          result << "</dd>"
+        else
+          result << "<dd>#{dd.text}</dd>"
+        end
+      end
+      result << "</dl>"
+      result
+    end
 
 
 
-      def preamble node
+    def preamble node
 =begin
   = Title
   Author
@@ -878,15 +883,15 @@ NOTE: note
 
   (boilerplate is ignored)
 =end
-        result = []
-        $seen_abstract = false
-        result << node.content
-        if $seen_abstract
-          result << "</abstract>"
-        end
-        result << "</front><middle>"
-        result
+      result = []
+      $seen_abstract = false
+      result << node.content
+      if $seen_abstract
+        result << "</abstract>"
       end
+      result << "</front><middle>"
+      result
+    end
     end
 
 

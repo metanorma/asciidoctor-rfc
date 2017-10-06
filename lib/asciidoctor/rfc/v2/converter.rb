@@ -557,6 +557,7 @@ module Asciidoctor
             widths << col.attr("colpcwidth")
           end
           node.rows[tblsec].each do |row|
+            rowlength = 0
             row.each_with_index do |cell, i|
               id = set_header_attribute "anchor", cell.id
               align = set_header_attribute("align", cell.attr("halign"))
@@ -565,8 +566,12 @@ module Asciidoctor
                       end
               entry_start = %(<ttcol#{id}#{align}#{width}>)
               cell_content = cell.text
+              rowlength += cell_content.size 
               result << %(#{entry_start}#{cell_content}</ttcol>)
             end
+          end
+          if rowlength > 1
+            warn "asciidoctor: WARNING: header row of table is longer than 72 ascii characters"
           end
         end
 
@@ -574,10 +579,15 @@ module Asciidoctor
           has_body = true if tblsec == :body
           # id = set_header_attribute "anchor", tblsec.id
           # not supported
-          node.rows[tblsec].each do |row|
+          node.rows[tblsec].each_with_index do |row, i|
+            rowlength = 0
             row.each do |cell|
               cell_content = cell.text
+              rowlength += cell_content.size 
               result << %(<c>#{cell_content}</c>)
+            end
+            if rowlength > 1
+              warn "asciidoctor: WARNING: row #{i} of table is longer than 72 ascii characters"
             end
           end
         end
