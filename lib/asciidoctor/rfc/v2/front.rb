@@ -1,5 +1,3 @@
-require "asciidoctor/rfc/converter"
-
 module Asciidoctor
   module RFC::V2
     module Front

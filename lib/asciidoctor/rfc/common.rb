@@ -3,7 +3,7 @@ require "asciidoctor"
 
 module Asciidoctor
   module RFC
-    module Converter
+    module Common
       def convert(node, transform = nil, opts = {})
         transform ||= node.node_name
         opts.empty? ? (send transform, node) : (send transform, node, opts)
