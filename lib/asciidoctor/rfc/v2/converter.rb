@@ -3,6 +3,7 @@ require "asciidoctor/rfc/v2/base"
 require "asciidoctor/rfc/v2/front"
 require "asciidoctor/rfc/v2/lists"
 require "asciidoctor/rfc/v2/blocks"
+require "asciidoctor/rfc/v2/table"
 
 module Asciidoctor
   module RFC::V2
@@ -21,6 +22,7 @@ module Asciidoctor
       include ::Asciidoctor::RFC::V2::Front
       include ::Asciidoctor::RFC::V2::Lists
       include ::Asciidoctor::RFC::V2::Blocks
+      include ::Asciidoctor::RFC::V2::Table
 
       register_for "rfc2"
 
