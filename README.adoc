@@ -659,7 +659,7 @@ are used in a tactical environment.<<pp>>
 
 [source,asciidoc]
 --
-\= A Standard for the Transmission of IP Datagrams on Avian Carriers
+= A Standard for the Transmission of IP Datagrams on Avian Carriers
 David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
 :abbrev: IP Datagrams on Avian Carriers
 :obsoletes: 10, 120
