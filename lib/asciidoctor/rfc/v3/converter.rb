@@ -1,4 +1,4 @@
-require "asciidoctor/rfc/converter"
+require "asciidoctor/rfc/common"
 require "asciidoctor/rfc/v3/front"
 
 module Asciidoctor
@@ -12,8 +12,7 @@ module Asciidoctor
     class Converter
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
-      include ::Asciidoctor::RFC::Converter
-
+      include ::Asciidoctor::RFC::Common
       include ::Asciidoctor::RFC::V3::Front
 
       register_for "rfc3"
