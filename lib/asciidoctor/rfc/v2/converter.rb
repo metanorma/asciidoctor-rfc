@@ -333,9 +333,15 @@ module Asciidoctor
         else
           id = set_header_attribute "anchor", node.id
           source = get_header_attribute node, "source"
+          if node.parent.context !~ /table|example|paragraph/
+            result << "<t>"
+          end
           result << "<cref#{id}#{source}>"
           result << node.content
           result << "</cref>"
+          if node.parent.context !~ /table|example|paragraph/
+            result << "</t>"
+          end
         end
         result
       end
@@ -363,7 +369,6 @@ module Asciidoctor
         # == title
         # Content
         #
-        # [[id]]
         # [bibliography]
         # == Normative|Informative References
         # * [[[ref1]]] Ref [must provide references as list]
@@ -373,9 +378,8 @@ module Asciidoctor
         if node.attr("style") == "bibliography"
           $xreftext = {}
           $processing_reflist = true
-          id = set_header_attribute "anchor", node.id
           title = set_header_attribute "title", node.title
-          result << "<references#{id}#{title}>"
+          result << "<references#{title}>"
           # require that references be given in a ulist
           node.blocks.each { |b| result << reflist(b) }
           result << "</references>"
@@ -410,6 +414,19 @@ module Asciidoctor
         suppresstitle = get_header_attribute node, "suppress-title"
         align = get_header_attribute node, "align"
         style = get_header_attribute node, "style"
+        styleval = case node.attr "grid"
+                   when "all"
+                     "all"
+                   when "rows"
+                     "none"  # not supported 
+                   when "cols"
+                     "full"
+                   when "none"
+                     "none"
+                   else
+                     "all"
+                   end
+        style = set_header_attribute "style", styleval
         result << %(<texttable#{id}#{title}#{suppresstitle}#{align}#{style}>)
         # preamble, postamble elements not supported
 
@@ -477,7 +494,7 @@ module Asciidoctor
         #    * A
         #    * B
         result = []
-        result << "<t>" if node.parent.context != :paragraph
+        result << "<t>" if node.parent.context !~ /paragraph|list_item/
         style = set_header_attribute "style", "symbols"
         result << "<list#{style}>"
         node.items.each do |item|
@@ -491,7 +508,7 @@ module Asciidoctor
           end
         end
         result << "</list>"
-        result << "</t>" if node.parent.context != :paragraph
+        result << "</t>" if node.parent.context !~ /paragraph|list_item/
         result
       end
 
@@ -510,11 +527,11 @@ module Asciidoctor
         #    . A
         #    . B
         result = []
-        result << "<t>" if node.parent.context != :paragraph
+        result << "<t>" if node.parent.context !~ /paragraph|list_item/
         counter = set_header_attribute "counter", node.attr("start")
         # TODO did I understand spec of @counter correctly?
-        type = set_header_attribute "type", OLIST_TYPES[node.style]
-        result << "<list#{counter}#{type}>"
+        style = set_header_attribute "style", OLIST_TYPES[node.style]
+        result << "<list#{counter}#{style}>"
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id
           if item.blocks?
@@ -526,7 +543,7 @@ module Asciidoctor
           end
         end
         result << "</list>"
-        result << "</t>" if node.parent.context != :paragraph
+        result << "</t>" if node.parent.context !~ /paragraph|list_item/
         result
       end
 
@@ -535,7 +552,7 @@ module Asciidoctor
         #    A:: B
         #    C:: D
         result = []
-        result << "<t>" if node.parent.context != :paragraph
+        result << "<t>" if node.parent.context !~ /paragraph|list_item/
         hangIndent = get_header_attribute node, "hangIndent"
         style = set_header_attribute "style", "hanging"
         result << "<list#{hangIndent}#{style}>"
@@ -560,7 +577,7 @@ module Asciidoctor
           end
         end
         result << "</list>"
-        result << "</t>" if node.parent.context != :paragraph
+        result << "</t>" if node.parent.context !~ /paragraph|list_item/
         result
       end
 
