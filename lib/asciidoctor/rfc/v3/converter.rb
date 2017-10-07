@@ -67,7 +67,7 @@ module Asciidoctor
       #
       #   [appendix] # start of back matter if not already started
       #   == Appendix
-      def document node
+      def document(node)
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         ipr = get_header_attribute node, "ipr"
@@ -107,7 +107,7 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :link href,href rel
-      def link node
+      def link(node)
         result = []
         links = node.attr "link"
         return result if links.nil?
@@ -125,11 +125,11 @@ module Asciidoctor
         result
       end
 
-      def inline_break node
+      def inline_break(node)
         %(#{node.text}<br/>)
       end
 
-      def inline_quoted node
+      def inline_quoted(node)
         case node.type
         when :emphasis
           "<em>#{node.text}</em>"
@@ -161,7 +161,7 @@ module Asciidoctor
       #   ....
       #     literal
       #   ....
-      def literal node
+      def literal(node)
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -177,7 +177,7 @@ module Asciidoctor
         result
       end
 
-      def stem node
+      def stem(node)
         literal node
       end
 
@@ -185,7 +185,7 @@ module Asciidoctor
       #   [[id]]
       #   [keepWithNext=true,keepWithPrevious=true] (optional)
       #   Text
-      def paragraph node
+      def paragraph(node)
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -198,7 +198,7 @@ module Asciidoctor
         result
       end
 
-      def open node
+      def open(node)
         paragraph node
       end
 
@@ -206,7 +206,7 @@ module Asciidoctor
       #   [[id]]
       #   [quote, attribution, citation info] # citation info limited to URL
       #   Text
-      def quote node
+      def quote(node)
         result = []
         id = set_header_attribute "anchor", node.id
         quotedFrom = set_header_attribute "quotedFrom", node.attr("attribution")
@@ -242,7 +242,7 @@ module Asciidoctor
       #     Content
       #   ====
       # @note admonitions within preamble are notes. Elsewhere, they are comments.
-      def admonition node
+      def admonition(node)
         result = []
         if node.parent.context == :preamble
           if $seen_abstract
@@ -273,7 +273,7 @@ module Asciidoctor
       #     * [[[ref4]]] C
       #     * [[[ref4]]] D
       # @note ulist repurposed as reference list
-      def reflist node
+      def reflist(node)
         # TODO reference/front not supported
         result = []
         node.items.each do |item|
@@ -306,7 +306,7 @@ module Asciidoctor
       #   == Normative|Informative References
       #   * [[[ref1]]] Ref [must provide references as list]
       #   * [[[ref2]]] Ref
-      def section node
+      def section(node)
         result = []
         if node.attr("style") == "bibliography"
           $xreftext = {}
@@ -346,7 +346,7 @@ module Asciidoctor
       #   |===
       #   |col | col
       #   |===
-      def table node
+      def table(node)
         has_body = false
         result = []
         id = set_header_attribute "anchor", node.id
@@ -388,7 +388,7 @@ module Asciidoctor
         result 
       end
 
-      def listing node
+      def listing(node)
         listing(node, 3)
       end
 
@@ -397,7 +397,7 @@ module Asciidoctor
       #   [empty=true,compact] (optional)
       #   * A
       #   * B
-      def ulist node
+      def ulist(node)
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -436,7 +436,7 @@ module Asciidoctor
       #   [compact,start=n,group=n] (optional)
       #   . A
       #   . B
-      def olist node
+      def olist(node)
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -467,7 +467,7 @@ module Asciidoctor
       #   [horizontal,compact] (optional)
       #   A:: B
       #   C:: D
-      def dlist node
+      def dlist(node)
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -505,7 +505,7 @@ module Asciidoctor
       #   NOTE: note
       #
       # @note (boilerplate is ignored)
-      def preamble node
+      def preamble(node)
         result = []
         $seen_abstract = false
         result << node.content
@@ -521,7 +521,7 @@ module Asciidoctor
       #   ****
       #   Sidebar
       #   ****
-      def sidebar node
+      def sidebar(node)
         result = []
         id = set_header_attribute "anchor", node.id
         result << "<aside#{id}>"
@@ -535,7 +535,7 @@ module Asciidoctor
       #   ====
       #   Example
       #   ====
-      def example node
+      def example(node)
         result = []
         id = set_header_attribute "anchor", node.id
         result << "<figure#{id}>"
@@ -551,7 +551,7 @@ module Asciidoctor
         result
       end
 
-      def inline_image node
+      def inline_image(node)
         result = []
         result << "<figure>" if node.parent.context != :example
         align = get_header_attribute node, "align"
@@ -570,7 +570,7 @@ module Asciidoctor
       #   [link=xxx,align=left|center|right,alt=alt_text,type]
       #   image::filename[]
       # @note ignoring width, height attributes
-      def image node
+      def image(node)
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -596,7 +596,7 @@ module Asciidoctor
       #   ----
       #   code
       #   ----
-      def listing node
+      def listing(node)
         result = []
         result << "<figure>" if node.parent.context != :example
         align = nil
