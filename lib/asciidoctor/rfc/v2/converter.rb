@@ -350,27 +350,6 @@ module Asciidoctor
       end
 
       # Syntax:
-      #   = Title
-      #   Author
-      #   :HEADER
-      #
-      #   ABSTRACT
-      #
-      #   NOTE: note
-      #
-      #   (boilerplate is ignored)
-      def preamble(node)
-        result = []
-        $seen_abstract = false
-        result << node.content
-        if $seen_abstract
-          result << "</abstract>"
-        end
-        result << "</front><middle>"
-        result
-      end
-
-      # Syntax:
       #   [[id]]
       #   .Title
       #   [align,alt,suppress-title]
@@ -401,25 +380,12 @@ module Asciidoctor
         result
       end
 
-      def inline_image(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = get_header_attribute node, "align"
-        alt = get_header_attribute node, "alt"
-        link = (node.image_uri node.target)
-        src = set_header_attribute node, "src", link
-        type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
-        result << "<artwork#{align}#{alt}#{type}#{src}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
-      end
-
       # Syntax:
       #   [[id]]
       #   .Name
       #   [link=xxx,align=left|center|right,alt=alt_text,type]
       #   image::filename[]
-      #   ignoring width, height attributes
+      # @note ignoring width, height attributes
       def image(node)
         result = []
         result << "<figure>" if node.parent.context != :example
