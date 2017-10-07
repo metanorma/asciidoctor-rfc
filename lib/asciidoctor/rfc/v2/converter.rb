@@ -277,7 +277,7 @@ module Asciidoctor
           terms = node.attr "terms"
           "<iref#{item}#{subitem}/>"
           "<iref#{item}#{subitem}/>"
-          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(": ")}") if terms.size > 2
+          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2
         end
       end
 

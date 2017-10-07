@@ -318,7 +318,7 @@ module Asciidoctor
           node.blocks.each { |b| result << reflist(b) }
           result << "</references>"
           unless $xreftext.empty?
-            result.unshift( $xreftext.keys.map { | k | %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
+            result.unshift($xreftext.keys.map { |k| %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
           end
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false
@@ -353,7 +353,7 @@ module Asciidoctor
         result << %(<table#{id}>)
         result << %(<name>#{node.title}</name>) if node.title?
         # TODO iref belongs here
-        [:head, :body, :foot].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+        [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
           has_body = true if tblsec == :body
           # id = set_header_attribute "anchor", tblsec.id
           # not supported
