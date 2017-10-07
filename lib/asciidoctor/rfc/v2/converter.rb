@@ -25,11 +25,6 @@ module Asciidoctor
         outfilesuffix ".xml"
       end
 
-      def convert(node, transform = nil, opts = {})
-        transform ||= node.node_name
-        opts.empty? ? (send transform, node) : (send transform, node, opts)
-      end
-
       alias :pass :content
       alias :embedded :content
       alias :sidebar :content
@@ -42,13 +37,9 @@ module Asciidoctor
       alias :inline_button :skip
       alias :inline_kbd :skip
       alias :inline_menu :skip
+
       alias :verse :content
       alias :quote :content
-
-      def document_ns_attributes(_doc)
-        # ' xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its"'
-        nil
-      end
 
       def document(node)
         # =Title

@@ -25,15 +25,6 @@ module Asciidoctor
         outfilesuffix '.xml'
       end
 
-      def convert(node, transform = nil, opts = {})
-        transform ||= node.node_name
-        opts.empty? ? (send transform, node) : (send transform, node, opts)
-      end
-
-      def skip node, name = nil
-        skip node, name
-      end
-
       alias :pass :content
       alias :embedded :content
       alias :audio :skip
@@ -45,30 +36,8 @@ module Asciidoctor
       alias :inline_button :skip
       alias :inline_kbd :skip
       alias :inline_menu :skip
+
       alias :inline_callout :content
-
-      def get_header_attribute node, attr, default = nil
-        if (node.attr? dash(attr)) 
-          %( #{attr}="#{node.attr dash(attr)}") 
-        elsif default.nil? 
-          nil 
-        else 
-          %( #{attr}="#{default}")
-        end
-      end
-
-      def set_header_attribute attr, val
-        if val.nil? 
-          nil 
-        else
-          %( #{attr}="#{val}")
-        end
-      end
-
-      def document_ns_attributes doc
-        #' xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its"'
-        nil
-      end
 
       def document node
 =begin
