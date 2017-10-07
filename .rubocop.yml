@@ -13,6 +13,9 @@ Rails:
 Metrics/AbcSize:
   Enabled: false
 
+Metrics/LineLength:
+  Enabled: false
+
 Metrics/ModuleLength:
   Enabled: false
 
@@ -23,4 +26,7 @@ Metrics/PerceivedComplexity:
   Enabled: false
 
 Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Naming/VariableName:
   Enabled: false

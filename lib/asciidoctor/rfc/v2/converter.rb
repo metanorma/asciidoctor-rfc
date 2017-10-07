@@ -233,7 +233,7 @@ module Asciidoctor
         revdate = node.attr("date") if revdate.nil?
         # date is mandatory in v2: use today
         revdate = DateTime.now.iso8601 if revdate.nil?
-        warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date) 
+        warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
         unless revdate.nil?
           begin
             revdate.gsub!(/T.*$/, "")
@@ -268,7 +268,7 @@ module Asciidoctor
       def inline_indexterm(node)
         # supports only primary and secondary terms
         # primary attribute (highlighted major entry) not supported
-        if node.type == :visible 
+        if node.type == :visible
           item = set_header_attribute "item", node.text
           "#{node.text}<iref#{item}/>"
         else
@@ -473,7 +473,7 @@ module Asciidoctor
                    when "all"
                      "all"
                    when "rows"
-                     "none"  # not supported 
+                     "none" # not supported
                    when "cols"
                      "full"
                    when "none"
@@ -507,7 +507,7 @@ module Asciidoctor
                       end
               entry_start = %(<ttcol#{id}#{align}#{width}>)
               cell_content = cell.text
-              rowlength += cell_content.size 
+              rowlength += cell_content.size
               result1 << %(#{entry_start}#{cell_content}</ttcol>)
             end
             result << result1
@@ -526,7 +526,7 @@ module Asciidoctor
             result1 = []
             row.each do |cell|
               cell_content = cell.text
-              rowlength += cell_content.size 
+              rowlength += cell_content.size
               result1 << %(<c>#{cell_content}</c>)
             end
             result << result1
@@ -539,10 +539,6 @@ module Asciidoctor
 
         warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
         result
-      end
-
-      def listing(node)
-        listing(node, 2)
       end
 
       def ulist(node)
@@ -691,7 +687,7 @@ module Asciidoctor
         result << "<figure>" if node.parent.context != :example
         align = get_header_attribute node, "align"
         alt = get_header_attribute node, "alt"
-        link =  (node.image_uri node.target)
+        link = (node.image_uri node.target)
         src = set_header_attribute node, "src", link
         type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
         result << "<artwork#{align}#{alt}#{type}#{src}/>"
