@@ -4,6 +4,16 @@ require "asciidoctor"
 module Asciidoctor
   module RFC
     module Converter
+      def convert(node, transform = nil, opts = {})
+        transform ||= node.node_name
+        opts.empty? ? (send transform, node) : (send transform, node, opts)
+      end
+
+      def document_ns_attributes(_doc)
+        # ' xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its"'
+        nil
+      end
+
       def content(node)
         node.content
       end
@@ -11,24 +21,6 @@ module Asciidoctor
       def skip node, name = nil
         warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
         nil
-      end
-
-      def get_header_attribute node, attr, default = nil
-        if (node.attr? dash(attr)) 
-          %( #{attr}="#{node.attr dash(attr)}") 
-        elsif default.nil? 
-          nil 
-        else 
-          %( #{attr}="#{default}")
-        end
-      end
-
-      def set_header_attribute attr, val
-        if val.nil? 
-          nil 
-        else
-          %( #{attr}="#{val}")
-        end
       end
 
       def authorname node, suffix
@@ -138,6 +130,23 @@ module Asciidoctor
         camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
       end
 
+      def get_header_attribute node, attr, default = nil
+        if (node.attr? dash(attr)) 
+          %( #{attr}="#{node.attr dash(attr)}") 
+        elsif default.nil? 
+          nil 
+        else 
+          %( #{attr}="#{default}")
+        end
+      end
+
+      def set_header_attribute attr, val
+        if val.nil? 
+          nil 
+        else
+          %( #{attr}="#{val}")
+        end
+      end
     end
   end
 end
