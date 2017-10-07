@@ -16,7 +16,7 @@ xdescribe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="RFC" stream="IETF" value="000000"/>
       <seriesInfo name="" value="000000"/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
       </front><middle>
       </middle>
