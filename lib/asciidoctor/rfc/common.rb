@@ -117,7 +117,7 @@ module Asciidoctor
             revdate.gsub!(/T.*$/, "")
             d = Date.iso8601 revdate
             day = set_header_attribute "day", d.day
-            month = set_header_attribute "month", d.month
+            month = set_header_attribute "month", Date::MONTHNAMES[d.month]
             year = set_header_attribute "year", d.year
             result << "<date#{day}#{month}#{year}/>"
           rescue
