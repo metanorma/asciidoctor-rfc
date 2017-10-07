@@ -1,5 +1,6 @@
 = AsciiDoctor-RFC
 :source-highlighter: coderay
+:icons: font 
 
 https://travis-ci.org/riboseinc/asciidoctor-rfc[image:https://travis-ci.org/riboseinc/asciidoctor-rfc.svg?branch=master[Build Status]]
 
@@ -120,9 +121,71 @@ The author listing is optional, and more detailed author attributes are given in
 |`:number:` | rfc@number | |
 |`:series-no:` | rfc@seriesNo | |
 |`:xmllang:` | rfc@xml:lang | |
+|`:fullname:` | front/author@fullname | front/author@fullname |
+|`:forename_initials:` | front/author@initials | front/author@initials |distinct from Asciidoc `:initials:` attribute, which includes surname
+|`:lastname:` |front/author@surname | front/author@surname |
+|`:role:` |front/author@role | front/author@role |
+|`:organization:` |front/author/organization | front/author@organization |
+|`:organization_abbrev:` |  front/author/organization@abbrev | |
+|`:email:` |front/author/address/email | front/author/address/email |
+|`:fax:` |front/author/address/facsimile | front/author/address/facsimile |
+|`:uri:` |front/author/address/uri | front/author/address/uri |
+|`:phone:` |front/author/address/phone | front/author/address/phone |
+|`:postal-line:` | | front/author/address/postal/postalLine | multiple lines are concatenated with "\ ". postal-line is mutually exclusive with the presence of street, city, region, country and code attributes
+|`:street:` |front/author/address/postal/street | front/author/address/postal/street | multiple lines are concatenated with "\ ".
+|`:city:` |front/author/address/postal/city | front/author/address/city |
+|`:region:` |front/author/address/postal/region | front/author/address/region |
+|`:country:` |front/author/address/postal/country | front/author/address/country |
+|`:code:` |front/author/address/postal/code | front/author/address/code |
+|`:fullname_2:` | front/author@fullname | front/author@fullname | Attributes of a second, third etc author are given by appending `_2`, `_3` etc to the attribute name
+|`:forename_initials_2:` | front/author@initials | front/author@initials |distinct from Asciidoc `:initials:` attribute, which includes surname
+|`:lastname_2:` |front/author@surname | front/author@surname |
+|`:role_2:` |front/author@role | front/author@role |
+|`:organization_2:` |front/author/organization | front/author@organization |
+|`:organization_abbrev_2:` |  front/author/organization@abbrev | |
+|`:email_2:` |front/author/address/email | front/author/address/email |
+|`:fax_2:` |front/author/address/facsimile | front/author/address/facsimile |
+|`:uri_2:` |front/author/address/uri | front/author/address/uri |
+|`:phone_2:` |front/author/address/phone | front/author/address/phone |
+|`:postal-line_2:` | | front/author/address/postal/postalLine | multiple lines are concatenated with "\ ". postal-line is mutually exclusive with the presence of street, city, region, country and code attributes
+|`:street_2:` |front/author/address/postal/street | front/author/address/postal/street | multiple lines are concatenated with "\ ".
+|`:city_2:` |front/author/address/postal/city | front/author/address/city |
+|`:region_2:` |front/author/address/postal/region | front/author/address/region |
+|`:country_2:` |front/author/address/postal/country | front/author/address/country |
+|`:code_2:` |front/author/address/postal/code | front/author/address/code |
+|`:revdate:` |front/date@day, front/date@month, front/date@year | front/date@day, front/date@month, front/date@year | For consistency with Asciidoc, `:revdate:` is given as an ISO 8601 date; the converter breaks it down into day, month name and year
+|`:area:` | front/area| front/area | comma delimited
+|`:workgroup:` |front/workgroup | front/workgroup | comma delimited
+|`:keyword:` |front/keyword | front/keyword | comma delimited
+|`:link:` _URL_ | | front/link@href = _URL_ |
+|`:link:` _URL REL_ | | front/link@href = _URL_, front/link@rel = _REL_ | REL values drawn from https://tools.ietf.org/html/rfc7669[RFC 7669]
 |===
 
+=== Preamble
 
+Any paragraphs following the document header are treated as the abstract (`front/abstract`), whether or not they are in abstract style. The abstract is terminated by either the first section header (which ends the document preamble), or an admonition (e.g. note).
+
+Any admonitions before the first section header are treated as notes (`font/note`).
+
+[source,asciidoc]
+----
+[[abstract-id]]<1>
+[abstract]
+This is an abstract<2> 
+
+NOTE: This is a note<3>
+
+[NOTE,remove-in-rfc=true]<4>
+.Note 2 Title<5>
+===
+This is another note<3>
+===
+----
+<1> front/abstract@anchor; attribute only available in v3
+<2> front/abstract
+<3> front/note
+<4> front/note@removeInRFC; attribute only available in v3
+<5> v2: front/note@title; v3: front/note/name
 
 
 [source,asciidoc]
@@ -388,9 +451,6 @@ Author;Author_2;Author_3
 :workgroup {front/workgroup} (comma delimited)
 :keyword {front/keyword} (comma delimited)
 
-:link URL {<front/link href=URL/>},URL REL {<front/link href=URL rel=REL/>} 
-  (for REL see https://tools.ietf.org/html/rfc7669)
-
 [abstract] {front/abstract}
 The first paragraph between the document header is automatically parsed as an abstract, 
 whether or not it is in abstract style.
@@ -551,7 +611,7 @@ Here are a few technical guidelines to follow:
 1. Write tests to support your new feature.
 1. Make sure the entire test suite passes locally and on CI.
 1. Open a Pull Request.
-1. ihttps://github.com/thoughtbot/guides/tree/master/protocol/git#write-a-feature[Squash your commits] after receiving feedback.
+1. https://github.com/thoughtbot/guides/tree/master/protocol/git#write-a-feature[Squash your commits] after receiving feedback.
 1. Party!
 
 == Credits
