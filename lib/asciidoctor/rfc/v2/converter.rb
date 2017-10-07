@@ -12,7 +12,6 @@ module Asciidoctor
     #
     # Features drawn from https://github.com/miekg/mmark/wiki/Syntax and
     # https://github.com/riboseinc/rfc2md
-
     class Converter
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
