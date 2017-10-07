@@ -1,4 +1,5 @@
 require "asciidoctor/rfc/converter"
+require "asciidoctor/rfc/v2/front"
 
 module Asciidoctor
   module RFC::V2
@@ -12,6 +13,8 @@ module Asciidoctor
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
       include ::Asciidoctor::RFC::Converter
+
+      include ::Asciidoctor::RFC::V2::Front
 
       register_for "rfc2"
 
@@ -41,37 +44,37 @@ module Asciidoctor
       alias :verse :content
       alias :quote :content
 
+      # Syntax:
+      #   =Title
+      #   Author
+      #   :category
+      #   :consensus
+      #   :doc-name
+      #   :number
+      #
+      #   :ipr
+      #   :obsoletes
+      #   :updates
+      #   :submissionType
+      #   :indexInclude
+      #   :ipr-extract
+      #   :sort-refs
+      #   :sym-refs
+      #   :toc-include
+      #
+      #   ABSTRACT
+      #
+      #   NOTEs
+      #
+      #   ==first title
+      #   CONTENT
+      #
+      #   [bibliography] # start of back matter
+      #   == Bibliography
+      #
+      #   [appendix] # start of back matter if not already started
+      #   == Appendix
       def document(node)
-        # =Title
-        # Author
-        # :category
-        # :consensus
-        # :doc-name
-        # :number
-        #
-        # :ipr
-        # :obsoletes
-        # :updates
-        # :submissionType
-        # :indexInclude
-        # :ipr-extract
-        # :sort-refs
-        # :sym-refs
-        # :toc-include
-        #
-        # ABSTRACT
-        #
-        # NOTEs
-        #
-        # ==first title
-        # CONTENT
-        #
-        # [bibliography] # start of back matter
-        # == Bibliography
-        #
-        # [appendix] # start of back matter if not already started
-        # == Appendix
-        #
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         category = get_header_attribute node, "category"
@@ -104,161 +107,6 @@ module Asciidoctor
         end
 
         result * "\n"
-      end
-
-      def front(node)
-        # = Title
-        # Author
-        # :METADATA
-        result = []
-        result << "<front>"
-        abbrev = get_header_attribute node, "abbrev"
-        result << "<title#{abbrev}>#{node.doctitle}</title>"
-        result << (author node)
-        result << (date node)
-        result << (area node)
-        result << (workgroup node)
-        result << (keyword node)
-      end
-
-      def organization(node, suffix)
-        result = []
-        organization = node.attr("organization#{suffix}")
-        organization_abbrev = node.attr("organization_abbrev#{suffix}")
-        abbrev = set_header_attribute "abbrev", organization_abbrev
-        result << "<organization#{abbrev}>#{organization}</organization>" unless organization.nil?
-        result
-      end
-
-      def address(node, suffix)
-        result = []
-        postalline = nil
-        street = node.attr("street#{suffix}")
-        city = node.attr("city#{suffix}")
-        region = node.attr("region#{suffix}")
-        country = node.attr("country#{suffix}")
-        code = node.attr("code#{suffix}")
-        phone = node.attr("phone#{suffix}")
-        email = node.attr("email#{suffix}")
-        facsimile = node.attr("fax#{suffix}")
-        uri = node.attr("uri#{suffix}")
-        if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
-          (not street.nil?)
-          result << "<address>"
-          if not street.nil?
-            result << "<postal>"
-            if postalline.nil?
-              street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
-              result << "<city>#{city}</city>" unless city.nil?
-              result << "<region>#{region}</region>" unless region.nil?
-              result << "<code>#{code}</code>" unless code.nil?
-              result << "<country>#{country}</country>" unless country.nil?
-            else
-              postalline&.split("\\ ")&.each { |p| result << "<postalLine>#{p}</postalLine>" }
-            end
-            result << "</postal>"
-          end
-          result << "<phone>#{phone}</phone>" unless phone.nil?
-          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
-          result << "<email>#{email}</email>" unless email.nil?
-          result << "<uri>#{uri}</uri>" unless uri.nil?
-          result << "</address>"
-        end
-        result
-      end
-
-      def author(node)
-        # = Title
-        # Author;Author_2;Author_3
-        # :fullname
-        # :lastname
-        # :organization
-        # :email
-        # :fullname_2
-        # :lastname_2
-        # :organization_2
-        # :email_2
-        # :fullname_3
-        # :lastname_3
-        # :organization_3
-        # :email_3
-        # recurse: author, author_2, author_3...
-        result = []
-        result << author1(node, "")
-        i = 2
-        loop do
-          suffix = "_#{i}"
-          author = node.attr("author#{suffix}")
-          if author.nil?
-            break
-          end
-          result << author1(node, suffix)
-          i += 1
-        end
-        result.flatten
-      end
-
-      def author1(node, suffix)
-        # = Title
-        # Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
-        # :fullname
-        # :lastname
-        # :forename_initials (excludes surname, unlike Asciidoc "initials" attribute)
-        # :organization
-        # :organization_abbrev
-        # :email
-        # :role
-        # :fax
-        # :uri
-        # :phone
-        # :street (lines broken up by "\ ")
-        # :city
-        # :region
-        # :country
-        # :code
-        result = []
-        result << authorname(node, suffix)
-        result << organization(node, suffix)
-        result << address(node, suffix)
-        result << "</author>"
-        result
-      end
-
-      def date(node)
-        # = Title
-        # Author
-        # :revdate or :date
-        result = []
-        revdate = node.attr("revdate")
-        revdate = node.attr("date") if revdate.nil?
-        # date is mandatory in v2: use today
-        revdate = DateTime.now.iso8601 if revdate.nil?
-        warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
-        unless revdate.nil?
-          begin
-            revdate.gsub!(/T.*$/, "")
-            d = Date.iso8601 revdate
-            day = set_header_attribute "day", d.day
-            month = set_header_attribute "month", Date::MONTHNAMES[d.month]
-            year = set_header_attribute "year", d.year
-            result << "<date#{day}#{month}#{year}/>"
-          rescue
-            # nop
-          end
-        end
-        result
-      end
-
-      def area(node)
-        area(node)
-      end
-
-      def workgroup(node)
-        workgroup(node)
-      end
-
-      def keyword(node)
-        keyword(node)
       end
 
       def inline_anchor(node)
@@ -306,13 +154,14 @@ module Asciidoctor
         end
       end
 
+      # Syntax:
+      #   [[id]]
+      #   .Name
+      #   [align=left|center|right,alt=alt_text,type] (optional)
+      #   ....
+      #     literal
+      #   ....
       def literal(node)
-        # [[id]]
-        # .Name
-        # [align=left|center|right,alt=alt_text,type] (optional)
-        # ....
-        #   literal
-        # ....
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -335,9 +184,10 @@ module Asciidoctor
         literal node
       end
 
+      # Syntax:
+      #   [[id]]
+      #   Text
       def paragraph(node)
-        #    [[id]]
-        #    Text
         result = []
         if (node.parent.context == :preamble) && (not $seen_abstract)
           result << "<abstract>"
@@ -352,29 +202,30 @@ module Asciidoctor
         paragraph node
       end
 
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :HEADER
+      #
+      #   ABSTRACT
+      #
+      #   NOTE: note
+      #
+      #   [NOTE]
+      #   .Title (in preamble)
+      #   ====
+      #     Content
+      #   ====
+      #
+      #     [NOTE] (in preamble)
+      #     [NOTE,source=name] (in body)
+      #   .Title
+      #   ====
+      #     Content
+      #   ====
+      #
+      # @note admonitions within preamble are notes. Elsewhere, they are comments.
       def admonition(node)
-        #    = Title
-        #    Author
-        #    :HEADER
-        #
-        #    ABSTRACT
-        #
-        # NOTE: note
-        #
-        #    [NOTE]
-        #    .Title (in preamble)
-        #    ====
-        #      Content
-        #    ====
-        #
-        #      [NOTE] (in preamble)
-        #      [NOTE,source=name] (in body)
-        #    .Title
-        #    ====
-        #      Content
-        #    ====
-        #
-        # admonitions within preamble are notes. Elsewhere, they are comments.
         result = []
         if node.parent.context == :preamble
           if $seen_abstract
@@ -419,16 +270,16 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   == title
+      #   Content
+      #
+      #   [bibliography]
+      #   == Normative|Informative References
+      #   * [[[ref1]]] Ref [must provide references as list]
+      #   * [[[ref2]]] Ref
       def section(node)
-        # [[id]]
-        # == title
-        # Content
-        #
-        # [bibliography]
-        # == Normative|Informative References
-        # * [[[ref1]]] Ref [must provide references as list]
-        # * [[[ref2]]] Ref
-        #
         result = []
         if node.attr("style") == "bibliography"
           $xreftext = {}
@@ -455,13 +306,14 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   .Title
+      #   [suppress-title,align,style]
+      #   |===
+      #   |col | col
+      #   |===
       def table(node)
-        # [[id]]
-        # .Title
-        # [suppress-title,align,style]
-        # |===
-        # |col | col
-        # |===
         has_body = false
         result = []
         id = set_header_attribute "anchor", node.id
@@ -541,9 +393,10 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   * A
+      #   * B
       def ulist(node)
-        #    * A
-        #    * B
         result = []
         result << "<t>" if node.parent.context !~ /paragraph|list_item/
         style = set_header_attribute "style", "symbols"
@@ -573,10 +426,11 @@ module Asciidoctor
         upperroman: "format %I",
       }).default = "numbers"
 
+      # Syntax:
+      #   [start=n] (optional)
+      #   . A
+      #   . B
       def olist(node)
-        #    [start=n] (optional)
-        #    . A
-        #    . B
         result = []
         result << "<t>" if node.parent.context !~ /paragraph|list_item/
         counter = set_header_attribute "counter", node.attr("start")
@@ -598,10 +452,11 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   [hangIndent=n] (optional)
+      #   A:: B
+      #   C:: D
       def dlist(node)
-        #    [hangIndent=n] (optional)
-        #    A:: B
-        #    C:: D
         result = []
         result << "<t>" if node.parent.context !~ /paragraph|list_item/
         hangIndent = get_header_attribute node, "hangIndent"
@@ -632,16 +487,17 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :HEADER
+      #
+      #   ABSTRACT
+      #
+      #   NOTE: note
+      #
+      #   (boilerplate is ignored)
       def preamble(node)
-        #    = Title
-        #    Author
-        #    :HEADER
-        #
-        #    ABSTRACT
-        #
-        # NOTE: note
-        #
-        #    (boilerplate is ignored)
         result = []
         $seen_abstract = false
         result << node.content
@@ -652,13 +508,14 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   .Title
+      #   [align,alt,suppress-title]
+      #   ====
+      #   Example
+      #   ====
       def example(node)
-        # [[id]]
-        # .Title
-        # [align,alt,suppress-title]
-        # ====
-        # Example
-        # ====
         result = []
         id = set_header_attribute "anchor", node.id
         alt = set_header_attribute "alt", node.alt
@@ -695,12 +552,13 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   .Name
+      #   [link=xxx,align=left|center|right,alt=alt_text,type]
+      #   image::filename[]
+      #   ignoring width, height attributes
       def image(node)
-        # [[id]]
-        # .Name
-        # [link=xxx,align=left|center|right,alt=alt_text,type]
-        # image::filename[]
-        # ignoring width, height attributes
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -715,15 +573,14 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   .name
+      #   [source,type,src=uri] (src is mutually exclusive with listing content) (v3)
+      #   [source,type,src=uri,align,alt] (src is mutually exclusive with listing content) (v2)
+      #   ----
+      #   code
+      #   ----
       def listing(node)
-=begin
-.name
-[source,type,src=uri] (src is mutually exclusive with listing content) (v3)
-[source,type,src=uri,align,alt] (src is mutually exclusive with listing content) (v2)
-----
-code
-----
-=end
         result = []
         result << "<figure>" if node.parent.context != :example
         align = set_header_attribute "align", node.title

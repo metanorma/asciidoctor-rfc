@@ -33,30 +33,33 @@ module Asciidoctor
         result
       end
 
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :area x, y
       def area(node)
-        # = Title
-        # Author
-        # :area x, y
         result = []
         area = node.attr("area")
         area&.split(/, ?/)&.each { |a| result << "<area>#{a}</area>" }
         result
       end
 
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :workgroup x, y
       def workgroup(node)
-        # = Title
-        # Author
-        # :workgroup x, y
         result = []
         workgroup = node.attr("workgroup")
         workgroup&.split(/, ?/)&.each { |a| result << "<workgroup>#{a}</workgroup>" }
         result
       end
 
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :keyword x, y
       def keyword(node)
-        # = Title
-        # Author
-        # :keyword x, y
         result = []
         keyword = node.attr("keyword")
         keyword&.split(/, ?/)&.each { |a| result << "<keyword>#{a}</keyword>" }
