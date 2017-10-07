@@ -28,22 +28,6 @@ module Asciidoctor
         outfilesuffix ".xml"
       end
 
-      alias :pass :content
-      alias :embedded :content
-      alias :sidebar :content
-      alias :audio :skip
-      alias :colist :skip
-      alias :floating_title :skip
-      alias :page_break :skip
-      alias :thematic_break :skip
-      alias :video :skip
-      alias :inline_button :skip
-      alias :inline_kbd :skip
-      alias :inline_menu :skip
-
-      alias :verse :content
-      alias :quote :content
-
       # Syntax:
       #   =Title
       #   Author
@@ -107,10 +91,6 @@ module Asciidoctor
         end
 
         result * "\n"
-      end
-
-      def inline_anchor(node)
-        inline_anchor(node)
       end
 
       def inline_indexterm(node)
@@ -180,10 +160,6 @@ module Asciidoctor
         result
       end
 
-      def stem(node)
-        literal node
-      end
-
       # Syntax:
       #   [[id]]
       #   Text
@@ -196,10 +172,6 @@ module Asciidoctor
         id = set_header_attribute "anchor", node.id
         result << "<t#{id}>#{node.content}</t>"
         result
-      end
-
-      def open(node)
-        paragraph node
       end
 
       # Syntax:
@@ -600,6 +572,25 @@ module Asciidoctor
         result << "</figure>" if node.parent.context != :example
         result
       end
+
+      alias_method :pass, :content
+      alias_method :embedded, :content
+      alias_method :sidebar, :content
+      alias_method :audio, :skip
+      alias_method :colist, :skip
+      alias_method :floating_title, :skip
+      alias_method :page_break, :skip
+      alias_method :thematic_break, :skip
+      alias_method :video, :skip
+      alias_method :inline_button, :skip
+      alias_method :inline_kbd, :skip
+      alias_method :inline_menu, :skip
+
+      alias_method :stem, :literal
+      alias_method :open, :paragraph
+
+      alias_method :verse, :content
+      alias_method :quote, :content
     end
   end
 end

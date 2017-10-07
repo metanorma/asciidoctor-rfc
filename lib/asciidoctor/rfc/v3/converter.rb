@@ -28,20 +28,6 @@ module Asciidoctor
         outfilesuffix ".xml"
       end
 
-      alias :pass :content
-      alias :embedded :content
-      alias :audio :skip
-      alias :colist :skip
-      alias :floating_title :skip
-      alias :page_break :skip
-      alias :thematic_break :skip
-      alias :video :skip
-      alias :inline_button :skip
-      alias :inline_kbd :skip
-      alias :inline_menu :skip
-
-      alias :inline_callout :content
-
       # Syntax:
       #   =Title
       #   Author
@@ -177,10 +163,6 @@ module Asciidoctor
         result
       end
 
-      def stem(node)
-        literal node
-      end
-
       # Syntax:
       #   [[id]]
       #   [keepWithNext=true,keepWithPrevious=true] (optional)
@@ -196,10 +178,6 @@ module Asciidoctor
         keepWithPrevious = get_header_attribute node, "keepWithPrevious"
         result << "<t#{id}#{keepWithNext}#{keepWithPrevious}>#{node.content}</t>"
         result
-      end
-
-      def open(node)
-        paragraph node
       end
 
       # Syntax:
@@ -581,10 +559,6 @@ module Asciidoctor
         result
       end
 
-      def verse
-        quote node
-      end
-
       # Syntax:
       #   .name
       #   [source,type,src=uri] (src is mutually exclusive with listing content) (v3)
@@ -612,6 +586,24 @@ module Asciidoctor
         result << "</figure>" if node.parent.context != :example
         result
       end
+
+      alias_method :pass, :content
+      alias_method :embedded, :content
+      alias_method :audio, :skip
+      alias_method :colist, :skip
+      alias_method :floating_title, :skip
+      alias_method :page_break, :skip
+      alias_method :thematic_break, :skip
+      alias_method :video, :skip
+      alias_method :inline_button, :skip
+      alias_method :inline_kbd, :skip
+      alias_method :inline_menu, :skip
+
+      alias_method :stem, :literal
+      alias_method :open, :paragraph
+      alias_method :verse, :quote
+
+      alias_method :inline_callout, :content
     end
   end
 end
