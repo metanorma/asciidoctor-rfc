@@ -14,10 +14,10 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
 
-      <date day="1" month="1" year="2070"/>
+      <date day="1" month="January" year="2070"/>
 
       </front><middle>
       </middle>
@@ -38,10 +38,10 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
 
-      <date day="1" month="1" year="1970"/>
+      <date day="1" month="January" year="1970"/>
 
       </front><middle>
       </middle>
@@ -63,10 +63,10 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
 
-      <date day="1" month="1" year="2070"/>
+      <date day="1" month="January" year="2070"/>
 
       </front><middle>
       </middle>

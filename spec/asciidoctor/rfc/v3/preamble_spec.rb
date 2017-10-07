@@ -7,7 +7,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Author
       :docName:
 
-      = Lorem
+      == Lorem
 
       Ipsum.
     INPUT
@@ -17,7 +17,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
 
       </front><middle>
@@ -38,7 +38,7 @@ describe Asciidoctor::RFC::V3::Converter do
 
       Preamble content.
 
-      = Lorem
+      == Lorem
 
       Ipsum.
     INPUT
@@ -48,7 +48,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
 
       <abstract>
