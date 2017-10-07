@@ -73,12 +73,12 @@ Author;Author_2;Author_3
 :ipr {rfc@ipr}
 :obsoletes {rfc@obsoletes}
 :updates {rfc@updates}
-:submissionType {rfc@submissionType} (default is "IETF")
-:indexInclude {rfc@indexInclude}
-:iprExtract {rfc@iprExtract}
-:sortRefs {rfc@sortRefs}
-:symRefs {rfc@symRefs}
-:tocInclude {rfc@tocInclude}
+:submission-type {rfc@submissionType} (default is "IETF")
+:index-include {rfc@indexInclude}
+:ipr-extract {rfc@iprExtract}
+:sort-refs {rfc@sortRefs}
+:sym-refs {rfc@symRefs}
+:toc-include {rfc@tocInclude}
 
 :name rfc-nnnn | Internet-Draft-Name * {front/seriesInfo@value}
   {front/seriesInfo@name is either "RFC" or "Internet-Draft"}
@@ -101,7 +101,7 @@ Author;Author_2;Author_3
 :fax {front/author/address/facsimile}
 :uri {front/author/address/uri}
 :phone {front/author/address/phone}
-:postalLine {front/author/address/postal/postalline} (concatenated with "\ ") 
+:postal-line {front/author/address/postal/postalLine} (concatenated with "\ ") 
   (mutually exclusive with following address fields)
 :street {front/author/address/postal/street} 
 :city {front/author/address/postal/city} 
@@ -119,7 +119,7 @@ Author;Author_2;Author_3
 :fax_2 {front/author/address/facsimile}
 :uri_2 {front/author/address/uri}
 :phone_2 {front/author/address/phone}
-:postalLine_2 {front/author/address/postal/postalline} (concatenated with "\ ") 
+:postal-line_2 {front/author/address/postal/postalLine} (concatenated with "\ ") 
   (mutually exclusive with following address fields)
 :street_2 {front/author/address/postal/street} 
 :city_2 {front/author/address/postal/city} 
@@ -149,7 +149,7 @@ Any admonitions between the abstract and the first section.
 ===
 
 [[id]] {middle/section@anchor}
-[removeInRFC=true,toc=include|exclude|default,sectnums] 
+[remove-in-rfc=true,toc=include|exclude|default,sectnums] 
   {middle/section@removeInRFC, middle/section@toc, middle/section@numbered}
 == Section title {middle/section/name}
 Content content content {middle/section/t}
@@ -166,7 +166,7 @@ _Italic_ {.../em} *Bold* {.../strong} `Monospace` {.../tt}
 [bcp14]#MUST NOT# {.../bcp14}
 
 [[id]] {.../t@anchor}
-[keepWithNext=true,keepWithPrevious=true] {.../t@keepWithNext, .../t@keepWithPrevious}
+[keep-with-next=true,keep-with-previous=true] {.../t@keepWithNext, .../t@keepWithPrevious}
 Paragraph text {.../t}
 
 [[id]] {.../blockquote@anchor}
@@ -204,7 +204,7 @@ or literal (artwork) {.../figure/artwork}
 
 [[id]] 
 .Figure 2
-[link=xxx,align=left|center|righti,alt=alt_text]
+[link=xxx,align=left|center|right,alt=alt_text]
   {.../figure/artwork@src, .../figure/artwork@align, .../figure/artwork@alt}
 image::filename[] {.../figure/artwork}
 
@@ -249,7 +249,7 @@ Sidebar {.../aside}
 [bibliography]
 == Normative References
 * [[[crossref]]] {back/references/reference@anchor} Reference1 {back/references/reference/refcontent}
-[quoteTitle=false,target=uri,annotation=xyz]
+[quote-title=false,target=uri,annotation=xyz]
   {back/references/reference/refcontent@quoteTitle, back/references/reference/refcontent@target,
   back/references/reference/refcontent@annotation}
 * [[[crossref2,xreftext]]] Reference2
@@ -310,14 +310,14 @@ Author;Author_2;Author_3
   format of each entry: Firstname Middlename(s) Lastname <Email>
 :category {rfc@category}
 :consensus {rfc@consensus}
-:docName {rfc@docName}
+:doc-name {rfc@docName}
 :number {rfc@number}
 :ipr {rfc@ipr}
 :obsoletes {rfc@obsoletes}
 :updates {rfc@updates}
-:submissionType {rfc@submissionType} (default is "IETF")
-:iprExtract {rfc@iprExtract}
-:seriesNo {rfc@seriesNo}
+:submission-type {rfc@submissionType} (default is "IETF")
+:ipr-extract {rfc@iprExtract}
+:series-no {rfc@seriesNo}
 :xmllang {rfc@xml:lang}
 
 :fullname {front/author@fullname} (redundant with author line above)
@@ -347,9 +347,7 @@ Author;Author_2;Author_3
 :fax_2 {front/author/address/facsimile}
 :uri_2 {front/author/address/uri}
 :phone_2 {front/author/address/phone}
-:postalLine_2 {front/author/address/postal/postalline} (concatenated with "\ ") 
-  (mutually exclusive with following address fields)
-:street_2 {front/author/address/postal/street} 
+:street_2 {front/author/address/postal/street}   (concatenated with "\ ")
 :city_2 {front/author/address/postal/city} 
 :region_2 {front/author/address/postal/region} 
 :country_2 {front/author/address/postal/country} 
@@ -439,7 +437,7 @@ postamble {.../figure/postamble}
 . A {.../list/t}
 . B
 
-[hangIndent=n] {.../list@hangIndent}
+[hang-indent=n] {.../list@hangIndent}
 A:: {.../list[@style="hanging"]/t@hangText} B {.../list[@style="hanging"]/t}
 [[id]] {.../list/t@anchor} C:: [[id]] {.../list/t@anchor} D
 

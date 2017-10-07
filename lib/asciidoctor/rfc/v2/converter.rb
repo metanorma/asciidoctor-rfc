@@ -70,7 +70,7 @@ module Asciidoctor
         # Author
         # :category
         # :consensus
-        # :docName
+        # :doc-name
         # :number
         #
         # :ipr
@@ -78,10 +78,10 @@ module Asciidoctor
         # :updates
         # :submissionType
         # :indexInclude
-        # :iprExtract
-        # :sortRefs
-        # :symRefs
-        # :tocInclude
+        # :ipr-extract
+        # :sort-refs
+        # :sym-refs
+        # :toc-include
         #
         # ABSTRACT
         #
