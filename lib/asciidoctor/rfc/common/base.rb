@@ -2,8 +2,8 @@ require "date"
 require "asciidoctor"
 
 module Asciidoctor
-  module RFC
-    module Common
+  module RFC::Common
+    module Base
       def convert(node, transform = nil, opts = {})
         transform ||= node.node_name
         opts.empty? ? (send transform, node) : (send transform, node, opts)
