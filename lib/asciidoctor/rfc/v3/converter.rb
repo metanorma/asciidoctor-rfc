@@ -1,4 +1,4 @@
-require_relative "../common"
+require "asciidoctor/rfc/converter"
 
 module Asciidoctor
   module RFC::V3
@@ -11,6 +11,7 @@ module Asciidoctor
     class Converter
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
+      include ::Asciidoctor::RFC::Converter
 
       register_for 'rfc3'
 
@@ -29,12 +30,8 @@ module Asciidoctor
         opts.empty? ? (send transform, node) : (send transform, node, opts)
       end
 
-      def content node
-        Asciidoctor::RFC::Common.content node
-      end
-
       def skip node, name = nil
-        Asciidoctor::RFC::Common.skip node, name
+        skip node, name
       end
 
       alias :pass :content
@@ -233,6 +230,52 @@ Author
         result
       end
 
+      def organization node, suffix
+        result = []
+        organization = node.attr("organization#{suffix}")
+        abbrev = nil
+        result << "<organization#{abbrev}>#{organization}</organization>" unless organization.nil?
+        result
+      end
+
+      def address node, suffix
+        result = []
+        postalline = node.attr("postalline#{suffix}")
+        street = node.attr("street#{suffix}")
+        city = node.attr("city#{suffix}")
+        region = node.attr("region#{suffix}")
+        country = node.attr("country#{suffix}")
+        code = node.attr("code#{suffix}")
+        phone = node.attr("phone#{suffix}")
+        email = node.attr("email#{suffix}")
+        facsimile = node.attr("fax#{suffix}")
+        uri = node.attr("uri#{suffix}")
+        if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
+          (not street.nil?)
+          result << "<address>"
+          if not street.nil?
+            result << "<postal>"
+            if postalline.nil?
+              street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
+              result << "<city>#{city}</city>" unless city.nil?
+              result << "<region>#{region}</region>" unless region.nil?
+              result << "<code>#{code}</code>" unless code.nil?
+              result << "<country>#{country}</country>" unless country.nil?
+            else
+              postalline&.split("\\ ")&.each { |p| result << "<postalLine>#{p}</postalLine>" }
+            end
+            result << "</postal>"
+          end
+          result << "<phone>#{phone}</phone>" unless phone.nil?
+          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
+          result << "<email>#{email}</email>" unless email.nil?
+          result << "<uri>#{uri}</uri>" unless uri.nil?
+          result << "</address>"
+        end
+        result
+      end
+
+
       def author node
 =begin
 = Title
@@ -287,36 +330,34 @@ Author (contains author firstname lastname middlename authorinitials email: Firs
 :code
 =end
         result = []
-        result << Asciidoctor::RFC::Common.authorname(node, suffix)
-        result << Asciidoctor::RFC::Common.organization(node, suffix, 3)
-        result << Asciidoctor::RFC::Common.address(node, suffix, 3)
+        result << authorname(node, suffix)
+        result << organization(node, suffix)
+        result << address(node, suffix)
         result << "</author>"
         result
 
       end
 
       def date node
-        Asciidoctor::RFC::Common.date(node, 3)
-      end
-
-      def area node
-        Asciidoctor::RFC::Common.area(node)
-      end
-
-      def workgroup node
-        Asciidoctor::RFC::Common.workgroup(node)
-      end
-
-      def keyword node
-        Asciidoctor::RFC::Common.keyword(node)
-      end
-
-      def inline_anchor(node)
-        Asciidoctor::RFC::Common.inline_anchor(node)
-      end
-
-      def inline_indexterm node
-        Asciidoctor::RFC::Common.inline_indexterm(node)
+        # = Title
+        # Author
+        # :revdate or :date
+        result = []
+        revdate = node.attr("revdate")
+        revdate = node.attr("date") if revdate.nil?
+        unless revdate.nil?
+          begin
+            revdate.gsub!(/T.*$/, "")
+            d = Date.iso8601 revdate
+            day = set_header_attribute "day", d.day
+            month = set_header_attribute "month", Date::MONTHNAMES[d.month]
+            year = set_header_attribute "year", d.year
+            result << "<date#{day}#{month}#{year}/>"
+          rescue
+            # nop
+          end
+        end
+        result
       end
 
       def inline_break node
@@ -454,7 +495,7 @@ NOTE: note
           removeInRFC = get_header_attribute node, "removeInRFC"
           result << "<note#{removeInRFC}>"
           result << "<name>#{node.title}</name>" unless node.title.nil?
-          result << (Asciidoctor::RFC::Common.paragraph1 node)
+          result << (paragraph1 node)
           result << "</note>"
         else
           id = set_header_attribute "anchor", node.id
@@ -595,7 +636,7 @@ Content
       end
 
       def listing node
-        Asciidoctor::RFC::Common.listing(node, 3)
+        listing(node, 3)
       end
 
       def ulist node
@@ -769,11 +810,36 @@ Example
     end
 
     def inline_image node
-      Asciidoctor::RFC::Common.inline_image(node, 3)
+      result = []
+      result << "<figure>" if node.parent.context != :example
+      align = get_header_attribute node, "align"
+      alt = get_header_attribute node, "alt"
+      link =  (node.image_uri node.target)
+      src = set_header_attribute node, "src", link
+      type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
+      result << "<artwork#{align}#{alt}#{type}#{src}/>"
+      result << "</figure>" if node.parent.context != :example
+      result
     end
 
     def image node
-      Asciidoctor::RFC::Common.image(node, 3)
+      # [[id]]
+      # .Name
+      # [link=xxx,align=left|center|right,alt=alt_text,type]
+      # image::filename[]
+      # ignoring width, height attributes
+      result = []
+      result << "<figure>" if node.parent.context != :example
+      id = set_header_attribute "anchor", node.id
+      align = get_header_attribute node, "align"
+      alt = set_header_attribute "alt", node.alt
+      link = (node.image_uri node.target)
+      src = set_header_attribute node, "src", link
+      type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
+      name = nil
+      result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
+      result << "</figure>" if node.parent.context != :example
+      result
     end
 
 
@@ -781,5 +847,33 @@ Example
       quote node
     end
 
+    def listing node
+=begin
+.name
+[source,type,src=uri] (src is mutually exclusive with listing content) (v3)
+[source,type,src=uri,align,alt] (src is mutually exclusive with listing content) (v2)
+----
+code
+----
+=end
+      result = []
+      result << "<figure>" if node.parent.context != :example
+      align = nil
+      alt = nil
+      tag = "sourcecode"
+      id = set_header_attribute "anchor", node.id
+      name = set_header_attribute "name", node.title
+      type = set_header_attribute "type", node.attr("language")
+      src = set_header_attribute "src", node.attr("src")
+      result << "<#{tag}#{id}#{align}#{name}#{type}#{src}#{alt}>"
+      if src.nil?
+        node.lines.each do |line|
+          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        end
+      end
+      result << "</#{tag}>"
+      result << "</figure>" if node.parent.context != :example
+      result
+    end
   end
 end
