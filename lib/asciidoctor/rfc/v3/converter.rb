@@ -3,7 +3,7 @@ require "asciidoctor/rfc/v3/front"
 
 module Asciidoctor
   module RFC::V3
-    # A {Converter} implementation that generates RFC XML output, a format used to 
+    # A {Converter} implementation that generates RFC XML output, a format used to
     # format RFC proposals (https://tools.ietf.org/html/rfc7991)
     #
     # Features drawn from https://github.com/miekg/mmark/wiki/Syntax and
@@ -16,7 +16,7 @@ module Asciidoctor
 
       include ::Asciidoctor::RFC::V3::Front
 
-      register_for 'rfc3'
+      register_for "rfc3"
 
       $seen_back_matter = false
       $seen_abstract = false
@@ -25,7 +25,7 @@ module Asciidoctor
       def initialize(backend, opts)
         super
         # basebackend 'html'
-        outfilesuffix '.xml'
+        outfilesuffix ".xml"
       end
 
       alias :pass :content
@@ -80,7 +80,7 @@ module Asciidoctor
         tocInclude = get_header_attribute node, "tocInclude"
         submissionType = get_header_attribute node, "submissionType", "IETF"
         t = Time.now.getutc
-        preptime = set_header_attribute "preptime", 
+        preptime = set_header_attribute "preptime",
           sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)
         version = set_header_attribute "version", "3"
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}
@@ -113,7 +113,7 @@ module Asciidoctor
         return result if links.nil?
         links.split(/,/).each do |l|
           m = /^(\S+)\s+(\S+)$/.match(l)
-          if m.nil?  
+          if m.nil?
             href = set_header_attribute "href", l
             result << "<link#{href}/>"
           else
@@ -121,7 +121,7 @@ module Asciidoctor
             rel = set_header_attribute "rel", m[2]
             result << "<link#{href}#{rel}/>"
           end
-        end 
+        end
         result
       end
 
@@ -170,7 +170,7 @@ module Asciidoctor
         type = set_header_attribute "type", "ascii-art"
         result << "<artwork#{id}#{align}#{alt}#{type}>"
         node.lines.each do |line|
-          result << line.gsub(/\&/,"&amp;").gsub(/</,"&lt;").gsub(/>/,"&gt;")
+          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
         end
         result << "</artwork>"
         result << "</figure>" if node.parent.context != :example
@@ -211,7 +211,7 @@ module Asciidoctor
         id = set_header_attribute "anchor", node.id
         quotedFrom = set_header_attribute "quotedFrom", node.attr("attribution")
         citationInfo = node.attr "citetitle"
-        if !citationInfo.nil? && citationInfo =~  URI::DEFAULT_PARSER.make_regexp
+        if !citationInfo.nil? && citationInfo =~ URI::DEFAULT_PARSER.make_regexp
           cite = set_header_attribute "cite", citationInfo
         end
         result << "<blockquote#{id}#{quotedFrom}#{cite}>"
@@ -220,7 +220,7 @@ module Asciidoctor
         result
       end
 
-      # Syntax: 
+      # Syntax:
       #   = Title
       #   Author
       #   :HEADER
@@ -368,7 +368,7 @@ module Asciidoctor
               colspan_attribute = set_header_attribute "colspan", cell.colspan
               rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
               align = set_header_attribute("align", cell.attr("halign"))
-              cell_tag_name = (tblsec == :head || cell.style == :header ? 'th' : 'td')
+              cell_tag_name = (tblsec == :head || cell.style == :header ? "th" : "td")
               entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
               cell_content = cell.text
               rowlength += cell_content.size
@@ -385,11 +385,7 @@ module Asciidoctor
         result << "</table>"
 
         warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
-        result 
-      end
-
-      def listing(node)
-        listing(node, 3)
+        result
       end
 
       # Syntax:
@@ -411,7 +407,7 @@ module Asciidoctor
           id = set_header_attribute "anchor", item.id
           if item.blocks?
             result << "<li#{id}>#{item.text}"
-            result << item.content 
+            result << item.content
             result << "</li>"
           else
             result << "<li#{id}>#{item.text}</li>"
@@ -540,7 +536,7 @@ module Asciidoctor
         id = set_header_attribute "anchor", node.id
         result << "<figure#{id}>"
         result << %(<name>#{node.title}</name>) if node.title?
-        # TODO iref 
+        # TODO iref
         result << node.content
         result << "</figure>"
         result.blocks.each do |b|
@@ -556,7 +552,7 @@ module Asciidoctor
         result << "<figure>" if node.parent.context != :example
         align = get_header_attribute node, "align"
         alt = get_header_attribute node, "alt"
-        link =  (node.image_uri node.target)
+        link = (node.image_uri node.target)
         src = set_header_attribute node, "src", link
         type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
         result << "<artwork#{align}#{alt}#{type}#{src}/>"

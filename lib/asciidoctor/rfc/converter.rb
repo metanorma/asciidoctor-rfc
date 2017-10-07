@@ -67,11 +67,11 @@ module Asciidoctor
         case node.type
         when :xref
           # format attribute not supported
-          unless (text = node.text) || (text = node.attributes['path'])
-            refid = node.attributes['refid']
+          unless (text = node.text) || (text = node.attributes["path"])
+            refid = node.attributes["refid"]
             text = %([#{refid}])
           end
-          target = node.target.gsub(/^#/,"")
+          target = node.target.gsub(/^#/, "")
           %(<xref target="#{target}">#{text}</xref>)
         when :link
           %(<eref target="#{target}">#{node.text}</eref>)
@@ -111,22 +111,22 @@ module Asciidoctor
       end
 
       def dash(camel_cased_word)
-        camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
+        camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
       end
 
       def get_header_attribute(node, attr, default = nil)
-        if (node.attr? dash(attr)) 
-          %( #{attr}="#{node.attr dash(attr)}") 
-        elsif default.nil? 
-          nil 
-        else 
+        if node.attr? dash(attr)
+          %( #{attr}="#{node.attr dash(attr)}")
+        elsif default.nil?
+          nil
+        else
           %( #{attr}="#{default}")
         end
       end
 
       def set_header_attribute(attr, val)
-        if val.nil? 
-          nil 
+        if val.nil?
+          nil
         else
           %( #{attr}="#{val}")
         end
