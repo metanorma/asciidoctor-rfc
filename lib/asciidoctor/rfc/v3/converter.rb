@@ -42,34 +42,32 @@ module Asciidoctor
 
       alias :inline_callout :content
 
+      # Syntax:
+      #   =Title
+      #   Author
+      #   :ipr
+      #   :obsoletes
+      #   :updates
+      #   :submissionType
+      #   :indexInclude
+      #   :iprExtract
+      #   :sortRefs
+      #   :symRefs
+      #   :tocInclude
+      #
+      #   ABSTRACT
+      #
+      #   NOTEs
+      #
+      #   ==first title
+      #   CONTENT
+      #
+      #   [bibliography] # start of back matter
+      #   == Bibliography
+      #
+      #   [appendix] # start of back matter if not already started
+      #   == Appendix
       def document node
-=begin
-=Title
-Author
-:ipr
-:obsoletes
-:updates
-:submissionType
-:indexInclude
-:iprExtract
-:sortRefs
-:symRefs
-:tocInclude
-
-ABSTRACT
-
-NOTEs
-
-==first title
-CONTENT
-
-[bibliography] # start of back matter
-== Bibliography
-
-[appendix] # start of back matter if not already started
-== Appendix
-
-=end
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         ipr = get_header_attribute node, "ipr"
@@ -105,12 +103,11 @@ CONTENT
         result * "\n"
       end
 
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :link href,href rel
       def link node
-=begin
-= Title
-Author
-:link href,href rel
-=end
         result = []
         links = node.attr "link"
         return result if links.nil?
@@ -149,9 +146,7 @@ Author
         when :subscript
           "<sub>#{node.text}</sub>"
         else
-=begin
-[bcp14]#MUST NOT#
-=end
+          # [bcp14]#MUST NOT#
           if node.role == "bcp14"
             "<bcp14>#{node.text}</bcp14>"
           else
@@ -160,14 +155,13 @@ Author
         end
       end
 
+      # Syntax:
+      #   [[id]]
+      #   [align=left|center|right,alt=alt_text] (optional)
+      #   ....
+      #     literal
+      #   ....
       def literal node
-=begin
-[[id]]
-[align=left|center|right,alt=alt_text] (optional)
-....
-  literal
-....
-=end
         result = []
         result << "<figure>" if node.parent.context != :example
         id = set_header_attribute "anchor", node.id
@@ -187,13 +181,11 @@ Author
         literal node
       end
 
-
+      # Syntax:
+      #   [[id]]
+      #   [keepWithNext=true,keepWithPrevious=true] (optional)
+      #   Text
       def paragraph node
-=begin
-  [[id]]
-  [keepWithNext=true,keepWithPrevious=true] (optional)
-  Text
-=end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -210,12 +202,11 @@ Author
         paragraph node
       end
 
+      # Syntax:
+      #   [[id]]
+      #   [quote, attribution, citation info] # citation info limited to URL
+      #   Text
       def quote node
-=begin
-[[id]]
-[quote, attribution, citation info] # citation info limited to URL
-Text
-=end
         result = []
         id = set_header_attribute "anchor", node.id
         quotedFrom = set_header_attribute "quotedFrom", node.attr("attribution")
@@ -229,31 +220,29 @@ Text
         result
       end
 
+      # Syntax: 
+      #   = Title
+      #   Author
+      #   :HEADER
+      #
+      #   ABSTRACT
+      #
+      #   NOTE: note
+      #
+      #   [NOTE]
+      #   .Title (in preamble)
+      #   ====
+      #     Content
+      #   ====
+      #
+      #     [NOTE,removeInRFC=true] (in preamble)
+      #     [NOTE,display=true|false,source=name] (in body)
+      #   .Title
+      #   ====
+      #     Content
+      #   ====
+      # @note admonitions within preamble are notes. Elsewhere, they are comments.
       def admonition node
-=begin
-  = Title
-  Author
-  :HEADER
-
-  ABSTRACT
-
-NOTE: note
-
-  [NOTE]
-  .Title (in preamble)
-  ====
-    Content
-  ====
-
-    [NOTE,removeInRFC=true] (in preamble)
-    [NOTE,display=true|false,source=name] (in body)
-  .Title
-  ====
-    Content
-  ====
-
-=end
-        # admonitions within preamble are notes. Elsewhere, they are comments.
         result = []
         if node.parent.context == :preamble
           if $seen_abstract
@@ -276,16 +265,15 @@ NOTE: note
         result
       end
 
-      # ulist repurposed as reference list
+      # Syntax:
+      #   * [[[ref1]]] A
+      #   [quoteTitle=false,target=uri,annotation=x] (optional)
+      #   * [[[ref2]]] B
+      #   * [[[ref3]]] (Referencegroup: no content)
+      #     * [[[ref4]]] C
+      #     * [[[ref4]]] D
+      # @note ulist repurposed as reference list
       def reflist node
-=begin
-  * [[[ref1]]] A
-  [quoteTitle=false,target=uri,annotation=x] (optional)
-  * [[[ref2]]] B
-  * [[[ref3]]] (Referencegroup: no content)
-    * [[[ref4]]] C
-    * [[[ref4]]] D
-=end
         # TODO reference/front not supported
         result = []
         node.items.each do |item|
@@ -300,27 +288,25 @@ NOTE: note
             quoteTitle = get_header_attribute node, "quoteTitle"
             target = get_header_attribute node, "target"
             annotation = get_header_attribute node, "annotation"
-            # Bug: [[[x]]] within embedded list is processed as [<bibref>]
+            # FIXME: [[[x]]] within embedded list is processed as [<bibref>]
             result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{quoteTitle}#{target}#{annotation} anchor=\"\\1\"><refcontent>")
           end
         end
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   [removeInRFC=true,toc=include|exclude|default] (optional)
+      #   == title
+      #   Content
+      #
+      #   [[id]]
+      #   [bibliography]
+      #   == Normative|Informative References
+      #   * [[[ref1]]] Ref [must provide references as list]
+      #   * [[[ref2]]] Ref
       def section node
-=begin
-[[id]]
-[removeInRFC=true,toc=include|exclude|default] (optional)
-== title
-Content
-
-[[id]]
-[bibliography]
-== Normative|Informative References
-* [[[ref1]]] Ref [must provide references as list]
-* [[[ref2]]] Ref
-
-=end
         result = []
         if node.attr("style") == "bibliography"
           $xreftext = {}
@@ -354,14 +340,13 @@ Content
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   .Title
+      #   |===
+      #   |col | col
+      #   |===
       def table node
-=begin
-[[id]]
-.Title
-|===
-|col | col
-|===
-=end
         has_body = false
         result = []
         id = set_header_attribute "anchor", node.id
@@ -407,13 +392,12 @@ Content
         listing(node, 3)
       end
 
+      # Syntax:
+      #   [[id]]
+      #   [empty=true,compact] (optional)
+      #   * A
+      #   * B
       def ulist node
-=begin
-  [[id]]
-  [empty=true,compact] (optional)
-  * A
-  * B
-=end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -447,13 +431,12 @@ Content
         upperroman: "I"
       }).default = "1"
 
+      # Syntax:
+      #   [[id]]
+      #   [compact,start=n,group=n] (optional)
+      #   . A
+      #   . B
       def olist node
-=begin
-  [[id]]
-  [compact,start=n,group=n] (optional)
-  . A
-  . B
-=end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -479,13 +462,12 @@ Content
         result
       end
 
+      # Syntax:
+      #   [[id]]
+      #   [horizontal,compact] (optional)
+      #   A:: B
+      #   C:: D
       def dlist node
-=begin
-  [[id]]
-  [horizontal,compact] (optional)
-  A:: B
-  C:: D
-=end
         result = []
         if node.parent.context == :preamble and not $seen_abstract
           $seen_abstract = true
@@ -513,20 +495,17 @@ Content
         result
       end
 
-
-
+      # Syntax:
+      #   = Title
+      #   Author
+      #   :HEADER
+      #
+      #   ABSTRACT
+      #
+      #   NOTE: note
+      #
+      # @note (boilerplate is ignored)
       def preamble node
-=begin
-  = Title
-  Author
-  :HEADER
-
-  ABSTRACT
-
-NOTE: note
-
-  (boilerplate is ignored)
-=end
         result = []
         $seen_abstract = false
         result << node.content
@@ -536,112 +515,107 @@ NOTE: note
         result << "</front><middle>"
         result
       end
-    end
 
-
-    def sidebar node
-=begin
-[[id]]
-****
-Sidebar
-****
-=end
-      result = []
-      id = set_header_attribute "anchor", node.id
-      result << "<aside#{id}>"
-      result << cell.content
-      result << "</aside>"
-      result
-    end
-
-
-    def example node
-=begin
-.Title
-====
-Example
-====
-=end
-      result = []
-      id = set_header_attribute "anchor", node.id
-      result << "<figure#{id}>"
-      result << %(<name>#{node.title}</name>) if node.title?
-      # TODO iref 
-      result << node.content
-      result << "</figure>"
-      result.blocks.each do |b|
-        unless b == :listing or b == :image or b == :literal
-          warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.text}"
-        end
+      # Syntax:
+      #   [[id]]
+      #   ****
+      #   Sidebar
+      #   ****
+      def sidebar node
+        result = []
+        id = set_header_attribute "anchor", node.id
+        result << "<aside#{id}>"
+        result << cell.content
+        result << "</aside>"
+        result
       end
-      result
-    end
 
-    def inline_image node
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      align = get_header_attribute node, "align"
-      alt = get_header_attribute node, "alt"
-      link =  (node.image_uri node.target)
-      src = set_header_attribute node, "src", link
-      type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
-      result << "<artwork#{align}#{alt}#{type}#{src}/>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
-
-    def image node
-      # [[id]]
-      # .Name
-      # [link=xxx,align=left|center|right,alt=alt_text,type]
-      # image::filename[]
-      # ignoring width, height attributes
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      id = set_header_attribute "anchor", node.id
-      align = get_header_attribute node, "align"
-      alt = set_header_attribute "alt", node.alt
-      link = (node.image_uri node.target)
-      src = set_header_attribute node, "src", link
-      type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
-      name = nil
-      result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
-      result << "</figure>" if node.parent.context != :example
-      result
-    end
-
-
-    def verse 
-      quote node
-    end
-
-    def listing node
-=begin
-.name
-[source,type,src=uri] (src is mutually exclusive with listing content) (v3)
-[source,type,src=uri,align,alt] (src is mutually exclusive with listing content) (v2)
-----
-code
-----
-=end
-      result = []
-      result << "<figure>" if node.parent.context != :example
-      align = nil
-      alt = nil
-      tag = "sourcecode"
-      id = set_header_attribute "anchor", node.id
-      name = set_header_attribute "name", node.title
-      type = set_header_attribute "type", node.attr("language")
-      src = set_header_attribute "src", node.attr("src")
-      result << "<#{tag}#{id}#{align}#{name}#{type}#{src}#{alt}>"
-      if src.nil?
-        node.lines.each do |line|
-          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+      # Syntax:
+      #   .Title
+      #   ====
+      #   Example
+      #   ====
+      def example node
+        result = []
+        id = set_header_attribute "anchor", node.id
+        result << "<figure#{id}>"
+        result << %(<name>#{node.title}</name>) if node.title?
+        # TODO iref 
+        result << node.content
+        result << "</figure>"
+        result.blocks.each do |b|
+          unless b == :listing or b == :image or b == :literal
+            warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.text}"
+          end
         end
+        result
       end
-      result << "</#{tag}>"
-      result << "</figure>" if node.parent.context != :example
-      result
+
+      def inline_image node
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        align = get_header_attribute node, "align"
+        alt = get_header_attribute node, "alt"
+        link =  (node.image_uri node.target)
+        src = set_header_attribute node, "src", link
+        type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
+        result << "<artwork#{align}#{alt}#{type}#{src}/>"
+        result << "</figure>" if node.parent.context != :example
+        result
+      end
+
+      # Syntax:
+      #   [[id]]
+      #   .Name
+      #   [link=xxx,align=left|center|right,alt=alt_text,type]
+      #   image::filename[]
+      # @note ignoring width, height attributes
+      def image node
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        id = set_header_attribute "anchor", node.id
+        align = get_header_attribute node, "align"
+        alt = set_header_attribute "alt", node.alt
+        link = (node.image_uri node.target)
+        src = set_header_attribute node, "src", link
+        type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
+        name = nil
+        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
+        result << "</figure>" if node.parent.context != :example
+        result
+      end
+
+      def verse
+        quote node
+      end
+
+      # Syntax:
+      #   .name
+      #   [source,type,src=uri] (src is mutually exclusive with listing content) (v3)
+      #   [source,type,src=uri,align,alt] (src is mutually exclusive with listing content) (v2)
+      #   ----
+      #   code
+      #   ----
+      def listing node
+        result = []
+        result << "<figure>" if node.parent.context != :example
+        align = nil
+        alt = nil
+        tag = "sourcecode"
+        id = set_header_attribute "anchor", node.id
+        name = set_header_attribute "name", node.title
+        type = set_header_attribute "type", node.attr("language")
+        src = set_header_attribute "src", node.attr("src")
+        result << "<#{tag}#{id}#{align}#{name}#{type}#{src}#{alt}>"
+        if src.nil?
+          node.lines.each do |line|
+            result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+          end
+        end
+        result << "</#{tag}>"
+        result << "</figure>" if node.parent.context != :example
+        result
+      end
     end
   end
 end
