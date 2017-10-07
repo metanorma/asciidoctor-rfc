@@ -125,34 +125,34 @@ The author listing is optional, and more detailed author attributes are given in
 |`:forename_initials:` | front/author@initials | front/author@initials |distinct from Asciidoc `:initials:` attribute, which includes surname
 |`:lastname:` |front/author@surname | front/author@surname |
 |`:role:` |front/author@role | front/author@role |
-|`:organization:` |front/author/organization | front/author@organization |
-|`:organization_abbrev:` |  front/author/organization@abbrev | |
-|`:email:` |front/author/address/email | front/author/address/email |
-|`:fax:` |front/author/address/facsimile | front/author/address/facsimile |
-|`:uri:` |front/author/address/uri | front/author/address/uri |
-|`:phone:` |front/author/address/phone | front/author/address/phone |
-|`:postal-line:` | | front/author/address/postal/postalLine | multiple lines are concatenated with "\ ". postal-line is mutually exclusive with the presence of street, city, region, country and code attributes
-|`:street:` |front/author/address/postal/street | front/author/address/postal/street | multiple lines are concatenated with "\ ".
-|`:city:` |front/author/address/postal/city | front/author/address/city |
-|`:region:` |front/author/address/postal/region | front/author/address/region |
-|`:country:` |front/author/address/postal/country | front/author/address/country |
-|`:code:` |front/author/address/postal/code | front/author/address/code |
+|`:organization:` |front/author/ organization | front/author/ organization |
+|`:organization_abbrev:` |  front/author/ organization@abbrev | |
+|`:email:` |front/author/ address/email | front/author/ address/email |
+|`:fax:` |front/author/ address/facsimile | front/author/ address/facsimile |
+|`:uri:` |front/author/ address/uri | front/author/ address/uri |
+|`:phone:` |front/author/ address/phone | front/author/ address/phone |
+|`:postal-line:` | | front/author/ address/postal/postalLine | multiple lines are concatenated with "\ ". postal-line is mutually exclusive with the presence of street, city, region, country and code attributes
+|`:street:` |front/author/ address/postal/street | front/author/ address/postal/street | multiple lines are concatenated with "\ ".
+|`:city:` |front/author/ address/postal/city | front/author/ address/city |
+|`:region:` |front/author/ address/postal/region | front/author/ address/region |
+|`:country:` |front/author/ address/postal/country | front/author/ address/country |
+|`:code:` |front/author/ address/postal/code | front/author/ address/code |
 |`:fullname_2:` | front/author@fullname | front/author@fullname | Attributes of a second, third etc author are given by appending `_2`, `_3` etc to the attribute name
 |`:forename_initials_2:` | front/author@initials | front/author@initials |distinct from Asciidoc `:initials:` attribute, which includes surname
 |`:lastname_2:` |front/author@surname | front/author@surname |
 |`:role_2:` |front/author@role | front/author@role |
-|`:organization_2:` |front/author/organization | front/author@organization |
-|`:organization_abbrev_2:` |  front/author/organization@abbrev | |
-|`:email_2:` |front/author/address/email | front/author/address/email |
-|`:fax_2:` |front/author/address/facsimile | front/author/address/facsimile |
-|`:uri_2:` |front/author/address/uri | front/author/address/uri |
-|`:phone_2:` |front/author/address/phone | front/author/address/phone |
-|`:postal-line_2:` | | front/author/address/postal/postalLine | multiple lines are concatenated with "\ ". postal-line is mutually exclusive with the presence of street, city, region, country and code attributes
-|`:street_2:` |front/author/address/postal/street | front/author/address/postal/street | multiple lines are concatenated with "\ ".
-|`:city_2:` |front/author/address/postal/city | front/author/address/city |
-|`:region_2:` |front/author/address/postal/region | front/author/address/region |
-|`:country_2:` |front/author/address/postal/country | front/author/address/country |
-|`:code_2:` |front/author/address/postal/code | front/author/address/code |
+|`:organization_2:` |front/author/ organization | front/author@organization |
+|`:organization_abbrev_2:` |  front/author/ organization@abbrev | |
+|`:email_2:` |front/author/ address/email | front/author/ address/email |
+|`:fax_2:` |front/author/ address/facsimile | front/author/ address/facsimile |
+|`:uri_2:` |front/author/ address/uri | front/author/ address/uri |
+|`:phone_2:` |front/author/ address/phone | front/author/ address/phone |
+|`:postal-line_2:` | | front/author/ address/postal/postalLine | multiple lines are concatenated with "\ ". postal-line is mutually exclusive with the presence of street, city, region, country and code attributes
+|`:street_2:` |front/author/ address/postal/street | front/author/ address/postal/street | multiple lines are concatenated with "\ ".
+|`:city_2:` |front/author/ address/postal/city | front/author/ address/city |
+|`:region_2:` |front/author/ address/postal/region | front/author/ address/region |
+|`:country_2:` |front/author/ address/postal/country | front/author/ address/country |
+|`:code_2:` |front/author/ address/postal/code | front/author/ address/code |
 |`:revdate:` |front/date@day, front/date@month, front/date@year | front/date@day, front/date@month, front/date@year | For consistency with Asciidoc, `:revdate:` is given as an ISO 8601 date; the converter breaks it down into day, month name and year
 |`:area:` | front/area| front/area | comma delimited
 |`:workgroup:` |front/workgroup | front/workgroup | comma delimited
@@ -168,7 +168,7 @@ Any paragraphs following the document header are treated as the abstract (`front
 Any admonitions before the first section header are treated as notes (`font/note`).
 
 [source,asciidoc]
-----
+--
 [[abstract-id]]<1>
 [abstract]
 This is an abstract<2> 
@@ -180,12 +180,83 @@ NOTE: This is a note<3>
 ===
 This is another note<3>
 ===
-----
+--
 <1> front/abstract@anchor; attribute only available in v3
 <2> front/abstract
 <3> front/note
 <4> front/note@removeInRFC; attribute only available in v3
 <5> v2: front/note@title; v3: front/note/name
+
+=== Sections and subsections
+
+[source,asciidoc]
+--
+[[id]]<1> 
+[remove-in-rfc=true,toc=include|exclude|default,sectnums]<2> 
+== Section title<3>
+First paragraph of section<4>
+
+Second paragraph of section<4>
+
+=== Subsection title<5>
+First paragraph of subsection<6>
+
+==== Subsubsection title<7>
+Content content content<8>
+--
+<1> middle/section@anchor
+<2> middle/section@removeInRFC, middle/section@toc, middle/section@numbered; attributes only available in v3
+<3> v2: middle/section@title; v3: middle/section/name
+<4> middle/section/t
+<5> v2: middle/section/section@title; v3: middle/section/section/name
+<6> middle/section/section/t
+<7> v2: middle/section/section/section@title; v3: middle/section/section/section/name
+<8> middle/section/section/section/t
+
+=== Crossreferences
+
+[source,asciidoc]
+--
+Content content content 
+<<crossreference>><1>
+<<crossreference,text>><2>
+http://example.com/[linktext]<3>
+--
+<1> `<xref target="crossreference"/>`
+<2> `<xref target="crossreference">text</xref>`
+<3> `<eref href="http://example.com/">linktext</eref>`
+
+=== Indexing
+
+[source,asciidoc]
+--
+This ((<indexterm>))<1>
+is visible in the text,
+this one is not (((indexterm, index-subterm))).<2>
+--
+<1> `<iref item="indexterm">indexterm</iref>`
+<2> `<iref item="indexterm" subitem="index-subterm"/>`
+
+=== Inline formatting
+
+[source,asciidoc]
+--
+Linebreak: + <1>
+_Italic_<2>
+*Bold*<3>
+`Monospace`<4>
+~subscript~<5>
+^superscript^<6>
+[bcp14]#MUST NOT#<7>
+--
+<1> That is, "+ " at the end of a line. v2: `<vspace/>`; v3: `<br/>`
+<2> v2: `<spanx style="emph">Italic</spanx>`; v3: `<em>Italic</em>`
+<3> v2: `<spanx style="strong">Bold</spanx>`; v3: `<strong>Bold</strong>`
+<4> v2: `<spanx style="verb">Monospace</spanx>`; v3: `<tt>Monospace</tt>`
+<5> v3: `<sub>subscript</sub>`. Not supported in v2; rendered as `_subscript_`
+<6> v3: `<sup>superscript</sup>`. Not supported in v2; rendered as `^superscript^`
+<7> v3: `<bcp14>MUST NOT</bcp14>`. Not supported in v2.
+
 
 
 [source,asciidoc]
