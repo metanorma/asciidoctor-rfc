@@ -18,12 +18,12 @@ module Asciidoctor
         node.content
       end
 
-      def skip node, name = nil
+      def skip(node, name = nil)
         warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
         nil
       end
 
-      def authorname node, suffix
+      def authorname(node, suffix)
         result = []
         authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
         surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
@@ -96,23 +96,7 @@ module Asciidoctor
         end
       end
 
-      def inline_indexterm node
-        # supports only primary and secondary terms
-        # primary attribute (highlighted major entry) not supported
-        if node.type == :visible 
-          item = set_header_attribute "item", node.text
-          "#{node.text}<iref#{item}/>"
-        else
-          item = set_header_attribute "item", terms[0]
-          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
-          terms = node.attr "terms"
-          "<iref#{item}#{subitem}/>"
-          "<iref#{item}#{subitem}/>"
-          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(": ")}") if terms.size > 2
-        end
-      end
-
-      def paragraph1 node
+      def paragraph1(node)
         result = []
         result1 = node.content
         if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
@@ -130,7 +114,7 @@ module Asciidoctor
         camel_cased_word.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
       end
 
-      def get_header_attribute node, attr, default = nil
+      def get_header_attribute(node, attr, default = nil)
         if (node.attr? dash(attr)) 
           %( #{attr}="#{node.attr dash(attr)}") 
         elsif default.nil? 
@@ -140,7 +124,7 @@ module Asciidoctor
         end
       end
 
-      def set_header_attribute attr, val
+      def set_header_attribute(attr, val)
         if val.nil? 
           nil 
         else

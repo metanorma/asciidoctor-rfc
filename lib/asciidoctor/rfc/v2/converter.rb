@@ -121,7 +121,7 @@ module Asciidoctor
         result << (keyword node)
       end
 
-      def organization node, suffix
+      def organization(node, suffix)
         result = []
         organization = node.attr("organization#{suffix}")
         organization_abbrev = node.attr("organization_abbrev#{suffix}")
@@ -130,7 +130,7 @@ module Asciidoctor
         result
       end
 
-      def address node, suffix
+      def address(node, suffix)
         result = []
         postalline = nil
         street = node.attr("street#{suffix}")
@@ -224,7 +224,7 @@ module Asciidoctor
         result
       end
 
-      def date node
+      def date(node)
         # = Title
         # Author
         # :revdate or :date
@@ -249,15 +249,15 @@ module Asciidoctor
         result
       end
 
-      def area node
+      def area(node)
         area(node)
       end
 
-      def workgroup node
+      def workgroup(node)
         workgroup(node)
       end
 
-      def keyword node
+      def keyword(node)
         keyword(node)
       end
 
@@ -266,7 +266,19 @@ module Asciidoctor
       end
 
       def inline_indexterm(node)
-        inline_indexterm(node)
+        # supports only primary and secondary terms
+        # primary attribute (highlighted major entry) not supported
+        if node.type == :visible 
+          item = set_header_attribute "item", node.text
+          "#{node.text}<iref#{item}/>"
+        else
+          item = set_header_attribute "item", terms[0]
+          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
+          terms = node.attr "terms"
+          "<iref#{item}#{subitem}/>"
+          "<iref#{item}#{subitem}/>"
+          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(": ")}") if terms.size > 2
+        end
       end
 
       def inline_break(node)
@@ -707,7 +719,7 @@ module Asciidoctor
         result
       end
 
-      def listing node
+      def listing(node)
 =begin
 .name
 [source,type,src=uri] (src is mutually exclusive with listing content) (v3)
