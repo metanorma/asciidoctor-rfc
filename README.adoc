@@ -96,9 +96,9 @@ The author listing is optional, and more detailed author attributes are given in
 |===
 |Asciidoc markup | v2 element | v3 element | Note
 
-|`[abbrev=x]` | front/title@abbrev | front/title@abbrev |
 |`= Document Title` | front/title | front/title |
 |Author listing | front/author@fullname, front/author@surname, front/author/address/email | front/author@fullname, front/author@surname, front/author/address/email |
+|`:abbrev:` | front/title@abbrev | front/title@abbrev |
 |`:ipr:` | rfc@ipr | rfc@ipr |
 |`:obsoletes:` | rfc@obsoletes | rfc@obsoletes | no need to insert list in brackets, as with MMark; assumed delimited by comma+space
 |`:updates:` | rfc@updates | rfc@updates | no need to insert list in brackets, as with MMark; assumed delimited by comma+space
@@ -169,16 +169,16 @@ Any admonitions before the first section header are treated as notes (`font/note
 
 [source,asciidoc]
 --
-[[abstract-id]]<1>
+[[abstract-id]] <1>
 [abstract]
-This is an abstract<2> 
+This is an abstract <2> 
 
-NOTE: This is a note<3>
+NOTE: This is a note <3>
 
-[NOTE,remove-in-rfc=true]<4>
-.Note 2 Title<5>
+[NOTE,remove-in-rfc=true] <4>
+.Note 2 Title <5>
 ===
-This is another note<3>
+This is another note <3>
 ===
 --
 <1> front/abstract@anchor; attribute only available in v3
@@ -191,18 +191,18 @@ This is another note<3>
 
 [source,asciidoc]
 --
-[[id]]<1> 
-[remove-in-rfc=true,toc=include|exclude|default,sectnums]<2> 
-== Section title<3>
-First paragraph of section<4>
+[[id]] <1> 
+[remove-in-rfc=true,toc=include|exclude|default,sectnums] <2> 
+== Section title <3>
+First paragraph of section <4>
 
-Second paragraph of section<4>
+Second paragraph of section <4>
 
-=== Subsection title<5>
-First paragraph of subsection<6>
+=== Subsection title <5>
+First paragraph of subsection <6>
 
-==== Subsubsection title<7>
-Content content content<8>
+==== Subsubsection title <7>
+Content content content <8>
 --
 <1> middle/section@anchor
 <2> middle/section@removeInRFC, middle/section@toc, middle/section@numbered; attributes only available in v3
@@ -218,9 +218,9 @@ Content content content<8>
 [source,asciidoc]
 --
 Content content content 
-<<crossreference>><1>
-<<crossreference,text>><2>
-http://example.com/[linktext]<3>
+<<crossreference>> <1>
+<<crossreference,text>> <2>
+http://example.com/[linktext] <3>
 --
 <1> `<xref target="crossreference"/>`
 <2> `<xref target="crossreference">text</xref>`
@@ -230,9 +230,9 @@ http://example.com/[linktext]<3>
 
 [source,asciidoc]
 --
-This ((<indexterm>))<1>
+This ((<indexterm>)) <1>
 is visible in the text,
-this one is not (((indexterm, index-subterm))).<2>
+this one is not (((indexterm, index-subterm))). <2>
 --
 <1> `<iref item="indexterm">indexterm</iref>`
 <2> `<iref item="indexterm" subitem="index-subterm"/>`
@@ -242,401 +242,609 @@ this one is not (((indexterm, index-subterm))).<2>
 [source,asciidoc]
 --
 Linebreak: + <1>
-_Italic_<2>
-*Bold*<3>
-`Monospace`<4>
-~subscript~<5>
-^superscript^<6>
-[bcp14]#MUST NOT#<7>
+_Italic_ <2>
+*Bold* <3>
+`Monospace` <4>
+~subscript~ <5>
+^superscript^ <6>
+[bcp14]#MUST NOT#  <7>
 --
 <1> That is, "+ " at the end of a line. v2: `<vspace/>`; v3: `<br/>`
 <2> v2: `<spanx style="emph">Italic</spanx>`; v3: `<em>Italic</em>`
 <3> v2: `<spanx style="strong">Bold</spanx>`; v3: `<strong>Bold</strong>`
 <4> v2: `<spanx style="verb">Monospace</spanx>`; v3: `<tt>Monospace</tt>`
-<5> v3: `<sub>subscript</sub>`. Not supported in v2; rendered as `_subscript_`
-<6> v3: `<sup>superscript</sup>`. Not supported in v2; rendered as `^superscript^`
+<5> v3: `<sub>subscript</sub>`. Not supported in v2; rendered as `\_subscript_`
+<6> v3: `<sup>superscript</sup>`. Not supported in v2; rendered as `\^superscript^`
 <7> v3: `<bcp14>MUST NOT</bcp14>`. Not supported in v2.
 
 
+=== Paragraphs
 
 [source,asciidoc]
 --
-[abbrev=x] {front/title@abbrev}
-= DOCUMENT TITLE {front/title}
-Author;Author_2;Author_3 
-  format of each entry: Firstname Middlename(s) Lastname <Email>
-:ipr {rfc@ipr}
-:obsoletes {rfc@obsoletes}
-:updates {rfc@updates}
-:submission-type {rfc@submissionType} (default is "IETF")
-:index-include {rfc@indexInclude}
-:ipr-extract {rfc@iprExtract}
-:sort-refs {rfc@sortRefs}
-:sym-refs {rfc@symRefs}
-:toc-include {rfc@tocInclude}
-
-:name rfc-nnnn | Internet-Draft-Name * {front/seriesInfo@value}
-  {front/seriesInfo@name is either "RFC" or "Internet-Draft"}
-:status {front/seriesInfo@status} (status of this document)
-:intendedstatus {front/seriesInfo@status} (of internet draft once published as RFC.
-  Given in <seriesinfo> element with empty "name" attribute)
-:rfcstatus {front/seriesInfo@status, front/seriesInfo@value} 
-  (of RFC: "full-standard|bcp|fyi number", or "info|exp|historic".
-  In the latter case, value is empty.
-  Given in <seriesinfo> element with empty "name" attribute)
-:stream {front/seriesInfo@stream} (default is "IETF")
-
-:fullname {front/author@fullname} (redundant with author line above)
-:forename_initials {front/author@initials} 
-  (distinct from Asciidoc :initials attribute, which includes surname)
-:lastname {front/author@surname} (redundant with author line above)
-:role {front/author@role}
-:organization {front/author/organization}
-:email {front/author/address/email} (redundant with author line above)
-:fax {front/author/address/facsimile}
-:uri {front/author/address/uri}
-:phone {front/author/address/phone}
-:postal-line {front/author/address/postal/postalLine} (concatenated with "\ ") 
-  (mutually exclusive with following address fields)
-:street {front/author/address/postal/street} 
-:city {front/author/address/postal/city} 
-:region {front/author/address/postal/region} 
-:country {front/author/address/postal/country} 
-:code {front/author/address/postal/code} 
-
-:fullname_2 {front/author@fullname} (redundant with second entry in author line above)
-:forename_initials_2 {front/author@initials} 
-  (distinct from Asciidoc :initials attribute, which includes surname)
-:lastname_2 {front/author@surname} (redundant with second entry in author line above)
-:role_2 {front/author@role}
-:organization_2 {front/author/organization}
-:email_2 {front/author/address/email} (redundant with second entry in author line above)
-:fax_2 {front/author/address/facsimile}
-:uri_2 {front/author/address/uri}
-:phone_2 {front/author/address/phone}
-:postal-line_2 {front/author/address/postal/postalLine} (concatenated with "\ ") 
-  (mutually exclusive with following address fields)
-:street_2 {front/author/address/postal/street} 
-:city_2 {front/author/address/postal/city} 
-:region_2 {front/author/address/postal/region} 
-:country_2 {front/author/address/postal/country} 
-:code_2 {front/author/address/postal/code} 
-
-:revdate {front/date@day, front/date@month, front/date@year}
-:area {front/area} (comma delimited)
-:workgroup {front/workgroup} (comma delimited)
-:keyword {front/keyword} (comma delimited)
-
-:link URL {<front/link href=URL/>},URL REL {<front/link href=URL rel=REL/>} 
-  (for REL see https://tools.ietf.org/html/rfc7669)
-
-[[id]] {front/abstract@anchor}
-[abstract] {front/abstract}
-The first paragraph between the document header is automatically parsed as an abstract, 
-whether or not it is in abstract style.
-
-NOTE: note
-
-[NOTE,removeInRFC=true] {front/note@removeInRFC}
-.Title {front/note/name}
-===
-Any admonitions between the abstract and the first section.
-===
-
-[[id]] {middle/section@anchor}
-[remove-in-rfc=true,toc=include|exclude|default,sectnums] 
-  {middle/section@removeInRFC, middle/section@toc, middle/section@numbered}
-== Section title {middle/section/name}
-Content content content {middle/section/t}
-<<crossreference>> {.../xref@target}
-<<crossreference,text>> {<xref target="crossreference">text</xref>}
-http://example.com/[linktext] {<eref href="http://example.com/">linktext</eref>}
-
-=== Subsection title {middle/section/section}
-This ((<indexterm>)) {iref@item} is visible in the text,
-this one is not (((indexterm, index-subterm))) {<iref item="indexterm" subitem="index-subterm"/>}.
-Linebreak + {<br/>}
-_Italic_ {.../em} *Bold* {.../strong} `Monospace` {.../tt}
-~subscript~ {.../sub} ^superscript^ {.../sup}
-[bcp14]#MUST NOT# {.../bcp14}
-
-[[id]] {.../t@anchor}
-[keep-with-next=true,keep-with-previous=true] {.../t@keepWithNext, .../t@keepWithPrevious}
-Paragraph text {.../t}
-
-[[id]] {.../blockquote@anchor}
-[quote, attribution, citation info] {.../blockquote@quotedFron, .../blockquote@cite}
-# citation info is limited to a URL
-Quotation {.../blockquote}
-
-[[id]] {.../cref@anchor}
-[NOTE,display=true|false,source=name] {.../cref@display, .../cref@source}
-.Title {.../cref/name}
-====
-Any admonition inside the body of the text is a comment. {.../cref}
-// Note that actual Asciidoc comments are ignored by the converter.
-====
-
-[[id]] {.../figure/sourcecode@anchor}
-.Source code listing {.../figure/sourcecode@name}
-[source,type,src=uri] {.../figure/sourcecode@type, {.../figure/sourcecode@src}}
-# (src is mutually exclusive with listing content)
-----
-begin() { 
-  Source code listing {.../figure/sourcecode}
-}
-----
-
-[[id]] {.../figure@anchor}
-.Figure 1 {.../figure/name}
-====
-[[id]] {.../figure/artwork@anchor}
-[align=left|center|right,alt=alt_text] {.../figure/artwork@align, .../figure/artwork@alt}
-....
-Figures are only permitted to contain listings (sourcecode), images (artwork), 
-or literal (artwork) {.../figure/artwork} 
-....
-
-[[id]] 
-.Figure 2
-[link=xxx,align=left|center|right,alt=alt_text]
-  {.../figure/artwork@src, .../figure/artwork@align, .../figure/artwork@alt}
-image::filename[] {.../figure/artwork}
-
-====
-
-
-[[id]] {.../ul@anchor}
-[empty=true,compact] {.../ul@empty, .../ul@spacing}
-* Unordered list 1 {.../ul/li}
-* [[id]] {.../ul/li@anchor} Unordered list 2
-
-[[id]] {.../ol@anchor}
-[compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] 
-  {.../ol@empty, .../ol@start, .../ol@group, .../ol@type}
-. A {.../ol/li}
-. B
-
-[[id]] {.../dl@anchor}
-[horizontal,compact] {.../dl@hanging, ..../dl@spacing}
-A:: {.../dl/dt} B {.../dl/dd}
-[[id]] {.../dl/dt@anchor} C:: [[id]] {.../dl/dd@anchor} D
-
-[[id]] {.../table@anchor}
-.Table Title {.../table/name}
-|===
-|head | head {.../table/thead/tr/td}
-
-[[id]] {.../table/tbody/tr@anchor}
-h|head {.../table/tbody/tr/th} | [[id]] {.../table/tbody/tr/td@anchor} body {.../table/tbody/tr/td}
-|respects colspan, rowspan| and (horizontal) align attributes of cells
-
-[[id]] {.../table/tbody/tr@anchor}
-|foot | foot {.../table/tfoot/tr/td}
-|===
-
-[[id]] {.../aside@anchor}
-****
-Sidebar {.../aside}
-****
-
-[[id]] {back/references@anchor}
-[bibliography]
-== Normative References
-* [[[crossref]]] {back/references/reference@anchor} Reference1 {back/references/reference/refcontent}
-[quote-title=false,target=uri,annotation=xyz]
-  {back/references/reference/refcontent@quoteTitle, back/references/reference/refcontent@target,
-  back/references/reference/refcontent@annotation}
-* [[[crossref2,xreftext]]] Reference2
-
-[[id]] {back/references@anchor}
-[bibliography]
-== Informative References
-* [[[crossref3]]] {back/references/referencegroup, back/references/referencegroup@anchor}
-** [[[crossref4]]] Reference4 {back/references/referencegroup/reference/refcontent}
-** [[[crossref5]]] Reference5
-
-[[id]] {back/section@anchor}
-[appendix]
-== Appendix 
-Content {back/section}
+[[id]] <1>
+[keep-with-next=true,keep-with-previous=true] <2> 
+Paragraph text <3>
 --
+<1> t@anchor
+<2> t@keepWithNext, t@keepWithPrevious; attributes only available in v3
+<3> `<t>Paragraph text</t>`
 
-== Syntax, v2
-
-The following is a walkthrough of Asciidoc features as they map to RFC XML v2; mappings are given in curly brackets.
+=== Quotes (v3 only)
 
 [source,asciidoc]
 --
-[abbrev=x] {front/title@abbrev}
-= DOCUMENT TITLE {front/title}
-Author;Author_2;Author_3 
-  format of each entry: Firstname Middlename(s) Lastname <Email>
-:category {rfc@category}
-:consensus {rfc@consensus}
-:doc-name {rfc@docName}
-:number {rfc@number}
-:ipr {rfc@ipr}
-:obsoletes {rfc@obsoletes}
-:updates {rfc@updates}
-:submission-type {rfc@submissionType} (default is "IETF")
-:ipr-extract {rfc@iprExtract}
-:series-no {rfc@seriesNo}
-:xmllang {rfc@xml:lang}
+[[id]] <1>
+[quote, attribution, citation info] <2> 
+Quotation <3>
+--
+<1> blockquote@anchor
+<2> blockquote@quotedFrom, blockquote@cite. In RFC XML v3, citation info is limited to a URL.
+<3> `<blockquote>Quotation</blockquote>`
 
-:fullname {front/author@fullname} (redundant with author line above)
-:forename_initials {front/author@initials} 
-  (distinct from Asciidoc :initials attribute, which includes surname)
-:lastname {front/author@surname} (redundant with author line above)
-:role {front/author@role}
-:organization {front/author/organization}
-:organization_abbrev {front/author/organization@abbrev}
-:email {front/author/address/email} (redundant with author line above)
-:fax {front/author/address/facsimile}
-:uri {front/author/address/uri}
-:phone {front/author/address/phone}
-:street {front/author/address/postal/street}  (concatenated with "\ ") 
-:city {front/author/address/postal/city} 
-:region {front/author/address/postal/region} 
-:country {front/author/address/postal/country} 
-:code {front/author/address/postal/code} 
+=== Comments
 
-:fullname_2 {front/author@fullname} (redundant with second entry in author line above)
-:forename_initials_2 {front/author@initials} 
-  (distinct from Asciidoc :initials attribute, which includes surname)
-:lastname_2 {front/author@surname} (redundant with second entry in author line above)
-:role_2 {front/author@role}
-:organization_2 {front/author/organization}
-:email_2 {front/author/address/email} (redundant with second entry in author line above)
-:fax_2 {front/author/address/facsimile}
-:uri_2 {front/author/address/uri}
-:phone_2 {front/author/address/phone}
-:street_2 {front/author/address/postal/street}   (concatenated with "\ ")
-:city_2 {front/author/address/postal/city} 
-:region_2 {front/author/address/postal/region} 
-:country_2 {front/author/address/postal/country} 
-:code_2 {front/author/address/postal/code} 
-
-:revdate {front/date@day, front/date@month, front/date@year}
-:area {front/area} (comma delimited)
-:workgroup {front/workgroup} (comma delimited)
-:keyword {front/keyword} (comma delimited)
-
-[abstract] {front/abstract}
-The first paragraph between the document header is automatically parsed as an abstract, 
-whether or not it is in abstract style.
-
-NOTE: note
-
-[NOTE] 
-.Title {front/note@title}
-===
-Any admonitions between the abstract and the first section.
-===
-
-[[id]] {middle/section@anchor}
-== Section title {middle/section@title}
-Content content content {middle/section/t}
-<<crossreference>> {.../xref@target}
-<<crossreference,text>> {<xref target="crossreference">text</xref>}
-http://example.com/[linktext] {<eref href="http://example.com/">linktext</eref>}
-
-=== Subsection title {middle/section/section}
-This ((<indexterm>)) {iref@item} is visible in the text,
-this one is not (((indexterm, index-subterm))) {<iref item="indexterm" subitem="index-subterm"/>}.
-Linebreak + {<vspace/>}
-_Italic_ {.../spanx[style="emph"]} *Bold* {.../spanx[style="strong"]} `Monospace` {.../spanx[style="verb"]}
-
-[[id]] {.../t@anchor}
-Paragraph text {.../t}
-
-[[id]] {.../cref@anchor}
-[NOTE,source=name] { .../cref@source}
-====
-Any admonition inside the body of the text is a comment. {.../cref}
+[source,asciidoc]
+--
+NOTE: Any admonition inside the body of the text is a comment. <1>
 // Note that actual Asciidoc comments are ignored by the converter.
-====
 
-[[id]] {.../figure/artwork@anchor}
-.Source code listing {.../figure/artwork@name}
-[source,type,src=uri,align,alt] {.../figure/artwork@type, .../figure/artwork@src, ../figure/artwork@align, ../figure/artwork@alt}
-# (src is mutually exclusive with listing content)
+[[id]] <2>
+[NOTE,display=true|false,source=name] <3> 
+.Note Title <4>
+====
+Any admonition inside the body of the text is a comment.
+====
+--
+<1> `<cref>Any admonition inside the body of the text is a comment.</cref>`
+<2> cref@anchor
+<3> cref@display (not supported in v2), cref@source
+<4> cref/name. Not supported in v2.
+
+=== Source code listings
+
+[source,asciidoc]
+--
+[[id]] <1>
+.Source code listing title <2>
+[source,type,src=uri,align,alt] <3>
 ----
 begin() { 
-  Source code listing {.../figure/artwork}
+  Source code listing <4>
 }
 ----
+--
+<1> v2: figure/artwork@anchor; v3: figure/sourcecode@anchor
+<2> v2: figure/artwork@name; v3: figure/sourcecode@name
+<3> v2: figure/artwork@type, figure/artwork@src, figure/artwork@align, figure/artwork@alt; v3: figure/sourcecode@type, figure/sourcecode@src (`align` and `alt` not supported). If `src` is present, the listing is not expected to have any content: content is taken from the hyperlink in the attribute.
+<4> v2: figure/artwork; v3: figure/sourcecode
 
-[[id]] {.../figure@anchor}
-.Figure 1 {.../figure/name}
-[align,alt,suppress-title] {.../figure@align, .../figure@alt, .../figure@supress-title}
+=== ASCII Art and Images
+
+[source,asciidoc]
+--
+[[id]] <1>
+[align,alt,suppress-title] <2>
+.Figure 1 <3>
 ====
-preamble {.../figure/preamble}
+Preamble text <4>
 
-[[id]] {.../figure/artwork@anchor}
-[align=left|center|right,alt=alt_text,type] {.../figure/artwork@align, .../figure/artwork@alt, .../figure/artwork@type}
+[[id]] <5>
+[align=left|center|right,alt=alt_text,type] <6>
 ....
 Figures are only permitted to contain listings (sourcecode), images (artwork), 
-or literal (artwork) {.../figure/artwork} 
+or literal (artwork) <7>
 ....
+[[id]] <5>
+.Figure 2 <8>
+[link=xxx,align=left|center|right,alt=alt_text,type] <9>
+image::filename[] <10>
 
-[[id]]  {.../figure/artwork@anchor}
-.Figure 2 {.../figure/artwork@name}
-[link=xxx,align=left|center|right,alt=alt_text,type]
-  {.../figure/artwork@src, .../figure/artwork@align, .../figure/artwork@alt, .../figure/artwork@type}
-image::filename[] {.../figure/artwork}
-
-postamble {.../figure/postamble}
+Postamble text <11>
 ====
+--
+<1> figure@anchor
+<2> figure/artwork@align, figure/artwork@alt, figure@supress-title; attributes only available in v2
+<3> figure/name
+<4> figure/preamble; only available in v2
+<5> figure/artwork@anchor
+<6> figure/artwork@align, figure/artwork@alt; figure@type (attribute only available in v2)
+<7> figure/artwork
+<8> figure/artwork@name; attributes only available in v2
+<9> figure/artwork@src, figure/artwork@align, figure/artwork@alt; figure/artwork@type (only available in v2, intended to be a MIME type; in v3, populated as either `svg` or `binary-art` depending on file suffix)
+<10> figure/artwork@src
+<11> figure/postamble; only available in v2
 
 
-* Unordered list 1 {.../list[@style="symbols"]/t}
-* [[id]] {.../list/t@anchor} Unordered list 2
+=== Unordered and Ordered Lists
 
-[start=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] 
-  {.../list@start, .../list@type}
-. A {.../list/t}
-. B
+[source,asciidoc]
+--
+[[id]] <1>
+[empty=true,compact] <2>
+* Unordered list 1 <3>
+* [[id]] Unordered list 2 <4>
+** Nested list <5>
 
-[hang-indent=n] {.../list@hangIndent}
-A:: {.../list[@style="hanging"]/t@hangText} B {.../list[@style="hanging"]/t}
-[[id]] {.../list/t@anchor} C:: [[id]] {.../list/t@anchor} D
+[[id]] <6>
+[compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <7>
+. A <8>
+. B <8>
+--
+<1> v3: ul@anchor; attribute only available in v3
+<2> v3: ul@empty, ul@spacing; attributes only available in v3
+<3> v2: list[@style="symbols"]/t; v3: ul/li
+<4> v2: list[@style="symbols"]/t@anchor, list[@style="symbols"]/t; v3: ul/li@anchor, ul/li
+<5> v2: list[@style="symbols"]/t/list[@style="symbols"]/t; v3: ul/li/ul/li
+<6> v3: ol@anchor; attribute only available in v3
+<7> v2: list/start, list@style (`empty` and `group` not available) v3: ol@empty, ol@start, ol@group, ol@type
+<8> v2: list/t; v3: ol/li
 
-[[id]] {.../texttable@anchor}
-.Table Title {.../texttable@title}
-[suppress-title,align,style] {.../texttable@supress-title, .../texttable@align, .../texttable@style}
+=== Definition Lists
+
+[source,asciidoc]
+--
+[[id]] <1>
+[horizontal,compact,hang-indent=n] <2>
+A:: B <3>
+[[id1]] A:: [[id2]] B <4>
+--
+<1> dl@anchor; attribute only available in v3
+<2> dl@hanging (attribute only available in v3), dl@spacing  (attribute only available in v3), list@hangIndent  (attribute only available in v2)
+<3> v2: list[@style="hanging"]/t@hangText, list[@style="hanging"]/t; v3: dl/dt, dl/dd
+<4> v2: list[@style="hanging"]/t@anchor, list[@style="hanging"]/t@anchor, list[@style="hanging"]/t; v3: dl/dt@anchor, dl/dd@anchor. In v2, the latest of the anchors will be used.
+
+=== Tables
+
+The converter respects the Asciidoc (horizontal) align attributes of cells (v2, v3) and colspan, rowspan attributes (v3).
+
+[source,asciidoc]
+--
+[[id]] <1>
+[suppress-title,align,style] <2>
+.Table Title <3>
 |===
-|[[id]] {.../texttable/ttcol@id} head | head {.../texttable/ttcol}
+|[[id]] head | head <4>
 
-h|head {.../texttable/c} | body {texttable/c}
-|respects (horizontal) align attributes of cells
+h|header cell | body cell <5>
+| | [[id]] body cell <6>
 
-|foot | foot {.../texttable/c}
+|foot | foot <7>
 |===
+--
+<1> v2: texttable@anchor; v3: table@anchor
+<2> v2: texttable@supress-title, texttable@align, texttable@style; attributes only available in v2
+<3> v2: texttable@title; v3: table/name
+<4> v2: texttable/ttcol@id (attribute only available in v2), texttable/ttcol; v3: table/thead/tr/td
+<5> v2: texttable/c, texttable/c; v3: table/tbody/tr/th, table/tbody/tr/td
+<6> v3: table/tbody/tr/td@anchor (attribute only available in v3)
+<7> v2: texttable/c; v3: table/tfoot/tr/td  
 
-[[id]] {back/references@anchor}
+=== Sidebar (v3 only)
+
+[source,asciidoc]
+--
+[[id]] <1>
+****
+Sidebar <2>
+****
+--
+<1> aside@anchor
+<2> `<aside>Sidebar</aside>`
+
+=== Referencecs (v2)
+References for v2 are expected to be provided in raw RFC XML v2 format.
+
+[source,asciidoc]
+--
+[[id]] <1>
 [bibliography]
 == Normative References
 ++++
-(raw XML)
-++++ {back/references/reference}
+(raw XML) <2>
+++++ 
 
-[[id]] {back/references@anchor}
+[[id]] <1>
 [bibliography]
 == Informative References
 ++++
-(raw XML)
-++++ {back/references/reference}
-
-[[id]] {back/section@anchor}
-[appendix]
-== Appendix 
-Content {back/section}
+(raw XML) <2>
+++++ 
 --
+<1> back/references@anchor
+<2> back/references/reference
 
-=== Example, v2
+=== References (v3)
 
-=== Example, v3
+[source,asciidoc]
+--
+[[id]] <1>
+[bibliography]
+== Normative References
+* [[[crossref]]]  Reference1 <2>
+[quote-title=false,target=uri,annotation=xyz] <3>
+* [[[crossref2,xreftext]]] Reference2 <4>
+
+[[id]] <1>
+[bibliography]
+== Informative References
+* [[[crossref3]]] <5>
+** [[[crossref4]]] Reference4 <6>
+** [[[crossref5]]] Reference5 <6>
+--
+<1> back/references@anchor
+<2> back/references/reference@anchor, back/references/reference/refcontent
+<3> back/references/reference/refcontent@quoteTitle, back/references/reference/refcontent@target,  back/references/reference/refcontent@annotation
+<4> `<displayreference target=crossreference to=xyz/>`
+<5> back/references/referencegroup@anchor
+<6> back/references/referencegroup/reference/refcontent
+
+=== Appendices
+
+[source,asciidoc]
+--
+[[id]] <1>
+[appendix]
+== Appendix 1 <2> 
+Content <3>
+--
+<1> back/section@anchor
+<2> v2: back/section@title; v3: back/section/name
+<3> back/section/t
+
+
+
+
+
+== Example, v3
+
+
+[source,asciidoc]
+--
+= A Standard for the Transmission of IP Datagrams on Avian Carriers
+David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
+:abbrev: IP Datagrams on Avian Carriers
+:obsoletes: 10, 120
+:updates: 2010, 2120
+:name: rfc-1149
+:rfcstatus: full-standard 1149
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:keyword: this, that
+:revdate: 1990-04-01T00:00:00Z
+:organization: BBN STC
+:phone: (617) 873-4323
+:uri: http://bbn.com
+:street: 10 Moulton Street
+:city: Cambridge
+:code: MA 02238
+:organization_2: BBN STC
+:phone_2: (617) 873-4323
+:street_2: 10 Moulton Street
+:city_2: Cambridge
+:code_2: MA 02238
+:uri_2: http://opoudjis.net
+:link: http://example1.com,http://example2.com author
+
+[abstract]
+Avian carriers can provide high delay, low throughput, and low
+altitude service.  The connection topology is limited to a single
+point-to-point path for each carrier, used with standard carriers,
+but many carriers can be used without significant interference with
+each other, outside of early spring.  This is because of the 3D ether 
+space available to the carriers, in contrast to the 1D ether used by
+IEEE802.3.  The carriers have an intrinsic collision avoidance
+system, which increases availability.  Unlike some network
+technologies, such as packet radio, communication is not limited to
+line-of-sight distance.  Connection oriented service is available in
+some cities, usually based upon a central hub topology.
+
+NOTE: Yes, this is an April Fool's RFC.
+
+[[frame]]
+== Frame Format
+
+The IP _datagram_ is *printed*, on a small scroll of paper, in
+hexadecimal, with each octet separated by whitestuff and blackstuff.
+The scroll of paper is wrapped around one leg of the avian carrier.
+A band of duct tape is used to secure the datagram's edges.  The
+bandwidth is limited to the leg length.  The MTU is variable, and
+paradoxically, generally increases with increased carrier age.  A
+typical MTU is 256 milligrams.  Some datagram padding may be needed.<<gof,2>>
+
+Upon receipt, the duct tape is removed and the paper copy of the
+datagram is optically scanned into a electronically transmittable
+form.<<xxx>>
+
+This document extends OpenPGP and its ECC extension to support SM2, SM3 and SM4:
+
+* support the SM3 hash algorithm for data validation purposes
+* support signatures utilizing the combination of SM3 with other digital
+  signing algorithms, such as RSA, ECDSA and SM2
+* support the SM2 asymmetric encryption algorithm for public key
+  operations
+* support usage of SM2 in combination with supported hash algorithms, such as
+  SHA-256 and SM3
+* support the SM4 symmetric encryption algorithm for data protection purposes
+* defines the OpenPGP profile "OSCCA-SM234" to enable usage of OpenPGP
+  in an OSCCA-compliant manner.
+  
+Algorithm-Specific Fields for SM2DSA keys:
+
+* a variable-length field containing a curve OID, formatted
+  as follows:
+.. a one-octet size of the following field; values 0 and
+   0xFF are reserved for future extensions
+.. octets representing a curve OID.
+*  MPI of an EC point representing a public key
+  
+  
+===  Definitions
+
+OSCCA-compliant:: All cryptographic algorithms used are compliant with OSCCA  regulations.
+SM2DSA:: The elliptic curve digital signature algorithm. <<xxxx>>
+SM2KEP:: The elliptic curve key exchange protocol.
+SM2PKE:: The public key encryption algorithm.
+
+==== Elliptic Curve Formula
+
+[stem]
+++++
+y^2 = x^3 + ax + b
+++++
+
+==== Curve Parameters
+
+[[curveparam1] 
+.Curve Parameters Listing
+====
+....
+p   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+      FFFFFFFF 00000000 FFFFFFFF FFFFFFFF
+a   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+      FFFFFFFF 00000000 FFFFFFFF FFFFFFFC
+b   = 28E9FA9E 9D9F5E34 4D5A9E4B CF6509A7
+      F39789F5 15AB8F92 DDBCBD41 4D940E93
+n   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+      7203DF6B 21C6052B 53BBF409 39D54123
+x_G = 32C4AE2C 1F198119 5F990446 6A39C994
+      8FE30BBF F2660BE1 715A4589 334C74C7
+y_G = BC3736A2 F4F6779C 59BDCEE3 6B692153
+      D0A9877C C62A4740 02DF32E5 2139F0A0
+....
+====
+
+== Supported Algorithms
+
+=== Public Key Algorithms
+
+The SM2 algorithm is supported with the following extension.
+
+NOTE: ECDH is defined in Section 8 of this document.
+
+The following public key algorithm IDs are added to expand Section
+9.1 of RFC4880, "Public-Key Algorithms":
+
+.Table 2
+|===
+|ID | Description of Algorithm
+
+|TBD | SM2
+|===
+
+
+
+== Security Considerations
+
+Security is not generally a problem in normal operation, but special +
+measures [bcp14]#MUST# be taken (such as data encryption) when avian carriers
+are used in a tactical environment.<<pp>> 
+
+[bibliography]
+== References
+
+* [[[pp]]]
+** [[[xxx]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
+  From Journeyman to Master. Addison-Wesley. 1999.
+** [[[xxxx]]] Personal communication.
+* [[[gof,2]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides. Design Patterns:
+  Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
+
+
+
+
+
+== Example, v2
+
+[source,asciidoc]
+--
+\= A Standard for the Transmission of IP Datagrams on Avian Carriers
+David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
+:abbrev: IP Datagrams on Avian Carriers
+:obsoletes: 10, 120
+:updates: 2010, 2120
+:category: info
+:docName: rfc-1149
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:keyword: this, that
+:revdate: 1990-04-01T00:00:00Z
+:organization: BBN STC
+:phone: (617) 873-4323
+:uri: http://bbn.com
+:street: 10 Moulton Street
+:city: Cambridge
+:code: MA 02238
+:organization_2: BBN STC
+:phone_2: (617) 873-4323
+:street_2: 10 Moulton Street
+:city_2: Cambridge
+:code_2: MA 02238
+:uri_2: http://opoudjis.net
+
+
+
+[abstract]
+Avian carriers can provide high delay, low throughput, and low
+altitude service.  The connection topology is limited to a single
+point-to-point path for each carrier, used with standard carriers,
+but many carriers can be used without significant interference with
+each other, outside of early spring.  This is because of the 3D ether 
+space available to the carriers, in contrast to the 1D ether used by
+IEEE802.3.  The carriers have an intrinsic collision avoidance
+system, which increases availability.  Unlike some network
+technologies, such as packet radio, communication is not limited to
+line-of-sight distance.  Connection oriented service is available in
+some cities, usually based upon a central hub topology.
+
+NOTE: Yes, this is an April Fool's RFC.
+
+[[frame]]
+== Frame Format
+
+The IP _datagram_ is *printed*, on a small scroll of paper, in
+hexadecimal, with each octet separated by whitestuff and blackstuff.
+The scroll of paper is wrapped around one leg of the avian carrier.
+A band of duct tape is used to secure the datagram's edges.  The
+bandwidth is limited to the leg length.  The MTU is variable, and
+paradoxically, generally increases with increased carrier age.  A
+typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
+
+Upon receipt, the duct tape is removed and the paper copy of the
+datagram is optically scanned into a electronically transmittable
+form.<<RFC7253>>
+
+This document extends OpenPGP and its ECC extension to support SM2, SM3 and SM4:
+
+* support the SM3 hash algorithm for data validation purposes
+* support signatures utilizing the combination of SM3 with other digital
+  signing algorithms, such as RSA, ECDSA and SM2
+* support the SM2 asymmetric encryption algorithm for public key
+  operations
+* support usage of SM2 in combination with supported hash algorithms, such as
+  SHA-256 and SM3
+* support the SM4 symmetric encryption algorithm for data protection purposes
+* defines the OpenPGP profile "OSCCA-SM234" to enable usage of OpenPGP
+  in an OSCCA-compliant manner.
+  
+Algorithm-Specific Fields for SM2DSA keys:
+
+* a variable-length field containing a curve OID, formatted
+  as follows:
+.. a one-octet size of the following field; values 0 and
+   0xFF are reserved for future extensions
+.. octets representing a curve OID.
+*  MPI of an EC point representing a public key
+  
+  
+===  Definitions
+
+OSCCA-compliant:: All cryptographic algorithms used are compliant with OSCCA  regulations.
+SM2DSA:: The elliptic curve digital signature algorithm. <<ISO.IEC.10118-3>>
+SM2KEP:: The elliptic curve key exchange protocol.
+SM2PKE:: The public key encryption algorithm.==== Elliptic Curve Formula
+
+==== Elliptic Curve Formula
+
+[stem]
+++++
+y^2 = x^3 + ax + b
+++++
+
+==== Curve Parameters
+
+[[curveparam1] 
+.Curve Parameters Listing
+====
+....
+p   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+      FFFFFFFF 00000000 FFFFFFFF FFFFFFFF
+a   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+      FFFFFFFF 00000000 FFFFFFFF FFFFFFFC
+b   = 28E9FA9E 9D9F5E34 4D5A9E4B CF6509A7
+      F39789F5 15AB8F92 DDBCBD41 4D940E93
+n   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+      7203DF6B 21C6052B 53BBF409 39D54123
+x_G = 32C4AE2C 1F198119 5F990446 6A39C994
+      8FE30BBF F2660BE1 715A4589 334C74C7
+y_G = BC3736A2 F4F6779C 59BDCEE3 6B692153
+      D0A9877C C62A4740 02DF32E5 2139F0A0
+....
+====
+
+== Supported Algorithms
+
+=== Public Key Algorithms
+
+The SM2 algorithm is supported with the following extension.
+
+NOTE: ECDH is defined in Section 8 of this document.
+
+The following public key algorithm IDs are added to expand Section
+9.1 of RFC4880, "Public-Key Algorithms":
+
+.Table 2
+|===
+|ID | Description of Algorithm
+
+|TBD | SM2
+|===
+
+
+
+== Security Considerations
+
+Security is not generally a problem in normal operation, but special +
+measures **MUST** be taken (such as data encryption) when avian carriers
+are used in a tactical environment.<<RFC7253>>, <<ISO.IEC.10118-3>>
+
+[bibliography]
+== References
+++++
+<reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>
+  <front>
+    <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
+    <author>
+      <organization>International Organization for Standardization</organization>
+      <address>
+        <postal>
+          <street>BIBC II</street>
+          <street>Chemin de Blandonnet 8</street>
+          <street>CP 401</street>
+          <city>Vernier</city>
+          <region>Geneva</region>
+          <code>1214</code>
+          <country>Switzerland</country>
+        </postal>
+        <phone>+41 22 749 01 11</phone>
+        <email>central@iso.org</email>
+        <uri>https://www.iso.org/</uri>
+      </address>
+    </author>
+    <date day='15' month='September' year='2017'/>
+  </front>
+</reference>
+
+<reference anchor='RFC7253' target='https://tools.ietf.org/html/rfc7253'>
+  <front>
+    <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
+    <author initials="T." surname="Krovetz">
+      <organization>Sacramento State</organization>
+    </author>
+    <author initials="P." surname="Rogaway">
+      <organization>UC Davis</organization>
+    </author>
+    <date month='May' year='2014'/>
+  </front>
+  <seriesInfo name="RFC" value="7253"/>
+</reference>
+++++
+
+
+
+
 
 
 
@@ -678,12 +886,12 @@ to use the contribution by all means.
 
 Here are a few technical guidelines to follow:
 
-1. Open an https://github.com/riboseinc/ribose-ruby/issues[issue] to discuss a new feature.
-1. Write tests to support your new feature.
-1. Make sure the entire test suite passes locally and on CI.
-1. Open a Pull Request.
-1. https://github.com/thoughtbot/guides/tree/master/protocol/git#write-a-feature[Squash your commits] after receiving feedback.
-1. Party!
+. Open an https://github.com/riboseinc/ribose-ruby/issues[issue] to discuss a new feature.
+. Write tests to support your new feature.
+. Make sure the entire test suite passes locally and on CI.
+. Open a Pull Request.
+. https://github.com/thoughtbot/guides/tree/master/protocol/git#write-a-feature[Squash your commits] after receiving feedback.
+. Party!
 
 == Credits
 
