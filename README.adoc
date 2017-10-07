@@ -1,54 +1,60 @@
-# AsciiDoctor-RFC
+= AsciiDoctor-RFC
+:source-highlighter: coderay
 
-[![Build
-Status](https://travis-ci.org/riboseinc/asciidoctor-rfc.svg?branch=master)](https://travis-ci.org/riboseinc/asciidoctor-rfc)
+https://travis-ci.org/riboseinc/asciidoctor-rfc[image:https://travis-ci.org/riboseinc/asciidoctor-rfc.svg?branch=master[Build Status]]
 
-A gem that processes [Asciidoctor](http://asciidoctor.org) input to generate RFC XML output, a format used to format RFC proposals (https://tools.ietf.org/html/rfc7991).
+A gem that processes http://asciidoctor.org[Asciidoctor] input to generate RFC XML output, a format used to format RFC proposals (https://tools.ietf.org/html/rfc7991).
 
-Currently generates only v3 RFC XML (RFC 7991).
+Generates both v3 RFC XML (https://tools.ietf.org/html/rfc7991[RFC 7991]) and v2 RFC XML (https://tools.ietf.org/html/rfc7749[RFC 7749]).
 
-## Installation
+== Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
+[source]
+----
 gem "asciidoctor-rfc"
-```
+----
 
 And then execute:
 
-```sh
+[source]
+----
 $ bundle
-```
+----
 
 Or install it yourself as:
 
-```sh
+[source]
+----
 $ gem install asciidoctor-rfc
-```
+----
 
-## Usage
+== Usage
 
 Converting to RFC XML is a simple as running the ./bin/asciidoctor-rfc script using Ruby and passing our AsciiDoc document as the first argument.
 
-```
+[source]
+----
 $ ruby ./bin/asciidoctor-rfc3 example.adoc  # RFC XML 3 output
 $ ruby ./bin/asciidoctor-rfc2 example.adoc  # RFC XML 2 output
-```
+----
 
 When the script completes, you should see the file `example.xml` in the same directory.
 
-## Syntax, v3
+== Syntax, v3
 
 The converter tries to follow native Asciidoc formatting as much as possible, including built-in attributes and styles. On occasion, it introduces additional attributes for RFC XML that are not present in Asciidoc.
 
 The following RFC XML v3 elements are not supported:
+
 * front/boilerplate
 * xref@format
 * iref@primary
 * reference/front
 
 The following Asciidoc features are not supported in the mapping to RFC XML v3:
+
 * Tertiary index terms
 * quote citations other than URLs
 * ordered list types decimal, lowergreek
@@ -65,7 +71,8 @@ The following Asciidoc features are not supported in the mapping to RFC XML v3:
 
 The following is a walkthrough of Asciidoc features as they map to RFC XML v3; mappings are given in curly brackets.
 
-```asciidoc
+[source,asciidoc]
+--
 [abbrev=x] {front/title@abbrev}
 = DOCUMENT TITLE {front/title}
 Author;Author_2;Author_3 
@@ -265,14 +272,14 @@ Sidebar {.../aside}
 [appendix]
 == Appendix 
 Content {back/section}
+--
 
-```
-
-## Syntax, v2
+== Syntax, v2
 
 The converter tries to follow native Asciidoc formatting as much as possible, including built-in attributes and styles. On occasion, it introduces additional attributes for RFC XML that are not present in Asciidoc.
 
 The following RFC XML v2 elements are not supported:
+
 * front/boilerplate
 * xref@format
 * iref@primary
@@ -280,9 +287,10 @@ The following RFC XML v2 elements are not supported:
 * table/preamble
 * table/postamble
 * artwork@width
-@ artwork@height
+* artwork@height
 
 The following Asciidoc features are not supported in the mapping to RFC XML v2:
+
 * Tertiary index terms
 * quote citations other than URLs
 * ordered list types decimal, lowergreek
@@ -303,7 +311,8 @@ The following Asciidoc features are not supported in the mapping to RFC XML v2:
 
 The following is a walkthrough of Asciidoc features as they map to RFC XML v2; mappings are given in curly brackets.
 
-```asciidoc
+[source,asciidoc]
+--
 [abbrev=x] {front/title@abbrev}
 = DOCUMENT TITLE {front/title}
 Author;Author_2;Author_3 
@@ -471,58 +480,54 @@ h|head {.../texttable/c} | body {texttable/c}
 [appendix]
 == Appendix 
 Content {back/section}
+--
 
-```
-
-## Development
+== Development
 
 We are following Sandi Metz's Rules for this gem, you can read the
-[description of the rules here][sandi-metz] All new code should follow these
+http://robots.thoughtbot.com/post/50655960596/sandi-metz-rules-for-developers[description of the rules here].
+All new code should follow these
 rules. If you make changes in a pre-existing file that violates these rules you
 should fix the violations as part of your contribution.
 
-### Setup
+=== Setup
 
 Clone the repository.
 
-```sh
+```
 git clone https://github.com/riboseinc/asciidoctor-rfc
 ```
 
 Setup your environment.
 
-```sh
+```
 bin/setup
 ```
 
 Run the test suite
 
-```sh
+```
 bin/rspec
 ```
 
-## Contributing
+== Contributing
 
 First, thank you for contributing! We love pull requests from everyone. By
-participating in this project, you hereby grant [Ribose Inc.][riboseinc] the
+participating in this project, you hereby grant https://www.ribose.com[Ribose Inc.] the
 right to grant or transfer an unlimited number of non exclusive licenses or
 sub-licenses to third parties, under the copyright covering the contribution
 to use the contribution by all means.
 
 Here are a few technical guidelines to follow:
 
-1. Open an [issue][issues] to discuss a new feature.
+1. Open an https://github.com/riboseinc/ribose-ruby/issues[issue] to discuss a new feature.
 1. Write tests to support your new feature.
 1. Make sure the entire test suite passes locally and on CI.
 1. Open a Pull Request.
-1. [Squash your commits][squash] after receiving feedback.
+1. ihttps://github.com/thoughtbot/guides/tree/master/protocol/git#write-a-feature[Squash your commits] after receiving feedback.
 1. Party!
 
-## Credits
+== Credits
 
-This gem is developed, maintained and funded by [Ribose Inc.][riboseinc]
+This gem is developed, maintained and funded by https://www.ribose.com[Ribose Inc.]
 
-[riboseinc]: https://www.ribose.com
-[issues]: https://github.com/riboseinc/ribose-ruby/issues
-[squash]: https://github.com/thoughtbot/guides/tree/master/protocol/git#write-a-feature
-[sandi-metz]: http://robots.thoughtbot.com/post/50655960596/sandi-metz-rules-for-developers
