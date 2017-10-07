@@ -1,5 +1,4 @@
 require "date"
-require "asciidoctor"
 
 module Asciidoctor
   module RFC::Common

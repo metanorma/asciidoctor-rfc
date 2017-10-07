@@ -1,5 +1,3 @@
-require "asciidoctor"
-
 require "asciidoctor/rfc/version"
 
 require "asciidoctor/rfc/v2/converter"
