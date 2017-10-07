@@ -1,3 +1,5 @@
+require "asciidoctor"
+
 require "asciidoctor/rfc/common/base"
 require "asciidoctor/rfc/v3/base"
 require "asciidoctor/rfc/v3/front"
