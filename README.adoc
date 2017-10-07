@@ -744,7 +744,7 @@ Algorithm-Specific Fields for SM2DSA keys:
 OSCCA-compliant:: All cryptographic algorithms used are compliant with OSCCA  regulations.
 SM2DSA:: The elliptic curve digital signature algorithm. <<ISO.IEC.10118-3>>
 SM2KEP:: The elliptic curve key exchange protocol.
-SM2PKE:: The public key encryption algorithm.==== Elliptic Curve Formula
+SM2PKE:: The public key encryption algorithm.
 
 ==== Elliptic Curve Formula
 
