@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xdescribe Asciidoctor::RFC::V3::Converter do
+xdescribe Asciidoctor::RFC::V2::Converter do
   it "renders a description list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
