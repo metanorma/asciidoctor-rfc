@@ -22,8 +22,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
        </front><middle>
        <section anchor="_section1" numbered="false">
        <name>Section1</name>
@@ -53,8 +52,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
        </front><middle>
        <section anchor="_section1" numbered="false">
        <name>Section1</name>
@@ -86,8 +84,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
        </front><middle>
        <section anchor="_section1" numbered="false">
        <name>Section1</name>
@@ -124,8 +121,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
        </front><middle>
        <section anchor="sect1" numbered="false">
        <name>Section1</name>
@@ -169,8 +165,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
        </front><middle>
        <section anchor="_section1" numbered="false">
        <name>Section1</name>
