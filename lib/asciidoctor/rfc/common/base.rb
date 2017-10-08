@@ -60,10 +60,11 @@ module Asciidoctor
       #   Author
       #   :area x, y
       def area(node)
-        result = []
-        area = node.attr("area")
-        area&.split(/, ?/)&.each { |a| result << "<area>#{a}</area>" }
-        result
+        noko do |xml|
+          node.attr("area")&.split(/, ?/)&.each do |ar|
+            xml.area ar
+          end
+        end
       end
 
       # Syntax:
@@ -71,10 +72,11 @@ module Asciidoctor
       #   Author
       #   :workgroup x, y
       def workgroup(node)
-        result = []
-        workgroup = node.attr("workgroup")
-        workgroup&.split(/, ?/)&.each { |a| result << "<workgroup>#{a}</workgroup>" }
-        result
+        noko do |xml|
+          node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+            xml.workgroup wg
+          end
+        end
       end
 
       # Syntax:
@@ -82,10 +84,11 @@ module Asciidoctor
       #   Author
       #   :keyword x, y
       def keyword(node)
-        result = []
-        keyword = node.attr("keyword")
-        keyword&.split(/, ?/)&.each { |a| result << "<keyword>#{a}</keyword>" }
-        result
+        noko do |xml|
+          node.attr("keyword")&.split(/, ?/)&.each do |kw|
+            xml.keyword kw
+          end
+        end
       end
 
       def paragraph1(node)
@@ -152,6 +155,12 @@ module Asciidoctor
         else
           %( #{attr}="#{val}")
         end
+      end
+
+      def noko(&block)
+        fragment = Nokogiri::XML::DocumentFragment.parse ""
+        Nokogiri::XML::Builder.with fragment, &block
+        fragment.to_xml.lines
       end
     end
   end
