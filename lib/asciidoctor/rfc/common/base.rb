@@ -133,19 +133,6 @@ module Asciidoctor
         result
       end
 
-      def inline_image(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = get_header_attribute node, "align"
-        alt = get_header_attribute node, "alt"
-        link = (node.image_uri node.target)
-        src = set_header_attribute node, "src", link
-        type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
-        result << "<artwork#{align}#{alt}#{type}#{src}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
-      end
-
       def dash(camel_cased_word)
         camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
       end
