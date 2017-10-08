@@ -19,8 +19,6 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
        <author fullname="Author">
        </author>
        </front><middle>
@@ -59,8 +57,6 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
        <author fullname="Author">
        </author>
        </front><middle>

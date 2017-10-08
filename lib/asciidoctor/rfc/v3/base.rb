@@ -116,6 +116,51 @@ module Asciidoctor
         end
       end
 
+      def inline_anchor(node)
+        case node.type
+        when :xref
+          # format attribute not supported
+          unless (text = node.text) || (text = node.attributes["path"])
+            refid = node.attributes["refid"]
+            text = %([#{refid}])
+          end
+          if text =~ /^\S+ (of|comma|parens|bare)\b/
+            # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref
+            relative = set_header_attribute "relative", node.attributes["fragment"]
+            target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
+            /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text1>.*)$/ =~ text
+            section = set_header_attribute "section", section 
+            format = set_header_attribute "displayFormat", format 
+            target = set_header_attribute "target", target 
+            %(<relref#{relative}#{section}#{format}#{target}>#{text1}</relref>)
+          else
+            target = node.target.gsub(/^#/, "")
+            %(<xref target="#{target}">#{text}</xref>)
+          end
+        when :link
+          %(<eref target="#{node.target}">#{node.text}</eref>)
+        when :bibref
+          unless node.xreftext.nil?
+            x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
+            if node.id != x
+              $xreftext[node.id] = x
+            end
+          end
+          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
+          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
+        when :ref
+          # If this is within referencegroup, output as bibanchor anyway
+          if $processing_reflist
+            %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
+          else
+            warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
+          end
+        else
+          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
+        end
+      end
+
+
       # Syntax:
       #   [[id]]
       #   [keepWithNext=true,keepWithPrevious=true] (optional)

@@ -221,10 +221,19 @@ Content content content
 <<crossreference>> <1>
 <<crossreference,text>> <2>
 http://example.com/[linktext] <3>
+The following represent the v3 relref element
+<<crossreference,section_number (of|comma|parens|bare)>> <4>
+<<crossreference,section_number (of|comma|parens|bare): text>> <5>
+<<crossreference#fragment,section (of|comma|parens|bare)>> <6>
+<<crossreference#fragment,section (of|comma|parens|bare): text>> <7>
 --
 <1> `<xref target="crossreference"/>`
 <2> `<xref target="crossreference">text</xref>`
 <3> `<eref href="http://example.com/">linktext</eref>`
+<4> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
+<5> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
+<6> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
+<7> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
 
 === Indexing
 

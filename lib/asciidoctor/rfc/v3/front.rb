@@ -32,7 +32,7 @@ module Asciidoctor
         stream = get_header_attribute node, "stream", "IETF"
         name = node.attr "docname"
         rfc = true
-        unless name.nil? && (not name.empty?)
+        if (not name.nil?) && (not name.empty?)
           if name =~ /^rfc-?/i
             name = name.gsub(/^rfc-?/i, "")
             nameattr = set_header_attribute "name", "RFC"

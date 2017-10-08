@@ -95,9 +95,10 @@ module Asciidoctor
             text = %([#{refid}])
           end
           target = node.target.gsub(/^#/, "")
+          puts node.attributes
           %(<xref target="#{target}">#{text}</xref>)
         when :link
-          %(<eref target="#{target}">#{node.text}</eref>)
+          %(<eref target="#{node.target}">#{node.text}</eref>)
         when :bibref
           unless node.xreftext.nil?
             x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")

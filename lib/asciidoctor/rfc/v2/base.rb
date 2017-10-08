@@ -109,6 +109,39 @@ module Asciidoctor
         end
       end
 
+      def inline_anchor(node)
+        case node.type
+        when :xref
+          # format attribute not supported
+          unless (text = node.text) || (text = node.attributes["path"])
+            refid = node.attributes["refid"]
+            text = %([#{refid}])
+          end
+          target = node.target.gsub(/^#/, "")
+          %(<xref target="#{target}">#{text}</xref>)
+        when :link
+          %(<eref target="#{node.target}">#{node.text}</eref>)
+        when :bibref
+          unless node.xreftext.nil?
+            x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
+            if node.id != x
+              $xreftext[node.id] = x
+            end
+          end
+          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
+          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
+        when :ref
+          # If this is within referencegroup, output as bibanchor anyway
+          if $processing_reflist
+            %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
+          else
+            warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
+          end
+        else
+          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
+        end
+      end
+
       # Syntax:
       #   [[id]]
       #   Text
