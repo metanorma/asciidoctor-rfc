@@ -6,10 +6,10 @@ module Asciidoctor
       #   Author
       #   :METADATA
       def front(node)
+        # FIXME: front should be opened and closed here
         result = []
         result << "<front>"
-        abbrev = get_header_attribute node, "abbrev"
-        result << "<title#{abbrev}>#{node.doctitle}</title>"
+        result << (title node)
         result << (series_info node)
         result << (author node)
         result << (date node)
@@ -18,59 +18,64 @@ module Asciidoctor
         result << (keyword node)
       end
 
+      def title(node)
+        noko do |xml|
+          title_attributes = {
+            abbrev: node.attr("abbrev")
+          }.reject { |_, val| val.nil? }
+          xml.title node.doctitle, **title_attributes
+        end
+      end
+
       # Syntax:
       #   = Title
       #   Author
-      #   :name rfc-* || Internet-Draft-Name
+      #   :name is_rfc-* || Internet-Draft-Name
       #   :status (of this document)
       #   :intendedstatus (of internet draft once published as RFC)
       #   :rfcstatus (of RFC: full-standard|bcp|fyi number or info|exp|historic)
       #   :stream
       def series_info(node)
-        result = []
-        status = get_header_attribute node, "status"
-        stream = get_header_attribute node, "stream", "IETF"
-        name = node.attr "docname"
-        rfc = true
-        if (not name.nil?) && (not name.empty?)
-          if name =~ /^rfc-?/i
-            name = name.gsub(/^rfc-?/i, "")
-            nameattr = set_header_attribute "name", "RFC"
-          else
-            nameattr = set_header_attribute "name", "Internet-Draft"
-            rfc = false
-          end
-          name = name.gsub(/\.[^\/]+$/, "")
-          value = set_header_attribute "value", name
-          status = get_header_attribute node, "status"
-          result << "<seriesInfo#{nameattr}#{status}#{stream}#{value}/>"
+        noko do |xml|
+          docname = node.attr("docname")
 
-          intendedstatus = node.attr("intendedstatus")
-          unless intendedstatus.nil? && (not rfc)
-            status = set_header_attribute "status", intendedstatus
-            nameattr = set_header_attribute "name", ""
-            result << "<seriesInfo#{nameattr}#{status}#{value}/>"
-          end
+          unless docname&.empty?
+            is_rfc = docname =~ /^rfc-?/i
 
-          rfcstatus = node.attr("rfcstatus")
-          unless rfcstatus.nil? && rfc
-            m = /^(\S+) (\d+)$/.match(rfcstatus)
-            if m.nil?
-              nameattr = set_header_attribute "name", ""
-              status = set_header_attribute "status", rfcstatus
-              value = set_header_attribute "value", ""
-              result << "<seriesInfo#{nameattr}#{status}#{value}/>"
-            else
-              rfcstatus1 = m[1]
-              rfcstatus2 = m[2]
-              nameattr = set_header_attribute "name", ""
-              status = set_header_attribute "status", rfcstatus1
-              value = set_header_attribute "value", rfcstatus2
-              result << "<seriesInfo#{nameattr}#{status}#{value}/>"
+            name = is_rfc ? docname.gsub(/^rfc-?/i, "") : docname
+            nameattr = is_rfc ? "RFC" : "Internet-Draft"
+            value = name.gsub(/\.[^\/]+$/, "")
+
+            seriesInfo_attributes = {
+              name: nameattr,
+              status: node.attr("status"),
+              stream: node.attr("stream") || "IETF",
+              value: value,
+            }.reject { |_, val| val.nil? }
+            xml.seriesInfo **seriesInfo_attributes
+
+            intendedstatus = node.attr("intendedstatus")
+            if is_rfc || !intendedstatus.nil?
+              seriesInfo_attributes = {
+                name: "",
+                status: intendedstatus,
+                value: value,
+              }.reject { |_, val| val.nil? }
+              xml.seriesInfo **seriesInfo_attributes
+            end
+
+            rfcstatus = node.attr("rfcstatus")
+            if !is_rfc || !rfcstatus.nil?
+              m = /^(\S+) (\d+)$/.match rfcstatus
+              seriesInfo_attributes = {
+                name: "",
+                status: m.nil? ? rfcstatus : m[1],
+                value: m.nil? ? "" : m[2],
+              }.reject { |_, val| val.nil? }
+              xml.seriesInfo **seriesInfo_attributes
             end
           end
         end
-        result
       end
 
       # Syntax:
@@ -180,22 +185,23 @@ module Asciidoctor
       #   Author
       #   :revdate or :date
       def date(node)
-        result = []
-        revdate = node.attr("revdate")
-        revdate = node.attr("date") if revdate.nil?
-        unless revdate.nil?
-          begin
-            revdate.gsub!(/T.*$/, "")
-            d = Date.iso8601 revdate
-            day = set_header_attribute "day", d.day
-            month = set_header_attribute "month", Date::MONTHNAMES[d.month]
-            year = set_header_attribute "year", d.year
-            result << "<date#{day}#{month}#{year}/>"
-          rescue
-            # nop
+        noko do |xml|
+          revdate = node.attr("revdate") || node.attr("date")
+          unless revdate.nil?
+            begin
+              revdate.gsub!(/T.*$/, "")
+              d = Date.iso8601 revdate
+              date_attributes = {
+                day: d.day,
+                month: Date::MONTHNAMES[d.month],
+                year: d.year,
+              }
+              xml.date **date_attributes
+            rescue
+              # nop
+            end
           end
         end
-        result
       end
     end
   end
