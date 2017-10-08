@@ -14,7 +14,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
-      <author fullname="Author" initials="A">
+      <author fullname="Author">
       </author>
 
       <keyword>first_keyword</keyword>

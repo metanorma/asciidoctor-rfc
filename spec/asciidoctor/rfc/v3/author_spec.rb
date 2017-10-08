@@ -15,7 +15,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
 
-      <author fullname="John Doe Horton" initials="J" surname="Horton">
+      <author fullname="John Doe Horton" surname="Horton">
       <address>
       <email>john.doe@email.com</email>
       </address>
@@ -40,12 +40,12 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
       <seriesInfo name="" value=""/>
 
-      <author fullname="John Doe Horton" initials="J" surname="Horton">
+      <author fullname="John Doe Horton" surname="Horton">
       <address>
       <email>john.doe@email.com</email>
       </address>
       </author>
-      <author fullname="Joanna Diva Munez" initials="J" surname="Munez">
+      <author fullname="Joanna Diva Munez" surname="Munez">
       <address>
       <email>joanna.munez@email.com</email>
       </address>
