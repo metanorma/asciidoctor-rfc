@@ -68,8 +68,14 @@ module Asciidoctor
             result << "<t>"
           end
           result << "<cref#{id}#{source}>"
-          result << node.content
+          if node.blocks?
+            warn "asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.lines}"
+            result << flatten(node)
+          else
+            result << node.content
+          end
           result << "</cref>"
+
           if node.parent.context !~ /table|example|paragraph/
             result << "</t>"
           end

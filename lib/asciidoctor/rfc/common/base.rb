@@ -86,40 +86,6 @@ module Asciidoctor
         result
       end
 
-      def inline_anchor(node)
-        case node.type
-        when :xref
-          # format attribute not supported
-          unless (text = node.text) || (text = node.attributes["path"])
-            refid = node.attributes["refid"]
-            text = %([#{refid}])
-          end
-          target = node.target.gsub(/^#/, "")
-          puts node.attributes
-          %(<xref target="#{target}">#{text}</xref>)
-        when :link
-          %(<eref target="#{node.target}">#{node.text}</eref>)
-        when :bibref
-          unless node.xreftext.nil?
-            x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
-            if node.id != x
-              $xreftext[node.id] = x
-            end
-          end
-          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
-          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-        when :ref
-          # If this is within referencegroup, output as bibanchor anyway
-          if $processing_reflist
-            %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-          else
-            warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
-          end
-        else
-          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
-        end
-      end
-
       def paragraph1(node)
         result = []
         result1 = node.content
@@ -136,6 +102,23 @@ module Asciidoctor
 
       def dash(camel_cased_word)
         camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
+      end
+
+      # if node contains blocks, flatten them into a single line
+      def flatten(node)
+        result = []
+        if node.blocks?
+          if node.respond_to?(:text)
+            result << node.text
+          end
+          node.blocks.each { |b| result << flatten(b) }
+        else
+          if node.respond_to?(:text)
+            result << node.text
+          end
+          result << node.content
+        end
+        result.reject { |e| e.empty? }
       end
 
       def get_header_attribute(node, attr, default = nil)
