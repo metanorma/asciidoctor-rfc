@@ -6,25 +6,24 @@ module Asciidoctor
       #   Author
       #   :METADATA
       def front(node)
-        # FIXME: front should be opened and closed here
-        result = []
-        result << "<front>"
-        result << (title node)
-        result << (series_info node)
-        result << (author node)
-        result << (date node)
-        result << (area node)
-        result << (workgroup node)
-        result << (keyword node)
+        noko do |xml|
+          xml.front do |xml_front|
+            title node, xml_front
+            series_info node, xml_front
+            author node, xml_front
+            date node, xml_front
+            area node, xml_front
+            workgroup node, xml_front
+            keyword node, xml_front
+          end
+        end
       end
 
-      def title(node)
-        noko do |xml|
-          title_attributes = {
-            abbrev: node.attr("abbrev")
-          }.reject { |_, val| val.nil? }
-          xml.title node.doctitle, **title_attributes
-        end
+      def title(node, xml)
+        title_attributes = {
+          abbrev: node.attr("abbrev")
+        }.reject { |_, val| val.nil? }
+        xml.title node.doctitle, **title_attributes
       end
 
       # Syntax:
@@ -35,45 +34,43 @@ module Asciidoctor
       #   :intendedstatus (of internet draft once published as RFC)
       #   :rfcstatus (of RFC: full-standard|bcp|fyi number or info|exp|historic)
       #   :stream
-      def series_info(node)
-        noko do |xml|
-          docname = node.attr("docname")
+      def series_info(node, xml)
+        docname = node.attr("docname")
 
-          unless docname&.empty?
-            is_rfc = docname =~ /^rfc-?/i
+        unless docname&.empty?
+          is_rfc = docname =~ /^rfc-?/i
 
-            name = is_rfc ? docname.gsub(/^rfc-?/i, "") : docname
-            nameattr = is_rfc ? "RFC" : "Internet-Draft"
-            value = name.gsub(/\.[^\/]+$/, "")
+          name = is_rfc ? docname.gsub(/^rfc-?/i, "") : docname
+          nameattr = is_rfc ? "RFC" : "Internet-Draft"
+          value = name.gsub(/\.[^\/]+$/, "")
 
+          seriesInfo_attributes = {
+            name: nameattr,
+            status: node.attr("status"),
+            stream: node.attr("stream") || "IETF",
+            value: value,
+          }.reject { |_, val| val.nil? }
+          xml.seriesInfo **seriesInfo_attributes
+
+          intendedstatus = node.attr("intendedstatus")
+          if is_rfc || !intendedstatus.nil?
             seriesInfo_attributes = {
-              name: nameattr,
-              status: node.attr("status"),
-              stream: node.attr("stream") || "IETF",
+              name: "",
+              status: intendedstatus,
               value: value,
             }.reject { |_, val| val.nil? }
             xml.seriesInfo **seriesInfo_attributes
+          end
 
-            intendedstatus = node.attr("intendedstatus")
-            if is_rfc || !intendedstatus.nil?
-              seriesInfo_attributes = {
-                name: "",
-                status: intendedstatus,
-                value: value,
-              }.reject { |_, val| val.nil? }
-              xml.seriesInfo **seriesInfo_attributes
-            end
-
-            rfcstatus = node.attr("rfcstatus")
-            if !is_rfc || !rfcstatus.nil?
-              m = /^(\S+) (\d+)$/.match rfcstatus
-              seriesInfo_attributes = {
-                name: "",
-                status: m.nil? ? rfcstatus : m[1],
-                value: m.nil? ? "" : m[2],
-              }.reject { |_, val| val.nil? }
-              xml.seriesInfo **seriesInfo_attributes
-            end
+          rfcstatus = node.attr("rfcstatus")
+          if !is_rfc || !rfcstatus.nil?
+            m = /^(\S+) (\d+)$/.match rfcstatus
+            seriesInfo_attributes = {
+              name: "",
+              status: m.nil? ? rfcstatus : m[1],
+              value: m.nil? ? "" : m[2],
+            }.reject { |_, val| val.nil? }
+            xml.seriesInfo **seriesInfo_attributes
           end
         end
       end
@@ -94,18 +91,16 @@ module Asciidoctor
       #   :organization_3
       #   :email_3
       # @note recurse: author, author_2, author_3...
-      def author(node)
-        noko do |xml|
-          author1(node, "", xml)
-          i = 2
-          loop do
-            suffix = "_#{i}"
-            author = node.attr("author#{suffix}")
-            fullname = node.attr("fullname#{suffix}")
-            break unless [author, fullname].any?
-            author1(node, suffix, xml)
-            i += 1
-          end
+      def author(node, xml)
+        author1(node, "", xml)
+        i = 2
+        loop do
+          suffix = "_#{i}"
+          author = node.attr("author#{suffix}")
+          fullname = node.attr("fullname#{suffix}")
+          break unless [author, fullname].any?
+          author1(node, suffix, xml)
+          i += 1
         end
       end
 
@@ -184,25 +179,46 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :revdate or :date
-      def date(node)
-        noko do |xml|
-          revdate = node.attr("revdate") || node.attr("date")
-          unless revdate.nil?
-            begin
-              revdate.gsub!(/T.*$/, "")
-              d = Date.iso8601 revdate
-              date_attributes = {
-                day: d.day,
-                month: Date::MONTHNAMES[d.month],
-                year: d.year,
-              }
-              xml.date **date_attributes
-            rescue
-              # nop
-            end
+      def date(node, xml)
+        revdate = node.attr("revdate") || node.attr("date")
+        unless revdate.nil?
+          begin
+            revdate.gsub!(/T.*$/, "")
+            d = Date.iso8601 revdate
+            date_attributes = {
+              day: d.day,
+              month: Date::MONTHNAMES[d.month],
+              year: d.year,
+            }
+            xml.date **date_attributes
+          rescue
+            # nop
           end
         end
       end
+
+
+      # These three overrides must be removed once they replace their homonyms
+      # in common/base (they serve to avoid conflict with v2 until that moment)
+
+      def area(node, xml)
+        node.attr("area")&.split(/, ?/)&.each do |ar|
+          xml.area ar
+        end
+      end
+
+      def workgroup(node, xml)
+        node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+          xml.workgroup wg
+        end
+      end
+
+      def keyword(node, xml)
+        node.attr("keyword")&.split(/, ?/)&.each do |kw|
+          xml.keyword kw
+        end
+      end
+
     end
   end
 end

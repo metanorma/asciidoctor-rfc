@@ -52,6 +52,8 @@ module Asciidoctor
         #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
         result << (link node)
         result << (front node)
+
+        result.last.last.gsub! /<\/front>$/, '' # FIXME: this is a hack!
         result << "</front><middle1>"
         result << node.content if node.blocks?
         result << ($seen_back_matter ? "</back>" : "</middle>")
