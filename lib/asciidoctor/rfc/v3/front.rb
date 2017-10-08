@@ -90,20 +90,18 @@ module Asciidoctor
       #   :email_3
       # @note recurse: author, author_2, author_3...
       def author(node)
-        result = []
-        result << author1(node, "")
-        i = 2
-        loop do
-          suffix = "_#{i}"
-          author = node.attr("author#{suffix}")
-          fullname = node.attr("fullname#{suffix}")
-          if author.nil? and fullname.nil?
-            break
+        noko do |xml|
+          author1(node, "", xml)
+          i = 2
+          loop do
+            suffix = "_#{i}"
+            author = node.attr("author#{suffix}")
+            fullname = node.attr("fullname#{suffix}")
+            break unless [author, fullname].any?
+            author1(node, suffix, xml)
+            i += 1
           end
-          result << author1(node, suffix)
-          i += 1
         end
-        result.flatten
       end
 
       # Syntax:
@@ -124,19 +122,17 @@ module Asciidoctor
       #   :region
       #   :country
       #   :code
-      def author1(node, suffix)
-        noko do |xml|
-          author_attributes = {
-            fullname: node.attr("author#{suffix}"),
-            surname: node.attr("lastname#{suffix}"),
-            initials: node.attr("forename_initials#{suffix}"),
-            role: node.attr("role#{suffix}"),
-          }.reject { |_, value| value.nil? }
+      def author1(node, suffix, xml)
+        author_attributes = {
+          fullname: node.attr("author#{suffix}"),
+          surname: node.attr("lastname#{suffix}"),
+          initials: node.attr("forename_initials#{suffix}"),
+          role: node.attr("role#{suffix}"),
+        }.reject { |_, value| value.nil? }
 
-          xml.author **author_attributes do |xml_sub|
-            organization node, suffix, xml_sub
-            address node, suffix, xml_sub
-          end
+        xml.author **author_attributes do |xml_sub|
+          organization node, suffix, xml_sub
+          address node, suffix, xml_sub
         end
       end
 
@@ -146,34 +142,34 @@ module Asciidoctor
       end
 
       def address(node, suffix, xml)
-        postalline = node.attr("postal-line#{suffix}")
-        street = node.attr("street#{suffix}")
-        city = node.attr("city#{suffix}")
-        region = node.attr("region#{suffix}")
-        country = node.attr("country#{suffix}")
-        code = node.attr("code#{suffix}")
-        phone = node.attr("phone#{suffix}")
         email = node.attr("email#{suffix}")
         facsimile = node.attr("fax#{suffix}")
+        phone = node.attr("phone#{suffix}")
+        postalline = node.attr("postal-line#{suffix}")
+        street = node.attr("street#{suffix}")
         uri = node.attr("uri#{suffix}")
-        if [email, facsimile, uri, phone, street, postalline].any?
+        if [email, facsimile, phone, postalline, street, uri].any?
           xml.address do |xml_address|
-            if [street, postalline].any?
+            if [postalline, street].any?
               xml_address.postal do |xml_postal|
                 if postalline.nil?
-                  street&.split("\\ ")&.each { |st| xml_postal.street st }
+                  city = node.attr("city#{suffix}")
+                  code = node.attr("code#{suffix}")
+                  country = node.attr("country#{suffix}")
+                  region = node.attr("region#{suffix}")
                   xml_postal.city city unless city.nil?
-                  xml_postal.region region unless region.nil?
                   xml_postal.code code unless code.nil?
                   xml_postal.country country unless country.nil?
+                  xml_postal.region region unless region.nil?
+                  street&.split("\\ ")&.each { |st| xml_postal.street st }
                 else
                   postalline&.split("\\ ")&.each { |pl| xml_postal.postalLine pl }
                 end
               end
             end
-            xml_address.phone phone unless phone.nil?
-            xml_address.facsimile facsimile unless facsimile.nil?
             xml_address.email email unless email.nil?
+            xml_address.facsimile facsimile unless facsimile.nil?
+            xml_address.phone phone unless phone.nil?
             xml_address.uri uri unless uri.nil?
           end
         end
