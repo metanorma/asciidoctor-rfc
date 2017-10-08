@@ -32,6 +32,8 @@ module Asciidoctor
       #   [appendix] # start of back matter if not already started
       #   == Appendix
       def document(node)
+        $seen_back_matter = false
+        $seen_abstract = false
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         category = get_header_attribute node, "category"
