@@ -235,6 +235,10 @@ module Asciidoctor
         when :emphasis
           %(<spanx style="emph">#{node.text}</spanx>)
         when :strong
+        puts node.type
+        puts node.attributes
+        puts node.node_name
+        puts node.passthroughs
           %(<spanx style="strong">#{node.text}</spanx>)
         when :monospaced
           %(<spanx style="verb">#{node.text}</spanx>)
