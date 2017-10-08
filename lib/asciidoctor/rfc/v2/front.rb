@@ -86,7 +86,8 @@ module Asciidoctor
         loop do
           suffix = "_#{i}"
           author = node.attr("author#{suffix}")
-          if author.nil?
+          fullname = node.attr("fullname#{suffix}")
+          if author.nil? and fullname.nil?
             break
           end
           result << author1(node, suffix)

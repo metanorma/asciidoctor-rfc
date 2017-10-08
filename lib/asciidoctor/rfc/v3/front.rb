@@ -96,7 +96,8 @@ module Asciidoctor
         loop do
           suffix = "_#{i}"
           author = node.attr("author#{suffix}")
-          if author.nil?
+          fullname = node.attr("fullname#{suffix}")
+          if author.nil? and fullname.nil?
             break
           end
           result << author1(node, suffix)
@@ -142,7 +143,7 @@ module Asciidoctor
 
       def address(node, suffix)
         result = []
-        postalline = node.attr("postalline#{suffix}")
+        postalline = node.attr("postal-line#{suffix}")
         street = node.attr("street#{suffix}")
         city = node.attr("city#{suffix}")
         region = node.attr("region#{suffix}")
@@ -153,9 +154,9 @@ module Asciidoctor
         facsimile = node.attr("fax#{suffix}")
         uri = node.attr("uri#{suffix}")
         if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
-            (not street.nil?)
+            (not street.nil?) || (not postalline.nil?)
           result << "<address>"
-          if not street.nil?
+          if not street.nil? or not postalline.nil?
             result << "<postal>"
             if postalline.nil?
               street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
