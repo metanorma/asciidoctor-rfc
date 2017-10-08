@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xdescribe Asciidoctor::RFC::V3::Converter do
+describe Asciidoctor::RFC::V3::Converter do
   it "renders an image" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       Click image:icons/play.png[Play, title="Play"] to get the party started.

@@ -1,14 +1,19 @@
 require "spec_helper"
 
 describe Asciidoctor::RFC::V3::Converter do
-  it "renders a sidebar" do
+  it "renders a description list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
-      ****
-      Sidebar
-      ****
+      [horizontal, compact]
+      A:: B
+      C:: D
     INPUT
-      Lipsum
+      <dl anchor="id">
+      <dt>A</dt>
+      <dd>B</dd>
+      <dt>C</dt>
+      <dd>D</dd>
+      </dl>
     OUTPUT
   end
 end
