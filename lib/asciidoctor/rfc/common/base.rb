@@ -44,15 +44,15 @@ module Asciidoctor
       end
 
       def authorname(node, suffix)
-        result = []
-        fullname = node.attr("author#{suffix}")
-        fullname = node.attr("fullname#{suffix}") if fullname.nil?
-        authorname = set_header_attribute "fullname", fullname
-        surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
-        initials = set_header_attribute "initials", node.attr("forename_initials#{suffix}")
-        role = set_header_attribute "role", node.attr("role#{suffix}")
-        result << "<author#{authorname}#{initials}#{surname}#{role}>"
-        result
+        noko do |xml|
+          author_attributes = {
+            fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
+            surname: node.attr("lastname#{suffix}"),
+            initials: node.attr("forename_initials#{suffix}"),
+            role: node.attr("role#{suffix}"),
+          }.reject { |_, value| value.nil? }
+          xml.author **author_attributes
+        end
       end
 
       # Syntax:
