@@ -1,26 +1,64 @@
 require "spec_helper"
 
-xdescribe Asciidoctor::RFC::V3::Converter do
-  it "renders title and abbrev" do
+describe Asciidoctor::RFC::V3::Converter do
+  it "renders links" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
-      :abbrev: abbrev_value
       :docName:
       Author
+      :link: http://www.example.com,urn:issn:99999999 item 
+      
+      == Section 1
+      text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
-      <front>
-
-      <title abbrev="abbrev_value">Document title</title>
-
-      <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-      <seriesInfo name="" value=""/>
-      <author fullname="Author">
-      </author>
-      </front><middle>
-      </middle>
-      </rfc>
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc preptime="1970-01-01T00:00:00Z"
+                version="3" submissionType="IETF">
+       <link href="http://www.example.com"/>
+       <link href="urn:issn:99999999" rel="item"/>
+       <front>
+       <title>Document title</title>
+       <author fullname="Author">
+       </author>
+       </front><middle>
+       <section anchor="_section_1" numbered="false">
+       <name>Section 1</name>
+       <t>text</t>
+       </section>
+       </middle>
+       </rfc>
     OUTPUT
   end
+
+  it "renders series, author, date, area, workgroup, keyword in sequence" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+      :abbrev: abbrev_value
+      :docname: rfc-1111
+      :revdate: 1999-01-01
+      :area: horticulture
+      :workgroup: IETF
+      :keyword: widgets
+    INPUT
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc preptime="1970-01-01T00:00:00Z"
+                version="3" submissionType="IETF">
+       <front>
+       <title abbrev="abbrev_value">Document title</title>
+       <seriesInfo name="RFC" stream="IETF" value="1111"/>
+       <seriesInfo name="" value="1111"/>
+       <author fullname="Author">
+       </author>
+       <date day="1" month="January" year="1999"/>
+       <area>horticulture</area>
+       <workgroup>IETF</workgroup>
+       <keyword>widgets</keyword>
+       </front><middle>
+       </middle>
+       </rfc>
+    OUTPUT
+  end
+
+
 end
