@@ -13,6 +13,7 @@ module Asciidoctor
       #   :sortRefs
       #   :symRefs
       #   :tocInclude
+      #   :tocDepth
       #
       #   ABSTRACT
       #
@@ -41,13 +42,14 @@ module Asciidoctor
         sortRefs = get_header_attribute node, "sortRefs"
         symRefs = get_header_attribute node, "symRefs"
         tocInclude = get_header_attribute node, "tocInclude"
+        tocDepth = get_header_attribute node, "tocDepth"
         submissionType = get_header_attribute node, "submissionType", "IETF"
         t = Time.now.getutc
         preptime = set_header_attribute "preptime",
           sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)
         version = set_header_attribute "version", "3"
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}
-        #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}>)
+        #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
         result << (link node)
         result << (front node)
         result << "</front><middle1>"

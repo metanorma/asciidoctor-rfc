@@ -224,6 +224,7 @@ These attributes are only supported for the v3 converter.
 |`:index-include:` | rfc@indexInclude
 |`:sort-refs:` | rfc@sortRefs
 |`:sym-refs:` | rfc@symRefs
+|`:toc-depth:` | rfc@tocDepth
 |`:toc-include:` | rfc@tocInclude
 |`:no-rfc-bold-bcp14:` | Override default assumption that boldface uppercase BCP14 word is to be rendered with `bcp14` tag
 |===

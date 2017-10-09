@@ -1,7 +1,7 @@
 require "spec_helper"
 require "byebug"
 
-xdescribe Asciidoctor::RFC::V3::Converter do
+describe Asciidoctor::RFC::V3::Converter do
   it "renders the minimal document w/ default values" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -12,8 +12,6 @@ xdescribe Asciidoctor::RFC::V3::Converter do
       <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
-      <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-      <seriesInfo name="" value=""/>
       <author fullname="Author">
       </author>
       </front><middle>
@@ -27,37 +25,29 @@ xdescribe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
+      :abbrev: abbrev
       :ipr: ipr_value
-      :obsoletes: obsoletes_value
-      :updates: updates_value
+      :consensus: false
+      :obsoletes: 1, 2
+      :updates: 10, 11
       :index-include: index_include_value
       :ipr-extract: ipr_extract_value
-      :sort-refs: sort_refs_value
-      :sym-refs: sym_refs_value
-      :toc-include: toc_include_value
-      :submission-type: submission_type_value
+      :sort-refs: true
+      :sym-refs: false
+      :toc-include: false
+      :toc-depth: 2
+      :submission-type: IRTF
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc ipr="ipr_value"
-           obsoletes="obsoletes_value"
-           updates="updates_value"
-           preptime="1970-01-01T00:00:00Z"
-           version="3"
-           submissionType="submission_type_value"
-           indexInclude="index_include_value"
-           iprExtract="ipr_extract_value"
-           sortRefs="sort_refs_value"
-           symRefs="sym_refs_value"
-           tocInclude="toc_include_value" >
-      <front>
-      <title>Document title</title>
-      <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-      <seriesInfo name="" value=""/>
-      <author fullname="Author">
-      </author>
-      </front><middle>
-      </middle>
-      </rfc>
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" preptime="1970-01-01T00:00:00Z"
+                version="3" submissionType="IRTF" indexInclude="index_include_value" iprExtract="ipr_extract_value" sortRefs="true" symRefs="false" tocInclude="false" tocDepth="2">
+       <front>
+       <title abbrev="abbrev">Document title</title>
+       <author fullname="Author">
+       </author>
+       </front><middle>
+       </middle>
+       </rfc>
     OUTPUT
   end
 
@@ -73,11 +63,10 @@ xdescribe Asciidoctor::RFC::V3::Converter do
       Lipsum.
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
+       <rfc preptime="1970-01-01T00:00:00Z"
+                version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
-      <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-      <seriesInfo name="" value=""/>
       <author fullname="Author">
       </author>
       </front><middle>
