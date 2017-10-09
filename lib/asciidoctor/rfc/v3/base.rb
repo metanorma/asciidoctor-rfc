@@ -29,6 +29,8 @@ module Asciidoctor
       def document(node)
         $seen_back_matter = false
         $seen_abstract = false
+        # If this is present, then BCP14 keywords in boldface are not assumed to be <bcp14> tags. By default they are.
+        $bcp_bold = ! (node.attr? "no-rfc-bold-bcp14" )
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         ipr = get_header_attribute node, "ipr"
@@ -95,7 +97,12 @@ module Asciidoctor
         when :emphasis
           "<em>#{node.text}</em>"
         when :strong
+          if $bcp_bold and 
+            node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/ 
+            "<bcp14>#{node.text}</bcp14>"
+          else
           "<strong>#{node.text}</strong>"
+          end
         when :monospaced
           "<tt>#{node.text}</tt>"
         when :double
@@ -109,7 +116,7 @@ module Asciidoctor
         else
           # [bcp14]#MUST NOT#
           if node.role == "bcp14"
-            "<bcp14>#{node.text}</bcp14>"
+            "<bcp14>#{node.text.upcase}</bcp14>"
           else
             node.text
           end

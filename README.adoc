@@ -225,6 +225,7 @@ These attributes are only supported for the v3 converter.
 |`:sort-refs:` | rfc@sortRefs
 |`:sym-refs:` | rfc@symRefs
 |`:toc-include:` | rfc@tocInclude
+|`:no-rfc-bold-bcp14:` | Override default assumption that boldface uppercase BCP14 word is to be rendered with `bcp14` tag
 |===
 
 ////
@@ -405,6 +406,7 @@ _Italic_ <2>
 ~subscript~ <5>
 ^superscript^ <6>
 [bcp14]#MUST NOT#  <7>
+*MUST NOT* <8>
 --
 <1> That is, "+ " at the end of a line. v2: `<vspace/>`; v3: `<br/>`
 <2> v2: `<spanx style="emph">Italic</spanx>`; v3: `<em>Italic</em>`
@@ -412,7 +414,8 @@ _Italic_ <2>
 <4> v2: `<spanx style="verb">Monospace</spanx>`; v3: `<tt>Monospace</tt>`
 <5> v3: `<sub>subscript</sub>`. Not supported in v2; rendered as `\_subscript_`
 <6> v3: `<sup>superscript</sup>`. Not supported in v2; rendered as `\^superscript^`
-<7> v3: `<bcp14>MUST NOT</bcp14>`. Not supported in v2.
+<7> v3: `<bcp14>MUST NOT</bcp14>`. Rendered in v2 as `<spanx style="strong">MUST NOT</spanx>`.
+<8> v2: `<spanx style="strong">MUST NOT</spanx>`. v3: if document flag `:no-rfc-bold-bcp14:` is present, then `<strong>MUST NOT</strong>`, else (by default) any BCP14/RFC2119 phrase in boldface and capitals is assumed to be intended to be tagged in `<bcp14>`.
 
 
 === Paragraphs

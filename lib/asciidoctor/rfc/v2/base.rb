@@ -105,7 +105,12 @@ module Asciidoctor
         when :subscript
           "_#{node.text}_"
         else
-          node.text
+          # [bcp14]#MUST NOT#
+          if node.role == "bcp14"
+            %(<spanx style="strong">#{node.text.upcase}</spanx>)
+          else
+            node.text
+          end
         end
       end
 
