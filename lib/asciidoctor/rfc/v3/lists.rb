@@ -113,21 +113,25 @@ module Asciidoctor
           result << "<abstract>"
         end
         id = set_header_attribute "anchor", node.id
-        hanging = set_header_attribute "hanging", "true" if node.option? "horizontal"
-        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        hanging = set_header_attribute "hanging", "true" if node.style == "horizontal"
+        spacing = set_header_attribute "spacing", "compact" if node.style == "compact"
         result << "<dl#{id}#{hanging}#{spacing}>"
+        id = nil
         node.items.each do |terms, dd|
           [*terms].each do |dt|
-            id = set_header_attribute "anchor", dt.id
+            #id = set_header_attribute "anchor", dt.id # not allowed in asciidoctor
             result << "<dt#{id}>#{dt.text}</dt>"
           end
           if dd.blocks?
-            id = set_header_attribute "anchor", dd.id
-            result << "<dd>#{dd.text}"
+            #id = set_header_attribute "anchor", dd.id # not allowed in asciidoctor
+            result << "<dd#{id}>"
+            if dd.text?
+                result << dd.text 
+            end
             result << dd.content
             result << "</dd>"
           else
-            result << "<dd>#{dd.text}</dd>"
+            result << "<dd#{id}>#{dd.text}</dd>"
           end
         end
         result << "</dl>"

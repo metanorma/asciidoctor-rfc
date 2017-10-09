@@ -551,13 +551,17 @@ Postamble text <11>
 [[id]] <1>
 [horizontal,compact,hang-indent=n] <2>
 A:: B <3>
-[[id1]] A:: [[id2]] B <4>
 --
 <1> dl@anchor; attribute only available in v3
-<2> dl@hanging (attribute only available in v3), dl@spacing  (attribute only available in v3), list@hangIndent  (attribute only available in v2)
+<2> dl@hanging (attribute only available in v3), dl@spacing  (attribute only available in v3), list@hangIndent  (attribute only available in v2). Note that the `compact` and `horizontal` attributes are mutually exclusive in Asciidoc.
 <3> v2: list[@style="hanging"]/t@hangText, list[@style="hanging"]/t; v3: dl/dt, dl/dd
-<4> v2: list[@style="hanging"]/t@anchor, list[@style="hanging"]/t@anchor, list[@style="hanging"]/t; v3: dl/dt@anchor, dl/dd@anchor. In v2, the latest of the anchors will be used.
 
+Note that Asciidoctor does not permit anchors on either definition list terms, or definition list definitions: the anchors in the following are ignored.
+[source,asciidoc]
+--
+[[id1]] A:: [[id2]]B 
+--
+--
 
 === Tables
 

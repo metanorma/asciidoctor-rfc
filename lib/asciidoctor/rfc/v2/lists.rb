@@ -93,15 +93,18 @@ module Asciidoctor
           id = nil
           [*terms].each do |dt|
             # we collapse multiple potential ids into the last seen
-            id = set_header_attribute "anchor", dt.id unless dt.id.nil?
+            # not allowed in asciidoctor
+            #id = set_header_attribute "anchor", dt.id unless dt.id.nil?
             hangtext << dt.text
           end
-          unless dd.id.nil?
-            id = set_header_attribute "anchor", dd.id
-          end
+          # not allowed in asciidoctor
+          #unless dd.id.nil?
+          #id = set_header_attribute "anchor", dd.id
+          #end
           hangText = set_header_attribute "hangText", hangtext.join(", ")
           if dd.blocks?
-            result << "<t#{id}#{hangText}>#{dd.text}"
+            result << "<t#{id}#{hangText}>"
+            result << dd.text if dd.text?
             result << dd.content
             result << "</t>"
           else

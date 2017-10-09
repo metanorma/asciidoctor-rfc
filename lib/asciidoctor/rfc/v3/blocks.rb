@@ -81,7 +81,7 @@ module Asciidoctor
           source = get_header_attribute node, "source"
           result << "<cref#{id}#{display}#{source}>"
           if node.blocks?
-            warn "asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.lines}"
+            warn "asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}"
             result << flatten(node)
           else
             result << node.content
