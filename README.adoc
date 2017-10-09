@@ -3,7 +3,7 @@
 :icons: font
 
 asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc, the
-"http://asciidoctor.org/[asciidoctor]-way".
+"`http://asciidoctor.org/[asciidoctor]-way`".
 
 image:https://img.shields.io/gem/v/asciidoctor-rfc.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rfc"]
 image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-rfc"]
@@ -12,7 +12,7 @@ image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["C
 
 == Introduction
 
-The "xml2rfc" Vocabulary (hereinafter "`RFC XML`") is an XML-based language
+The "`xml2rfc`" Vocabulary (hereinafter "`RFC XML`") is an XML-based language
 used for writing
 https://www.ietf.org/id-info/guidelines.html[Internet-Drafts]
 and https://tools.ietf.org/html/rfc7322[RFCs (RFC7322)].
@@ -100,6 +100,21 @@ Set the `doctype` attribute to set status of this document:
 * `rfc@number` will be set to the `:name:` attribute (in v2)
 
 
+=== Gem Options
+
+[cols="2", options="header"]
+|===
+
+| Attribute
+| Purpose
+
+|`:no-rfc-bold-bcp14:`
+| Optional. Default value `true`. Allowed values: `true`, `false`.
+Override default assumption that boldface uppercase BCP14 word is to be rendered with `bcp14` tag.
+
+|===
+
+
 === Basic Document Attributes
 
 `asciidoctor-rfc` allows setting the RFC XML document header using the following
@@ -108,19 +123,72 @@ permitted between the title, listing of authors, and the document attributes.
 
 Shared RFC XML v3/v2 syntax:
 
+[cols="3", options="header"]
 |===
-| Markup              | RFC XML v2/v3 elements                            | Value Notes
-| `= Document Title`  | rfc/front/title                                   |
-| `:abbrev:`          | rfc/front/title@abbrev                            |
-| `:ipr:`             | rfc@ipr                                           |
-| `:ipr-extract:`     | rfc@iprExtract                                    |
-| `:obsoletes:`       | rfc@obsoletes                                     | no need to insert list in brackets, as with MMark; assumed delimited by comma+space
-| `:updates:`         | rfc@updates                                       | no need to insert list in brackets, as with MMark; assumed delimited by comma+space
-| `:submission-type:` | rfc@submissionType                                | `IETF` (default), `independent`, `IAB`, and `IRTF`
-| `:revdate:`         | front/date@day, front/date@month, front/date@year | For consistency with AsciiDoc, `:revdate:` is given as an ISO 8601 date; the converter breaks it down into day, month name and year
-| `:area:`            | front/area                                        | Comma delimited
-| `:workgroup:`       | front/workgroup                                   | Comma delimited
-| `:keyword:`         | front/keyword                                     | Comma delimited
+
+| Attribute
+| Purpose
+| RFC XML v2/v3 element
+
+| `= Document Title`
+| Mandatory. Title of document.
+| `rfc/front/title`
+
+| `:abbrev:`
+| Mandatory. Abbreviation of document title. Usually the document name without
+the keyword `draft-`.
+| `rfc/front/title@abbrev`
+
+| `:ipr:`
+| Mandatory. IP status of document. See
+https://tools.ietf.org/html/rfc7991#section-2.45.5[here]. Defaults to
+`trust200902`.
+| `rfc@ipr`
+
+| `:ipr-extract:`
+| Optional. Identifies a section that can be extracted from text. See
+https://tools.ietf.org/html/rfc7991#section-2.45.6[here].
+| `rfc@iprExtract`
+
+| `:obsoletes:`
+| Optional. A comma-separated list of RFC numbers or Internet-Draft names that
+this document obsoletes. Delimited by `comma + space`.
+| `rfc@obsoletes`
+
+| `:updates:`
+| Optional. A comma-separated list of RFC numbers or Internet-Draft names that
+this document updates. Delimited by `comma + space`.
+| `rfc@updates`
+
+| `:submission-type:`
+| Optional. Document stream of document described in
+https://tools.ietf.org/html/rfc7841[RFC7841]. Allowed values: `IETF` (default),
+`independent`, `IAB`, and `IRTF`.
+| `rfc@submissionType`
+
+| `:revdate:`
+| Optional. Latest revision date of document. Default value is current time.
+Accepts ISO 8601 date. For consistency with AsciiDoc, `:revdate:` is given as
+an ISO 8601 date; the converter breaks it down into day, month name and year
+| `front/date@day`, `front/date@month`, `front/date@year`
+
+| `:area:`
+| Optional. Comma delimited text on which IETF area this document relates to. Value should
+"be either the full name or the abbreviation of one of the IETF areas as
+listed on <http://www.ietf.org/iesg/area.html>". See
+https://tools.ietf.org/html/rfc7991#section-2.4[here].
+| `front/area`
+
+| `:workgroup:`
+| Optional. Comma delimited text on which IETF workgroup or research group this
+document originates from. See https://tools.ietf.org/html/rfc7991#section-2.65[here].
+| `front/workgroup`
+
+| `:keyword:`
+| Optional. Comma delimited text for singular keywords used for RFC index and
+metadata.
+| `front/keyword`
+
 |===
 
 
@@ -136,7 +204,8 @@ When `doctype` is set to:
 ** v3: the `front/seriesInfo@value` will be set to this value.
 ** v2: the `rfc@docName` will be set to this value.
 
-* `rfc`: the value should be a number like `7991` as described https://tools.ietf.org/html/rfc7991#section-2.47.6[here]
+* `rfc`: the value should be a number like `7991` as described
+  https://tools.ietf.org/html/rfc7991#section-2.47.6[here]
 ** v3: the `front/seriesInfo@value` will be set to this value.
 ** v2: the `rfc@number` will be set to this value.
 
@@ -147,7 +216,8 @@ Set the `status` attribute to set the current status of this document.
 
 The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
 
-* In v3, this sets the first `front/seriesInfo` element with `@status` as one of those values to indicate this.
+* In v3, this sets the first `front/seriesInfo` element with `@status` as one
+  of those values to indicate this.
 * In v2, this sets the `front@category` value to one of `std`, `bcp`, `info`, `exp`, `historic`.
 
 
@@ -219,14 +289,50 @@ While v3 supports marking specific elements with their own `xml:lang` attribute,
 
 These attributes are only supported for the v3 converter.
 
+[cols="3", options="header"]
 |===
-| Markup | RFC XML v3 element
-|`:index-include:` | rfc@indexInclude
-|`:sort-refs:` | rfc@sortRefs
-|`:sym-refs:` | rfc@symRefs
-|`:toc-depth:` | rfc@tocDepth
-|`:toc-include:` | rfc@tocInclude
-|`:no-rfc-bold-bcp14:` | Override default assumption that boldface uppercase BCP14 word is to be rendered with `bcp14` tag
+
+| Attribute
+| Purpose
+| RFC XML v3 element
+
+|`:index-include:`
+| Optional. Defaults to `true`. Values: `true` or `false`. Specifies whether
+formatter should include an index in generated files. If the source file has no
+`<iref>` elements, an index is never generated.
+| `rfc@indexInclude`
+
+|`:sort-refs:`
+| Optional. Defaults to `false`. Values: `true` or `false`. Specifies whether
+the prep tool should sort references.
+| `rfc@sortRefs`
+
+|`:sym-refs:`
+| Optional. Defaults to `true`. Values: `true` or `false`. Specifies whether
+formatter should use symbolic references (such as "`[RFC2119]`") or not
+(such as "`[3]`").
+| `rfc@symRefs`
+
+|`:toc-include:`
+| Optional. Defaults to `true`. Values: `true` or `false`. Specifies whether
+formatter should contain a table of contents.
+| `rfc@tocInclude`
+
+| `:link{_i}: _URL_` or `:link{_i}: _URL_ _REL_`
+a| Optional. A link to an external document related to this document.
+
+There are 4 types of values:
+
+. (RFC only) ISSN for this RFC document (`rel` set to `item`, `link` value in
+  form of `urn:issn:`;
+. (RFC only) DOI for this RFC document (`rel` set to `describedBy`, `link`
+  value in form specified by https://tools.ietf.org/html/rfc7669[RFC7669];
+. (Final Draft) Internet-Draft submitted to become published RFC (`rel` set to
+  `convertedFrom`, `link` value set to "IETF-controlled web site that retains
+  copies of Internet-Drafts";
+. (Any status) ISSN (`rel` set to `alternate`, `link` value as any author run web site.
+| `front/link@href = _URL_` or/ with `front/link@rel = _REL_`
+
 |===
 
 ////
@@ -240,7 +346,8 @@ TODO: I don't think this is used?
 In an Internet-Draft/RFC, detailed information of an author is necessary, which
 is not supported by the normal AsciiDoc syntax.
 
-You will need to provide the following information:
+You will need to provide the following information.
+
 
 ==== Multiple Author Names
 
@@ -256,14 +363,29 @@ firstname middlename(s) lastname <email>; firstname middlename(s) lastname <emai
 
 These will be mapped as follows:
 
-|===
-| Markup | RFC XML v3/v2 elements
-| `firstname middlename(s) lastname` | `front/author@fullname`
-| `lastname` | `front/author@surname`
-| `email` | `front/author/address/email`
+[cols="3", options="header"]
 |===
 
-==== Per Author Attributes
+| Syntax
+| Purpose
+| RFC XML v3/v2 element
+
+| `firstname middlename(s) lastname`
+| Mandatory (at least one). Author's full name.
+| `front/author@fullname`
+
+| `lastname`
+| Author's last name.
+| `front/author@surname`
+
+| `email`
+| Author's email address.
+| `front/author/address/email`
+
+|===
+
+
+==== Author Attributes
 
 In `asciidoctor-rfc`, detailed author attributes are given as document
 attributes.
@@ -273,33 +395,131 @@ first author uses a name `:role`, and the second onwards `:role_2`, etc.
 
 Shared RFC XML v3/v2 syntax:
 
-|===
-| Markup | RFC XML v2/v3 elements | Notes
-|`:fullname{_i}:` | front/author@fullname |
-|`:forename_initials{_i}:` | front/author@initials | distinct from AsciiDoc `:initials:` attribute, which includes surname
-|`:lastname{_i}:` | front/author@surname |
-|`:role{_i}:` | front/author@role |
-|`:organization{_i}:` | front/author/organization |
-|`:organization_abbrev{_i}:` | front/author/organization@abbrev |
-|`:email{_i}:` | front/author/address/email |
-|`:fax{_i}:` | front/author/address/facsimile |
-|`:uri{_i}:` | front/author/address/uri |
-|`:phone{_i}:` | front/author/address/phone |
-|`:street{_i}:` | front/author/address/postal/street | multiple lines are concatenated with `"\ "`.
-|`:city{_i}:` | front/author/address/postal/city |
-|`:region{_i}:` | front/author/address/postal/region |
-|`:country{_i}:` | front/author/address/postal/country |
-|`:code{_i}:` | front/author/address/postal/code |
-|`:link{_i}: _URL_` | front/link@href = _URL_ |
-|`:link{_i}: _URL REL_` | front/link@href = _URL_, front/link@rel = _REL_ | REL values drawn from https://tools.ietf.org/html/rfc7669[RFC 7669]
+[cols="3", options="header"]
 |===
 
-Syntax only available for RFC XML v3:
+| Attribute
+| Purpose
+| RFC XML v3/v2 element
+
+| `:fullname{_i}:`
+| Optional. Author's full name. Can set here instead of document header's "`Author`" line.
+| `front/author@fullname`
+
+| `:forename_initials{_i}:`
+| Optional. Author's initials excluding surname. Defaults to dynamically
+calculated initials. Distinct from the AsciiDoc `:initials:` attribute, which
+includes surname.
+| `front/author@initials`
+
+| `:lastname{_i}:`
+| Optional. Author's last name. Can set here instead of document header's "`Author`" line.
+| `front/author@surname` |
+
+| `:role{_i}:`
+| Optional. Defaults to `author`. Possible values: `author`, `editor`.
+| `front/author@role`
+
+| `:organization{_i}:`
+| Optional. Defaults to `""`. Author's organization affiliation.
+| `front/author/organization`
+
+| `:organization_abbrev{_i}:`
+| Optional. Defaults to `""`. Author's organization's abbreviation shown .
+| `front/author/organization@abbrev`
 
 |===
-| Markup | RFC XML v3 elements | Notes
-|`:postal-line{_i}:` | front/author/address/postal/postalLine | Ignored in v2. Multiple lines are concatenated with `"\ "`. `:postal-line:` is mutually exclusive with the presence of `street`, `city`, `region`, `country` and `code` attributes
+
+
+===== Author Address
+
+[cols="3", options="header"]
 |===
+| Attribute
+| Purpose
+| RFC XML v2/v3 element
+
+| `:email{_i}:`
+| Email of author.
+| `front/author/address/email`
+
+| `:fax{_i}:`
+| Fax number of author. Deprecated in v3.
+| `front/author/address/facsimile`
+
+| `:uri{_i}:`
+| URI of author.
+| `front/author/address/uri`
+
+| `:phone{_i}:`
+| Author's phone number. Scheme-specific part of a `tel` URI (does not include
+the prefix `tel:`).
+See https://tools.ietf.org/html/rfc3966#section-3[RFC3966 `global-number-digits`].
+| `front/author/address/phone`
+
+| `:street{_i}:`
+| Address of author, non-city/region/code/country portion.
+Multiple lines concatenated with `"\ "` will be split into separate `<street>`
+elements.
+| `front/author/address/postal/street`
+
+| `:city{_i}:`
+| City portion of author's address
+| `front/author/address/postal/city`
+
+| `:region{_i}:`
+| Region, state or province portion of author's address. For US/CA the 2-digit state code.
+| `front/author/address/postal/region`
+
+| `:country{_i}:`
+| Country of author's address
+| `front/author/address/postal/country`
+
+| `:code{_i}:`
+| Postal code of author's address
+| `front/author/address/postal/code`
+|===
+
+
+Only available for RFC XML v3:
+
+|===
+| Attribute | Purpose | RFC XML v3 element
+| `:postal-line{_i}:`
+| For those who want to directly format their postal addresses without regard
+to the prior types. Ignored in v2. Multiple lines are concatenated with `"\ "`.
+The `postal-line` attribute is mutually exclusive with the presence of `street`,
+`city`, `region`, `country` and `code` attributes.
+| `front/author/address/postal/postalLine`
+|===
+
+
+Example. This source:
+
+[source,asciidoc]
+----
+:street: 57 Mt Pleasant St\ Technology Park
+:city: Dullsville
+:region: NSW
+:country: Australia
+:code: 3333
+----
+
+Produces:
+
+[source,xml]
+----
+<address>
+  <postal>
+    <street>57 Mt Pleasant St</street>
+    <street>Technology Park</street>
+    <city>Dullsville</city>
+    <region>NSW</region>
+    <code>3333</code>
+    <country>Australia</country>
+  </postal>
+</address>
+----
 
 
 === Abstract
@@ -307,7 +527,7 @@ Syntax only available for RFC XML v3:
 Any paragraphs following the document header are treated as the abstract
 (`front/abstract`), whether or not they are in abstract style. The abstract is
 terminated by either the first section header (which ends the document
-preamble), or an admonition (e.g. note).
+preamble), or an admonition (e.g. `note`).
 
 Any admonitions before the first section header are treated as notes (`front/note`).
 
@@ -325,17 +545,17 @@ NOTE: This is a note <3>
 This is another note <3>
 ===
 ----
-<1> front/abstract@anchor; attribute only available in v3
-<2> front/abstract
-<3> front/note
-<4> front/note@removeInRFC; attribute only available in v3
-<5> v2: front/note@title; v3: front/note/name
+<1> v3 only: `front/abstract@anchor` (attribute only available in v3)
+<2> `front/abstract`
+<3> `front/note`
+<4> v3 only: `front/note@removeInRFC` (attribute only available in v3)
+<5> v3: `front/note/name`; v2: `front/note@title`
 
 
 === Sections and Subsections
 
 [source,asciidoc]
---
+----
 [[id]] <1>
 [remove-in-rfc=true,toc=include|exclude|default,sectnums] <2>
 == Section title <3>
@@ -348,21 +568,21 @@ First paragraph of subsection <6>
 
 ==== Subsubsection title <7>
 Content content content <8>
---
-<1> middle/section@anchor
-<2> middle/section@removeInRFC, middle/section@toc, middle/section@numbered; attributes only available in v3
-<3> v2: middle/section@title; v3: middle/section/name
-<4> middle/section/t
-<5> v2: middle/section/section@title; v3: middle/section/section/name
-<6> middle/section/section/t
-<7> v2: middle/section/section/section@title; v3: middle/section/section/section/name
-<8> middle/section/section/section/t
+----
+<1> `middle/section@anchor`
+<2> v3 only: `middle/section@removeInRFC`, `middle/section@toc`, `middle/section@numbered` (attributes only available in v3)
+<3> v3: `middle/section/name`; v2: `middle/section@title`
+<4> `middle/section/t`
+<5> v3: `middle/section/section/name`; v2: `middle/section/section@title`
+<6> `middle/section/section/t`
+<7> v3: `middle/section/section/section/name`; v2: `middle/section/section/section@title`
+<8> `middle/section/section/section/t`
 
 
 === Cross-References
 
 [source,asciidoc]
---
+----
 Content content content
 <<crossreference>> <1>
 <<crossreference,text>> <2>
@@ -373,15 +593,15 @@ The following represent the v3 relref element
 <<crossreference,section_number (of|comma|parens|bare): text>> <6>
 <<crossreference#fragment,section_number (of|comma|parens|bare)>> <7>
 <<crossreference#fragment,section_number (of|comma|parens|bare): text>> <8>
---
+----
 <1> `<xref target="crossreference"/>`
 <2> `<xref target="crossreference">text</xref>`
 <3> `<xref format="counter|title|none|default" target="crossreference">text</xref>`
 <4> `<eref href="http://example.com/">linktext</eref>`
-<5> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
-<6> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
-<7> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
-<8> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
+<5> v3 only: `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>` (element only available in v3)
+<6> v3 only: `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>` (element only available in v3)
+<7> v3 only: `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>` (element only available in v3)
+<8> v3 only: `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>` (element only available in v3)
 
 
 === Indexing
@@ -409,14 +629,14 @@ _Italic_ <2>
 [bcp14]#MUST NOT#  <7>
 *MUST NOT* <8>
 --
-<1> That is, "+ " at the end of a line. v2: `<vspace/>`; v3: `<br/>`
-<2> v2: `<spanx style="emph">Italic</spanx>`; v3: `<em>Italic</em>`
-<3> v2: `<spanx style="strong">Bold</spanx>`; v3: `<strong>Bold</strong>`
-<4> v2: `<spanx style="verb">Monospace</spanx>`; v3: `<tt>Monospace</tt>`
-<5> v3: `<sub>subscript</sub>`. Not supported in v2; rendered as `\_subscript_`
-<6> v3: `<sup>superscript</sup>`. Not supported in v2; rendered as `\^superscript^`
-<7> v3: `<bcp14>MUST NOT</bcp14>`. Rendered in v2 as `<spanx style="strong">MUST NOT</spanx>`.
-<8> v2: `<spanx style="strong">MUST NOT</spanx>`. v3: if document flag `:no-rfc-bold-bcp14:` is present, then `<strong>MUST NOT</strong>`, else (by default) any BCP14/RFC2119 phrase in boldface and capitals is assumed to be intended to be tagged in `<bcp14>`.
+<1> That is, "+ " at the end of a line. v3: `<br/>`; v2: `<vspace/>`.
+<2> v3: `<em>Italic</em>`; v2: `<spanx style="emph">Italic</spanx>`
+<3> v3: `<strong>Bold</strong>`; v2: `<spanx style="strong">Bold</spanx>`
+<4> v3: `<tt>Monospace</tt>`; v2: `<spanx style="verb">Monospace</spanx>`
+<5> v3 only: `<sub>subscript</sub>`. Not supported in v2; rendered as `\_subscript_`
+<6> v3 only: `<sup>superscript</sup>`. Not supported in v2; rendered as `\^superscript^`
+<7> v3 only: `<bcp14>MUST NOT</bcp14>`. Not supported in v2.
+<8> v3: if document flag `:no-rfc-bold-bcp14:` is present, then `<strong>MUST NOT</strong>`, else (by default) any BCP14/RFC2119 phrase in boldface and capitals is assumed to be intended to be tagged in `<bcp14>`. v2: `<spanx style="strong">MUST NOT</spanx>`.
 
 
 === Paragraphs
@@ -427,8 +647,8 @@ _Italic_ <2>
 [keep-with-next=true,keep-with-previous=true] <2>
 Paragraph text <3>
 --
-<1> t@anchor
-<2> t@keepWithNext, t@keepWithPrevious; attributes only available in v3
+<1> `t@anchor`
+<2> v3 only: `t@keepWithNext`, `t@keepWithPrevious` (attributes only available in v3)
 <3> `<t>Paragraph text</t>`
 
 === Quotes (v3 only)
@@ -439,8 +659,8 @@ Paragraph text <3>
 [quote, attribution, citation info] <2>
 Quotation <3>
 --
-<1> blockquote@anchor
-<2> blockquote@quotedFrom, blockquote@cite. In RFC XML v3, citation info is limited to a URL.
+<1> `blockquote@anchor`
+<2> `blockquote@quotedFrom`, `blockquote@cite`. In v3, `citation info` is limited to a URL.
 <3> `<blockquote>Quotation</blockquote>`
 
 
@@ -477,9 +697,9 @@ begin() {
 }
 ----
 --
-<1> v3: `figure/sourcecode@anchor`, v2: `figure/artwork@anchor`
-<2> v3: `figure/sourcecode@name`, v2: `figure/artwork@name`
-<3> v3: `figure/sourcecode@type`, `figure/sourcecode@src` (`align` and `alt` not supported). If `src` is present, the listing is not expected to have any content: content is taken from the hyperlink in the attribute. v2: `figure/artwork@type`, `figure/artwork@src`, `figure/artwork@align`, `figure/artwork@alt`.
+<1> v3: `figure/sourcecode@anchor`; v2: `figure/artwork@anchor`
+<2> v3: `figure/sourcecode@name`; v2: `figure/artwork@name`
+<3> v3: `figure/sourcecode@type`; `figure/sourcecode@src` (`align` and `alt` not supported). If `src` is present, the listing is not expected to have any content: content is taken from the hyperlink in the attribute. v2: `figure/artwork@type`, `figure/artwork@src`, `figure/artwork@align`, `figure/artwork@alt`.
 <4> v3: `figure/sourcecode`; v2: `figure/artwork`
 
 
@@ -508,17 +728,17 @@ image::filename[] <10>
 Postamble text <11>
 ====
 --
-<1> figure@anchor
-<2> figure/artwork@align, figure/artwork@alt, figure@suppress-title; attributes only available in v2
-<3> figure/name
-<4> figure/preamble; only available in v2
-<5> figure/artwork@anchor
-<6> figure/artwork@align, figure/artwork@alt; figure@type (attribute only available in v2)
-<7> figure/artwork
-<8> figure/artwork@name
-<9> figure/artwork@src, figure/artwork@align, figure/artwork@alt; figure/artwork@type (only available in v2, intended to be a MIME type; in v3, populated as either `svg` or `binary-art` depending on file suffix)
-<10> figure/artwork@src
-<11> figure/postamble; only available in v2
+<1> `figure@anchor`
+<2> v2 only: `figure/artwork@align`, `figure/artwork@alt`, `figure@suppress-title` (attributes only available in v2)
+<3> `figure/name`
+<4> v2 only: `figure/preamble` (only available in v2)
+<5> `figure/artwork@anchor`
+<6> `figure/artwork@align`, `figure/artwork@alt`; `figure@type` (attribute only available in v2)
+<7> `figure/artwork`
+<8> `figure/artwork@name`
+<9> `figure/artwork@src`, `figure/artwork@align`, `figure/artwork@alt`; `figure/artwork@type` (only available in v2, intended to be a MIME type; v3: populated as either `svg` or `binary-art` depending on file suffix)
+<10> `figure/artwork@src`
+<11> v2 only: `figure/postamble` (only available in v2)
 
 
 === Unordered and Ordered Lists
@@ -536,14 +756,14 @@ Postamble text <11>
 . A <8>
 . B <8>
 --
-<1> v3: ul@anchor; attribute only available in v3
-<2> v3: ul@empty, ul@spacing; attributes only available in v3
-<3> v2: list[@style="symbols"]/t; v3: ul/li
-<4> v2: list[@style="symbols"]/t@anchor, list[@style="symbols"]/t; v3: ul/li@anchor, ul/li
-<5> v2: list[@style="symbols"]/t/list[@style="symbols"]/t; v3: ul/li/ul/li
-<6> v3: ol@anchor; attribute only available in v3
-<7> v2: list/start, list@style (`empty` and `group` not available) v3: ol@empty, ol@start, ol@group, ol@type
-<8> v2: list/t; v3: ol/li
+<1> v3: `ul@anchor`; attribute only available in v3
+<2> v3: `ul@empty`, `ul@spacing`; attributes only available in v3
+<3> v2: `list[@style="symbols"]/t`; v3: ul/li
+<4> v2: `list[@style="symbols"]/t@anchor`, `list[@style="symbols"]/t`; v3: `ul/li@anchor`, `ul/li`
+<5> v2: `list[@style="symbols"]/t/list[@style="symbols"]/t`; v3: `ul/li/ul/li`
+<6> v3: `ol@anchor`; attribute only available in v3
+<7> v2: `list/start`, `list@style` (`empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type`
+<8> v2: `list/t`; v3: `ol/li`
 
 
 === Definition Lists
@@ -554,20 +774,22 @@ Postamble text <11>
 [horizontal,compact,hang-indent=n] <2>
 A:: B <3>
 --
-<1> dl@anchor; attribute only available in v3
-<2> dl@hanging (attribute only available in v3), dl@spacing  (attribute only available in v3), list@hangIndent  (attribute only available in v2). Note that the `compact` and `horizontal` attributes are mutually exclusive in Asciidoc.
-<3> v2: list[@style="hanging"]/t@hangText, list[@style="hanging"]/t; v3: dl/dt, dl/dd
+<1> v3 only: `dl@anchor` (attribute only available in v3)
+<2> v3 only: `dl@hanging`, `dl@spacing` (attributes only available in v3); v2 only: `list@hangIndent` (attribute only available in v2). Note that the `compact` and `horizontal` attributes are mutually exclusive in AsciiDoc.
+<3> v3: `dl/dt`, `dl/dd`; v2: `list[@style="hanging"]/t@hangText`, `list[@style="hanging"]/t`
 
-Note that Asciidoctor does not permit anchors on either definition list terms, or definition list definitions: the anchors in the following are ignored.
+Note that asciidoctor does not permit anchors on either definition list terms,
+or definition list definitions: the anchors in the following are ignored.
+
 [source,asciidoc]
 --
-[[id1]] A:: [[id2]]B 
---
+[[id1]] A:: [[id2]]B
 --
 
 === Tables
 
-The converter respects the AsciiDoc (horizontal) align attributes of cells (v2, v3) and `colspan`, `rowspan` attributes (v3).
+The converter respects the AsciiDoc (horizontal) align attributes of cells (v2,
+v3) and `colspan`, `rowspan` attributes (v3).
 
 [source,asciidoc]
 --
@@ -583,13 +805,13 @@ h|header cell | body cell <5>
 |foot | foot <7>
 |===
 --
-<1> v2: texttable@anchor; v3: table@anchor
-<2> v2: texttable@suppress-title, texttable@align, texttable@style; attributes only available in v2
-<3> v2: texttable@title; v3: table/name
-<4> v2: texttable/ttcol@id (attribute only available in v2), texttable/ttcol; v3: table/thead/tr/td
-<5> v2: texttable/c, texttable/c; v3: table/tbody/tr/th, table/tbody/tr/td
-<6> v3: table/tbody/tr/td@anchor (attribute only available in v3)
-<7> v2: texttable/c; v3: table/tfoot/tr/td
+<1> v3: `table@anchor`; v2: `texttable@anchor`
+<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style`; attributes only available in v2
+<3> v3: `table/name`; v2: `texttable@title`
+<4> v3: `table/thead/tr/td`; v2: `texttable/ttcol@id` (attribute only available in v2), `texttable/ttcol`
+<5> v3: `table/tbody/tr/th`, `table/tbody/tr/td`; v2: `texttable/c`, `texttable/c`
+<6> v3: `table/tbody/tr/td@anchor` (attribute only available in v3)
+<7> v3: `table/tfoot/tr/td`; v2: `texttable/c`
 
 
 === Sidebar (v3 only)
@@ -601,7 +823,7 @@ h|header cell | body cell <5>
 Sidebar <2>
 ****
 --
-<1> aside@anchor
+<1> `aside@anchor`
 <2> `<aside>Sidebar</aside>`
 
 
@@ -625,12 +847,12 @@ Sidebar <2>
 ** [[[crossref4]]] Reference4 <6>
 ** [[[crossref5]]] Reference5 <6>
 --
-<1> back/references@anchor
-<2> back/references/reference@anchor, back/references/reference/refcontent
-<3> back/references/reference/refcontent@quoteTitle, back/references/reference/refcontent@target, back/references/reference/refcontent@annotation
+<1> `back/references@anchor`
+<2> `back/references/reference@anchor`, `back/references/reference/refcontent`
+<3> `back/references/reference/refcontent@quoteTitle`, `back/references/reference/refcontent@target`, `back/references/reference/refcontent@annotation`
 <4> `<displayreference target=crossreference to=xyz/>`
-<5> back/references/referencegroup@anchor
-<6> back/references/referencegroup/reference/refcontent
+<5> `back/references/referencegroup@anchor`
+<6> `back/references/referencegroup/reference/refcontent`
 
 ==== v2 References
 
@@ -652,8 +874,8 @@ References for v2 are expected to be provided in raw RFC XML v2 format.
 (raw XML) <2>
 ++++
 --
-<1> back/references@anchor
-<2> back/references/reference
+<1> `back/references@anchor`
+<2> `back/references/reference`
 
 
 
@@ -666,9 +888,9 @@ References for v2 are expected to be provided in raw RFC XML v2 format.
 == Appendix 1 <2>
 Content <3>
 --
-<1> back/section@anchor
-<2> v2: back/section@title; v3: back/section/name
-<3> back/section/t
+<1> `back/section@anchor`
+<2> v3: `back/section/name`; v2: `back/section@title`
+<3> `back/section/t`
 
 
 
@@ -680,15 +902,16 @@ asciidoctor commands:
 
 |===
 | RFC XML element                  | RFC XML v3 | RFC XML v2
-| `front/boilerplate`              | N          | N
+| `front/boilerplate`              | Not added  | N/A
 | `iref@primary`                   | N          | N
 | `reference/*` (and all children) | N/A        | N
 | `reference/front`                | N          | N/A
-| `table/preamble`                 | N/A        | N
-| `table/postamble`                | N/A        | N
+| `table/preamble`                 | Deprecated | N
+| `table/postamble`                | Deprecated | N
 | `artwork@width`                  | N/A        | N
 | `artwork@height`                 | N/A        | N
 |===
+
 
 === Unsupported Asciidoctor Features
 
@@ -696,44 +919,49 @@ These asciidoctor features are not supported in output of these formats:
 
 |===
 | asciidoctor feature | RFC XML v2 | RFC XML v3
-| http://asciidoctor.org/docs/user-manual/#quote[Quote] | rendered as normal paragraph | Y
-| http://asciidoctor.org/docs/user-manual/#quote[Quote]: Non-URL Citations || Ignored
-| http://asciidoctor.org/docs/user-manual/#verse[Verse] | rendered as normal paragraph | Y
-| http://asciidoctor.org/docs/user-manual/#sidebar[Sidebar] | rendered as normal paragraph | Y
-| http://asciidoctor.org/docs/user-manual/#index-terms[Index Term] Tertiary || Ignored
-| List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` || treated as `arabic`
-| http://asciidoctor.org/docs/user-manual/#callouts[Callouts] || Ignored
-| http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] || treated as inline section
-| http://asciidoctor.org/docs/user-manual/#page-break[Page Break] || Ignored
-| http://asciidoctor.org/docs/user-manual/#horizontal-rules[Horizontal Rule] || Ignored
-| http://asciidoctor.org/docs/user-manual/#audio[`audio`] || Ignored
-| http://asciidoctor.org/docs/user-manual/#video[`video`] || Ignored
-| Macro: http://asciidoctor.org/docs/user-manual/#keyboard-shortcuts[Keyboard shortcuts] || Ignored
-| Macro: http://asciidoctor.org/docs/user-manual/#menu-selections[Menu selections] || Ignored
-| Macro: http://asciidoctor.org/docs/user-manual/#ui-buttons[UI buttons] || Ignored
-| Table: http://asciidoctor.org/docs/user-manual/#footer-row[Distinction between table body and table footer] | N | Y
-| Table: http://asciidoctor.org/docs/user-manual/#header-row[Multiple table header rows] | N | Y
+| http://asciidoctor.org/docs/user-manual/#quote[Quote] | Rendered as normal paragraph | Supported
+| http://asciidoctor.org/docs/user-manual/#quote[Quote]: Non-URL Citations 2+| Ignored
+| http://asciidoctor.org/docs/user-manual/#verse[Verse] | Rendered as normal paragraph | Supported
+| http://asciidoctor.org/docs/user-manual/#sidebar[Sidebar] | Rendered as normal paragraph | Supported
+| http://asciidoctor.org/docs/user-manual/#index-terms[Index Term] Tertiary 2+| Ignored
+| List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` 2+| Treated as `arabic`
+| http://asciidoctor.org/docs/user-manual/#callouts[Callouts] 2+| Ignored
+| Formatting: http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] 2+| Treated as inline section
+| Formatting: http://asciidoctor.org/docs/user-manual/#page-break[Page Break] 2+| Ignored
+| Formatting: http://asciidoctor.org/docs/user-manual/#horizontal-rules[Horizontal Rule] 2+| Ignored
+| Media: http://asciidoctor.org/docs/user-manual/#audio[Audio] 2+| Ignored
+| Media: http://asciidoctor.org/docs/user-manual/#video[Video] 2+| Ignored
+| Macro: http://asciidoctor.org/docs/user-manual/#keyboard-shortcuts[Keyboard shortcuts] 2+| Ignored
+| Macro: http://asciidoctor.org/docs/user-manual/#menu-selections[Menu selections] 2+| Ignored
+| Macro: http://asciidoctor.org/docs/user-manual/#ui-buttons[UI buttons] 2+| Ignored
+| Table: http://asciidoctor.org/docs/user-manual/#footer-row[Distinction between table body and table footer] | No | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#header-row[Multiple table header rows] | No | Supported
 |===
-
-The following tables present AsciiDoc markup, and how they map to RFC XML v2 and RFC XML v3.
-
 
 
 == Examples
 
 === RFC XML v3 Example
 
-//[source,asciidoc]
-//----
+ifdef::env-github[]
 include::spec/examples/example-v3.adoc[]
-//----
+endif::[]
+ifndef::env-github[]
+[source,asciidoc]
+----
+include::spec/examples/example-v3.adoc[]
+----
 
 === RFC XML v2 Example
 
-//[source,asciidoc]
-//----
+ifdef::env-github[]
 include::spec/examples/example-v2.adoc[]
-//----
+endif::[]
+ifndef::env-github[]
+[source,asciidoc]
+----
+include::spec/examples/example-v2.adoc[]
+----
 
 
 == Development
@@ -749,21 +977,24 @@ should fix the violations as part of your contribution.
 
 Clone the repository.
 
-```
+[source,sh]
+----
 git clone https://github.com/riboseinc/asciidoctor-rfc
-```
+----
 
 Setup your environment.
 
-```
+[source,sh]
+----
 bin/setup
-```
+----
 
 Run the test suite
 
-```
+[source,sh]
+----
 bin/rspec
-```
+----
 
 == Contributing
 
