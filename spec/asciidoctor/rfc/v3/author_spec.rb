@@ -56,7 +56,7 @@ describe Asciidoctor::RFC::V3::Converter do
       expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :forename_initials: J. D.
       :role: editor
@@ -76,7 +76,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author initials="J. D." surname="Horton" role="editor">
+       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -102,7 +102,7 @@ describe Asciidoctor::RFC::V3::Converter do
       expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :forename_initials: J. D.
       :role: editor
@@ -116,7 +116,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
-      :fullName_2: Billy Bob Thornton
+      :fullname_2: Billy Bob Thornton
       :lastname_2: Thornton
       :forename_initials_2: B. B.
       :role_2: author
@@ -136,7 +136,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author initials="J. D." surname="Horton" role="editor">
+       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -152,7 +152,7 @@ describe Asciidoctor::RFC::V3::Converter do
        <uri>http://example.com</uri>
        </address>
        </author>
-       <author initials="B. B." surname="Thornton" role="author">
+       <author fullname="Billy Bob Thornton" initials="B. B." surname="Thornton" role="author">
        <organization>IBM</organization>
        <address>
        <postal>
@@ -178,7 +178,7 @@ describe Asciidoctor::RFC::V3::Converter do
       expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :forename_initials: J. D.
       :role: editor
@@ -198,7 +198,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author initials="J. D." surname="Horton" role="editor">
+       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -225,7 +225,7 @@ describe Asciidoctor::RFC::V3::Converter do
       expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :initials: J. D. H.
       :role: editor
@@ -245,7 +245,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author surname="Horton" role="editor">
+       <author fullname="John Doe Horton" surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -271,7 +271,7 @@ describe Asciidoctor::RFC::V3::Converter do
       expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :initials: J. D. H.
       :role: editor
@@ -287,7 +287,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author surname="Horton" role="editor">
+       <author fullname="John Doe Horton" surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -313,7 +313,7 @@ describe Asciidoctor::RFC::V3::Converter do
       expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :initials: J. D. H.
       :role: editor
@@ -334,7 +334,7 @@ describe Asciidoctor::RFC::V3::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author surname="Horton" role="editor">
+       <author fullname="John Doe Horton" surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>

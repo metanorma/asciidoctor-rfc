@@ -45,7 +45,9 @@ module Asciidoctor
 
       def authorname(node, suffix)
         result = []
-        authorname = set_header_attribute "fullname", node.attr("author#{suffix}")
+        fullname = node.attr("author#{suffix}")
+        fullname = node.attr("fullname#{suffix}") if fullname.nil?
+        authorname = set_header_attribute "fullname", fullname
         surname = set_header_attribute "surname", node.attr("lastname#{suffix}")
         initials = set_header_attribute "initials", node.attr("forename_initials#{suffix}")
         role = set_header_attribute "role", node.attr("role#{suffix}")
