@@ -681,9 +681,9 @@ Any admonition inside the body of the text is a comment.
 ====
 --
 <1> `<cref>Any admonition inside the body of the text is a comment.</cref>`
-<2> cref@anchor
-<3> cref@display (not supported in v2), cref@source
-<4> cref/name. Not supported in v2.
+<2> `cref@anchor`
+<3> v3 only: `cref@display` (not supported in v2); v2: `cref@source`
+<4> v3 only: `cref/name`
 
 
 === Source Code Listings
@@ -808,7 +808,7 @@ h|header cell | body cell <5>
 |===
 --
 <1> v3: `table@anchor`; v2: `texttable@anchor`
-<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style`; attributes only available in v2
+<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style` (attributes only available in v2)
 <3> v3: `table/name`; v2: `texttable@title`
 <4> v3: `table/thead/tr/td`; v2: `texttable/ttcol@id` (attribute only available in v2), `texttable/ttcol`
 <5> v3: `table/tbody/tr/th`, `table/tbody/tr/td`; v2: `texttable/c`, `texttable/c`
