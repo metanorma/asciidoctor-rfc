@@ -951,6 +951,7 @@ ifndef::env-github[]
 ----
 include::spec/examples/example-v3.adoc[]
 ----
+endif::[]
 
 === RFC XML v2 Example
 
@@ -962,6 +963,7 @@ ifndef::env-github[]
 ----
 include::spec/examples/example-v2.adoc[]
 ----
+endif::[]
 
 
 == Development
