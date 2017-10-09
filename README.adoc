@@ -416,7 +416,7 @@ includes surname.
 
 | `:lastname{_i}:`
 | Optional. Author's last name. Can set here instead of document header's "`Author`" line.
-| `front/author@surname` |
+| `front/author@surname`
 
 | `:role{_i}:`
 | Optional. Defaults to `author`. Possible values: `author`, `editor`.
