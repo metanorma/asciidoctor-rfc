@@ -628,7 +628,7 @@ _Italic_ <2>
 `Monospace` <4>
 ~subscript~ <5>
 ^superscript^ <6>
-[bcp14]#MUST NOT#  <7>
+[bcp14]#MUST NOT# <7>
 *MUST NOT* <8>
 --
 <1> That is, "+ " at the end of a line. v3: `<br/>`; v2: `<vspace/>`.
@@ -637,7 +637,7 @@ _Italic_ <2>
 <4> v3: `<tt>Monospace</tt>`; v2: `<spanx style="verb">Monospace</spanx>`
 <5> v3 only: `<sub>subscript</sub>`. Not supported in v2; rendered as `\_subscript_`
 <6> v3 only: `<sup>superscript</sup>`. Not supported in v2; rendered as `\^superscript^`
-<7> v3 only: `<bcp14>MUST NOT</bcp14>`. Not supported in v2.
+<7> v3 only: `<bcp14>MUST NOT</bcp14>`. Not supported in v2; rendered as `<spanx style="strong">MUST NOT</spanx>`.
 <8> v3: if document flag `:no-rfc-bold-bcp14:` is present, then `<strong>MUST NOT</strong>`, else (by default) any BCP14/RFC2119 phrase in boldface and capitals is assumed to be intended to be tagged in `<bcp14>`. v2: `<spanx style="strong">MUST NOT</spanx>`.
 
 
