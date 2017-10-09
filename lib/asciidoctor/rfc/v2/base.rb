@@ -115,12 +115,20 @@ module Asciidoctor
           # format attribute not supported
           unless (text = node.text) || (text = node.attributes["path"])
             refid = node.attributes["refid"]
-            text = %([#{refid}])
+            #text = %([#{refid}])
           end
-          target = node.target.gsub(/^#/, "")
-          %(<xref target="#{target}">#{text}</xref>)
+          format = nil
+          if text =~ /^format=(counter|title|none|default):/
+            /^format=(?<format>\S+):\s*(?<text1>.*)$/ =~ text
+            format = set_header_attribute "format", format
+            text = text1
+          end
+          target = set_header_attribute "target", node.target.gsub(/^#/, "")
+          %(<xref#{format}#{target}>#{text}</xref>)
         when :link
-          %(<eref target="#{node.target}">#{node.text}</eref>)
+          text = node.text
+          text = nil if node.target == node.text
+          %(<eref target="#{node.target}">#{text}</eref>)
         when :bibref
           unless node.xreftext.nil?
             x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")

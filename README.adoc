@@ -50,7 +50,6 @@ The converter tries to follow native Asciidoc formatting as much as possible, in
 The following **RFC XML v2** and **RFC XML v3** elements are not supported:
 
 * front/boilerplate
-* xref@format
 * iref@primary
 * reference/* (all children of reference) (**v2**)
 * reference/front (**v3**)
@@ -220,20 +219,22 @@ Content content content <8>
 Content content content 
 <<crossreference>> <1>
 <<crossreference,text>> <2>
-http://example.com/[linktext] <3>
+<<crossreference,format=(counter|title|none|default): text>> <3>
+http://example.com/[linktext] <4>
 The following represent the v3 relref element
-<<crossreference,section_number (of|comma|parens|bare)>> <4>
-<<crossreference,section_number (of|comma|parens|bare): text>> <5>
-<<crossreference#fragment,section (of|comma|parens|bare)>> <6>
-<<crossreference#fragment,section (of|comma|parens|bare): text>> <7>
+<<crossreference,section_number (of|comma|parens|bare)>> <5>
+<<crossreference,section_number (of|comma|parens|bare): text>> <6>
+<<crossreference#fragment,section_number (of|comma|parens|bare)>> <7>
+<<crossreference#fragment,section_number (of|comma|parens|bare): text>> <8>
 --
 <1> `<xref target="crossreference"/>`
 <2> `<xref target="crossreference">text</xref>`
-<3> `<eref href="http://example.com/">linktext</eref>`
-<4> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
-<5> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
-<6> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
-<7> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
+<3> `<xref format="counter|title|none|default" target="crossreference">text</xref>`
+<4> `<eref href="http://example.com/">linktext</eref>`
+<5> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
+<6> `<relref displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
+<7> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>`: element only available in v3
+<8> `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>`: element only available in v3
 
 === Indexing
 

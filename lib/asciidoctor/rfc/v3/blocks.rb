@@ -118,8 +118,8 @@ module Asciidoctor
         # TODO iref
         result << node.content
         result << "</figure>"
-        result.blocks.each do |b|
-          unless b == :listing or b == :image or b == :literal
+        node.blocks.each do |b|
+          unless b.context == :listing or b.context == :image or b.context == :literal
             warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.text}"
           end
         end
