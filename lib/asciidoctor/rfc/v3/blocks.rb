@@ -3,6 +3,7 @@ module Asciidoctor
     module Blocks
       # Syntax:
       #   [[id]]
+      #   .name
       #   [align=left|center|right,alt=alt_text] (optional)
       #   ....
       #     literal
@@ -14,7 +15,9 @@ module Asciidoctor
         align = get_header_attribute node, "align"
         alt = set_header_attribute "alt", node.alt
         type = set_header_attribute "type", "ascii-art"
-        result << "<artwork#{id}#{align}#{alt}#{type}>"
+        name = set_header_attribute "name", node.title
+        result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
+
         node.lines.each do |line|
           result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
         end
@@ -120,7 +123,7 @@ module Asciidoctor
         result << "</figure>"
         node.blocks.each do |b|
           unless b.context == :listing or b.context == :image or b.context == :literal
-            warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.text}"
+            warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.lines}"
           end
         end
         result

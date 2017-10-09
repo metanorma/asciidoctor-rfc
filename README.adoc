@@ -494,13 +494,14 @@ begin() {
 Preamble text <4>
 
 [[id]] <5>
+.Figure2.jpg <8>
 [align=left|center|right,alt=alt_text,type] <6>
 ....
 Figures are only permitted to contain listings (sourcecode), images (artwork),
 or literal (artwork) <7>
 ....
 [[id]] <5>
-.Figure 2 <8>
+.Figure2.jpg <8>
 [link=xxx,align=left|center|right,alt=alt_text,type] <9>
 image::filename[] <10>
 
@@ -514,7 +515,7 @@ Postamble text <11>
 <5> figure/artwork@anchor
 <6> figure/artwork@align, figure/artwork@alt; figure@type (attribute only available in v2)
 <7> figure/artwork
-<8> figure/artwork@name; attributes only available in v2
+<8> figure/artwork@name
 <9> figure/artwork@src, figure/artwork@align, figure/artwork@alt; figure/artwork@type (only available in v2, intended to be a MIME type; in v3, populated as either `svg` or `binary-art` depending on file suffix)
 <10> figure/artwork@src
 <11> figure/postamble; only available in v2
