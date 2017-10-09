@@ -714,17 +714,17 @@ The following tables present AsciiDoc markup, and how they map to RFC XML v2 and
 
 === RFC XML v3 Example
 
-[source,asciidoc]
-----
+//[source,asciidoc]
+//----
 include::spec/examples/example-v3.adoc[]
-----
+//----
 
 === RFC XML v2 Example
 
-[source,asciidoc]
-----
+//[source,asciidoc]
+//----
 include::spec/examples/example-v2.adoc[]
-----
+//----
 
 
 == Development
