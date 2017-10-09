@@ -90,11 +90,13 @@ in AsciiDoc/asciidoctor syntax.
 Set the `doctype` attribute to set status of this document:
 
 `:doctype: internet-draft` sets the document as an Internet-Draft:
+
 * `rfc/front/seriesInfo@name` attribute will be set to `Internet-Draft` (in v3)
 * `rfc/front/seriesInfo@value` will be set to the `:name:` attribute (in v3)
 * `rfc@docName` will be set to the `:name:` attribute (in v2)
 
 `:doctype: rfc` sets the document as an RFC:
+
 * `rfc/front/seriesInfo@name` attribute will be set to `RFC` (in v3)
 * `rfc/front/seriesInfo@value` will be set to the `:name:` attribute (in v3)
 * `rfc@number` will be set to the `:name:` attribute (in v2)
