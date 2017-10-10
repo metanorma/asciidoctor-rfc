@@ -103,7 +103,7 @@ module Asciidoctor
         result = []
         id = set_header_attribute "anchor", node.id
         result << "<aside#{id}>"
-        result << cell.content
+        result << node.content
         result << "</aside>"
         result
       end
