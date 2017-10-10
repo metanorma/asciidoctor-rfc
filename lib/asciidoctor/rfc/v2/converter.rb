@@ -43,7 +43,6 @@ module Asciidoctor
       alias_method :sidebar, :content
       alias_method :audio, :skip
       alias_method :colist, :skip
-      alias_method :floating_title, :content
       alias_method :page_break, :skip
       alias_method :thematic_break, :skip
       alias_method :video, :skip

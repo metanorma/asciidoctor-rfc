@@ -558,27 +558,31 @@ This is another note <3>
 
 [source,asciidoc]
 ----
-[[id]] <1>
-[remove-in-rfc=true,toc=include|exclude|default,sectnums] <2>
-== Section title <3>
-First paragraph of section <4>
+:sectnums: <1>
+[[id]] <2>
+[remove-in-rfc=true,toc=include|exclude|default] <3>
+== Section title <4>
+First paragraph of section <5>
 
-Second paragraph of section <4>
+Second paragraph of section <5>
 
-=== Subsection title <5>
-First paragraph of subsection <6>
+:sectnums!: <6>
+=== Subsection title <7>
+First paragraph of subsection <8>
 
-==== Subsubsection title <7>
-Content content content <8>
+==== Subsubsection title <9>
+Content content content <10>
 ----
-<1> `middle/section@anchor`
-<2> v3 only: `middle/section@removeInRFC`, `middle/section@toc`, `middle/section@numbered` (attributes only available in v3)
-<3> v3: `middle/section/name`; v2: `middle/section@title`
-<4> `middle/section/t`
-<5> v3: `middle/section/section/name`; v2: `middle/section/section@title`
-<6> `middle/section/section/t`
-<7> v3: `middle/section/section/section/name`; v2: `middle/section/section/section@title`
-<8> `middle/section/section/section/t`
+<1> `middle/section@numbered=true` (attribute only available in v3)
+<2> `middle/section@anchor`
+<3> v3 only: `middle/section@removeInRFC`, `middle/section@toc` (attributes only available in v3)
+<4> v3: `middle/section/name`; v2: `middle/section@title`
+<5> `middle/section/t`
+<6> `middle/section@numbered=false` (attribute only available in v3) (toggle)
+<7> v3: `middle/section/section/name`; v2: `middle/section/section@title`
+<8> `middle/section/section/t`
+<9> v3: `middle/section/section/section/name`; v2: `middle/section/section/section@title`
+<10> `middle/section/section/section/t`
 
 
 === Cross-References
@@ -935,7 +939,7 @@ These asciidoctor features are not supported in output of these formats:
 | http://asciidoctor.org/docs/user-manual/#index-terms[Index Term] Tertiary 2+| Ignored
 | List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` 2+| Treated as `arabic`
 | http://asciidoctor.org/docs/user-manual/#callouts[Callouts] 2+| Ignored
-| Formatting: http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] 2+| Treated as inline section
+| Formatting: http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] 2+| Rendered as strong paragraph
 | Formatting: http://asciidoctor.org/docs/user-manual/#page-break[Page Break] 2+| Ignored
 | Formatting: http://asciidoctor.org/docs/user-manual/#horizontal-rules[Horizontal Rule] 2+| Ignored
 | Media: http://asciidoctor.org/docs/user-manual/#audio[Audio] 2+| Ignored

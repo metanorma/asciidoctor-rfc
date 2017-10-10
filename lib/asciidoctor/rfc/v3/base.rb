@@ -196,6 +196,8 @@ module Asciidoctor
       end
 
       # Syntax:
+      #   :sectnums: (toggle)
+      #   :sectnums!: (toggle)
       #   [[id]]
       #   [removeInRFC=true,toc=include|exclude|default] (optional)
       #   == title

@@ -1,6 +1,16 @@
 module Asciidoctor
   module RFC::V2
     module Blocks
+
+      # Syntax:
+      # [discrete]
+      # == Section
+      def floating_title(node)
+        result = []
+        result << %{<t><spanx style="strong">#{node.title}</spanx></t>}
+        result
+      end
+
       # Syntax:
       #   [[id]]
       #   .Name

@@ -42,7 +42,6 @@ module Asciidoctor
           $seen_abstract = true
           result << "<abstract>"
         end
-        puts node
         id = set_header_attribute "anchor", node.id
         empty = get_header_attribute node, "empty"
         spacing = get_header_attribute node, "spacing" 
