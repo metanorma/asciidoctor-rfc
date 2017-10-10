@@ -95,9 +95,7 @@ module Asciidoctor
           result = result1
         else
           id = set_header_attribute "anchor", node.id
-          result << "<t#{id}>"
-          result << result1
-          result << "</t>"
+          result << "<t#{id}>#{result1}</t>"
         end
         result
       end
