@@ -61,7 +61,7 @@ module Asciidoctor
         result << "<t>" if node.parent.context !~ /paragraph|list_item/
         counter = set_header_attribute "counter", node.attr("start")
         # TODO did I understand spec of @counter correctly?
-        style = set_header_attribute "style", OLIST_TYPES[node.style]
+        style = set_header_attribute "style", OLIST_TYPES[node.style.to_sym]
         result << "<list#{counter}#{style}>"
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id

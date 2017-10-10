@@ -754,7 +754,7 @@ Postamble text <11>
 ** Nested list <5>
 
 [[id]] <6>
-[compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <7>
+[spacing=compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <7>
 . A <8>
 . B <8>
 --

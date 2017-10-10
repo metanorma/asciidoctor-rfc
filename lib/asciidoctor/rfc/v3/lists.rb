@@ -72,7 +72,7 @@ module Asciidoctor
 
       # Syntax:
       #   [[id]]
-      #   [compact,start=n,group=n] (optional)
+      #   [start=n,group=n,spacing=normal|compact] (optional)
       #   . A
       #   . B
       def olist(node)
@@ -82,10 +82,11 @@ module Asciidoctor
           result << "<abstract>"
         end
         id = set_header_attribute "anchor", node.id
-        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        spacing = set_header_attribute "spacing", "compact" if node.style == "compact"
+        spacing = get_header_attribute node, "spacing" if spacing.nil?
         start = get_header_attribute node, "start"
         group = get_header_attribute node, "group"
-        type = set_header_attribute "type", OLIST_TYPES[node.style]
+        type = set_header_attribute "type", OLIST_TYPES[node.style.to_sym]
         result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id
