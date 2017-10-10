@@ -36,7 +36,8 @@ describe Asciidoctor::RFC::V3::Converter do
 
   it "skips keyboard shortcuts" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
-      You should click image:play.jpg[Sunset] to continue.
+      :experimental:
+      You should click kbd:[F11] to continue.
     INPUT
        <t>You should click  to continue.</t>
     OUTPUT
@@ -44,7 +45,8 @@ describe Asciidoctor::RFC::V3::Converter do
 
   it "skips menu selections" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
-      You should click image:play.jpg[Sunset] to continue.
+      :experimental:
+      You should click menu:View[Zoom > Reset] to continue.
     INPUT
        <t>You should click  to continue.</t>
     OUTPUT
@@ -52,7 +54,8 @@ describe Asciidoctor::RFC::V3::Converter do
 
   it "skips UI buttons" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
-      You should click image:play.jpg[Sunset] to continue.
+      :experimental:
+      You should click btn:[OK] to continue.
     INPUT
        <t>You should click  to continue.</t>
     OUTPUT
@@ -60,17 +63,29 @@ describe Asciidoctor::RFC::V3::Converter do
 
   it "skips audio" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
-      You should click image:play.jpg[Sunset] to continue.
+      Text
+      
+      audio::ocean_waves.mp3[options="autoplay,loop"] 
+      
+      Text
     INPUT
-       <t>You should click  to continue.</t>
+       <t>Text</t>
+     
+       <t>Text</t>
     OUTPUT
   end
 
   it "skips video" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
-      You should click image:play.jpg[Sunset] to continue.
+      Text
+      
+      video::video_file.mp4[width=640, start=60, end=140, options=autoplay] 
+      
+      Text
     INPUT
-       <t>You should click  to continue.</t>
+       <t>Text</t>
+     
+       <t>Text</t>
     OUTPUT
   end
 
