@@ -102,6 +102,21 @@ module Asciidoctor
         result
       end
 
+      def inline_indexterm(node)
+        # supports only primary and secondary terms
+        # primary attribute (highlighted major entry) not supported
+        if node.type == :visible
+          item = set_header_attribute "item", node.text
+          "#{node.text}<iref#{item}/>"
+        else
+          terms = node.attr 'terms'
+          item = set_header_attribute "item", terms[0]
+          subitem = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
+          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2
+          "<iref#{item}#{subitem}/>"
+        end
+      end
+
       def dash(camel_cased_word)
         camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
       end

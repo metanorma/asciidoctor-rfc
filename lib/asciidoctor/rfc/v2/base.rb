@@ -68,22 +68,6 @@ module Asciidoctor
         result * "\n"
       end
 
-      def inline_indexterm(node)
-        # supports only primary and secondary terms
-        # primary attribute (highlighted major entry) not supported
-        if node.type == :visible
-          item = set_header_attribute "item", node.text
-          "#{node.text}<iref#{item}/>"
-        else
-          item = set_header_attribute "item", terms[0]
-          item = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
-          terms = node.attr "terms"
-          "<iref#{item}#{subitem}/>"
-          "<iref#{item}#{subitem}/>"
-          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2
-        end
-      end
-
       def inline_break(node)
         %(#{node.text}<vspace/>)
       end

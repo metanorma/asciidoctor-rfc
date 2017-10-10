@@ -910,8 +910,8 @@ asciidoctor commands:
 | `reference/front`                | N          | N/A
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
-| `artwork@width`                  | N/A        | N
-| `artwork@height`                 | N/A        | N
+| `artwork@width`                  | Only on images | Only on images
+| `artwork@height`                 | Only on images | Only on images
 |===
 
 
