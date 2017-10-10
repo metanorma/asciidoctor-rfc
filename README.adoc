@@ -502,8 +502,8 @@ or literal (artwork) <7>
 ....
 [[id]] <5>
 .Figure2.jpg <8>
-[link=xxx,align=left|center|right,alt=alt_text,type] <9>
-image::filename[] <10>
+[align=left|center|right,alt=alt_text,type] <9>
+image::filename.jpg[alt_text,700,200] <10>
 
 Postamble text <11>
 ====
@@ -516,8 +516,8 @@ Postamble text <11>
 <6> figure/artwork@align, figure/artwork@alt; figure@type (attribute only available in v2)
 <7> figure/artwork
 <8> figure/artwork@name
-<9> figure/artwork@src, figure/artwork@align, figure/artwork@alt; figure/artwork@type (only available in v2, intended to be a MIME type; in v3, populated as either `svg` or `binary-art` depending on file suffix)
-<10> figure/artwork@src
+<9> figure/artwork@align, figure/artwork@alt; figure/artwork@type (only available in v2, intended to be a MIME type; in v3, populated as either `svg` or `binary-art` depending on file suffix)
+<10> figure/artwork@src, figure/artwork@alt, figure/artwork@width (deprecated in v3), figure/artwork@height (deprecated in v3)
 <11> figure/postamble; only available in v2
 
 
@@ -701,6 +701,7 @@ These asciidoctor features are not supported in output of these formats:
 | http://asciidoctor.org/docs/user-manual/#verse[Verse] | rendered as normal paragraph | Y
 | http://asciidoctor.org/docs/user-manual/#sidebar[Sidebar] | rendered as normal paragraph | Y
 | http://asciidoctor.org/docs/user-manual/#index-terms[Index Term] Tertiary || Ignored
+| http://asciidoctor.org/docs/user-manual/#images[Inline images] || Ignored
 | List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` || treated as `arabic`
 | http://asciidoctor.org/docs/user-manual/#callouts[Callouts] || Ignored
 | http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] || treated as inline section

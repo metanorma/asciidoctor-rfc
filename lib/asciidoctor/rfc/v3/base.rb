@@ -240,24 +240,11 @@ module Asciidoctor
         result
       end
 
-      def inline_image(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = get_header_attribute node, "align"
-        alt = get_header_attribute node, "alt"
-        link = (node.image_uri node.target)
-        src = set_header_attribute node, "src", link
-        type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
-        result << "<artwork#{align}#{alt}#{type}#{src}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
-      end
-
       # Syntax:
       #   [[id]]
       #   .Name
       #   [link=xxx,align=left|center|right,alt=alt_text,type]
-      #   image::filename[]
+      #   image::filename[alt,width,height]
       # @note ignoring width, height attributes
       def image(node)
         result = []
@@ -265,11 +252,13 @@ module Asciidoctor
         id = set_header_attribute "anchor", node.id
         align = get_header_attribute node, "align"
         alt = set_header_attribute "alt", node.alt
-        link = (node.image_uri node.target)
-        src = set_header_attribute node, "src", link
-        type = set_header_attribute node, "type", link =~ /\.svg$/ ? "svg" : "binary-art"
-        name = nil
-        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}/>"
+        link = (node.image_uri node.attr("target"))
+        src = set_header_attribute "src", link
+        type = set_header_attribute "type", link =~ /\.svg$/ ? "svg" : "binary-art"
+        name = set_header_attribute "name", node.title
+        width = get_header_attribute node, "width"
+        height = get_header_attribute node, "height"
+        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}#{width}#{height}/>"
         result << "</figure>" if node.parent.context != :example
         result
       end
