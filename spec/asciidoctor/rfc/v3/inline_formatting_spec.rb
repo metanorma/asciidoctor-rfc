@@ -109,5 +109,33 @@ describe Asciidoctor::RFC::V3::Converter do
        </rfc>
     OUTPUT
   end
+  
+  it "renders stem as literal" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+      :stem:
+      
+      == Section 1
+      stem:[sqrt(4) = 2]
+    INPUT
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc preptime="1970-01-01T00:00:00Z"
+                version="3" submissionType="IETF">
+       <front>
+       <title abbrev="abbrev_value">Document title</title>
+       <author fullname="Author">
+       </author>
+       </front><middle>
+       <section anchor="_section_1" numbered="false">
+       <name>Section 1</name>
+       <t>sqrt(4) = 2</t>
+       </section>
+       </middle>
+       </rfc>
+    OUTPUT
+  end
 
 end
