@@ -15,6 +15,20 @@ describe Asciidoctor::RFC::V3::Converter do
     OUTPUT
   end
 
+  it "ignores anchors on list items" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      [[id]]
+      [start=3,group=5,arabic,spacing=compact]
+      . First
+      . [[id1]] Second
+    INPUT
+       <ol anchor="id" spacing="compact" start="3" group="5" type="1">
+       <li>First</li>
+       <li>Second</li>
+       </ol>
+    OUTPUT
+  end
+
   it "renders a nested ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]

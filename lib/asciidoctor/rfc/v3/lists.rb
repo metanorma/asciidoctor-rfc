@@ -33,7 +33,7 @@ module Asciidoctor
 
       # Syntax:
       #   [[id]]
-      #   [empty=true,compact] (optional)
+      #   [empty=true,spacing=compact|normal] (optional)
       #   * A
       #   * B
       def ulist(node)
@@ -42,9 +42,10 @@ module Asciidoctor
           $seen_abstract = true
           result << "<abstract>"
         end
+        puts node
         id = set_header_attribute "anchor", node.id
         empty = get_header_attribute node, "empty"
-        spacing = set_header_attribute "spacing", "compact" if node.option? "compact"
+        spacing = get_header_attribute node, "spacing" 
         result << "<ul#{id}#{empty}#{spacing}>"
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id

@@ -748,25 +748,32 @@ Postamble text <11>
 [source,asciidoc]
 --
 [[id]] <1>
-[empty=true,compact] <2>
+[empty=true,spacing=normal|compact] <2>
 * Unordered list 1 <3>
-* [[id]] Unordered list 2 <4>
-** Nested list <5>
+* Unordered list 2 <3>
+** Nested list <4>
 
-[[id]] <6>
-[spacing=compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <7>
-. A <8>
-. B <8>
+[[id]] <5>
+[spacing=compact,start=n,group=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
+. A <7>
+. B <7>
 --
 <1> v3: `ul@anchor`; attribute only available in v3
 <2> v3: `ul@empty`, `ul@spacing`; attributes only available in v3
 <3> v2: `list[@style="symbols"]/t`; v3: ul/li
-<4> v2: `list[@style="symbols"]/t@anchor`, `list[@style="symbols"]/t`; v3: `ul/li@anchor`, `ul/li`
-<5> v2: `list[@style="symbols"]/t/list[@style="symbols"]/t`; v3: `ul/li/ul/li`
-<6> v3: `ol@anchor`; attribute only available in v3
-<7> v2: `list/start`, `list@style` (`empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type`
-<8> v2: `list/t`; v3: `ol/li`
+<4> v2: `list[@style="symbols"]/t/list[@style="symbols"]/t`; v3: `ul/li/ul/li`
+<5> v3: `ol@anchor`; attribute only available in v3
+<6> v2: `list/start`, `list@style` (`empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type`
+<7> v2: `list/t`; v3: `ol/li`
 
+Note that asciidoctor does not permit anchors on either list items: the anchors in the following are ignored.
+
+[source,asciidoc]
+--
+* [[id1]] A
+
+. [[id2]] A
+--
 
 === Definition Lists
 
