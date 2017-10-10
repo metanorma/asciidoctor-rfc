@@ -23,4 +23,10 @@ xdescribe Asciidoctor::RFC::V3::Converter do
       </rfc>
     OUTPUT
   end
+  
+  # floating titles
+  
+  # http://asciidoctor.org/docs/user-manual/#page-break[Page Break] 2+| Ignored
+ # http://asciidoctor.org/docs/user-manual/#horizontal-rules[Horizontal Rule] 2+| Ignored
+  
 end

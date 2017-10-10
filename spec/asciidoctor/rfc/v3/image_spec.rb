@@ -34,6 +34,46 @@ describe Asciidoctor::RFC::V3::Converter do
     OUTPUT
   end
 
+  it "skips keyboard shortcuts" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      You should click image:play.jpg[Sunset] to continue.
+    INPUT
+       <t>You should click  to continue.</t>
+    OUTPUT
+  end
+
+  it "skips menu selections" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      You should click image:play.jpg[Sunset] to continue.
+    INPUT
+       <t>You should click  to continue.</t>
+    OUTPUT
+  end
+
+  it "skips UI buttons" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      You should click image:play.jpg[Sunset] to continue.
+    INPUT
+       <t>You should click  to continue.</t>
+    OUTPUT
+  end
+
+  it "skips audio" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      You should click image:play.jpg[Sunset] to continue.
+    INPUT
+       <t>You should click  to continue.</t>
+    OUTPUT
+  end
+
+  it "skips video" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      You should click image:play.jpg[Sunset] to continue.
+    INPUT
+       <t>You should click  to continue.</t>
+    OUTPUT
+  end
+
 
 
 end

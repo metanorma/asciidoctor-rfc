@@ -923,7 +923,7 @@ These asciidoctor features are not supported in output of these formats:
 | asciidoctor feature | RFC XML v2 | RFC XML v3
 | http://asciidoctor.org/docs/user-manual/#quote[Quote] | Rendered as normal paragraph | Supported
 | http://asciidoctor.org/docs/user-manual/#quote[Quote]: Non-URL Citations 2+| Ignored
-| http://asciidoctor.org/docs/user-manual/#verse[Verse] | Rendered as normal paragraph | Supported
+| http://asciidoctor.org/docs/user-manual/#verse[Verse] | Rendered as normal paragraph | Rendered as Quote
 | http://asciidoctor.org/docs/user-manual/#sidebar[Sidebar] | Rendered as normal paragraph | Supported
 | http://asciidoctor.org/docs/user-manual/#index-terms[Index Term] Tertiary 2+| Ignored
 | List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` 2+| Treated as `arabic`
