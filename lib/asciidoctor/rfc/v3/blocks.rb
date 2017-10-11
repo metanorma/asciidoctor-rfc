@@ -27,10 +27,8 @@ module Asciidoctor
           alt: node.attr("alt"),
         }.reject { |_, value| value.nil? }
 
-        artwork_content = node.lines.map do |line|
-          # TODO: this could be done with a more generic html escaper
-          line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
-        end.join("\n")
+        # NOTE: html escaping is performed by Nokogiri
+        artwork_content = node.lines.join("\n")
 
         noko do |xml|
           if node.parent.context != :example
@@ -160,24 +158,28 @@ module Asciidoctor
       #   code
       #   ----
       def listing(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = nil
-        alt = nil
-        tag = "sourcecode"
-        id = set_header_attribute "anchor", node.id
-        name = set_header_attribute "name", node.title
-        type = set_header_attribute "type", node.attr("language")
-        src = set_header_attribute "src", node.attr("src")
-        result << "<#{tag}#{id}#{align}#{name}#{type}#{src}#{alt}>"
-        if src.nil?
-          node.lines.each do |line|
-            result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        sourcecode_attributes = {
+          anchor: node.id,
+          align: nil,
+          alt: nil,
+          name: node.title,
+          type: node.attr("language"),
+          src: node.attr("src"),
+        }.reject { |_, value| value.nil? }
+
+        # NOTE: html escaping is performed by Nokogiri
+        sourcecode_content =
+          sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.sourcecode sourcecode_content, **sourcecode_attributes
+            end
+          else
+            xml.sourcecode sourcecode_content, **sourcecode_attributes
           end
         end
-        result << "</#{tag}>"
-        result << "</figure>" if node.parent.context != :example
-        result
       end
     end
   end
