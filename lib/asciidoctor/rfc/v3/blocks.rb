@@ -133,19 +133,23 @@ module Asciidoctor
       #   Example
       #   ====
       def example(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        result << "<figure#{id}>"
-        result << %(<name>#{node.title}</name>) if node.title?
-        # TODO iref
-        result << node.content
-        result << "</figure>"
         node.blocks.each do |b|
-          unless b.context == :listing or b.context == :image or b.context == :literal
+          unless %i{listing image literal}.include? b.context
             warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.lines}"
           end
         end
-        result
+
+        figure_attributes = {
+          anchor: node.id,
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          xml.figure **figure_attributes do |xml_figure|
+            xml_figure.name node.title if node.title?
+            # TODO iref
+            xml_figure << node.content
+          end
+        end
       end
 
       # Syntax:
