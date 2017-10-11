@@ -6,9 +6,9 @@ module Asciidoctor
       # [discrete]
       # == Section
       def floating_title(node)
-        result = []
-        result << %{<t><strong>#{node.title}</strong></t>}
-        result
+        noko do |xml|
+          xml.t { |xml_t| xml_t.strong node.title }
+        end
       end
 
       # Syntax:
@@ -19,21 +19,26 @@ module Asciidoctor
       #     literal
       #   ....
       def literal(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        type = set_header_attribute "type", "ascii-art"
-        name = set_header_attribute "name", node.title
-        result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
+        artwork_attributes = {
+          anchor: node.id,
+          align: node.attr("align"),
+          type: "ascii-art",
+          name: node.title,
+          alt: node.attr("alt"),
+        }.reject { |_, value| value.nil? }
 
-        node.lines.each do |line|
-          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        # NOTE: html escaping is performed by Nokogiri
+        artwork_content = node.lines.join("\n")
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork artwork_content, **artwork_attributes
+            end
+          else
+            xml.artwork artwork_content, **artwork_attributes
+          end
         end
-        result << "</artwork>"
-        result << "</figure>" if node.parent.context != :example
-        result
       end
 
       # Syntax:
@@ -41,17 +46,20 @@ module Asciidoctor
       #   [quote, attribution, citation info] # citation info limited to URL
       #   Text
       def quote(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        quotedFrom = set_header_attribute "quotedFrom", node.attr("attribution")
-        citationInfo = node.attr "citetitle"
-        if !citationInfo.nil? && citationInfo =~ URI::DEFAULT_PARSER.make_regexp
-          cite = set_header_attribute "cite", citationInfo
+        cite_value = node.attr("citetitle")
+        cite_value = nil unless cite_value.to_s =~ URI::DEFAULT_PARSER.make_regexp
+
+        blockquote_attributes = {
+          anchor: node.id,
+          quotedFrom: node.attr("attribution"),
+          cite: cite_value,
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          xml.blockquote **blockquote_attributes do |xml_blockquote|
+            xml_blockquote << node.content
+          end
         end
-        result << "<blockquote#{id}#{quotedFrom}#{cite}>"
-        result << node.content
-        result << "</blockquote>"
-        result
       end
 
       # Syntax:
@@ -110,12 +118,11 @@ module Asciidoctor
       #   Sidebar
       #   ****
       def sidebar(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        result << "<aside#{id}>"
-        result << node.content
-        result << "</aside>"
-        result
+        noko do |xml|
+          xml.aside anchor: node.id do |xml_aside|
+            xml_aside << node.content
+          end
+        end
       end
 
       # Syntax:
@@ -124,19 +131,23 @@ module Asciidoctor
       #   Example
       #   ====
       def example(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        result << "<figure#{id}>"
-        result << %(<name>#{node.title}</name>) if node.title?
-        # TODO iref
-        result << node.content
-        result << "</figure>"
         node.blocks.each do |b|
-          unless b.context == :listing or b.context == :image or b.context == :literal
+          unless %i{listing image literal}.include? b.context
             warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.lines}"
           end
         end
-        result
+
+        figure_attributes = {
+          anchor: node.id,
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          xml.figure **figure_attributes do |xml_figure|
+            xml_figure.name node.title if node.title?
+            # TODO iref
+            xml_figure << node.content
+          end
+        end
       end
 
       # Syntax:
@@ -147,24 +158,28 @@ module Asciidoctor
       #   code
       #   ----
       def listing(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = nil
-        alt = nil
-        tag = "sourcecode"
-        id = set_header_attribute "anchor", node.id
-        name = set_header_attribute "name", node.title
-        type = set_header_attribute "type", node.attr("language")
-        src = set_header_attribute "src", node.attr("src")
-        result << "<#{tag}#{id}#{align}#{name}#{type}#{src}#{alt}>"
-        if src.nil?
-          node.lines.each do |line|
-            result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        sourcecode_attributes = {
+          anchor: node.id,
+          align: nil,
+          alt: nil,
+          name: node.title,
+          type: node.attr("language"),
+          src: node.attr("src"),
+        }.reject { |_, value| value.nil? }
+
+        # NOTE: html escaping is performed by Nokogiri
+        sourcecode_content =
+          sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.sourcecode sourcecode_content, **sourcecode_attributes
+            end
+          else
+            xml.sourcecode sourcecode_content, **sourcecode_attributes
           end
         end
-        result << "</#{tag}>"
-        result << "</figure>" if node.parent.context != :example
-        result
       end
     end
   end

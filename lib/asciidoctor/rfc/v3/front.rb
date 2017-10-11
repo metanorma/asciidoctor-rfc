@@ -5,210 +5,224 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :METADATA
-      def front(node)
-        result = []
-        result << "<front>"
-        abbrev = get_header_attribute node, "abbrev"
-        result << "<title#{abbrev}>#{node.doctitle}</title>"
-        result << (series_info node)
-        result << (author node)
-        result << (date node)
-        result << (area node)
-        result << (workgroup node)
-        result << (keyword node)
+      def front(node, xml)
+        xml.front do |xml_front|
+          title node, xml_front
+          series_info node, xml_front
+          author node, xml_front
+          date node, xml_front
+          area node, xml_front
+          workgroup node, xml_front
+          keyword node, xml_front
+        end
       end
 
-      # Syntax:
-      #   = Title
-      #   Author
-      #   :name rfc-* || Internet-Draft-Name
-      #   :status (of this document)
-      #   :intended-series (of internet draft once published as RFC)
-      #   :intended-series (of RFC: full-standard|bcp|fyi number or info|exp|historic)
-      #   :stream
-      def series_info(node)
-        result = []
-        status = get_header_attribute node, "status"
-        stream = set_header_attribute "stream", node.attr("submission-type") 
-        stream = set_header_attribute "stream", "IETF" if stream.nil?
-        name = node.attr "docname"
-        rfc = true
-        if (not name.nil?) && (not name.empty?)
-          if name =~ /^rfc-?/i
-            name = name.gsub(/^rfc-?/i, "")
-            nameattr = set_header_attribute "name", "RFC"
-          else
-            nameattr = set_header_attribute "name", "Internet-Draft"
-            rfc = false
-          end
-          name = name.gsub(/\.[^\/]+$/, "")
-          value = set_header_attribute "value", name
-          status = get_header_attribute node, "status"
-          result << "<seriesInfo#{nameattr}#{status}#{stream}#{value}/>"
+      def title(node, xml)
+        title_attributes = {
+          abbrev: node.attr("abbrev")
+        }.reject { |_, val| val.nil? }
+        xml.title node.doctitle, **title_attributes
+      end
+
+      def series_info(node, xml)
+        docname = node.attr("docname")
+
+        unless docname&.empty?
+          is_rfc = docname =~ /^rfc-?/i
+
+          name = is_rfc ? docname.gsub(/^rfc-?/i, "") : docname
+          nameattr = is_rfc ? "RFC" : "Internet-Draft"
+          value = name.gsub(/\.[^\/]+$/, "")
+
+          seriesInfo_attributes = {
+            name: nameattr,
+            status: node.attr("status"),
+            stream: node.attr("submission-type") || "IETF",
+            value: value,
+          }.reject { |_, val| val.nil? }
+          xml.seriesInfo **seriesInfo_attributes
 
           intendedstatus = node.attr("intended-series")
-          if ! intendedstatus.nil? && (not rfc)
-            status = set_header_attribute "status", intendedstatus
-            nameattr = set_header_attribute "name", ""
-            unless nameattr =~ /^(standard|full-standard|bcp|fyi|informational|experimental|historic)$/
-              warn %(asciidoctor: WARNING: disallowed value for intended-series: #{nameattr})
+          if !is_rfc && !intendedstatus.nil?
+            unless intendedstatus =~ /^(standard|full-standard|bcp|fyi|informational|experimental|historic)$/
+              warn %(asciidoctor: WARNING: disallowed value for intended-series: #{intendedstatus})
             end
-            result << "<seriesInfo#{nameattr}#{status}#{value}/>"
+            seriesInfo_attributes = {
+              name: "",
+              status: intendedstatus,
+              value: value,
+            }.reject { |_, val| val.nil? }
+            xml.seriesInfo **seriesInfo_attributes
           end
 
           rfcstatus = intendedstatus
-          if ! rfcstatus.nil? && rfc
-            m = /^(\S+) (\d+)$/.match(rfcstatus)
+          if is_rfc && !rfcstatus.nil?
+            m = /^(\S+) (\d+)$/.match rfcstatus
             if m.nil?
-              nameattr = set_header_attribute "name", ""
-              status = set_header_attribute "status", rfcstatus
-              value = set_header_attribute "value", "none"
-              result << "<seriesInfo#{nameattr}#{status}#{value}/>"
+              rfcstatus = "exp" if rfcstatus == "experimental"
+              rfcstatus = "info" if rfcstatus == "informational"
+              unless rfcstatus =~ /^(info|exp|historic)$/
+                warn %(asciidoctor: WARNING: disallowed value for intended-series with no series number: #{rfcstatus})
+              end
             else
-              rfcstatus1 = m[1]
-              rfcstatus2 = m[2]
-              nameattr = set_header_attribute "name", ""
-              status = set_header_attribute "status", rfcstatus1
-              value = set_header_attribute "value", rfcstatus2
-              nameattr = "exp" if nameattr == "experimental"
-              nameattr = "info" if nameattr == "informational"
-            unless nameattr =~ /^(standard|full-standard|bcp|fyi|info|exp|historic)$/
-              warn %(asciidoctor: WARNING: disallowed value for intended-series: #{nameattr})
+              unless m[1] =~ /^(standard|full-standard|bcp)$/
+                warn %(asciidoctor: WARNING: disallowed value for intended-series with series number: #{m[1]})
+              end
             end
-              result << "<seriesInfo#{nameattr}#{status}#{value}/>"
-            end
+            seriesInfo_attributes = {
+              name: "",
+              status: m.nil? ? rfcstatus : m[1],
+              value: m.nil? ? "none" : m[2],
+            }.reject { |_, val| val.nil? }
+            xml.seriesInfo **seriesInfo_attributes
           end
         end
-        result
       end
 
-      # Syntax:
-      #   = Title
-      #   Author;Author_2;Author_3
-      #   :fullname
-      #   :lastname
-      #   :organization
-      #   :email
-      #   :fullname_2
-      #   :lastname_2
-      #   :organization_2
-      #   :email_2
-      #   :fullname_3
-      #   :lastname_3
-      #   :organization_3
-      #   :email_3
-      # @note recurse: author, author_2, author_3...
-      def author(node)
-        result = []
-        result << author1(node, "")
-        i = 2
-        loop do
-          suffix = "_#{i}"
-          author = node.attr("author#{suffix}")
-          fullname = node.attr("fullname#{suffix}")
-          if author.nil? and fullname.nil?
-            break
-          end
-          result << author1(node, suffix)
-          i += 1
-        end
-        result.flatten
-      end
+# Syntax:
+#   = Title
+#   Author;Author_2;Author_3
+#   :fullname
+#   :lastname
+#   :organization
+#   :email
+#   :fullname_2
+#   :lastname_2
+#   :organization_2
+#   :email_2
+#   :fullname_3
+#   :lastname_3
+#   :organization_3
+#   :email_3
+# @note recurse: author, author_2, author_3...
+def author(node, xml)
+  author1(node, "", xml)
+  i = 2
+  loop do
+    suffix = "_#{i}"
+    author = node.attr("author#{suffix}")
+    fullname = node.attr("fullname#{suffix}")
+    break unless [author, fullname].any?
+    author1(node, suffix, xml)
+    i += 1
+  end
+end
 
-      # Syntax:
-      #   = Title
-      #   Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
-      #   :fullname
-      #   :lastname
-      #   :forename_initials (excludes surname, unlike Asciidoc "initials" attribute)
-      #   :organization
-      #   :email
-      #   :role
-      #   :fax
-      #   :uri
-      #   :phone
-      #   :postalLine (mutually exclusive with street city etc) (lines broken up by "\ ")
-      #   :street
-      #   :city
-      #   :region
-      #   :country
-      #   :code
-      def author1(node, suffix)
-        result = []
-        result << authorname(node, suffix)
-        result << organization(node, suffix)
-        result << address(node, suffix)
-        result << "</author>"
-        result
-      end
+# Syntax:
+#   = Title
+#   Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
+#   :fullname
+#   :lastname
+#   :forename_initials (excludes surname, unlike Asciidoc "initials" attribute)
+#   :organization
+#   :email
+#   :role
+#   :fax
+#   :uri
+#   :phone
+#   :postalLine (mutually exclusive with street city etc) (lines broken up by "\ ")
+#   :street
+#   :city
+#   :region
+#   :country
+#   :code
+def author1(node, suffix, xml)
+  author_attributes = {
+    fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
+    surname: node.attr("lastname#{suffix}"),
+    initials: node.attr("forename_initials#{suffix}"),
+    role: node.attr("role#{suffix}"),
+  }.reject { |_, value| value.nil? }
 
-      def organization(node, suffix)
-        result = []
-        organization = node.attr("organization#{suffix}")
-        abbrev = nil
-        result << "<organization#{abbrev}>#{organization}</organization>" unless organization.nil?
-        result
-      end
+  xml.author **author_attributes do |xml_sub|
+    organization node, suffix, xml_sub
+    address node, suffix, xml_sub
+  end
+end
 
-      def address(node, suffix)
-        result = []
-        postalline = node.attr("postal-line#{suffix}")
-        street = node.attr("street#{suffix}")
-        city = node.attr("city#{suffix}")
-        region = node.attr("region#{suffix}")
-        country = node.attr("country#{suffix}")
-        code = node.attr("code#{suffix}")
-        phone = node.attr("phone#{suffix}")
-        email = node.attr("email#{suffix}")
-        facsimile = node.attr("fax#{suffix}")
-        uri = node.attr("uri#{suffix}")
-        if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
-          (not street.nil?) || (not postalline.nil?)
-          result << "<address>"
-          if not street.nil? or not postalline.nil?
-            result << "<postal>"
-            if postalline.nil?
-              street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
-              result << "<city>#{city}</city>" unless city.nil?
-              result << "<region>#{region}</region>" unless region.nil?
-              result << "<code>#{code}</code>" unless code.nil?
-              result << "<country>#{country}</country>" unless country.nil?
-            else
-              postalline&.split("\\ ")&.each { |p| result << "<postalLine>#{p}</postalLine>" }
-            end
-            result << "</postal>"
-          end
-          result << "<phone>#{phone}</phone>" unless phone.nil?
-          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
-          result << "<email>#{email}</email>" unless email.nil?
-          result << "<uri>#{uri}</uri>" unless uri.nil?
-          result << "</address>"
-        end
-        result
-      end
+def organization(node, suffix, xml)
+  organization = node.attr("organization#{suffix}")
+  xml.organization organization unless organization.nil?
+end
 
-      # Syntax:
-      #   = Title
-      #   Author
-      #   :revdate or :date
-      def date(node)
-        result = []
-        revdate = node.attr("revdate")
-        revdate = node.attr("date") if revdate.nil?
-        unless revdate.nil?
-          begin
-            revdate.gsub!(/T.*$/, "")
-            d = Date.iso8601 revdate
-            day = set_header_attribute "day", d.day
-            month = set_header_attribute "month", Date::MONTHNAMES[d.month]
-            year = set_header_attribute "year", d.year
-            result << "<date#{day}#{month}#{year}/>"
-          rescue
-            # nop
+def address(node, suffix, xml)
+  email = node.attr("email#{suffix}")
+  facsimile = node.attr("fax#{suffix}")
+  phone = node.attr("phone#{suffix}")
+  postalline = node.attr("postal-line#{suffix}")
+  street = node.attr("street#{suffix}")
+  uri = node.attr("uri#{suffix}")
+  if [email, facsimile, phone, postalline, street, uri].any?
+    xml.address do |xml_address|
+      if [postalline, street].any?
+        xml_address.postal do |xml_postal|
+          if postalline.nil?
+            city = node.attr("city#{suffix}")
+            code = node.attr("code#{suffix}")
+            country = node.attr("country#{suffix}")
+            region = node.attr("region#{suffix}")
+            xml_postal.city city unless city.nil?
+            xml_postal.code code unless code.nil?
+            xml_postal.country country unless country.nil?
+            xml_postal.region region unless region.nil?
+            street&.split("\\ ")&.each { |st| xml_postal.street st }
+          else
+            postalline&.split("\\ ")&.each { |pl| xml_postal.postalLine pl }
           end
         end
-        result
       end
+      xml_address.email email unless email.nil?
+      xml_address.facsimile facsimile unless facsimile.nil?
+      xml_address.phone phone unless phone.nil?
+      xml_address.uri uri unless uri.nil?
     end
   end
 end
+
+# Syntax:
+#   = Title
+#   Author
+#   :revdate or :date
+def date(node, xml)
+  revdate = node.attr("revdate") || node.attr("date")
+  unless revdate.nil?
+    begin
+      revdate.gsub!(/T.*$/, "")
+      d = Date.iso8601 revdate
+      date_attributes = {
+        day: d.day,
+        month: Date::MONTHNAMES[d.month],
+        year: d.year,
+      }
+      xml.date **date_attributes
+    rescue
+      # nop
+    end
+  end
+end
+
+
+# These three overrides must be removed once they replace their homonyms
+# in common/base (they serve to avoid conflict with v2 until that moment)
+
+def area(node, xml)
+  node.attr("area")&.split(/, ?/)&.each do |ar|
+    xml.area ar
+  end
+end
+
+def workgroup(node, xml)
+  node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+    xml.workgroup wg
+  end
+end
+
+def keyword(node, xml)
+  node.attr("keyword")&.split(/, ?/)&.each do |kw|
+    xml.keyword kw
+  end
+end
+
+          end
+    end
+  end
