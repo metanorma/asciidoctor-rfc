@@ -124,7 +124,7 @@ module Asciidoctor
       #   :code
       def author1(node, suffix, xml)
         author_attributes = {
-          fullname: node.attr("author#{suffix}"),
+          fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
           surname: node.attr("lastname#{suffix}"),
           initials: node.attr("forename_initials#{suffix}"),
           role: node.attr("role#{suffix}"),
