@@ -120,12 +120,11 @@ module Asciidoctor
       #   Sidebar
       #   ****
       def sidebar(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        result << "<aside#{id}>"
-        result << node.content
-        result << "</aside>"
-        result
+        noko do |xml|
+          xml.aside anchor: node.id do |xml_aside|
+            xml_aside << node.content
+          end
+        end
       end
 
       # Syntax:
