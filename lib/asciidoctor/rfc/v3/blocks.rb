@@ -48,17 +48,20 @@ module Asciidoctor
       #   [quote, attribution, citation info] # citation info limited to URL
       #   Text
       def quote(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        quotedFrom = set_header_attribute "quotedFrom", node.attr("attribution")
-        citationInfo = node.attr "citetitle"
-        if !citationInfo.nil? && citationInfo =~ URI::DEFAULT_PARSER.make_regexp
-          cite = set_header_attribute "cite", citationInfo
+        cite_value = node.attr("citetitle")
+        cite_value = nil unless cite_value.to_s =~ URI::DEFAULT_PARSER.make_regexp
+
+        blockquote_attributes = {
+          anchor: node.id,
+          quotedFrom: node.attr("attribution"),
+          cite: cite_value,
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          xml.blockquote **blockquote_attributes do |xml_blockquote|
+            xml_blockquote << node.content
+          end
         end
-        result << "<blockquote#{id}#{quotedFrom}#{cite}>"
-        result << node.content
-        result << "</blockquote>"
-        result
       end
 
       # Syntax:
