@@ -23,13 +23,14 @@ module Asciidoctor
       #   Author
       #   :name rfc-* || Internet-Draft-Name
       #   :status (of this document)
-      #   :intendedstatus (of internet draft once published as RFC)
-      #   :rfcstatus (of RFC: full-standard|bcp|fyi number or info|exp|historic)
+      #   :intended-series (of internet draft once published as RFC)
+      #   :intended-series (of RFC: full-standard|bcp|fyi number or info|exp|historic)
       #   :stream
       def series_info(node)
         result = []
         status = get_header_attribute node, "status"
-        stream = get_header_attribute node, "stream", "IETF"
+        stream = set_header_attribute "stream", node.attr("submission-type") 
+        stream = set_header_attribute "stream", "IETF" if stream.nil?
         name = node.attr "docname"
         rfc = true
         if (not name.nil?) && (not name.empty?)
@@ -45,20 +46,23 @@ module Asciidoctor
           status = get_header_attribute node, "status"
           result << "<seriesInfo#{nameattr}#{status}#{stream}#{value}/>"
 
-          intendedstatus = node.attr("intendedstatus")
-          unless intendedstatus.nil? && (not rfc)
+          intendedstatus = node.attr("intended-series")
+          if ! intendedstatus.nil? && (not rfc)
             status = set_header_attribute "status", intendedstatus
             nameattr = set_header_attribute "name", ""
+            unless nameattr =~ /^(standard|full-standard|bcp|fyi|informational|experimental|historic)$/
+              warn %(asciidoctor: WARNING: disallowed value for intended-series: #{nameattr})
+            end
             result << "<seriesInfo#{nameattr}#{status}#{value}/>"
           end
 
-          rfcstatus = node.attr("rfcstatus")
-          unless rfcstatus.nil? && rfc
+          rfcstatus = intendedstatus
+          if ! rfcstatus.nil? && rfc
             m = /^(\S+) (\d+)$/.match(rfcstatus)
             if m.nil?
               nameattr = set_header_attribute "name", ""
               status = set_header_attribute "status", rfcstatus
-              value = set_header_attribute "value", ""
+              value = set_header_attribute "value", "none"
               result << "<seriesInfo#{nameattr}#{status}#{value}/>"
             else
               rfcstatus1 = m[1]
@@ -66,6 +70,11 @@ module Asciidoctor
               nameattr = set_header_attribute "name", ""
               status = set_header_attribute "status", rfcstatus1
               value = set_header_attribute "value", rfcstatus2
+              nameattr = "exp" if nameattr == "experimental"
+              nameattr = "info" if nameattr == "informational"
+            unless nameattr =~ /^(standard|full-standard|bcp|fyi|info|exp|historic)$/
+              warn %(asciidoctor: WARNING: disallowed value for intended-series: #{nameattr})
+            end
               result << "<seriesInfo#{nameattr}#{status}#{value}/>"
             end
           end
@@ -154,7 +163,7 @@ module Asciidoctor
         facsimile = node.attr("fax#{suffix}")
         uri = node.attr("uri#{suffix}")
         if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
-            (not street.nil?) || (not postalline.nil?)
+          (not street.nil?) || (not postalline.nil?)
           result << "<address>"
           if not street.nil? or not postalline.nil?
             result << "<postal>"

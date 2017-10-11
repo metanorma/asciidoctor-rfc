@@ -92,14 +92,14 @@ Set the `doctype` attribute to set status of this document:
 `:doctype: internet-draft` sets the document as an Internet-Draft:
 
 * `rfc/front/seriesInfo@name` attribute will be set to `Internet-Draft` (in v3)
-* `rfc/front/seriesInfo@value` will be set to the `:name:` attribute (in v3)
-* `rfc@docName` will be set to the `:name:` attribute (in v2)
+* `rfc/front/seriesInfo@value` will be set to the `:docname:` attribute, stripping any file suffixes, but including any draft number; e.g. `draft-ietf-somewg-someprotocol-07` (in v3)
+* `rfc@docName` will be set to the `:docname:` attribute (in v2)
 
 `:doctype: rfc` sets the document as an RFC:
 
 * `rfc/front/seriesInfo@name` attribute will be set to `RFC` (in v3)
-* `rfc/front/seriesInfo@value` will be set to the `:name:` attribute (in v3)
-* `rfc@number` will be set to the `:name:` attribute (in v2)
+* `rfc/front/seriesInfo@value` will be set to the `:docname:` attribute, stripping the initial `rfc-` prefix and any file suffixes (in v3)
+* `rfc@number` will be set to the `:docname:` attribute (in v2)
 
 
 === Gem Options
@@ -225,13 +225,10 @@ The following values are allowed: `standard`, `informational`, `experimental`, `
 
 === Intended Series
 
-// TODO: reworking of implementation syntax necessary.
-// TODO: do we call this intended-status vs rfc-status?
-
 Set the `intended-series` attribute to set the intended series of this
 document.
 
-The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
+The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`. 
 
 When `doctype` is set to:
 
@@ -241,18 +238,12 @@ When `doctype` is set to:
 ** In v3, this sets a second `front/seriesInfo` element with `@status` as one of those values, and an empty `@name`, to indicate this.
 ** In v2, this sets the `front@category` value to one of `std`, `bcp`, `info`, `exp`, `historic`.
 
-* `rfc`: this value can be one of `full-standard`, `bcp` or `fyi` to indicate the current status of this document.
+* `rfc`: this value can be either:
+** one of `full-standard`, `bcp` or `fyi`, to indicate the current status of this document, followed by the number of the document within the series; e.g. `full-standard 1234`, `bcp 14`.
+** `exp`, `info`, or `historic`. (`experimental` and `informational` will be accepted by the gem as synonyms.)
 
 ** In v3, this sets a second `front/seriesInfo` element with `@status` as one of those values, and an empty `@name`, to indicate this.
 ** In v2, this sets the `front@category` value to one of `std`, `bcp`, `info`. (While in https://tools.ietf.org/html/rfc7749#appendix-A.1[v2], the values `exp`, `historic` are also possible for a RFC, our gem does not support it.)
-
-////
-TODO: figure this out with the right syntax
-|`:intendedstatus:` | | front/seriesInfo@status | status of Internet Draft, once published as RFC. Given in `<seriesinfo>` element with an empty `name` attribute.
-|`:rfcstatus: full-standard\|bcp\|fyi _number_` | | front/seriesInfo@status, front/seriesInfo@value = number | Given in `<seriesinfo>` element with empty `name` attribute
-|`:rfcstatus: info\|exp\|historic` | | front/seriesInfo@status | Given in `<seriesinfo>` element with empty `name` attribute
-////
-
 
 === Document Submission Type / Stream
 
@@ -262,9 +253,6 @@ The following values are allowed: `IETF` (default), `independent`, `IAB`, and `I
 
 * In v3, the `rfc@submissionType` and `rfc/front/seriesInfo@stream` attributes are set to this value.
 * In v2, the `rfc@submissionType` is set to this value
-
-// TODO: Doesn't seem that v3's `stream` needs its own command.
-
 
 === Document Consensus
 

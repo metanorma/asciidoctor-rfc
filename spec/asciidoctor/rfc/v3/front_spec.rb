@@ -18,7 +18,6 @@ describe Asciidoctor::RFC::V3::Converter do
        <front>
        <title abbrev="abbrev_value">Document title</title>
        <seriesInfo name="RFC" stream="IETF" value="1111"/>
-       <seriesInfo name="" value="1111"/>
        <author fullname="Author">
        </author>
        <date day="1" month="January" year="1999"/>
