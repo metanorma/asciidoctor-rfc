@@ -5,17 +5,15 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :METADATA
-      def front(node)
-        noko do |xml|
-          xml.front do |xml_front|
-            title node, xml_front
-            series_info node, xml_front
-            author node, xml_front
-            date node, xml_front
-            area node, xml_front
-            workgroup node, xml_front
-            keyword node, xml_front
-          end
+      def front(node, xml)
+        xml.front do |xml_front|
+          title node, xml_front
+          series_info node, xml_front
+          author node, xml_front
+          date node, xml_front
+          area node, xml_front
+          workgroup node, xml_front
+          keyword node, xml_front
         end
       end
 

@@ -19,21 +19,28 @@ module Asciidoctor
       #     literal
       #   ....
       def literal(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        type = set_header_attribute "type", "ascii-art"
-        name = set_header_attribute "name", node.title
-        result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
+        artwork_attributes = {
+          anchor: node.id,
+          align: node.attr("align"),
+          type: "ascii-art",
+          name: node.title,
+          alt: node.attr("alt"),
+        }.reject { |_, value| value.nil? }
 
-        node.lines.each do |line|
-          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        artwork_content = node.lines.map do |line|
+          # TODO: this could be done with a more generic html escaper
+          line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        end.join("\n")
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork artwork_content, **artwork_attributes
+            end
+          else
+            xml.artwork artwork_content, **artwork_attributes
+          end
         end
-        result << "</artwork>"
-        result << "</figure>" if node.parent.context != :example
-        result
       end
 
       # Syntax:
