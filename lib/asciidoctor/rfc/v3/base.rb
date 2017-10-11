@@ -51,7 +51,7 @@ module Asciidoctor
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}
         #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
         result << (link node)
-        result << (front node)
+        result << noko { |xml| front node, xml }
 
         result.last.last.gsub! /<\/front>$/, '' # FIXME: this is a hack!
         result << "</front><middle1>"
