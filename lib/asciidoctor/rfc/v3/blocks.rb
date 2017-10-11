@@ -6,9 +6,9 @@ module Asciidoctor
       # [discrete]
       # == Section
       def floating_title(node)
-        result = []
-        result << %{<t><strong>#{node.title}</strong></t>}
-        result
+        noko do |xml|
+          xml.t { |xml_t| xml_t.strong node.title }
+        end
       end
 
       # Syntax:
