@@ -53,9 +53,7 @@ module Asciidoctor
 
       alias_method :stem, :literal
       alias_method :open, :paragraph
-
-      alias_method :verse, :content
-      alias_method :quote, :content
+      alias_method :quote, :paragraph
     end
   end
 end

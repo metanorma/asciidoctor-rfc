@@ -62,6 +62,28 @@ module Asciidoctor
         end
       end
 
+      def verse(node)
+        cite_value = node.attr("citetitle")
+        cite_value = nil unless cite_value.to_s =~ URI::DEFAULT_PARSER.make_regexp
+
+        blockquote_attributes = {
+          anchor: node.id,
+          quotedFrom: node.attr("attribution"),
+          cite: cite_value,
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          xml.blockquote **blockquote_attributes do |xml_blockquote|
+            lines = node.content.split(/\n/)
+            lines.each_with_index do |line, index|
+              xml_blockquote << line
+              xml_blockquote << "<br/>\n" unless index == lines.size - 1
+            end
+          end
+        end
+      end
+
+
       # Syntax:
       #   = Title
       #   Author

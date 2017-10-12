@@ -157,6 +157,18 @@ module Asciidoctor
         result
       end
 
+      def verse(node)
+        result = []
+        if (node.parent.context == :preamble) && (not $seen_abstract)
+          result << "<abstract>"
+          $seen_abstract = true
+        end
+        id = set_header_attribute "anchor", node.id
+        result << "<t#{id}>#{node.content.gsub("\n", "<br/>\n")}</t>"
+        result
+      end
+
+
       # Syntax:
       #   [[id]]
       #   == title
