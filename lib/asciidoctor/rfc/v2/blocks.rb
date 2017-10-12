@@ -110,14 +110,21 @@ module Asciidoctor
         result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
         seen_artwork = false
         # TODO iref
-        result.blocks.each do |b|
-          if (b == :listing) || (b == :image) || (b == :literal)
-            result << node.content
+        node.blocks.each do |b|
+          if (b.context == :listing) 
+            result << listing(b)
+            seen_artwork = true
+          elsif (b.context == :image)
+            result << image(b)
+            seen_artwork = true
+          elsif (b.context == :literal)
+            result << literal(b)
             seen_artwork = true
           else
-            result << seen_artwork ? "<preamble>" : "<postamble>"
-            result << node.content
-            result << seen_artwork ? "</preamble>" : "</postamble>"
+            result << (seen_artwork ? "<postamble>" : "<preamble>")
+            # we want to see the para text, not its <t> container
+            result << b.content
+            result << (seen_artwork ? "</postamble>" : "</preamble>")
           end
         end
         result << "</figure>"

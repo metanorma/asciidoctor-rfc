@@ -46,12 +46,12 @@ module Asciidoctor
           docName = set_header_attribute "docName", node.attr("name")
         end
         ipr = get_header_attribute node, "ipr"
-        iprExtract = get_header_attribute node, "indexInclude"
+        iprExtract = get_header_attribute node, "iprExtract"
         obsoletes = get_header_attribute node, "obsoletes"
         updates = get_header_attribute node, "updates"
         seriesNo = get_header_attribute node, "seriesNo"
         submissionType = get_header_attribute node, "submissionType", "IETF"
-        xmllang = get_header_attribute node, "xml:lang"
+        xmllang = set_header_attribute "xml:lang", node.attr("xml-lang")
 
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{category}
         #{consensus}#{submissionType}#{iprExtract}#{docName}#{number}#{seriesNo}#{xmllang}>)

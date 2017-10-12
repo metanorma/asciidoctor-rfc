@@ -275,6 +275,24 @@ By default this is `en`.
 While v3 supports marking specific elements with their own `xml:lang` attribute, this is not yet supported by our gem.
 
 
+=== Document Attributes for v2 only
+
+These attributes are only supported for the v2 converter.
+
+[cols="3", options="header"]
+|===
+
+| Attribute
+| Purpose
+| RFC XML v3 element
+
+|`:series-no:`
+| Optional. The document series is defined by the "category" attribute;
+   "seriesNo" is only applicable to the values "info" ("FYI" series),
+   "std" ("STD" series), and "bcp" ("BCP" series).
+| `rfc@seriesNo`
+|===
+
 === Document Attributes for v3 only
 
 These attributes are only supported for the v3 converter.
@@ -324,11 +342,6 @@ There are 4 types of values:
 | `front/link@href = _URL_` or/ with `front/link@rel = _REL_`
 
 |===
-
-////
-TODO: I don't think this is used?
-|`:series-no:` | rfc@seriesNo | |
-////
 
 
 === Author Attributes

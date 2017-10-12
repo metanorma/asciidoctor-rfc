@@ -8,46 +8,77 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
-      <front>
-      <title>Document title</title>
-      <author fullname="Author">
-      </author>
-      </front><middle>
-      </middle>
-      </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title>Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
-  it "renders all document attributes" do
+  it "renders all document attributes for RFC" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
-      :docName:
       Author
+      :name: 1111
       :abbrev: abbrev
+      :doctype: rfc
       :ipr: ipr_value
       :consensus: false
       :obsoletes: 1, 2
       :updates: 10, 11
       :index-include: index_include_value
       :ipr-extract: ipr_extract_value
-      :sort-refs: true
-      :sym-refs: false
-      :toc-include: false
-      :toc-depth: 2
       :submission-type: IRTF
+      :category: category1
+      :series-no: 12
+      :xml-lang: en
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IRTF" indexInclude="index_include_value" iprExtract="ipr_extract_value" sortRefs="true" symRefs="false" tocInclude="false" tocDepth="2">
-       <front>
-       <title abbrev="abbrev">Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
+                 consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
+        <front>
+        <title abbrev="abbrev">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        </middle>
+        </rfc>
+    OUTPUT
+  end
+
+  it "renders all document attributes for Internet Draft" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+      :name: draft-03-draft
+      :abbrev: abbrev
+      :doctype: internet-draft
+      :ipr: ipr_value
+      :consensus: false
+      :obsoletes: 1, 2
+      :updates: 10, 11
+      :ipr-extract: ipr_extract_value
+      :submission-type: IRTF
+      :category: category1
+      :series-no: 12
+      :xml-lang: en
+    INPUT
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
+                 consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
+        <front>
+        <title abbrev="abbrev">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
@@ -62,21 +93,20 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Lipsum.
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-      <front>
-      <title>Document title</title>
-      <author fullname="Author">
-      </author>
-      </front><middle>
-      </middle><back>
-      <section anchor="_appendix" numbered="false">
-      <name>Appendix</name>
-      <t>Lipsum.</t>
-      </section>
-      </back>
-      </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title>Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        </middle><back>
+        <section anchor="_appendix" title="Appendix">
+        <t>Lipsum.</t>
+        </section>
+        </back>
+        </rfc>
     OUTPUT
   end
 end
