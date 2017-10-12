@@ -5,11 +5,11 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
       .Title
-      [align=center,alt=alt_text]
+      [align=center,alt=alt_text,type=img/jpeg]
       image::http:://www.example/org/filename.jpg[]
     INPUT
        <figure>
-       <artwork anchor="id" name="Title" align="center" alt="alt_text" type="binary-art" src="http:://www.example/org/filename.jpg"/>
+       <artwork anchor="id" name="Title" align="center" alt="alt_text" type="img/jpeg" src="http:://www.example/org/filename.jpg"/>
        </figure>
     OUTPUT
   end
@@ -21,7 +21,7 @@ describe Asciidoctor::RFC::V2::Converter do
       image::http:://www.example/org/filename.jpg[alt_text,300,200]
     INPUT
        <figure>
-       <artwork anchor="id" name="Title" alt="alt_text" type="binary-art" src="http:://www.example/org/filename.jpg" width="300" height="200"/>
+       <artwork anchor="id" name="Title" alt="alt_text" src="http:://www.example/org/filename.jpg" width="300" height="200"/>
        </figure>
     OUTPUT
   end

@@ -220,7 +220,7 @@ module Asciidoctor
         link = (node.image_uri node.attr("target"))
         src = set_header_attribute "src", link
         type = get_header_attribute node, "type"
-        name = get_header_attribute node, "name"
+        name = set_header_attribute "name", node.title
         width = get_header_attribute node, "width"
         height = get_header_attribute node, "height"
         result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}#{width}#{height}/>"
