@@ -7,20 +7,24 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       John Doe Horton <john.doe@email.com>
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
-      <front>
-      <title>Document title</title>
-
-      <author fullname="John Doe Horton" surname="Horton">
-      <address>
-      <email>john.doe@email.com</email>
-      </address>
-      </author>
-
-      </front><middle>
-      </middle>
-      </rfc>
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc
+                submissionType="IETF">
+       <front>
+       <title>Document title</title>
+       <author fullname="John Doe Horton" surname="Horton">
+     
+         <address>
+     
+           <email>john.doe@email.com</email>
+     
+         </address>
+     
+       </author>
+       <date day="1" month="January" year="1970"/>
+       </front><middle>
+       </middle>
+       </rfc>
     OUTPUT
   end
 
@@ -30,25 +34,33 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       John Doe Horton <john.doe@email.com>; Joanna Diva Munez <joanna.munez@email.com>
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
-      <front>
-      <title>Document title</title>
-
-      <author fullname="John Doe Horton" surname="Horton">
-      <address>
-      <email>john.doe@email.com</email>
-      </address>
-      </author>
-      <author fullname="Joanna Diva Munez" surname="Munez">
-      <address>
-      <email>joanna.munez@email.com</email>
-      </address>
-      </author>
-
-      </front><middle>
-      </middle>
-      </rfc>
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc
+                submissionType="IETF">
+       <front>
+       <title>Document title</title>
+       <author fullname="John Doe Horton" surname="Horton">
+     
+         <address>
+     
+           <email>john.doe@email.com</email>
+     
+         </address>
+     
+       </author>
+       <author fullname="Joanna Diva Munez" surname="Munez">
+     
+         <address>
+     
+           <email>joanna.munez@email.com</email>
+     
+         </address>
+     
+       </author>
+       <date day="1" month="January" year="1970"/>
+       </front><middle>
+       </middle>
+       </rfc>
       OUTPUT
       end
 
@@ -61,6 +73,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :forename_initials: J. D.
       :role: editor
       :organization: Ribose
+      :organization_abbrev: RBM
       :fax: 555 5555
       :email: john.doe@email.com
       :uri: http://example.com
@@ -72,26 +85,44 @@ describe Asciidoctor::RFC::V2::Converter do
       :code: 3333
       INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+       <rfc
+                submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
-       <organization>Ribose</organization>
-       <address>
-       <postal>
-       <street>57 Mt Pleasant St</street>
-       <city>Dullsville</city>
-       <region>NSW</region>
-       <code>3333</code>
-       <country>Australia</country>
-       </postal>
-       <phone>555 5655</phone>
-       <facsimile>555 5555</facsimile>
-       <email>john.doe@email.com</email>
-       <uri>http://example.com</uri>
-       </address>
+       <author fullname="John Doe Horton" surname="Horton" initials="J. D." role="editor">
+     
+         <organization abbrev="RBM">Ribose</organization>
+     
+         <address>
+     
+           <postal>
+     
+             <street>57 Mt Pleasant St</street>
+
+             <city>Dullsville</city>
+     
+             <region>NSW</region>
+
+             <code>3333</code>
+     
+             <country>Australia</country>
+     
+     
+     
+           </postal>
+     
+           <phone>555 5655</phone>
+     
+           <facsimile>555 5555</facsimile>
+     
+           <email>john.doe@email.com</email>
+     
+           <uri>http://example.com</uri>
+     
+         </address>
+     
        </author>
+       <date day="1" month="January" year="1970"/>
        </front><middle>
        </middle>
        </rfc>
@@ -120,7 +151,8 @@ describe Asciidoctor::RFC::V2::Converter do
       :lastname_2: Thornton
       :forename_initials_2: B. B.
       :role_2: author
-      :organization_2: IBM
+      :organization_2: International Business Machines
+      :organization_abbrev_2: IBM
       :fax_2: 555 6666
       :email_2: billy.thornton@email.com
       :uri_2: http://ibm.com
@@ -132,42 +164,73 @@ describe Asciidoctor::RFC::V2::Converter do
       :code_2: 44444
       INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+       <rfc
+                submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
-       <organization>Ribose</organization>
-       <address>
-       <postal>
-       <street>57 Mt Pleasant St</street>
-       <city>Dullsville</city>
-       <region>NSW</region>
-       <code>3333</code>
-       <country>Australia</country>
-       </postal>
-       <phone>555 5655</phone>
-       <facsimile>555 5555</facsimile>
-       <email>john.doe@email.com</email>
-       <uri>http://example.com</uri>
-       </address>
+       <author fullname="John Doe Horton" surname="Horton" initials="J. D." role="editor">
+     
+         <organization>Ribose</organization>
+     
+         <address>
+     
+           <postal>
+     
+             <street>57 Mt Pleasant St</street>
+     
+             <city>Dullsville</city>
+     
+             <region>NSW</region>
+     
+             <code>3333</code>
+     
+             <country>Australia</country>
+     
+           </postal>
+     
+           <phone>555 5655</phone>
+     
+           <facsimile>555 5555</facsimile>
+     
+           <email>john.doe@email.com</email>
+     
+           <uri>http://example.com</uri>
+     
+         </address>
+     
        </author>
-       <author fullname="Billy Bob Thornton" initials="B. B." surname="Thornton" role="author">
-       <organization>IBM</organization>
-       <address>
-       <postal>
-       <street>67 Mt Pleasant St</street>
-       <city>Dulltown</city>
-       <region>VIC</region>
-       <code>44444</code>
-       <country>UK</country>
-       </postal>
-       <phone>555 6655</phone>
-       <facsimile>555 6666</facsimile>
-       <email>billy.thornton@email.com</email>
-       <uri>http://ibm.com</uri>
-       </address>
+       <author fullname="Billy Bob Thornton" surname="Thornton" initials="B. B." role="author">
+     
+         <organization abbrev="IBM">International Business Machines</organization>
+     
+         <address>
+     
+           <postal>
+     
+             <street>67 Mt Pleasant St</street>
+     
+             <city>Dulltown</city>
+     
+             <region>VIC</region>
+     
+             <code>44444</code>
+     
+             <country>UK</country>
+     
+           </postal>
+     
+           <phone>555 6655</phone>
+     
+           <facsimile>555 6666</facsimile>
+     
+           <email>billy.thornton@email.com</email>
+     
+           <uri>http://ibm.com</uri>
+     
+         </address>
+     
        </author>
+       <date day="1" month="January" year="1970"/>
        </front><middle>
        </middle>
        </rfc>
@@ -194,27 +257,44 @@ describe Asciidoctor::RFC::V2::Converter do
       :code: 3333
       INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+       <rfc
+                submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
-       <organization>Ribose</organization>
-       <address>
-       <postal>
-       <street>57 Mt Pleasant St</street>
-       <street>Technology Park</street>
-       <city>Dullsville</city>
-       <region>NSW</region>
-       <code>3333</code>
-       <country>Australia</country>
-       </postal>
-       <phone>555 5655</phone>
-       <facsimile>555 5555</facsimile>
-       <email>john.doe@email.com</email>
-       <uri>http://example.com</uri>
-       </address>
+       <author fullname="John Doe Horton" surname="Horton" initials="J. D." role="editor">
+     
+         <organization>Ribose</organization>
+     
+         <address>
+     
+           <postal>
+     
+             <street>57 Mt Pleasant St</street>
+     
+             <street>Technology Park</street>
+     
+             <city>Dullsville</city>
+     
+             <region>NSW</region>
+     
+             <code>3333</code>
+     
+             <country>Australia</country>
+     
+           </postal>
+     
+           <phone>555 5655</phone>
+     
+           <facsimile>555 5555</facsimile>
+     
+           <email>john.doe@email.com</email>
+     
+           <uri>http://example.com</uri>
+     
+         </address>
+     
        </author>
+       <date day="1" month="January" year="1970"/>
        </front><middle>
        </middle>
        </rfc>
@@ -241,122 +321,48 @@ describe Asciidoctor::RFC::V2::Converter do
       :code: 3333
       INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+       <rfc
+                submissionType="IETF">
        <front>
        <title>Document title</title>
        <author fullname="John Doe Horton" surname="Horton" role="editor">
-       <organization>Ribose</organization>
-       <address>
-       <postal>
-       <street>57 Mt Pleasant St</street>
-       <city>Dullsville</city>
-       <region>NSW</region>
-       <code>3333</code>
-       <country>Australia</country>
-       </postal>
-       <phone>555 5655</phone>
-       <facsimile>555 5555</facsimile>
-       <email>john.doe@email.com</email>
-       <uri>http://example.com</uri>
-       </address>
+     
+         <organization>Ribose</organization>
+     
+         <address>
+     
+           <postal>
+     
+             <street>57 Mt Pleasant St</street>
+     
+             <city>Dullsville</city>
+     
+             <region>NSW</region>
+     
+             <code>3333</code>
+     
+             <country>Australia</country>
+     
+           </postal>
+     
+           <phone>555 5655</phone>
+     
+           <facsimile>555 5555</facsimile>
+     
+           <email>john.doe@email.com</email>
+     
+           <uri>http://example.com</uri>
+     
+         </address>
+     
        </author>
+       <date day="1" month="January" year="1970"/>
        </front><middle>
        </middle>
        </rfc>
       OUTPUT
       end
       
-        it "respects postal line attributes, with multiple lines" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
-      = Document title
-      :docName: 
-      :fullname: John Doe Horton
-      :lastname: Horton
-      :initials: J. D. H.
-      :role: editor
-      :organization: Ribose
-      :fax: 555 5555
-      :email: john.doe@email.com
-      :uri: http://example.com
-      :phone: 555 5655
-      :postal-line: 57 Mt Pleasant St\ Dullsville\ NSW\ Australia\ 3333
-      INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title>Document title</title>
-       <author fullname="John Doe Horton" surname="Horton" role="editor">
-       <organization>Ribose</organization>
-       <address>
-       <postal>
-       <postalLine>57 Mt Pleasant St</postalLine>
-       <postalLine>Dullsville</postalLine>
-       <postalLine>NSW</postalLine>
-       <postalLine>Australia</postalLine>
-       <postalLine>3333</postalLine>
-       </postal>
-       <phone>555 5655</phone>
-       <facsimile>555 5555</facsimile>
-       <email>john.doe@email.com</email>
-       <uri>http://example.com</uri>
-       </address>
-       </author>
-       </front><middle>
-       </middle>
-       </rfc>
-      OUTPUT
-      end
-      
-        it "gives postal lines priority over address lines" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
-      = Document title
-      :docName: 
-      :fullname: John Doe Horton
-      :lastname: Horton
-      :initials: J. D. H.
-      :role: editor
-      :organization: Ribose
-      :fax: 555 5555
-      :email: john.doe@email.com
-      :uri: http://example.com
-      :phone: 555 5655
-      :postal-line: 57 Mt Pleasant St\ Dullsville\ NSW\ Australia\ 3333
-      :street: 57 Mt Pleasant St
-      :city: Dullsville
-      :region: NSW
-      :country: Australia
-      :code: 3333
-      INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title>Document title</title>
-       <author fullname="John Doe Horton" surname="Horton" role="editor">
-       <organization>Ribose</organization>
-       <address>
-       <postal>
-       <postalLine>57 Mt Pleasant St</postalLine>
-       <postalLine>Dullsville</postalLine>
-       <postalLine>NSW</postalLine>
-       <postalLine>Australia</postalLine>
-       <postalLine>3333</postalLine>
-       </postal>
-       <phone>555 5655</phone>
-       <facsimile>555 5555</facsimile>
-       <email>john.doe@email.com</email>
-       <uri>http://example.com</uri>
-       </address>
-       </author>
-       </front><middle>
-       </middle>
-       </rfc>
-      OUTPUT
-      end
-      
-
   
   
 end

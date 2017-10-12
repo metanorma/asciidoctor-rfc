@@ -17,50 +17,43 @@ module Asciidoctor
         result << (keyword node)
       end
 
-      def organization(node, suffix)
-        result = []
+      def organization(node, suffix, xml)
         organization = node.attr("organization#{suffix}")
         organization_abbrev = node.attr("organization_abbrev#{suffix}")
-        abbrev = set_header_attribute "abbrev", organization_abbrev
-        result << "<organization#{abbrev}>#{organization}</organization>" unless organization.nil?
-        result
+        organization_attributes = {
+          abbrev: organization_abbrev,
+        }.reject { |_, value| value.nil? }
+        xml.organization organization, **organization_attributes unless organization.nil?
       end
 
-      def address(node, suffix)
-        result = []
-        postalline = nil
-        street = node.attr("street#{suffix}")
-        city = node.attr("city#{suffix}")
-        region = node.attr("region#{suffix}")
-        country = node.attr("country#{suffix}")
-        code = node.attr("code#{suffix}")
-        phone = node.attr("phone#{suffix}")
+      def address(node, suffix, xml)
         email = node.attr("email#{suffix}")
         facsimile = node.attr("fax#{suffix}")
+        phone = node.attr("phone#{suffix}")
+        postalline = node.attr("postal-line#{suffix}")
+        street = node.attr("street#{suffix}")
         uri = node.attr("uri#{suffix}")
-        if (not email.nil?) || (not facsimile.nil?) || (not uri.nil?) || (not phone.nil?) ||
-          (not street.nil?)
-          result << "<address>"
-          if not street.nil?
-            result << "<postal>"
-            if postalline.nil?
-              street&.split("\\ ")&.each { |p| result << "<street>#{p}</street>" }
-              result << "<city>#{city}</city>" unless city.nil?
-              result << "<region>#{region}</region>" unless region.nil?
-              result << "<code>#{code}</code>" unless code.nil?
-              result << "<country>#{country}</country>" unless country.nil?
-            else
-              postalline&.split("\\ ")&.each { |p| result << "<postalLine>#{p}</postalLine>" }
+        if [email, facsimile, phone, street, uri].any?
+          xml.address do |xml_address|
+            if [street].any?
+              xml_address.postal do |xml_postal|
+                  city = node.attr("city#{suffix}")
+                  code = node.attr("code#{suffix}")
+                  country = node.attr("country#{suffix}")
+                  region = node.attr("region#{suffix}")
+                  street&.split("\\ ")&.each { |st| xml_postal.street st }
+                  xml_postal.city city unless city.nil?
+                  xml_postal.region region unless region.nil?
+                  xml_postal.code code unless code.nil?
+                  xml_postal.country country unless country.nil?
+              end
             end
-            result << "</postal>"
+            xml_address.phone phone unless phone.nil?
+            xml_address.facsimile facsimile unless facsimile.nil?
+            xml_address.email email unless email.nil?
+            xml_address.uri uri unless uri.nil?
           end
-          result << "<phone>#{phone}</phone>" unless phone.nil?
-          result << "<facsimile>#{facsimile}</facsimile>" unless facsimile.nil?
-          result << "<email>#{email}</email>" unless email.nil?
-          result << "<uri>#{uri}</uri>" unless uri.nil?
-          result << "</address>"
         end
-        result
       end
 
       # Syntax:
@@ -115,12 +108,19 @@ module Asciidoctor
       #   :country
       #   :code
       def author1(node, suffix)
-        result = []
-        result << authorname(node, suffix)
-        result << organization(node, suffix)
-        result << address(node, suffix)
-        # result << "</author>"
-        result
+        noko do |xml|
+          author_attributes = {
+            fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
+            surname: node.attr("lastname#{suffix}"),
+            initials: node.attr("forename_initials#{suffix}"),
+            role: node.attr("role#{suffix}"),
+          }.reject { |_, value| value.nil? }
+
+          xml.author **author_attributes do |xml_sub|
+            organization node, suffix, xml_sub
+            address node, suffix, xml_sub
+          end
+        end
       end
 
       # Syntax:

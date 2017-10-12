@@ -160,19 +160,19 @@ def address(node, suffix, xml)
             code = node.attr("code#{suffix}")
             country = node.attr("country#{suffix}")
             region = node.attr("region#{suffix}")
+            street&.split("\\ ")&.each { |st| xml_postal.street st }
             xml_postal.city city unless city.nil?
+            xml_postal.region region unless region.nil?
             xml_postal.code code unless code.nil?
             xml_postal.country country unless country.nil?
-            xml_postal.region region unless region.nil?
-            street&.split("\\ ")&.each { |st| xml_postal.street st }
           else
             postalline&.split("\\ ")&.each { |pl| xml_postal.postalLine pl }
           end
         end
       end
-      xml_address.email email unless email.nil?
-      xml_address.facsimile facsimile unless facsimile.nil?
       xml_address.phone phone unless phone.nil?
+      xml_address.facsimile facsimile unless facsimile.nil?
+      xml_address.email email unless email.nil?
       xml_address.uri uri unless uri.nil?
     end
   end
