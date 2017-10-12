@@ -1,4 +1,5 @@
 require "date"
+require "nokogiri"
 
 module Asciidoctor
   module RFC::Common
@@ -158,8 +159,8 @@ module Asciidoctor
       end
 
       def noko(&block)
-        fragment = Nokogiri::XML::DocumentFragment.parse ""
-        Nokogiri::XML::Builder.with fragment, &block
+        fragment = ::Nokogiri::XML::DocumentFragment.parse ""
+        ::Nokogiri::XML::Builder.with fragment, &block
         fragment.to_xml.lines
       end
     end

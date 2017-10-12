@@ -15,20 +15,18 @@ describe Asciidoctor::RFC::V2::Converter do
       text
     INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+       <rfc
+                submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
+       <date day="1" month="January" year="1970"/>
        </front><middle>
-       <section anchor="_section_1" numbered="false">
-       <name>Section 1</name>
+       <section anchor="_section_1" title="Section 1">
        <t>text</t>
        </section>
        </middle><back>
-       <section anchor="_appendix" numbered="false">
-       <name>Appendix</name>
+       <section anchor="_appendix" title="Appendix">
        <t>text</t>
        </section>
        </back>
@@ -53,24 +51,21 @@ describe Asciidoctor::RFC::V2::Converter do
       text
     INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+       <rfc
+                submissionType="IETF">
        <front>
        <title>Document title</title>
-       <author fullname="Author">
-       </author>
+       <author fullname="Author"/>
+       <date day="1" month="January" year="1970"/>
        </front><middle>
-       <section anchor="_section_1" numbered="false">
-       <name>Section 1</name>
+       <section anchor="_section_1" title="Section 1">
        <t>text</t>
        </section>
        </middle><back>
-       <references anchor="_biblio">
-       <name>Biblio</name>
-       <reference>Reference1</refcontent></reference>
+       <references title="Biblio">
+     
        </references>
-       <section anchor="_appendix" numbered="false">
-       <name>Appendix</name>
+       <section anchor="_appendix" title="Appendix">
        <t>text</t>
        </section>
        </back>

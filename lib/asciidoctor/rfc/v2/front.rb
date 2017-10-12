@@ -129,11 +129,14 @@ module Asciidoctor
       #   :revdate or :date
       def date(node)
         result = []
+        revdate = nil
         revdate = node.attr("revdate")
         revdate = node.attr("date") if revdate.nil?
         # date is mandatory in v2: use today
-        revdate = DateTime.now.iso8601 if revdate.nil?
-        warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
+        if revdate.nil?
+          revdate = DateTime.now.iso8601
+          warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
+        end
         unless revdate.nil?
           begin
             revdate.gsub!(/T.*$/, "")

@@ -1,35 +1,19 @@
 require "spec_helper"
 
 describe Asciidoctor::RFC::V2::Converter do
-  it "renders a horizontal description list" do
+  it "renders a description list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
-      [horizontal]
+      [hang-indent=5]
       A:: B
       C:: D
     INPUT
-      <dl anchor="id" hanging="true">
-      <dt>A</dt>
-      <dd>B</dd>
-      <dt>C</dt>
-      <dd>D</dd>
-      </dl>
-    OUTPUT
-  end
-  
-  it "renders a compact description list" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
-      [[id]]
-      [compact]
-      A:: B
-      C:: D
-    INPUT
-      <dl anchor="id" spacing="compact">
-      <dt>A</dt>
-      <dd>B</dd>
-      <dt>C</dt>
-      <dd>D</dd>
-      </dl>
+        <t>
+        <list hangIndent="5" style="hanging">
+        <t hangText="A">B</t>
+        <t hangText="C">D</t>
+        </list>
+        </t>
     OUTPUT
   end
   
@@ -43,27 +27,26 @@ describe Asciidoctor::RFC::V2::Converter do
        Produce::
        * Bananas
     INPUT
-       <dl>
-       <dt>Dairy</dt>
-       <dd>
-       <ul>
-       <li>Milk</li>
-       <li>Eggs</li>
-       </ul>
-       </dd>
-       <dt>Bakery</dt>
-       <dd>
-       <ul>
-       <li>Bread</li>
-       </ul>
-       </dd>
-       <dt>Produce</dt>
-       <dd>
-       <ul>
-       <li>Bananas</li>
-       </ul>
-       </dd>
-       </dl>
+        <t>
+        <list style="hanging">
+        <t hangText="Dairy">
+        <list style="symbols">
+        <t>Milk</t>
+        <t>Eggs</t>
+        </list>
+        </t>
+        <t hangText="Bakery">
+        <list style="symbols">
+        <t>Bread</t>
+        </list>
+        </t>
+        <t hangText="Produce">
+        <list style="symbols">
+        <t>Bananas</t>
+        </list>
+        </t>
+        </list>
+        </t>
     OUTPUT
   end
   
