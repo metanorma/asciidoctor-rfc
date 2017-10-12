@@ -832,32 +832,35 @@ Sidebar <2>
 
 ==== v3 References
 
+This gem has limited support for the list presentation of references supported natively in Asciidoc. 
+However, raw RFC XML markup is preferred for entering references for v3 RFC XML, and it is the only
+method supported for v2 RFC XML.
+
 [source,asciidoc]
 --
 [[id]] <1>
 [bibliography]
 == Normative References
 * [[[crossref]]]  Reference1 <2>
-[quote-title=false,target=uri,annotation=xyz] <3>
-* [[[crossref2,xreftext]]] Reference2 <4>
+* [[[crossref2,xreftext]]] Reference2 <3>
 
 [[id]] <1>
 [bibliography]
 == Informative References
-* [[[crossref3]]] <5>
-** [[[crossref4]]] Reference4 <6>
-** [[[crossref5]]] Reference5 <6>
+* [[[crossref3]]] <4>
+** [[[crossref4]]] Reference4 <5>
+** [[[crossref5]]] Reference5 <5>
 --
 <1> `back/references@anchor`
 <2> `back/references/reference@anchor`, `back/references/reference/refcontent`
-<3> `back/references/reference/refcontent@quoteTitle`, `back/references/reference/refcontent@target`, `back/references/reference/refcontent@annotation`
-<4> `<displayreference target=crossreference to=xyz/>`
-<5> `back/references/referencegroup@anchor`
-<6> `back/references/referencegroup/reference/refcontent`
+<3> `<displayreference target=crossreference to=xyz/>`
+<4> `back/references/referencegroup@anchor`
+<5> `back/references/referencegroup/reference/refcontent`
 
-==== v2 References
+==== v2 and v3 References
 
-References for v2 are expected to be provided in raw RFC XML v2 format.
+References for v2 are expected to be provided in raw RFC XML v2 format, and references
+for v3 are encouraged to be provided in raw RFC XML v3 format.
 
 [source,asciidoc]
 --
@@ -906,13 +909,15 @@ asciidoctor commands:
 | `front/boilerplate`              | Not added  | N/A
 | `iref@primary`                   | N          | N
 | `reference/*` (and all children) | N/A        | N
-| `reference/front`                | N          | N/A
+| `reference/front`                | N          | N
+| `reference/annotation`           | N          | N
+| `reference@quote-title`          | N          | N/A
+| `reference@target`               | N          | N
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
 | `artwork@width`                  | Only on images | Only on images
 | `artwork@height`                 | Only on images | Only on images
 |===
-
 
 === Unsupported Asciidoctor Features
 

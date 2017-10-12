@@ -21,9 +21,10 @@ module Asciidoctor
             item.blocks.each { |b| result << reflist(b) }
             result << "</referencegroup>"
           else
-            quoteTitle = get_header_attribute node, "quoteTitle"
-            target = get_header_attribute node, "target"
-            annotation = get_header_attribute node, "annotation"
+            puts item
+            quoteTitle = get_header_attribute item, "quoteTitle"
+            target = get_header_attribute item, "target"
+            annotation = get_header_attribute item, "annotation"
             # FIXME: [[[x]]] within embedded list is processed as [<bibref>]
             result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{quoteTitle}#{target}#{annotation} anchor=\"\\1\"><refcontent>")
           end

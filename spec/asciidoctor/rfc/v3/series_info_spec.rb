@@ -92,7 +92,7 @@ describe Asciidoctor::RFC::V3::Converter do
        <front>
        <title>Document title</title>
        <seriesInfo name="RFC" status="full-standard" stream="IRTF" value="1111"/>
-       <seriesInfo name="" status="historic" value="none"/>
+       <seriesInfo name="" status="historic" value="1111"/>
        <author fullname="Author">
        </author>
        </front><middle>

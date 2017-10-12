@@ -71,7 +71,7 @@ module Asciidoctor
             seriesInfo_attributes = {
               name: "",
               status: m.nil? ? rfcstatus : m[1],
-              value: m.nil? ? "none" : m[2],
+              value: m.nil? ? value : m[2],
             }.reject { |_, val| val.nil? }
             xml.seriesInfo **seriesInfo_attributes
           end
