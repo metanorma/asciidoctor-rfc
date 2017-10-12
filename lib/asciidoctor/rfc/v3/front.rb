@@ -25,10 +25,9 @@ module Asciidoctor
       end
 
       def series_info(node, xml)
-        docname = node.attr("docname")
-
-        unless docname&.empty?
-          is_rfc = docname =~ /^rfc-?/i
+        docname = node.attr("name")
+        unless docname.nil? or docname&.empty?
+          is_rfc = docname =~ /^rfc-?/i || node.attr("doctype") == "rfc"
 
           name = is_rfc ? docname.gsub(/^rfc-?/i, "") : docname
           nameattr = is_rfc ? "RFC" : "Internet-Draft"

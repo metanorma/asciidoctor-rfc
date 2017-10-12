@@ -6,7 +6,7 @@ module Asciidoctor
       #   Author
       #   :category
       #   :consensus
-      #   :doc-name
+      #   :name
       #   :number
       #
       #   :ipr
@@ -36,11 +36,15 @@ module Asciidoctor
         $seen_abstract = false
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
+        doctype = node.attr "doctype"
+        is_rfc = (doctype == "rfc")
         category = get_header_attribute node, "category"
         consensus = get_header_attribute node, "consensus"
-        docName = get_header_attribute node, "docName"
-        number = get_header_attribute node, "number"
-        warn "asciidoctor: WARNING: both docName and number attributes present" unless number.nil? || docName.nil?
+        if is_rfc
+          number = set_header_attribute "number", node.attr("name")
+        else
+          docName = set_header_attribute "docName", node.attr("name")
+        end
         ipr = get_header_attribute node, "ipr"
         iprExtract = get_header_attribute node, "indexInclude"
         obsoletes = get_header_attribute node, "obsoletes"

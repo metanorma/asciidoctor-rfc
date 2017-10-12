@@ -6,7 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       Author
       :abbrev: abbrev_value
-      :docname: rfc-1111
+      :name: rfc-1111
       :revdate: 1999-01-01
       :area: horticulture
       :workgroup: IETF

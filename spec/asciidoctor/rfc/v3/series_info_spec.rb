@@ -6,7 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       Author
       :doctype: internet-draft
-      :docname: internet-draft-this-is-an-internet-draft-00
+      :name: internet-draft-this-is-an-internet-draft-00
       :status: informational
       :intended-series: bcp
       :submission-type: IRTF
@@ -31,7 +31,32 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       Author
       :doctype: rfc
-      :docname: rfc-1111
+      :name: 1111
+      :status: full-standard
+      :intended-series: fyi 1111
+      :submission-type: IRTF
+    INPUT
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc preptime="1970-01-01T00:00:00Z"
+                version="3" submissionType="IRTF">
+       <front>
+       <title>Document title</title>
+       <seriesInfo name="RFC" status="full-standard" stream="IRTF" value="1111"/>
+       <seriesInfo name="" status="fyi" value="1111"/>
+       <author fullname="Author">
+       </author>
+       </front><middle>
+       </middle>
+       </rfc>
+    OUTPUT
+  end
+
+  it "treats the rfc- prefix on :name: as optional" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+      :doctype: rfc
+      :name: rfc-1111
       :status: full-standard
       :intended-series: fyi 1111
       :submission-type: IRTF
@@ -56,7 +81,7 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       Author
       :doctype: rfc
-      :docname: rfc-1111
+      :name: rfc-1111
       :status: full-standard
       :intended-series: historic
       :submission-type: IRTF
