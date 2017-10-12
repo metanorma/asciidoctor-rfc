@@ -52,6 +52,8 @@ module Asciidoctor
               width = if !node.option?("autowidth") && (i < widths.size)
                         set_header_attribute("width", "#{widths[i]}%")
                       end
+              warn "asciidoctor: WARNING: RFC XML v2 tables do not support colspan attribute" unless cell.colspan.nil?
+              warn "asciidoctor: WARNING: RFC XML v2 tables do not support rowspan attribute" unless cell.rowspan.nil?
               entry_start = %(<ttcol#{id}#{align}#{width}>)
               cell_content = cell.text
               rowlength += cell_content.size

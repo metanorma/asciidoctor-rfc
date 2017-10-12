@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Asciidoctor::RFC::V3::Converter do
-  it "renders a description list" do
+  it "renders a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
       .Table Title 

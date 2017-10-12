@@ -795,7 +795,7 @@ v3) and `colspan`, `rowspan` attributes (v3).
 [source,asciidoc]
 --
 [[id]] <1>
-[suppress-title,align,style] <2>
+[suppress-title=true|false,align=left|center|right,grid=all|cols|none] <2>
 .Table Title <3>
 |===
 |[[id]] head | head <4>
@@ -807,12 +807,26 @@ h|header cell | body cell <5>
 |===
 --
 <1> v3: `table@anchor`; v2: `texttable@anchor`
-<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style` (attributes only available in v2)
+<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style` (attributes only available in v2). Mapping of Asciidoc grid attribute to RFC XML style attribute is: `all` > `all`, `cols` > `full`, `none` > `none`. The RFC XML `headers` attribute is not supported. The Asciidoc attribute `rows` is not supported.
 <3> v3: `table/name`; v2: `texttable@title`
 <4> v3: `table/thead/tr/td`; v2: `texttable/ttcol@id` (attribute only available in v2), `texttable/ttcol`
 <5> v3: `table/tbody/tr/th`, `table/tbody/tr/td`; v2: `texttable/c`, `texttable/c`
 <6> v3: `table/tbody/tr/td@anchor` (attribute only available in v3)
 <7> v3: `table/tfoot/tr/td`; v2: `texttable/c`
+
+
+        styleval = case node.attr "grid"
+                   when "all"
+                     "all"
+                   when "rows"
+                     "none" # not supported
+                   when "cols"
+                     "full"
+                   when "none"
+                     "none"
+                   else
+                     "all"
+                   end
 
 
 === Sidebar (v3 only)
@@ -915,6 +929,7 @@ asciidoctor commands:
 | `reference@target`               | N          | N
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
+| `table@style = headers           | N/A        | N
 | `artwork@width`                  | Only on images | Only on images
 | `artwork@height`                 | Only on images | Only on images
 |===
@@ -943,6 +958,11 @@ These asciidoctor features are not supported in output of these formats:
 | Macro: http://asciidoctor.org/docs/user-manual/#ui-buttons[UI buttons] 2+| Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#footer-row[Distinction between table body and table footer] | No | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#header-row[Multiple table header rows] | No | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = rows] | No | Ignored
+| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = cols|none] | Supported | Ignored
+| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: frame] 2+| Ignored
+| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: rowspan] Ignored | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: colspan] Ignored | Supported
 |===
 
 
