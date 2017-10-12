@@ -11,20 +11,19 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Ipsum.
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title>Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       <section anchor="_lorem" numbered="false">
-       <name>Lorem</name>
-       <t>Ipsum.</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title>Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="_lorem" title="Lorem">
+        <t>Ipsum.</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
@@ -42,24 +41,23 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Ipsum.
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title>Document title</title>
-       <author fullname="Author">
-       </author>
-       <abstract>
-       <t>Preamble content.</t>
-       <t>More Preamble content.</t>
-       </abstract>
-       </front><middle>
-       <section anchor="_lorem" numbered="false">
-       <name>Lorem</name>
-       <t>Ipsum.</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title>Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        <abstract>
+        <t>Preamble content.</t>
+        <t>More Preamble content.</t>
+        </abstract>
+        </front><middle>
+        <section anchor="_lorem" title="Lorem">
+        <t>Ipsum.</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
@@ -71,7 +69,7 @@ describe Asciidoctor::RFC::V2::Converter do
 
       NOTE: This is a note.
       
-      [NOTE,remove-in-rfc=true]
+      [NOTE]
       .Title of Note
       ====
       This is another note.
@@ -81,29 +79,25 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Ipsum.
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title>Document title</title>
-       <author fullname="Author">
-       </author>
-       <note>
-       <t>
-       This is a note.
-       </t>
-       </note>
-       <note removeInRFC="true">
-       <name>Title of Note</name>
-       <t>This is another note.</t>
-       </note>
-       </front><middle>
-       <section anchor="_lorem" numbered="false">
-       <name>Lorem</name>
-       <t>Ipsum.</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title>Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        <note>
+        <t>This is a note.</t>
+        </note>
+        <note title="Title of Note">
+        <t>This is another note.</t>
+        </note>
+        </front><middle>
+        <section anchor="_lorem" title="Lorem">
+        <t>Ipsum.</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 

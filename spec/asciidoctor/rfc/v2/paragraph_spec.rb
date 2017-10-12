@@ -7,7 +7,7 @@ describe Asciidoctor::RFC::V2::Converter do
       [keep-with-next=true, keep-with-previous=true, foo=bar]
       Lorem ipsum.
     INPUT
-      <t anchor="id" keepWithNext="true" keepWithPrevious="true">Lorem ipsum.</t>
+      <t anchor="id">Lorem ipsum.</t>
     OUTPUT
   end
 end

@@ -4,14 +4,16 @@ describe Asciidoctor::RFC::V2::Converter do
   it "renders an ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
-      [start=3,group=5,arabic,spacing=compact]
+      [start=3,arabic]
       . First
       . Second
     INPUT
-       <ol anchor="id" spacing="compact" start="3" group="5" type="1">
-       <li>First</li>
-       <li>Second</li>
-       </ol>
+        <t>
+        <list counter="3" style="numbers">
+        <t>First</t>
+        <t>Second</t>
+        </list>
+        </t>
     OUTPUT
   end
 
@@ -22,10 +24,12 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . [[id1]] Second
     INPUT
-       <ol anchor="id" spacing="compact" start="3" group="5" type="1">
-       <li>First</li>
-       <li>Second</li>
-       </ol>
+        <t>
+        <list counter="3" style="numbers">
+        <t>First</t>
+        <t> Second</t>
+        </list>
+        </t>
     OUTPUT
   end
 
@@ -41,17 +45,19 @@ describe Asciidoctor::RFC::V2::Converter do
       . Fifth
       . Sixth
     INPUT
-       <ol anchor="id" type="a">
-       <li>First</li>
-       <li>Second
-       <ol type="A">
-       <li>Third</li>
-       <li>Fourth</li>
-       </ol>
-       </li>
-       <li>Fifth</li>
-       <li>Sixth</li>
-       </ol>
+        <t>
+        <list style="format %c">
+        <t>First</t>
+        <t>Second
+        <list style="format %C">
+        <t>Third</t>
+        <t>Fourth</t>
+        </list>
+        </t>
+        <t>Fifth</t>
+        <t>Sixth</t>
+        </list>
+        </t>
     OUTPUT
   end
   
@@ -64,15 +70,17 @@ describe Asciidoctor::RFC::V2::Converter do
       ** Third
       ** Fourth
     INPUT
-       <ol anchor="id" type="i">
-       <li>First</li>
-       <li>Second
-       <ul>
-       <li>Third</li>
-       <li>Fourth</li>
-       </ul>
-       </li>
-       </ol>
+        <t>
+        <list style="format %i">
+        <t>First</t>
+        <t>Second
+        <list style="symbols">
+        <t>Third</t>
+        <t>Fourth</t>
+        </list>
+        </t>
+        </list>
+        </t>
     OUTPUT
   end
 
@@ -83,10 +91,12 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . Second
     INPUT
-       <ol anchor="id" type="1">
-       <li>First</li>
-       <li>Second</li>
-       </ol>
+        <t>
+        <list style="numbers">
+        <t>First</t>
+        <t>Second</t>
+        </list>
+        </t>
     OUTPUT
   end
 
@@ -98,10 +108,12 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . Second
     INPUT
-       <ol anchor="id" type="1">
-       <li>First</li>
-       <li>Second</li>
-       </ol>
+        <t>
+        <list style="numbers">
+        <t>First</t>
+        <t>Second</t>
+        </list>
+        </t>
     OUTPUT
   end
 

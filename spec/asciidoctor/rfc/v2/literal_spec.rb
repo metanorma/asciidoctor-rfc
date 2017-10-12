@@ -5,13 +5,13 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[literal-id]]
       .filename
-      [align=left,alt=alt_text]
+      [align=left,alt=alt_text,type=abnf]
       ....
         Literal contents.
       ....
     INPUT
       <figure>
-      <artwork anchor="literal-id" align="left" name="filename" type="ascii-art" alt="alt_text">
+      <artwork anchor="literal-id" align="left" name="filename" type="abnf" alt="alt_text">
         Literal contents.
       </artwork>
       </figure>
@@ -29,7 +29,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <1> This is a callout
     INPUT
       <figure>
-      <artwork anchor="literal-id" align="left" name="filename" type="ascii-art" alt="alt_text">
+      <artwork anchor="literal-id" align="left" name="filename" alt="alt_text">
         Literal contents.
       </artwork>
       </figure>
@@ -44,11 +44,11 @@ describe Asciidoctor::RFC::V2::Converter do
       sqrt(4) = 2
       ++++
     INPUT
-      <figure>
-      <artwork type="ascii-art">
-       sqrt(4) = 2
-       </artwork>
-      </figure>
+        <figure>
+        <artwork>
+        sqrt(4) = 2
+        </artwork>
+        </figure>
     OUTPUT
   end
 end
