@@ -28,7 +28,8 @@ module Asciidoctor
         style = set_header_attribute "style", "symbols"
         result << "<list#{style}>"
         node.items.each do |item|
-          id = set_header_attribute "anchor", item.id
+          # id = set_header_attribute "anchor", item.id
+          id = nil
           if item.blocks?
             result << "<t#{id}>#{item.text}"
             result << item.content

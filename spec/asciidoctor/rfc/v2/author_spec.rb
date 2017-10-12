@@ -1,8 +1,8 @@
 require "spec_helper"
 
-xdescribe Asciidoctor::RFC::V2::Converter do
+describe Asciidoctor::RFC::V2::Converter do
   it "renders all options with short author syntax" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
       John Doe Horton <john.doe@email.com>
@@ -11,8 +11,6 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
-      <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-      <seriesInfo name="" value=""/>
 
       <author fullname="John Doe Horton" surname="Horton">
       <address>
@@ -27,7 +25,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
   end
 
   it "renders all options with multiple short author syntax" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
       John Doe Horton <john.doe@email.com>; Joanna Diva Munez <joanna.munez@email.com>
@@ -36,8 +34,6 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
-      <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-      <seriesInfo name="" value=""/>
 
       <author fullname="John Doe Horton" surname="Horton">
       <address>
@@ -57,10 +53,10 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       end
 
       it "renders all options with long author syntax" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :forename_initials: J. D.
       :role: editor
@@ -80,9 +76,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
-       <author initials="J. D." surname="Horton" role="editor">
+       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -105,10 +99,10 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       end
       
       it "renders all options with multiple long author syntax" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :forename_initials: J. D.
       :role: editor
@@ -122,7 +116,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
-      :fullName_2: Billy Bob Thornton
+      :fullname_2: Billy Bob Thornton
       :lastname_2: Thornton
       :forename_initials_2: B. B.
       :role_2: author
@@ -142,9 +136,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
-       <author initials="J. D." surname="Horton" role="editor">
+       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -160,7 +152,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
        <uri>http://example.com</uri>
        </address>
        </author>
-       <author initials="B. B." surname="Thornton" role="author">
+       <author fullname="Billy Bob Thornton" initials="B. B." surname="Thornton" role="author">
        <organization>IBM</organization>
        <address>
        <postal>
@@ -183,10 +175,10 @@ xdescribe Asciidoctor::RFC::V2::Converter do
   end
   
       it "respects multiple lines in street" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :forename_initials: J. D.
       :role: editor
@@ -206,9 +198,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
-       <author initials="J. D." surname="Horton" role="editor">
+       <author fullname="John Doe Horton" initials="J. D." surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -232,10 +222,10 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       end
       
         it "ignores initials attribute from Asciidoc" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :initials: J. D. H.
       :role: editor
@@ -255,9 +245,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
-       <author surname="Horton" role="editor">
+       <author fullname="John Doe Horton" surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -280,10 +268,10 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       end
       
         it "respects postal line attributes, with multiple lines" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :initials: J. D. H.
       :role: editor
@@ -299,9 +287,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
-       <author surname="Horton" role="editor">
+       <author fullname="John Doe Horton" surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>
@@ -324,10 +310,10 @@ xdescribe Asciidoctor::RFC::V2::Converter do
       end
       
         it "gives postal lines priority over address lines" do
-      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName: 
-      :fullName: John Doe Horton
+      :fullname: John Doe Horton
       :lastname: Horton
       :initials: J. D. H.
       :role: editor
@@ -348,9 +334,7 @@ xdescribe Asciidoctor::RFC::V2::Converter do
                 version="3" submissionType="IETF">
        <front>
        <title>Document title</title>
-       <seriesInfo name="Internet-Draft" stream="IETF" value=""/>
-       <seriesInfo name="" value=""/>
-       <author surname="Horton" role="editor">
+       <author fullname="John Doe Horton" surname="Horton" role="editor">
        <organization>Ribose</organization>
        <address>
        <postal>

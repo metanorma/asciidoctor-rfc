@@ -119,7 +119,7 @@ module Asciidoctor
         result << authorname(node, suffix)
         result << organization(node, suffix)
         result << address(node, suffix)
-        result << "</author>"
+        # result << "</author>"
         result
       end
 

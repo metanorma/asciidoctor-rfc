@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xdescribe Asciidoctor::RFC::V3::Converter do
+describe Asciidoctor::RFC::V3::Converter do
   it "ignores actual Asciidoctor comments" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
