@@ -5,7 +5,7 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[literal-id]]
       .filename.rb
-      [source,ruby,src=http://example.com/ruby.rb]
+      [source,ruby,src=http://example.com/ruby.rb,alt=Alt Text]
       ----
       def listing(node)
         result = []
@@ -14,8 +14,8 @@ describe Asciidoctor::RFC::V2::Converter do
       ----
     INPUT
        <figure>
-       <sourcecode anchor="literal-id" name="filename.rb" type="ruby" src="http://example.com/ruby.rb">
-       </sourcecode>
+        <artwork anchor="literal-id" name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
+        </artwork>
        </figure>
     OUTPUT
   end
@@ -33,12 +33,12 @@ describe Asciidoctor::RFC::V2::Converter do
       ----
     INPUT
       <figure>
-      <sourcecode anchor="literal-id" name="filename.rb" type="ruby">
+      <artwork anchor="literal-id" name="filename.rb" type="ruby">
       def listing(node)
         result = []
         result &lt;&lt; "&lt;figure&gt;" if node.parent.context != :example
       end
-      </sourcecode>
+      </artwork>
       </figure>
     OUTPUT
   end
@@ -50,10 +50,10 @@ describe Asciidoctor::RFC::V2::Converter do
     Notice that the monospace markup is preserved in the output.
     INPUT
        <figure>
-       <sourcecode>
+       <artwork>
        This is an example of a paragraph styled with `listing`.
        Notice that the monospace markup is preserved in the output.
-       </sourcecode>
+       </artwork>
        </figure>
     OUTPUT
   end

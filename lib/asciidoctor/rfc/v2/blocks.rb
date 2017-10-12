@@ -134,7 +134,7 @@ module Asciidoctor
       def listing(node)
         result = []
         result << "<figure>" if node.parent.context != :example
-        align = set_header_attribute "align", node.title
+        align = get_header_attribute node, "align"
         alt = set_header_attribute "alt", node.alt
         tag = "artwork"
         id = set_header_attribute "anchor", node.id
