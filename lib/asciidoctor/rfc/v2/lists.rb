@@ -6,15 +6,15 @@ module Asciidoctor
         # ++++
         # <xml>
         # ++++
-        # TODO push through references as undigested XML
         result = []
-        node.lines.each do |item|
-          # we expect the biblio anchor to be right at the start of the reference
-          target = get_header_attribute node, "target"
-          # undo XML substitution
-          ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
-          # result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
-          result << ref
+        if node.context == :pass
+          node.lines.each do |item|
+            target = get_header_attribute node, "target"
+            # undo XML substitution
+            ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
+            # result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
+            result << ref
+          end
         end
         result
       end

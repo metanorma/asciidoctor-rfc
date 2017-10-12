@@ -8,28 +8,27 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       
-      [remove-in-rfc=true,toc=include]
+      [[id]]
       == Section 1
       Para 1
       
       Para 2
       
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       <section anchor="_section_1" removeInRFC="true" toc="include" numbered="false">
-       <name>Section 1</name>
-       <t>Para 1</t>
-       <t>Para 2</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title abbrev="abbrev_value">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="id" title="Section 1">
+        <t>Para 1</t>
+        <t>Para 2</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
@@ -40,16 +39,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       
-      :sectnums:
-      [toc=exclude]
       == Section 1
       Para 1
       
       ==== Subsection 1.1
       Para 1a
 
-      :sectnums!:
-      [toc=default]
       === Subsection 1.2
       Para 2
 
@@ -57,32 +52,75 @@ describe Asciidoctor::RFC::V2::Converter do
       Para 3
       
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       <section anchor="_section_1" toc="exclude" numbered="true">
-       <name>Section 1</name>
-       <t>Para 1</t>
-       <section anchor="_subsection_1_1" numbered="true">
-       <name>Subsection 1.1</name>
-       <t>Para 1a</t>
-       </section>
-       <section anchor="_subsection_1_2" toc="default" numbered="false">
-       <name>Subsection 1.2</name>
-       <t>Para 2</t>
-       <section anchor="_subsection_1_2_1" numbered="false">
-       <name>Subsection 1.2.1</name>
-       <t>Para 3</t>
-       </section>
-       </section>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title abbrev="abbrev_value">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="_section_1" title="Section 1">
+        <t>Para 1</t>
+        <section anchor="_subsection_1_1" title="Subsection 1.1">
+        <t>Para 1a</t>
+        </section>
+        <section anchor="_subsection_1_2" title="Subsection 1.2">
+        <t>Para 2</t>
+        <section anchor="_subsection_1_2_1" title="Subsection 1.2.1">
+        <t>Para 3</t>
+        </section>
+        </section>
+        </section>
+        </middle>
+        </rfc>
+    OUTPUT
+  end
+  
+  it "ignores sectnums" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+      
+      :sectnums:
+      == Section 1
+      Para 1
+      
+      ==== Subsection 1.1
+      Para 1a
+
+      :sectnums!:
+      === Subsection 1.2
+      Para 2
+
+      ==== Subsection 1.2.1
+      Para 3
+      
+    INPUT
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title abbrev="abbrev_value">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="_section_1" title="Section 1">
+        <t>Para 1</t>
+        <section anchor="_subsection_1_1" title="Subsection 1.1">
+        <t>Para 1a</t>
+        </section>
+        <section anchor="_subsection_1_2" title="Subsection 1.2">
+        <t>Para 2</t>
+        <section anchor="_subsection_1_2_1" title="Subsection 1.2.1">
+        <t>Para 3</t>
+        </section>
+        </section>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
   
@@ -101,22 +139,21 @@ describe Asciidoctor::RFC::V2::Converter do
       Para 2
       
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       <section anchor="_section_1" numbered="false">
-       <name>Section 1</name>
-       <t>Para 1</t>
-     
-       <t>Para 2</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title abbrev="abbrev_value">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="_section_1" title="Section 1">
+        <t>Para 1</t>
+      
+        <t>Para 2</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
@@ -135,22 +172,21 @@ describe Asciidoctor::RFC::V2::Converter do
       Para 2
       
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       <section anchor="_section_1" numbered="false">
-       <name>Section 1</name>
-       <t>Para 1</t>
-     
-       <t>Para 2</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title abbrev="abbrev_value">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="_section_1" title="Section 1">
+        <t>Para 1</t>
+      
+        <t>Para 2</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
@@ -169,22 +205,21 @@ describe Asciidoctor::RFC::V2::Converter do
       Para 2
       
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>
-       <title abbrev="abbrev_value">Document title</title>
-       <author fullname="Author">
-       </author>
-       </front><middle>
-       <section anchor="_section_1" numbered="false">
-       <name>Section 1</name>
-       <t>Para 1</t>
-       <t><strong>Section 2</strong></t>
-       <t>Para 2</t>
-       </section>
-       </middle>
-       </rfc>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <rfc
+                 submissionType="IETF">
+        <front>
+        <title abbrev="abbrev_value">Document title</title>
+        <author fullname="Author"/>
+        <date day="1" month="January" year="1970"/>
+        </front><middle>
+        <section anchor="_section_1" title="Section 1">
+        <t>Para 1</t>
+        <t><spanx style="strong">Section 2</spanx></t>
+        <t>Para 2</t>
+        </section>
+        </middle>
+        </rfc>
     OUTPUT
   end
 
