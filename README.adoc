@@ -815,20 +815,6 @@ h|header cell | body cell <5>
 <7> v3: `table/tfoot/tr/td`; v2: `texttable/c`
 
 
-        styleval = case node.attr "grid"
-                   when "all"
-                     "all"
-                   when "rows"
-                     "none" # not supported
-                   when "cols"
-                     "full"
-                   when "none"
-                     "none"
-                   else
-                     "all"
-                   end
-
-
 === Sidebar (v3 only)
 
 [source,asciidoc]
