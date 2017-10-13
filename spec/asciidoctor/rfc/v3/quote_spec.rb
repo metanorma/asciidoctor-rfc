@@ -18,10 +18,12 @@ describe Asciidoctor::RFC::V3::Converter do
       [quote, attribution="quote attribution", citetitle="http://www.foo.bar"]
       ____
       Dennis: Come and see the violence inherent in the system. Help! Help! I'm being repressed!
+
       King Arthur: Bloody peasant!
+
       Dennis: Oh, what a giveaway! Did you hear that? Did you hear that, eh? That's what I'm on about! Did you see him repressing me? You saw him, Didn't you?
       ____
-      INPUT
+    INPUT
       <blockquote anchor="verse-id" quotedFrom="quote attribution" cite="http://www.foo.bar">
       <t>Dennis: Come and see the violence inherent in the system. Help! Help! I&#8217;m being repressed!</t>
       <t>King Arthur: Bloody peasant!</t>

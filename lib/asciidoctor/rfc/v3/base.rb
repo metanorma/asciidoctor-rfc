@@ -131,6 +131,7 @@ module Asciidoctor
       def inline_anchor(node)
         case node.type
         when :xref
+          text = node.text
           if text =~ /^\S+ (of|comma|parens|bare)\b/
             # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref
             relative = set_header_attribute "relative", node.attributes["fragment"]

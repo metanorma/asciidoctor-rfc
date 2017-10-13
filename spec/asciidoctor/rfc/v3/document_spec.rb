@@ -53,6 +53,7 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
+
       [appendix]
       == Appendix
       Lipsum.

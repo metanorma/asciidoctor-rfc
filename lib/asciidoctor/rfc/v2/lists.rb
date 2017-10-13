@@ -51,7 +51,7 @@ module Asciidoctor
         lowerroman: "format %i",
         upperalpha: "format %C",
         upperroman: "format %I",
-      }.freeze).default = "numbers"
+      }).default = "numbers"
 
       # Syntax:
       #   [start=n] (optional)

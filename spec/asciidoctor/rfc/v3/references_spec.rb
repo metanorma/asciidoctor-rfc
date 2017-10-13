@@ -5,8 +5,10 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       Author
       :doctype: internet-draft
+
       == Text
       Text
+
       [[id]]
       [bibliography]
       == References
@@ -29,13 +31,16 @@ describe Asciidoctor::RFC::V3::Converter do
       </references>
     OUTPUT
   end
+
   it "renders an unordered list of references, with referencegroups" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :doctype: internet-draft
+
       == Text
       Text
+
       [bibliography]
       == References
       * [[[pp]]]
@@ -61,13 +66,16 @@ describe Asciidoctor::RFC::V3::Converter do
       </references>
     OUTPUT
   end
+
   it "renders an unordered list of references, with displayreferences" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :doctype: internet-draft
+
       == Text
       Text
+
       [bibliography]
       == References
       * [[[xxx,1]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
@@ -90,13 +98,16 @@ describe Asciidoctor::RFC::V3::Converter do
       </references>
     OUTPUT
   end
+
   it "renders raw RFC XML as references" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :doctype: internet-draft
+
       == Text
       Text
+
       [bibliography]
       == References
       ++++

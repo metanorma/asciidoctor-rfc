@@ -6,6 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       .Table Title
       |===
       |[[id]] head | head
+
       h|header cell | body cell
       | | body cell
       2+| colspan of 2
@@ -70,6 +71,7 @@ describe Asciidoctor::RFC::V3::Converter do
       .Table Title
       |===
       |[[id]] head | head
+
       h|header cell | body cell
       | | [[id]] body cell
       2+| colspan of 2

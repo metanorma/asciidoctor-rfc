@@ -6,6 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :docName:
       Author
       :link: http://www.example.com,urn:issn:99999999 item
+
       == Section 1
       text
     INPUT

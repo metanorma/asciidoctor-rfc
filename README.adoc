@@ -123,8 +123,8 @@ typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
 
 == Usage
 
-Converting your AsciiDoc to RFC XML is a simple as running the
-`./bin/asciidoctor-rfc` script using Ruby and passing our
+Converting your AsciiDoc to RFC XML is a simple as running the appropriate
+`./bin/asciidoctor-rfc` script using Ruby, and passing our
 AsciiDoc document file as the first argument.
 
 [source,console]
@@ -278,11 +278,9 @@ When `doctype` is set to:
 
 Set the `status` attribute to set the current status of this document.
 
-The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
-
 * In v3, this sets the first `front/seriesInfo` element with `@status` as one
-  of those values to indicate this.
-* In v2, this sets the `front@category` value to one of `std`, `bcp`, `info`, `exp`, `historic`.
+  of: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
+* In v2, this sets the `rfc@category` value as one of `std`, `info`, `exp`, `bcp`, `historic`.
 
 
 === Intended Series

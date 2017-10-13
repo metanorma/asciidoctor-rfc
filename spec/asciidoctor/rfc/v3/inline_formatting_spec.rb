@@ -6,6 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       This [bcp14]#must not# stand
     INPUT
@@ -31,6 +32,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       This *MUST NOT* stand
     INPUT
@@ -57,6 +59,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :no-rfc-bold-bcp14:
       :docName:
       Author
+
       == Section 1
       This *MUST NOT* stand
     INPUT
@@ -82,6 +85,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       _Text_ *Text* `Text` "Text" 'Text' ^Superscript^ ~Subscript~
     INPUT
@@ -108,6 +112,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :docName:
       Author
       :stem:
+
       == Section 1
       stem:[sqrt(4) = 2]
     INPUT

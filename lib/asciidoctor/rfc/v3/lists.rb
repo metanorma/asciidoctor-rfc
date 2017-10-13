@@ -77,7 +77,7 @@ module Asciidoctor
         lowerroman: "i",
         upperalpha: "A",
         upperroman: "I",
-      }.freeze).default = "1"
+      }).default = "1"
 
       # Syntax:
       #   [[id]]

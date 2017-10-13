@@ -6,6 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       http://example.com/
       http://example.com/[linktext]
@@ -33,12 +34,16 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       [[crossreference]]
       == Section 1
+
       == Section 2
       See <<crossreference>>.
+
       == Section 3
       See <<crossreference,text>>
+
       == Section 4
       See <<crossreference,format=counter: text>>
     INPUT
@@ -75,11 +80,16 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
+
       == Section 2
+
       See <<crossreference>>.
+
       == Section 3
       See <<crossreference,text>>
+
       [bibliography]
       == References
       * [[[crossreference]]] Reference 1
@@ -118,11 +128,13 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       See <<crossreference,1.3 of>>
       <<crossreference,1.4 comma: text>>
       <<crossreference#fragment1,2.5.3 parens>>
       <<crossreference#fragment2,6.2a bare: text>>
+
       [bibliography]
       == References
       * [[[crossreference]]] Reference 1

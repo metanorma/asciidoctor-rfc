@@ -5,8 +5,11 @@ describe Asciidoctor::RFC::V3::Converter do
       [[id]]
       ****
       Sidebar
+
       Another sidebar
+
       * This is a list
+
       ....
       And this is ascii-art
       ....
@@ -19,9 +22,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <li>This is a list</li>
       </ul>
       <figure>
-      <artwork type="ascii-art">
-      And this is ascii-art
-      </artwork>
+      <artwork type="ascii-art">And this is ascii-art</artwork>
       </figure>
       </aside>
     OUTPUT

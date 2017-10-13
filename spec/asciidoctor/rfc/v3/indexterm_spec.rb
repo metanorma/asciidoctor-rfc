@@ -6,6 +6,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       This ((indexterm))
       is visible in the text,
       this one is not (((indexterm, index-subterm))).
@@ -31,6 +32,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       This ((indexterm))
       is visible in the text,
       this one with a tertiary term is not (((indexterm, index-subterm, index-subsubterm))).

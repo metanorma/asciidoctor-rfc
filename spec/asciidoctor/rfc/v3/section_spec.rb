@@ -6,9 +6,11 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       [remove-in-rfc=true,toc=include]
       == Section 1
       Para 1
+
       Para 2
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
@@ -35,16 +37,21 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       :sectnums:
       [toc=exclude]
       == Section 1
       Para 1
+
       ==== Subsection 1.1
       Para 1a
+
       :sectnums!:
       [toc=default]
+
       === Subsection 1.2
       Para 2
+
       ==== Subsection 1.2.1
       Para 3
     INPUT
@@ -83,9 +90,12 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       Para 1
+
       <<<
+
       Para 2
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
@@ -112,9 +122,12 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       Para 1
+
       '''
+
       Para 2
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
@@ -141,8 +154,10 @@ describe Asciidoctor::RFC::V3::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section 1
       Para 1
+
       [discrete]
       == Section 2
       Para 2

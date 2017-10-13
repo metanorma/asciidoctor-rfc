@@ -4,7 +4,7 @@ module Asciidoctor
       # Syntax:
       #   =Title
       #   Author
-      #   :category
+      #   :status
       #   :consensus
       #   :name
       #   :number
@@ -38,7 +38,7 @@ module Asciidoctor
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         doctype = node.attr "doctype"
         is_rfc = (doctype == "rfc")
-        category = get_header_attribute node, "category"
+        category = set_header_attribute node, node.attr("status")
         consensus = get_header_attribute node, "consensus"
         if is_rfc
           number = set_header_attribute "number", node.attr("name")
