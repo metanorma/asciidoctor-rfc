@@ -44,12 +44,13 @@ module Asciidoctor
         tocInclude = get_header_attribute node, "tocInclude"
         tocDepth = get_header_attribute node, "tocDepth"
         submissionType = get_header_attribute node, "submissionType", "IETF"
+        xmllang = set_header_attribute "xml:lang", node.attr("xml-lang")
         t = Time.now.getutc
         preptime = set_header_attribute("preptime",
                                         sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ",
                                                 t.year, t.month, t.day, t.hour, t.min, t.sec))
         version = set_header_attribute "version", "3"
-        result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}
+        result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}#{xmllang}
         #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
         result << (link node)
         result << noko { |xml| front node, xml }

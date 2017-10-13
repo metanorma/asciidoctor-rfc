@@ -321,8 +321,7 @@ Set document consensus type via the `consensus` document attribute.
 These values are accepted: `false`, `true`.
 
 * In v3, this is the value set for the `rfc@consensus` attribute.
-* In v2, this is the value set for the `rfc@consensus` attribute, but `false` is written as `no` and `true` is written as `yes`.
-
+* In v2, this is the value set for the `rfc@consensus` attribute, but `false` is converted to  `no` and `true` is converted to `yes`.
 
 === Document Language
 
@@ -386,20 +385,20 @@ formatter should use symbolic references (such as "`[RFC2119]`") or not
 formatter should contain a table of contents.
 | `rfc@tocInclude`
 
-| `:link{_i}: _URL_` or `:link{_i}: _URL_ _REL_`
+| `:link{_i_}: _URL_` or `:link{_i_}: _URL_ _REL_`
 a| Optional. A link to an external document related to this document.
 
 There are 4 types of values:
 
 . (RFC only) ISSN for this RFC document (`rel` set to `item`, `link` value in
-  form of `urn:issn:`;
+  form of `urn:issn:`);
 . (RFC only) DOI for this RFC document (`rel` set to `describedBy`, `link`
-  value in form specified by https://tools.ietf.org/html/rfc7669[RFC7669];
+  value in form specified by https://tools.ietf.org/html/rfc7669[RFC7669]);
 . (Final Draft) Internet-Draft submitted to become published RFC (`rel` set to
   `convertedFrom`, `link` value set to "IETF-controlled web site that retains
-  copies of Internet-Drafts";
-. (Any status) ISSN (`rel` set to `alternate`, `link` value as any author run web site.
-| `front/link@href = _URL_` or/ with `front/link@rel = _REL_`
+  copies of Internet-Drafts");
+. (Any status) ISSN (`rel` set to `alternate`, `link` value as any author run web site).
+| `front/link@href = _URL_`, `front/link@rel = _REL_` (if supplied)
 
 |===
 
@@ -434,7 +433,7 @@ These will be mapped as follows:
 | RFC XML v3/v2 element
 
 | `firstname middlename(s) lastname`
-| Mandatory (at least one). Author's full name.
+| Mandatory (at least one). Author's full name. (Middle names are optional.)
 | `front/author@fullname`
 
 | `lastname`
@@ -454,7 +453,8 @@ In `asciidoctor-rfc`, detailed author attributes are given as document
 attributes.
 
 As multiple authors can be specified, the document attribute to specify the
-first author uses a name `:role`, and the second onwards `:role_2`, etc.
+first author uses a unsuffixed attribute name `:role`, and the second author's
+attributes onwards use a numeric suffix to identify the author: `:role_2`, `:role_3`, etc.
 
 Shared RFC XML v3/v2 syntax:
 
@@ -531,7 +531,7 @@ elements.
 | `front/author/address/postal/city`
 
 | `:region{_i}:`
-| Region, state or province portion of author's address. For US/CA the 2-digit state code.
+| Region, state or province portion of author's address. For US/CA the 2-letter state code.
 | `front/author/address/postal/region`
 
 | `:country{_i}:`
@@ -831,7 +831,7 @@ Postamble text <11>
 <6> v2: `list/start`, `list@style` (`empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type`
 <7> v2: `list/t`; v3: `ol/li`
 
-Note that asciidoctor does not permit anchors on either list items: the anchors in the following are ignored.
+Note that asciidoctor does not permit anchors on list items: the anchors in the following are ignored.
 
 [source,asciidoc]
 --
@@ -930,6 +930,10 @@ method supported for v2 RFC XML.
 <4> `back/references/referencegroup@anchor`
 <5> `back/references/referencegroup/reference/refcontent`
 
+A referencegroup is identified if there is a nested list of references. Note that other Asciidoc
+renderers do not expect unordered lists of references to be nested, and they may have
+problems rendering such nested bibliographic lists.
+
 ==== v2 and v3 References
 
 References for v2 are expected to be provided in raw RFC XML v2 format, and references
@@ -988,7 +992,7 @@ asciidoctor commands:
 | `reference@target`               | N          | N
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
-| `table@style = headers           | N/A        | N
+| `table@style = headers`           | N/A        | N
 | `artwork@width`                  | Only on images | Only on images
 | `artwork@height`                 | Only on images | Only on images
 |===
@@ -1003,7 +1007,7 @@ These asciidoctor features are not supported in output of these formats:
 | http://asciidoctor.org/docs/user-manual/#quote[Quote]: Non-URL Citations 2+| Ignored
 | http://asciidoctor.org/docs/user-manual/#verse[Verse] | Rendered as normal paragraph | Rendered as Quote
 | http://asciidoctor.org/docs/user-manual/#sidebar[Sidebar] | Rendered as normal paragraph | Supported
-| http://asciidoctor.org/docs/user-manual/#index-terms[Index Term] Tertiary 2+| Ignored
+| http://asciidoctor.org/docs/user-manual/#index-terms[Index Term]: Tertiary 2+| Ignored
 | List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` 2+| Treated as `arabic`
 | http://asciidoctor.org/docs/user-manual/#callouts[Callouts] 2+| Ignored
 | Formatting: http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] 2+| Rendered as strong paragraph
@@ -1018,10 +1022,10 @@ These asciidoctor features are not supported in output of these formats:
 | Table: http://asciidoctor.org/docs/user-manual/#footer-row[Distinction between table body and table footer] | No | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#header-row[Multiple table header rows] | No | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = rows] | No | Ignored
-| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = cols|none] | Supported | Ignored
+| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = cols\|none] | Supported | Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: frame] 2+| Ignored
-| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: rowspan] Ignored | Supported
-| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: colspan] Ignored | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: rowspan] | Ignored | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: colspan] | Ignored | Supported
 |===
 
 
