@@ -52,12 +52,74 @@ $ gem install asciidoctor-rfc
 
 == Quick Start
 
+Illustrating with v2 RFC XML, and Internet Draft rather than RFC
+
 [source,asciidoc]
 ----
-= My first document using asciidoctor-rfc
-:doctype: internet-draft // or rfc
-----
+=  A Standard for the Transmission of IP Datagrams on Avian Carriers
+David Waitzman <dwaitzman@BBN.COM>
+:doctype: internet-draft 
+:abbrev: IP Datagrams on Avian Carriers
+:obsoletes: 10, 120
+:updates: 2010, 2120
+:category: info
+:name: internet-draft-avian-transmission-00
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:keyword: avians, datagrams
+:revdate: 1990-04-01T00:00:00Z
+:organization: BBN STC
+:phone: (617) 873-4323
+:uri: http://bbn.com
+:street: 10 Moulton Street
+:city: Cambridge
+:code: MA 02238
 
+[abstract]
+Avian carriers can provide high delay, low throughput, and low
+altitude service.  The connection topology is limited to a single
+point-to-point path for each carrier, used with standard carriers,
+but many carriers can be used without significant interference with
+each other, outside of early spring.  This is because of the 3D ether
+space available to the carriers, in contrast to the 1D ether used by
+IEEE802.3.  The carriers have an intrinsic collision avoidance
+system, which increases availability.  Unlike some network
+technologies, such as packet radio, communication is not limited to
+line-of-sight distance.  Connection oriented service is available in
+some cities, usually based upon a central hub topology. 
+
+NOTE: Yes, this is an April Fool's RFC.
+
+[[frame]]
+== Frame Format
+
+The IP _datagram_ is *printed*, on a small scroll of paper, in
+hexadecimal, with each octet separated by whitestuff and blackstuff.
+The scroll of paper is wrapped around one leg of the avian carrier.
+A band of duct tape is used to secure the datagram's edges.  The
+bandwidth is limited to the leg length.  The MTU is variable, and
+paradoxically, generally increases with increased carrier age.  A
+typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
+
+[bibliography]
+== References
+++++
+<reference anchor='RFC7253' target='https://tools.ietf.org/html/rfc7253'>
+  <front>
+    <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
+    <author initials="T." surname="Krovetz">
+      <organization>Sacramento State</organization>
+    </author>
+    <author initials="P." surname="Rogaway">
+      <organization>UC Davis</organization>
+    </author>
+    <date month='May' year='2014'/>
+  </front>
+  <seriesInfo name="RFC" value="7253"/>
+</reference>
+++++
+----
 
 == Usage
 

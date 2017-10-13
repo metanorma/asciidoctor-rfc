@@ -4,7 +4,7 @@ David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
 :obsoletes: 10, 120
 :updates: 2010, 2120
 :category: info
-:docName: rfc-1149
+:name: rfc-1149
 :ipr: trust200902
 :area: Internet
 :workgroup: Network Working Group
@@ -22,8 +22,6 @@ David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
 :city_2: Cambridge
 :code_2: MA 02238
 :uri_2: http://opoudjis.net
-
-
 
 [abstract]
 Avian carriers can provide high delay, low throughput, and low
