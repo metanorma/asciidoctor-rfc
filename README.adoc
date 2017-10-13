@@ -413,10 +413,8 @@ You will need to provide the following information.
 
 ==== Multiple Author Names
 
-// TODO: Note that an author could simply be an "Organization" without the names.
-// https://tools.ietf.org/html/rfc7991#section-2.7
-
-Just like a normal AsciiDoc, provide this (sample of 3 authors):
+Just like a normal AsciiDoc, you can provide author information in the author 
+header (sample of 3 authors):
 
 [source,asciidoc]
 ----
@@ -493,6 +491,8 @@ includes surname.
 
 |===
 
+Note that you can provide organization information without providing name information
+for an author.
 
 ===== Author Address
 

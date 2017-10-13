@@ -271,4 +271,49 @@ describe Asciidoctor::RFC::V2::Converter do
       </rfc>
     OUTPUT
   end
+
+  it "permits corporate authors" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      :role: editor
+      :organization: Ribose
+      :fax: 555 5555
+      :email: john.doe@email.com
+      :uri: http://example.com
+      :phone: 555 5655
+      :street: 57 Mt Pleasant St
+      :city: Dullsville
+      :region: NSW
+      :country: Australia
+      :code: 3333
+    INPUT
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc
+                submissionType="IETF">
+       <front>
+       <title>Document title</title>
+       <author role="editor">
+         <organization>Ribose</organization>
+         <address>
+           <postal>
+             <street>57 Mt Pleasant St</street>
+             <city>Dullsville</city>
+             <region>NSW</region>
+             <code>3333</code>
+             <country>Australia</country>
+           </postal>
+           <phone>555 5655</phone>
+           <facsimile>555 5555</facsimile>
+           <email>john.doe@email.com</email>
+           <uri>http://example.com</uri>
+         </address>
+       </author>
+       <date day="1" month="January" year="1970"/>
+       </front><middle>
+       </middle>
+       </rfc>
+    OUTPUT
+  end
+
 end
