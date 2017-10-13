@@ -30,22 +30,21 @@ module Asciidoctor
         email = node.attr("email#{suffix}")
         facsimile = node.attr("fax#{suffix}")
         phone = node.attr("phone#{suffix}")
-        postalline = node.attr("postal-line#{suffix}")
         street = node.attr("street#{suffix}")
         uri = node.attr("uri#{suffix}")
         if [email, facsimile, phone, street, uri].any?
           xml.address do |xml_address|
             if [street].any?
               xml_address.postal do |xml_postal|
-                  city = node.attr("city#{suffix}")
-                  code = node.attr("code#{suffix}")
-                  country = node.attr("country#{suffix}")
-                  region = node.attr("region#{suffix}")
-                  street&.split("\\ ")&.each { |st| xml_postal.street st }
-                  xml_postal.city city unless city.nil?
-                  xml_postal.region region unless region.nil?
-                  xml_postal.code code unless code.nil?
-                  xml_postal.country country unless country.nil?
+                city = node.attr("city#{suffix}")
+                code = node.attr("code#{suffix}")
+                country = node.attr("country#{suffix}")
+                region = node.attr("region#{suffix}")
+                street&.split("\\ ")&.each { |st| xml_postal.street st }
+                xml_postal.city city unless city.nil?
+                xml_postal.region region unless region.nil?
+                xml_postal.code code unless code.nil?
+                xml_postal.country country unless country.nil?
               end
             end
             xml_address.phone phone unless phone.nil?
@@ -80,7 +79,7 @@ module Asciidoctor
           suffix = "_#{i}"
           author = node.attr("author#{suffix}")
           fullname = node.attr("fullname#{suffix}")
-          if author.nil? and fullname.nil?
+          if author.nil? && fullname.nil?
             break
           end
           result << author1(node, suffix)
@@ -129,7 +128,6 @@ module Asciidoctor
       #   :revdate or :date
       def date(node)
         result = []
-        revdate = nil
         revdate = node.attr("revdate")
         revdate = node.attr("date") if revdate.nil?
         # date is mandatory in v2: use today

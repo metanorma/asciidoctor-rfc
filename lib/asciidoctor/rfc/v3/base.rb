@@ -31,7 +31,7 @@ module Asciidoctor
         $seen_back_matter = false
         $seen_abstract = false
         # If this is present, then BCP14 keywords in boldface are not assumed to be <bcp14> tags. By default they are.
-        $bcp_bold = ! (node.attr? "no-rfc-bold-bcp14" )
+        $bcp_bold = !(node.attr? "no-rfc-bold-bcp14")
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         ipr = get_header_attribute node, "ipr"
@@ -45,15 +45,16 @@ module Asciidoctor
         tocDepth = get_header_attribute node, "tocDepth"
         submissionType = get_header_attribute node, "submissionType", "IETF"
         t = Time.now.getutc
-        preptime = set_header_attribute "preptime",
-          sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", t.year, t.month, t.day, t.hour, t.min, t.sec)
+        preptime = set_header_attribute("preptime",
+                                        sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ",
+                                                t.year, t.month, t.day, t.hour, t.min, t.sec))
         version = set_header_attribute "version", "3"
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}
         #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
         result << (link node)
         result << noko { |xml| front node, xml }
 
-        result.last.last.gsub! /<\/front>$/, '' # FIXME: this is a hack!
+        result.last.last.gsub! /<\/front>$/, "" # FIXME: this is a hack!
         result << "</front><middle1>"
         result << node.content if node.blocks?
         result << ($seen_back_matter ? "</back>" : "</middle>")
@@ -61,11 +62,11 @@ module Asciidoctor
 
         # <middle> needs to move after preamble
         result = result.flatten
-        if result.any? { |e| e =~ /<\/front><middle>/ } and result.any? { |e| e =~ /<\/front><middle1>/ }
-          result = result.reject { |e| e =~ /<\/front><middle1>/ }
-        else
-          result = result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
-        end
+        result = if result.any? { |e| e =~ /<\/front><middle>/ } && result.any? { |e| e =~ /<\/front><middle1>/ }
+                   result.reject { |e| e =~ /<\/front><middle1>/ }
+                 else
+                   result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
+                 end
 
         result * "\n"
       end
@@ -101,11 +102,11 @@ module Asciidoctor
         when :emphasis
           "<em>#{node.text}</em>"
         when :strong
-          if $bcp_bold and 
-            node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/ 
+          if $bcp_bold &&
+            node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/
             "<bcp14>#{node.text}</bcp14>"
           else
-          "<strong>#{node.text}</strong>"
+            "<strong>#{node.text}</strong>"
           end
         when :monospaced
           "<tt>#{node.text}</tt>"
@@ -130,19 +131,14 @@ module Asciidoctor
       def inline_anchor(node)
         case node.type
         when :xref
-          # format attribute not supported
-          unless (text = node.text) || (text = node.attributes["path"])
-            refid = node.attributes["refid"]
-            #text = %([#{refid}])
-          end
           if text =~ /^\S+ (of|comma|parens|bare)\b/
             # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref
             relative = set_header_attribute "relative", node.attributes["fragment"]
             target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
             /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text1>.*)$/ =~ text
-            section = set_header_attribute "section", section 
-            format = set_header_attribute "displayFormat", format 
-            target = set_header_attribute "target", target 
+            section = set_header_attribute "section", section
+            format = set_header_attribute "displayFormat", format
+            target = set_header_attribute "target", target
             %(<relref#{relative}#{section}#{format}#{target}>#{text1}</relref>)
           else
             format = nil
@@ -179,14 +175,13 @@ module Asciidoctor
         end
       end
 
-
       # Syntax:
       #   [[id]]
       #   [keepWithNext=true,keepWithPrevious=true] (optional)
       #   Text
       def paragraph(node)
         result = []
-        if node.parent.context == :preamble and not $seen_abstract
+        if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end

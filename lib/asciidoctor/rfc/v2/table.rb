@@ -15,7 +15,6 @@ module Asciidoctor
         title = set_header_attribute "title", node.title
         suppresstitle = get_header_attribute node, "suppress-title"
         align = get_header_attribute node, "align"
-        style = get_header_attribute node, "style"
         styleval = case node.attr "grid"
                    when "all"
                      "all"
@@ -34,15 +33,11 @@ module Asciidoctor
 
         [:head].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
           has_body = true if tblsec == :body
-          # id = set_header_attribute "anchor", tblsec.id
-          # not supported
           if node.rows[tblsec].size > 1
             warn "asciidoctor: WARNING: RFC XML v2 tables only support a single header row"
           end
           widths = []
-          node.columns.each do |col|
-            widths << col.attr("colpcwidth")
-          end
+          node.columns.each { |col| widths << col.attr("colpcwidth") }
           node.rows[tblsec].each do |row|
             rowlength = 0
             result1 = []

@@ -1,7 +1,6 @@
 module Asciidoctor
   module RFC::V2
     module Blocks
-
       # Syntax:
       # [discrete]
       # == Section
@@ -111,13 +110,13 @@ module Asciidoctor
         seen_artwork = false
         # TODO iref
         node.blocks.each do |b|
-          if (b.context == :listing) 
+          if b.context == :listing
             result << listing(b)
             seen_artwork = true
-          elsif (b.context == :image)
+          elsif b.context == :image
             result << image(b)
             seen_artwork = true
-          elsif (b.context == :literal)
+          elsif b.context == :literal
             result << literal(b)
             seen_artwork = true
           else

@@ -111,7 +111,7 @@ module Asciidoctor
           item = set_header_attribute "item", node.text
           "#{node.text}<iref#{item}/>"
         else
-          terms = node.attr 'terms'
+          terms = node.attr "terms"
           item = set_header_attribute "item", terms[0]
           subitem = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
           warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2

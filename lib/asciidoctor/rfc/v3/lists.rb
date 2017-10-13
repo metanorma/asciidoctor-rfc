@@ -30,13 +30,12 @@ module Asciidoctor
         elsif node.context == :pass
           # we expect raw xml
           node.lines.each do |item|
-            # we expect the biblio anchor to be right at the start of the reference
-            target = get_header_attribute node, "target"
             # undo XML substitution
             ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
-            # result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
             result << ref
           end
+        else
+          warn %(asciidoctor: WARNING: references are not a ulist or raw XML: #{node.context})
         end
         result
       end
@@ -48,13 +47,13 @@ module Asciidoctor
       #   * B
       def ulist(node)
         result = []
-        if node.parent.context == :preamble and not $seen_abstract
+        if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end
         id = set_header_attribute "anchor", node.id
         empty = get_header_attribute node, "empty"
-        spacing = get_header_attribute node, "spacing" 
+        spacing = get_header_attribute node, "spacing"
         result << "<ul#{id}#{empty}#{spacing}>"
         node.items.each do |item|
           id = set_header_attribute "anchor", item.id
@@ -77,8 +76,8 @@ module Asciidoctor
         # lowergreek: "lower-greek", # not supported
         lowerroman: "i",
         upperalpha: "A",
-        upperroman: "I"
-      }).default = "1"
+        upperroman: "I",
+      }.freeze).default = "1"
 
       # Syntax:
       #   [[id]]
@@ -87,7 +86,7 @@ module Asciidoctor
       #   . B
       def olist(node)
         result = []
-        if node.parent.context == :preamble and not $seen_abstract
+        if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end
@@ -119,7 +118,7 @@ module Asciidoctor
       #   C:: D
       def dlist(node)
         result = []
-        if node.parent.context == :preamble and not $seen_abstract
+        if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end
@@ -130,14 +129,12 @@ module Asciidoctor
         id = nil
         node.items.each do |terms, dd|
           [*terms].each do |dt|
-            #id = set_header_attribute "anchor", dt.id # not allowed in asciidoctor
-            result << "<dt#{id}>#{dt.text}</dt>"
+            result << "<dt>#{dt.text}</dt>"
           end
           if dd.blocks?
-            #id = set_header_attribute "anchor", dd.id # not allowed in asciidoctor
-            result << "<dd#{id}>"
+            result << "<dd>"
             if dd.text?
-              result << dd.text 
+              result << dd.text
             end
             result << dd.content
             result << "</dd>"

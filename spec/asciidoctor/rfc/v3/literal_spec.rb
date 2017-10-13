@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V3::Converter do
   it "renders a listing" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
@@ -17,7 +16,6 @@ describe Asciidoctor::RFC::V3::Converter do
       </figure>
     OUTPUT
   end
-  
   it "ignores callouts" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[literal-id]]
@@ -35,19 +33,18 @@ describe Asciidoctor::RFC::V3::Converter do
       </figure>
     OUTPUT
   end
-  
   it "renders stem as a literal" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       :stem:
-      [stem] 
-      ++++ 
+      [stem]
+      ++++
       sqrt(4) = 2
       ++++
     INPUT
       <figure>
       <artwork type="ascii-art">
-       sqrt(4) = 2
-       </artwork>
+      sqrt(4) = 2
+      </artwork>
       </figure>
     OUTPUT
   end

@@ -1,7 +1,6 @@
 module Asciidoctor
   module RFC::V3
     module Blocks
-
       # Syntax:
       # [discrete]
       # == Section
@@ -82,7 +81,6 @@ module Asciidoctor
           end
         end
       end
-
 
       # Syntax:
       #   = Title

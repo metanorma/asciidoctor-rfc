@@ -106,10 +106,6 @@ module Asciidoctor
         case node.type
         when :xref
           # format attribute not supported
-          unless (text = node.text) || (text = node.attributes["path"])
-            refid = node.attributes["refid"]
-            #text = %([#{refid}])
-          end
           format = nil
           if text =~ /^format=(counter|title|none|default):/
             /^format=(?<format>\S+):\s*(?<text1>.*)$/ =~ text
@@ -167,7 +163,6 @@ module Asciidoctor
         result << "<t#{id}>#{node.content.gsub("\n", "<br/>\n")}</t>"
         result
       end
-
 
       # Syntax:
       #   [[id]]

@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V2::Converter do
   it "renders a listing block with source attribute, ignoring listing content" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
@@ -13,13 +12,13 @@ describe Asciidoctor::RFC::V2::Converter do
       end
       ----
     INPUT
-       <figure>
+      <figure>
         <artwork anchor="literal-id" name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
         </artwork>
-       </figure>
+      </figure>
     OUTPUT
   end
-  
+
   it "renders a listing block without source attribute" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[literal-id]]
@@ -45,18 +44,16 @@ describe Asciidoctor::RFC::V2::Converter do
 
   it "renders a listing paragraph" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
-    [listing]
-    This is an example of a paragraph styled with `listing`.
-    Notice that the monospace markup is preserved in the output.
+      [listing]
+      This is an example of a paragraph styled with `listing`.
+      Notice that the monospace markup is preserved in the output.
     INPUT
-       <figure>
-       <artwork>
-       This is an example of a paragraph styled with `listing`.
-       Notice that the monospace markup is preserved in the output.
-       </artwork>
-       </figure>
+      <figure>
+      <artwork>
+      This is an example of a paragraph styled with `listing`.
+      Notice that the monospace markup is preserved in the output.
+      </artwork>
+      </figure>
     OUTPUT
   end
-  
-  
 end

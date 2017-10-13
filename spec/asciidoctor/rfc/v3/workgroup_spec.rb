@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V3::Converter do
   it "renders workgroups" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
@@ -14,10 +13,8 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
-
       <workgroup>first_workgroup</workgroup>
       <workgroup>second_workgroup</workgroup>
-
       </front><middle>
       </middle>
       </rfc>

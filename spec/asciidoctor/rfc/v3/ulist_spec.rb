@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V3::Converter do
   it "renders an unordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
@@ -8,10 +7,10 @@ describe Asciidoctor::RFC::V3::Converter do
       * First
       * Second
     INPUT
-       <ul anchor="id" empty="true" spacing="compact">
-       <li>First</li>
-       <li>Second</li>
-       </ul>
+      <ul anchor="id" empty="true" spacing="compact">
+      <li>First</li>
+      <li>Second</li>
+      </ul>
     OUTPUT
   end
 
@@ -21,10 +20,10 @@ describe Asciidoctor::RFC::V3::Converter do
       * First
       * [[id1]] Second
     INPUT
-       <ul anchor="id">
-       <li>First</li>
-       <li> Second</li>
-       </ul>
+      <ul anchor="id">
+      <li>First</li>
+      <li> Second</li>
+      </ul>
     OUTPUT
   end
 
@@ -38,20 +37,20 @@ describe Asciidoctor::RFC::V3::Converter do
       * Fifth
       * Sixth
     INPUT
-       <ul anchor="id">
-       <li>First</li>
-       <li>Second
-       <ul>
-       <li>Third</li>
-       <li>Fourth</li>
-       </ul>
-       </li>
-       <li>Fifth</li>
-       <li>Sixth</li>
-       </ul>
+      <ul anchor="id">
+      <li>First</li>
+      <li>Second
+      <ul>
+      <li>Third</li>
+      <li>Fourth</li>
+      </ul>
+      </li>
+      <li>Fifth</li>
+      <li>Sixth</li>
+      </ul>
     OUTPUT
   end
-  
+
   it "renders a nested ordered/unordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
@@ -61,16 +60,15 @@ describe Asciidoctor::RFC::V3::Converter do
       .. Third
       .. Fourth
     INPUT
-       <ul anchor="id">
-       <li>First</li>
-       <li>Second
-       <ol type="i">
-       <li>Third</li>
-       <li>Fourth</li>
-       </ol>
-       </li>
-       </ul>
+      <ul anchor="id">
+      <li>First</li>
+      <li>Second
+      <ol type="i">
+      <li>Third</li>
+      <li>Fourth</li>
+      </ol>
+      </li>
+      </ul>
     OUTPUT
   end
-
 end

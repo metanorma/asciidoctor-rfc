@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V2::Converter do
   it "renders an ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
@@ -8,12 +7,12 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . Second
     INPUT
-        <t>
-        <list counter="3" style="numbers">
-        <t>First</t>
-        <t>Second</t>
-        </list>
-        </t>
+      <t>
+      <list counter="3" style="numbers">
+      <t>First</t>
+      <t>Second</t>
+      </list>
+      </t>
     OUTPUT
   end
 
@@ -24,12 +23,12 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . [[id1]] Second
     INPUT
-        <t>
-        <list counter="3" style="numbers">
-        <t>First</t>
-        <t> Second</t>
-        </list>
-        </t>
+      <t>
+      <list counter="3" style="numbers">
+      <t>First</t>
+      <t> Second</t>
+      </list>
+      </t>
     OUTPUT
   end
 
@@ -45,22 +44,22 @@ describe Asciidoctor::RFC::V2::Converter do
       . Fifth
       . Sixth
     INPUT
-        <t>
-        <list style="format %c">
-        <t>First</t>
-        <t>Second
-        <list style="format %C">
-        <t>Third</t>
-        <t>Fourth</t>
-        </list>
-        </t>
-        <t>Fifth</t>
-        <t>Sixth</t>
-        </list>
-        </t>
+      <t>
+      <list style="format %c">
+      <t>First</t>
+      <t>Second
+      <list style="format %C">
+      <t>Third</t>
+      <t>Fourth</t>
+      </list>
+      </t>
+      <t>Fifth</t>
+      <t>Sixth</t>
+      </list>
+      </t>
     OUTPUT
   end
-  
+
   it "renders a nested ordered/unordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
@@ -70,17 +69,17 @@ describe Asciidoctor::RFC::V2::Converter do
       ** Third
       ** Fourth
     INPUT
-        <t>
-        <list style="format %i">
-        <t>First</t>
-        <t>Second
-        <list style="symbols">
-        <t>Third</t>
-        <t>Fourth</t>
-        </list>
-        </t>
-        </list>
-        </t>
+      <t>
+      <list style="format %i">
+      <t>First</t>
+      <t>Second
+      <list style="symbols">
+      <t>Third</t>
+      <t>Fourth</t>
+      </list>
+      </t>
+      </list>
+      </t>
     OUTPUT
   end
 
@@ -91,15 +90,14 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . Second
     INPUT
-        <t>
-        <list style="numbers">
-        <t>First</t>
-        <t>Second</t>
-        </list>
-        </t>
+      <t>
+      <list style="numbers">
+      <t>First</t>
+      <t>Second</t>
+      </list>
+      </t>
     OUTPUT
   end
-
 
   it "renders lowergreek lists as arabic" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
@@ -108,15 +106,12 @@ describe Asciidoctor::RFC::V2::Converter do
       . First
       . Second
     INPUT
-        <t>
-        <list style="numbers">
-        <t>First</t>
-        <t>Second</t>
-        </list>
-        </t>
+      <t>
+      <list style="numbers">
+      <t>First</t>
+      <t>Second</t>
+      </list>
+      </t>
     OUTPUT
   end
-
-  
-  
 end

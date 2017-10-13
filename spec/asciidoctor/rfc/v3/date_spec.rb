@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V3::Converter do
   it "renders the date" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
@@ -15,15 +14,12 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
-
       <date day="1" month="January" year="2070"/>
-
       </front><middle>
       </middle>
       </rfc>
     OUTPUT
   end
-
   it "renders the revdate" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -38,15 +34,12 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
-
       <date day="1" month="January" year="1970"/>
-
       </front><middle>
       </middle>
       </rfc>
     OUTPUT
   end
-
   it "gives precedence to revdate" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -62,9 +55,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
-
       <date day="1" month="January" year="2070"/>
-
       </front><middle>
       </middle>
       </rfc>

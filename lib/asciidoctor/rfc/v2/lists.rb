@@ -9,12 +9,12 @@ module Asciidoctor
         result = []
         if node.context == :pass
           node.lines.each do |item|
-            target = get_header_attribute node, "target"
             # undo XML substitution
             ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
-            # result << "<reference>#{ref}</reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference#{target} anchor=\"\\1\">")
             result << ref
           end
+        else
+          warn %(asciidoctor: WARNING: references are not raw XML: #{node.context})
         end
         result
       end
@@ -51,7 +51,7 @@ module Asciidoctor
         lowerroman: "format %i",
         upperalpha: "format %C",
         upperroman: "format %I",
-      }).default = "numbers"
+      }.freeze).default = "numbers"
 
       # Syntax:
       #   [start=n] (optional)
@@ -93,15 +93,8 @@ module Asciidoctor
           hangtext = []
           id = nil
           [*terms].each do |dt|
-            # we collapse multiple potential ids into the last seen
-            # not allowed in asciidoctor
-            #id = set_header_attribute "anchor", dt.id unless dt.id.nil?
             hangtext << dt.text
           end
-          # not allowed in asciidoctor
-          #unless dd.id.nil?
-          #id = set_header_attribute "anchor", dd.id
-          #end
           hangText = set_header_attribute "hangText", hangtext.join(", ")
           if dd.blocks?
             result << "<t#{id}#{hangText}>"

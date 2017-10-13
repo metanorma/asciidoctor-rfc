@@ -1,6 +1,5 @@
 require "spec_helper"
 require "byebug"
-
 describe Asciidoctor::RFC::V2::Converter do
   it "renders the minimal document w/ default values" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
@@ -8,16 +7,16 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
     INPUT
-        <?xml version="1.0" encoding="UTF-8"?>
-        <rfc
-                 submissionType="IETF">
-        <front>
-        <title>Document title</title>
-        <author fullname="Author"/>
-        <date day="1" month="January" year="1970"/>
-        </front><middle>
-        </middle>
-        </rfc>
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title>Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      </middle>
+      </rfc>
     OUTPUT
   end
 
@@ -39,16 +38,16 @@ describe Asciidoctor::RFC::V2::Converter do
       :series-no: 12
       :xml-lang: en
     INPUT
-        <?xml version="1.0" encoding="UTF-8"?>
-        <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
-                 consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
-        <front>
-        <title abbrev="abbrev">Document title</title>
-        <author fullname="Author"/>
-        <date day="1" month="January" year="1970"/>
-        </front><middle>
-        </middle>
-        </rfc>
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
+               consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
+      <front>
+      <title abbrev="abbrev">Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      </middle>
+      </rfc>
     OUTPUT
   end
 
@@ -69,16 +68,16 @@ describe Asciidoctor::RFC::V2::Converter do
       :series-no: 12
       :xml-lang: en
     INPUT
-        <?xml version="1.0" encoding="UTF-8"?>
-        <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
-                 consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
-        <front>
-        <title abbrev="abbrev">Document title</title>
-        <author fullname="Author"/>
-        <date day="1" month="January" year="1970"/>
-        </front><middle>
-        </middle>
-        </rfc>
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
+               consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
+      <front>
+      <title abbrev="abbrev">Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      </middle>
+      </rfc>
     OUTPUT
   end
 
@@ -87,26 +86,24 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       Author
-
       [appendix]
       == Appendix
-
       Lipsum.
     INPUT
-        <?xml version="1.0" encoding="UTF-8"?>
-        <rfc
-                 submissionType="IETF">
-        <front>
-        <title>Document title</title>
-        <author fullname="Author"/>
-        <date day="1" month="January" year="1970"/>
-        </front><middle>
-        </middle><back>
-        <section anchor="_appendix" title="Appendix">
-        <t>Lipsum.</t>
-        </section>
-        </back>
-        </rfc>
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title>Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      </middle><back>
+      <section anchor="_appendix" title="Appendix">
+      <t>Lipsum.</t>
+      </section>
+      </back>
+      </rfc>
     OUTPUT
   end
 end

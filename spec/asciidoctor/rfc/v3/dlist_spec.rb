@@ -1,5 +1,4 @@
 require "spec_helper"
-
 describe Asciidoctor::RFC::V3::Converter do
   it "renders a horizontal description list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
@@ -16,7 +15,6 @@ describe Asciidoctor::RFC::V3::Converter do
       </dl>
     OUTPUT
   end
-  
   it "renders a compact description list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
@@ -32,41 +30,37 @@ describe Asciidoctor::RFC::V3::Converter do
       </dl>
     OUTPUT
   end
-  
   it "renders hybrid description list" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'  
-       Dairy::
-       * Milk
-       * Eggs
-       Bakery::
-       * Bread
-       Produce::
-       * Bananas
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      Dairy::
+      * Milk
+      * Eggs
+      Bakery::
+      * Bread
+      Produce::
+      * Bananas
     INPUT
-       <dl>
-       <dt>Dairy</dt>
-       <dd>
-       <ul>
-       <li>Milk</li>
-       <li>Eggs</li>
-       </ul>
-       </dd>
-       <dt>Bakery</dt>
-       <dd>
-       <ul>
-       <li>Bread</li>
-       </ul>
-       </dd>
-       <dt>Produce</dt>
-       <dd>
-       <ul>
-       <li>Bananas</li>
-       </ul>
-       </dd>
-       </dl>
+      <dl>
+      <dt>Dairy</dt>
+      <dd>
+      <ul>
+      <li>Milk</li>
+      <li>Eggs</li>
+      </ul>
+      </dd>
+      <dt>Bakery</dt>
+      <dd>
+      <ul>
+      <li>Bread</li>
+      </ul>
+      </dd>
+      <dt>Produce</dt>
+      <dd>
+      <ul>
+      <li>Bananas</li>
+      </ul>
+      </dd>
+      </dl>
     OUTPUT
   end
-  
-  
-
 end
