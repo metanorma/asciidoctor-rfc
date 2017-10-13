@@ -40,7 +40,7 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
-               consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
+               consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
       <front>
       <title abbrev="abbrev">Document title</title>
       <author fullname="Author"/>
@@ -70,7 +70,7 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1"
-               consensus="false" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
+               consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
       <front>
       <title abbrev="abbrev">Document title</title>
       <author fullname="Author"/>

@@ -39,7 +39,10 @@ module Asciidoctor
         doctype = node.attr "doctype"
         is_rfc = (doctype == "rfc")
         category = set_header_attribute "category", node.attr("status")
-        consensus = get_header_attribute node, "consensus"
+        consensus_value = node.attr("consensus")
+        consensus_value  = "no" if consensus_value == "false"
+        consensus_value  = "yes" if consensus_value == "true"
+        consensus = set_header_attribute "consensus", consensus_value
         if is_rfc
           number = set_header_attribute "number", node.attr("name")
         else
