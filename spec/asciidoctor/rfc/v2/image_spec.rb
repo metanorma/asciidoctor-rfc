@@ -57,7 +57,9 @@ describe Asciidoctor::RFC::V2::Converter do
   it "skips audio" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       Text
+
       audio::ocean_waves.mp3[options="autoplay,loop"]
+
       Text
     INPUT
       <t>Text</t>
@@ -67,7 +69,9 @@ describe Asciidoctor::RFC::V2::Converter do
   it "skips video" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       Text
+
       video::video_file.mp4[width=640, start=60, end=140, options=autoplay]
+
       Text
     INPUT
       <t>Text</t>

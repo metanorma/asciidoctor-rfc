@@ -5,8 +5,10 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       Author
+
       == Section 1
       text
+
       [appendix]
       == Appendix
       text
@@ -35,12 +37,15 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :docName:
-        Author
+      Author
+
       == Section 1
       text
+
       [bibliography]
       == Biblio
       * Reference1
+
       == Appendix
       text
     INPUT

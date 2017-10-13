@@ -34,7 +34,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :index-include: index_include_value
       :ipr-extract: ipr_extract_value
       :submission-type: IRTF
-      :category: category1
+      :status: category1
       :series-no: 12
       :xml-lang: en
     INPUT
@@ -64,7 +64,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :updates: 10, 11
       :ipr-extract: ipr_extract_value
       :submission-type: IRTF
-      :category: category1
+      :status: category1
       :series-no: 12
       :xml-lang: en
     INPUT
@@ -86,6 +86,7 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       Author
+
       [appendix]
       == Appendix
       Lipsum.

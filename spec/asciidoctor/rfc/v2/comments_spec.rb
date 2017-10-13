@@ -6,9 +6,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section1
       Text
+
       //Ignorable comment
+
       ////
         Multiblock ignorable comment
       ////
@@ -35,8 +38,10 @@ describe Asciidoctor::RFC::V2::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section1
       Text
+
       NOTE: This is a note
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
@@ -66,8 +71,10 @@ describe Asciidoctor::RFC::V2::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section1
       Text
+
       WARNING: This is a note
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
@@ -97,9 +104,11 @@ describe Asciidoctor::RFC::V2::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       [[sect1]]
       == Section1
       Text
+
       WARNING: Text _Text_ *Text* `Text` ~Text~ ^Text^ http://example.com/[linktext] <<ref>>
       [bibliography]
       == References
@@ -135,12 +144,15 @@ describe Asciidoctor::RFC::V2::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section1
       Text
+
       [IMPORTANT]
       .Feeding the Werewolves
       ====
       While werewolves are hardy community members, keep in mind the following dietary concerns:
+
       . They are allergic to cinnamon.
       . More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
       . Celery makes them sad.
@@ -176,8 +188,10 @@ describe Asciidoctor::RFC::V2::Converter do
       :abbrev: abbrev_value
       :docName:
       Author
+
       == Section1
       Text
+
       [[id]]
       [NOTE,source=GBS]
       .Note Title

@@ -5,8 +5,10 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       Author
       :doctype: internet-draft
+
       == Text
       Text
+
       [[id]]
       [bibliography]
       == References
@@ -29,8 +31,10 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       Author
       :doctype: internet-draft
+
       == Text
       Text
+
       [bibliography]
       == References
       ++++

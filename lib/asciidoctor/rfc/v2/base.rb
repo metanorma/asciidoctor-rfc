@@ -38,7 +38,7 @@ module Asciidoctor
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         doctype = node.attr "doctype"
         is_rfc = (doctype == "rfc")
-        category = set_header_attribute node, node.attr("status")
+        category = set_header_attribute "category", node.attr("status")
         consensus = get_header_attribute node, "consensus"
         if is_rfc
           number = set_header_attribute "number", node.attr("name")
@@ -105,7 +105,7 @@ module Asciidoctor
       def inline_anchor(node)
         case node.type
         when :xref
-          # format attribute not supported
+          text = node.text
           format = nil
           if text =~ /^format=(counter|title|none|default):/
             /^format=(?<format>\S+):\s*(?<text1>.*)$/ =~ text

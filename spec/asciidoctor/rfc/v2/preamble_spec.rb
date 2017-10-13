@@ -5,6 +5,7 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       Author
       :docName:
+
       == Lorem
       Ipsum.
     INPUT
@@ -29,8 +30,11 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       Author
       :docName:
+
       Preamble content.
+
       More Preamble content.
+
       == Lorem
       Ipsum.
     INPUT
@@ -59,12 +63,15 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       Author
       :docName:
+
       NOTE: This is a note.
+
       [NOTE]
       .Title of Note
       ====
       This is another note.
       ====
+
       == Lorem
       Ipsum.
     INPUT

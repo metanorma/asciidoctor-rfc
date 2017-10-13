@@ -5,8 +5,10 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
+
       == Section 1
       text
+
       [appendix]
       == Appendix
       text
@@ -37,11 +39,14 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
+
       == Section 1
       text
+
       [bibliography]
       == Biblio
       * Reference1
+
       == Appendix
       text
     INPUT

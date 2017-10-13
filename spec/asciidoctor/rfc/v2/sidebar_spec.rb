@@ -5,8 +5,11 @@ describe Asciidoctor::RFC::V2::Converter do
       [[id]]
       ****
       Sidebar
+
       Another sidebar
+
       * This is a list
+
       ....
       And this is ascii-art
       ....

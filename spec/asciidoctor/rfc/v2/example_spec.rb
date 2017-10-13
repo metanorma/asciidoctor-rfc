@@ -25,10 +25,12 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       ====
       Preamble text
+
       .figure1.txt
       ....
       Figures are only permitted to contain listings (sourcecode), images (artwork), or literal (artwork)
       ....
+
       Postamble text
       ====
     INPUT
