@@ -150,12 +150,22 @@ module Asciidoctor
       #   Text
       def paragraph(node)
         result = []
-        if (node.parent.context == :preamble) && (not $seen_abstract)
-          result << "<abstract>"
+
+        if (node.parent.context == :preamble) && !$seen_abstract
           $seen_abstract = true
+          result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        result << "<t#{id}>#{node.content}</t>"
+
+        t_attributes = {
+          anchor: node.id,
+        }.reject { |_, value| value.nil? }
+
+        result << noko do |xml|
+          xml.t **t_attributes do |xml_t|
+            xml_t << node.content
+          end
+        end
+
         result
       end
 
@@ -213,20 +223,27 @@ module Asciidoctor
       #   image::filename[alt_text,width,height]
       # @note ignoring width, height attributes
       def image(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        link = (node.image_uri node.attr("target"))
-        src = set_header_attribute "src", link
-        type = get_header_attribute node, "type"
-        name = set_header_attribute "name", node.title
-        width = get_header_attribute node, "width"
-        height = get_header_attribute node, "height"
-        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}#{width}#{height}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
+        uri = node.image_uri node.attr("target")
+        artwork_attributes = {
+          align: node.attr("align"),
+          alt: node.alt,
+          anchor: node.id,
+          height: node.attr("height"),
+          name: node.title,
+          src: uri,
+          type: node.attr("type"),
+          width: node.attr("width"),
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork **artwork_attributes
+            end
+          else
+            xml.artwork **artwork_attributes
+          end
+        end
       end
     end
   end
