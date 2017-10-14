@@ -171,12 +171,22 @@ module Asciidoctor
 
       def verse(node)
         result = []
-        if (node.parent.context == :preamble) && (not $seen_abstract)
-          result << "<abstract>"
+
+        if (node.parent.context == :preamble) && !$seen_abstract
           $seen_abstract = true
+          result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        result << "<t#{id}>#{node.content.gsub("\n", "<br/>\n")}</t>"
+
+        t_attributes = {
+          anchor: node.id,
+        }.reject { |_, value| value.nil? }
+
+        result << noko do |xml|
+          xml.t **t_attributes do |xml_t|
+            xml_t << node.content.gsub("\n", "<br/>")
+          end
+        end
+
         result
       end
 
