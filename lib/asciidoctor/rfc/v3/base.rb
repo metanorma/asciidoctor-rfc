@@ -79,17 +79,15 @@ module Asciidoctor
       #   :link href,href rel
       def link(node)
         result = []
-        links = node.attr "link"
-        return result if links.nil?
-        links.split(/,/).each do |l|
-          m = /^(\S+)\s+(\S+)$/.match(l)
-          if m.nil?
-            href = set_header_attribute "href", l
-            result << "<link#{href}/>"
-          else
-            href = set_header_attribute "href", m[1]
-            rel = set_header_attribute "rel", m[2]
-            result << "<link#{href}#{rel}/>"
+        result << noko do |xml|
+          links = (node.attr("link") || "").split(/,/)
+          links.each do |link|
+            matched = /^(?<href>\S+)\s+(?<rel>\S+)$/.match link
+            link_attributes = {
+              href: matched.nil? ? link : matched[:href],
+              rel: matched.nil? ? nil : matched[:rel],
+            }.reject { |_, value| value.nil? }
+            xml.link **link_attributes
           end
         end
         result
