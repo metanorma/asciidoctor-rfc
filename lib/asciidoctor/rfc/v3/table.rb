@@ -8,45 +8,49 @@ module Asciidoctor
       #   |col | col
       #   |===
       def table(node)
-        has_body = false
-        result = []
-        id = set_header_attribute "anchor", node.id
-        result << %(<table#{id}>)
-        result << %(<name>#{node.title}</name>) if node.title?
-        # TODO iref belongs here
-        [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
-          has_body = true if tblsec == :body
-          # id = set_header_attribute "anchor", tblsec.id
-          # not supported
-          result << %(<t#{tblsec}>)
-          node.rows[tblsec].each_with_index do |row, i|
-            # id not supported on row
-            result << "<tr>"
-            rowlength = 0
-            result1 = []
-            row.each do |cell|
-              id = set_header_attribute "anchor", cell.id
-              colspan_attribute = set_header_attribute "colspan", cell.colspan
-              rowspan_attribute = set_header_attribute "rowspan", cell.rowspan
-              align = set_header_attribute("align", cell.attr("halign"))
-              cell_tag_name = (tblsec == :head || cell.style == :header ? "th" : "td")
-              entry_start = %(<#{cell_tag_name}#{colspan_attribute}#{rowspan_attribute}#{id}#{align}>)
-              cell_content = cell.text
-              rowlength += cell_content.size
-              result1 << %(#{entry_start}#{cell_content}</#{cell_tag_name}>)
-            end
-            result << result1
-            if rowlength > 72
-              warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters:\n#{result1}"
-            end
-            result << "</tr>"
-          end
-          result << %(</t#{tblsec}>)
-        end
-        result << "</table>"
+        noko do |xml|
+          has_body = false
+          # TODO iref belongs here
 
-        warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
-        result
+          table_attributes = {
+            anchor: node.id
+          }.reject { |_, value| value.nil? }
+
+          xml.table **table_attributes do |xml_table|
+            xml_table.name node.title if node.title?
+
+            [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
+              tblsec_tag = "t#{tblsec}"
+
+              has_body = true if tblsec == :body
+              # id = set_header_attribute "anchor", tblsec.id
+              # not supported
+              xml_table.send tblsec_tag do |xml_tblsec|
+                node.rows[tblsec].each_with_index do |row, i|
+                  # id not supported on row
+                  xml_tblsec.tr do |xml_tr|
+                    rowlength = 0
+                    row.each do |cell|
+                      cell_attributes = {
+                        anchor: cell.id,
+                        colspan: cell.colspan,
+                        rowspan: cell.rowspan,
+                        align: cell.attr("halign"),
+                      }.reject { |_, value| value.nil? }
+
+                      cell_tag = (tblsec == :head || cell.style == :header ? "th" : "td")
+
+                      rowlength += cell.text.size
+                      xml_tr.send cell_tag, cell.text, **cell_attributes
+                    end
+                    warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters" if rowlength > 72
+                  end
+                end
+              end
+            end
+          end
+          warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
+        end
       end
     end
   end
