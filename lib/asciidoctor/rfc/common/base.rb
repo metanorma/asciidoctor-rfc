@@ -93,8 +93,10 @@ module Asciidoctor
         if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
           result = result1
         else
-          id = set_header_attribute "anchor", node.id
-          result << "<t#{id}>#{result1}</t>"
+          t_attributes = {
+            anchor: node.id,
+          }.reject { |_, value| value.nil? }
+          result << noko { |xml| xml.t result1, **t_attributes }
         end
         result
       end
@@ -103,14 +105,18 @@ module Asciidoctor
         # supports only primary and secondary terms
         # primary attribute (highlighted major entry) not supported
         if node.type == :visible
-          item = set_header_attribute "item", node.text
-          "#{node.text}<iref#{item}/>"
+          iref_attributes = {
+            item: node.text
+          }.reject { |_, value| value.nil? }
+          node.text + noko { |xml| xml.iref **iref_attributes }.join
         else
           terms = node.attr "terms"
-          item = set_header_attribute "item", terms[0]
-          subitem = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
           warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2
-          "<iref#{item}#{subitem}/>"
+          iref_attributes = {
+            item: terms[0],
+            subitem: (terms.size > 1 ? terms[1] : nil),
+          }.reject { |_, value| value.nil? }
+          noko { |xml| xml.iref **iref_attributes }.join
         end
       end
 
