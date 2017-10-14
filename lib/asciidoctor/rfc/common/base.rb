@@ -60,11 +60,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :area x, y
-      def area(node)
-        noko do |xml|
-          node.attr("area")&.split(/, ?/)&.each do |ar|
-            xml.area ar
-          end
+      def area(node, xml)
+        node.attr("area")&.split(/, ?/)&.each do |ar|
+          xml.area ar
         end
       end
 
@@ -72,11 +70,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :workgroup x, y
-      def workgroup(node)
-        noko do |xml|
-          node.attr("workgroup")&.split(/, ?/)&.each do |wg|
-            xml.workgroup wg
-          end
+      def workgroup(node, xml)
+        node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+          xml.workgroup wg
         end
       end
 
@@ -84,11 +80,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :keyword x, y
-      def keyword(node)
-        noko do |xml|
-          node.attr("keyword")&.split(/, ?/)&.each do |kw|
-            xml.keyword kw
-          end
+      def keyword(node, xml)
+        node.attr("keyword")&.split(/, ?/)&.each do |kw|
+          xml.keyword kw
         end
       end
 
