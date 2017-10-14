@@ -106,7 +106,7 @@ module Asciidoctor
         # primary attribute (highlighted major entry) not supported
         if node.type == :visible
           iref_attributes = {
-            item: node.text
+            item: node.text,
           }.reject { |_, value| value.nil? }
           node.text + noko { |xml| xml.iref **iref_attributes }.join
         else
@@ -138,7 +138,7 @@ module Asciidoctor
           end
           result << node.content
         end
-        result.reject { |e| e.empty? }
+        result.reject(&:empty?)
       end
 
       def noko(&block)
