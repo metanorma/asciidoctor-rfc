@@ -44,27 +44,26 @@ module Asciidoctor
         result
       end
 
-      def authorname(node, suffix)
-        noko do |xml|
-          author_attributes = {
-            fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
-            surname: node.attr("lastname#{suffix}"),
-            initials: node.attr("forename_initials#{suffix}"),
-            role: node.attr("role#{suffix}"),
-          }.reject { |_, value| value.nil? }
-          xml.author **author_attributes
-        end
-      end
+      # TODO: dead code? remove.
+      # def authorname(node, suffix)
+      #   noko do |xml|
+      #     author_attributes = {
+      #       fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
+      #       surname: node.attr("lastname#{suffix}"),
+      #       initials: node.attr("forename_initials#{suffix}"),
+      #       role: node.attr("role#{suffix}"),
+      #     }.reject { |_, value| value.nil? }
+      #     xml.author **author_attributes
+      #   end
+      # end
 
       # Syntax:
       #   = Title
       #   Author
       #   :area x, y
-      def area(node)
-        noko do |xml|
-          node.attr("area")&.split(/, ?/)&.each do |ar|
-            xml.area ar
-          end
+      def area(node, xml)
+        node.attr("area")&.split(/, ?/)&.each do |ar|
+          xml.area ar
         end
       end
 
@@ -72,11 +71,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :workgroup x, y
-      def workgroup(node)
-        noko do |xml|
-          node.attr("workgroup")&.split(/, ?/)&.each do |wg|
-            xml.workgroup wg
-          end
+      def workgroup(node, xml)
+        node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+          xml.workgroup wg
         end
       end
 
@@ -84,11 +81,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :keyword x, y
-      def keyword(node)
-        noko do |xml|
-          node.attr("keyword")&.split(/, ?/)&.each do |kw|
-            xml.keyword kw
-          end
+      def keyword(node, xml)
+        node.attr("keyword")&.split(/, ?/)&.each do |kw|
+          xml.keyword kw
         end
       end
 

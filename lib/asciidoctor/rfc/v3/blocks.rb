@@ -108,26 +108,38 @@ module Asciidoctor
         result = []
         if node.parent.context == :preamble
           if $seen_abstract
-            $seen_abstract = false
             result << "</abstract>"
+            $seen_abstract = false
           end
-          removeInRFC = get_header_attribute node, "removeInRFC"
-          result << "<note#{removeInRFC}>"
-          result << "<name>#{node.title}</name>" unless node.title.nil?
-          result << (paragraph1 node)
-          result << "</note>"
+
+          note_attributes = {
+            removeInRFC: node.attr("remove-in-rfc"),
+          }.reject { |_, value| value.nil? }
+
+          result << noko do |xml|
+            xml.note **note_attributes do |xml_note|
+              xml_note.name node.title unless node.title.nil?
+              xml_note << [paragraph1(node)].flatten.join("\n")
+            end
+          end
         else
-          id = set_header_attribute "anchor", node.id
-          display = get_header_attribute node, "display"
-          source = get_header_attribute node, "source"
-          result << "<cref#{id}#{display}#{source}>"
-          if node.blocks?
-            warn "asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}"
-            result << flatten(node)
-          else
-            result << node.content
+          cref_attributes = {
+            anchor: node.id,
+            display: node.attr("display"),
+            source: node.attr("source"),
+          }.reject { |_, value| value.nil? }
+
+          cref_contents = node.blocks? ? flatten(node) : node.content
+          cref_contents = [cref_contents].flatten.join("\n")
+          warn <<~WARNING_MESSAGE if node.blocks?
+            asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}
+          WARNING_MESSAGE
+
+          result << noko do |xml|
+            xml.cref **cref_attributes do |xml_cref|
+              xml_cref << cref_contents
+            end
           end
-          result << "</cref>"
         end
         result
       end
