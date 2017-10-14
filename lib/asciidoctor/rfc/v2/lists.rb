@@ -23,60 +23,26 @@ module Asciidoctor
       #   * A
       #   * B
       def ulist(node)
-        result = []
-        result << "<t>" if node.parent.context !~ /paragraph|list_item/
-        style = set_header_attribute "style", "symbols"
-        result << "<list#{style}>"
-        node.items.each do |item|
-          # id = set_header_attribute "anchor", item.id
-          id = nil
-          if item.blocks?
-            result << "<t#{id}>#{item.text}"
-            result << item.content
-            result << "</t>"
-          else
-            result << "<t#{id}>#{item.text}</t>"
-          end
-        end
-        result << "</list>"
-        result << "</t>" if node.parent.context !~ /paragraph|list_item/
-        result
+        noko { |xml| wrap_list :ulist_naked, node, xml }
       end
 
-      (OLIST_TYPES = {
-        arabic:     "numbers",
-        # decimal:    "1", # not supported
-        loweralpha: "format %c",
-        # lowergreek: "lower-greek", # not supported
-        lowerroman: "format %i",
-        upperalpha: "format %C",
-        upperroman: "format %I",
-      }).default = "numbers"
+      OLIST_TYPES =
+        Hash.new("numbers").merge(
+          arabic:     "numbers",
+          # decimal:    "1", # not supported
+          loweralpha: "format %c",
+          # lowergreek: "lower-greek", # not supported
+          lowerroman: "format %i",
+          upperalpha: "format %C",
+          upperroman: "format %I",
+        ).freeze
 
       # Syntax:
       #   [start=n] (optional)
       #   . A
       #   . B
       def olist(node)
-        result = []
-        result << "<t>" if node.parent.context !~ /paragraph|list_item/
-        counter = set_header_attribute "counter", node.attr("start")
-        # TODO did I understand spec of @counter correctly?
-        style = set_header_attribute "style", OLIST_TYPES[node.style.to_sym]
-        result << "<list#{counter}#{style}>"
-        node.items.each do |item|
-          id = set_header_attribute "anchor", item.id
-          if item.blocks?
-            result << "<t#{id}>#{item.text}"
-            result << item.content
-            result << "</t>"
-          else
-            result << "<t#{id}>#{item.text}</t>"
-          end
-        end
-        result << "</list>"
-        result << "</t>" if node.parent.context !~ /paragraph|list_item/
-        result
+        noko { |xml| wrap_list :olist_naked, node, xml }
       end
 
       # Syntax:
@@ -84,30 +50,83 @@ module Asciidoctor
       #   A:: B
       #   C:: D
       def dlist(node)
-        result = []
-        result << "<t>" if node.parent.context !~ /paragraph|list_item/
-        hangIndent = get_header_attribute node, "hangIndent"
-        style = set_header_attribute "style", "hanging"
-        result << "<list#{hangIndent}#{style}>"
-        node.items.each do |terms, dd|
-          hangtext = []
-          id = nil
-          [*terms].each do |dt|
-            hangtext << dt.text
+        noko { |xml| wrap_list :dlist_naked, node, xml }
+      end
+
+      private
+
+      def wrap_list(method_name, node, xml)
+        if node.parent.context !~ /paragraph|list_item/
+          xml.t do |xml_t|
+            send method_name, node, xml_t
           end
-          hangText = set_header_attribute "hangText", hangtext.join(", ")
-          if dd.blocks?
-            result << "<t#{id}#{hangText}>"
-            result << dd.text if dd.text?
-            result << dd.content
-            result << "</t>"
-          else
-            result << "<t#{id}#{hangText}>#{dd.text}</t>"
+        else
+          send method_name, node, xml
+        end
+      end
+
+      def ulist_naked(node, xml)
+        list_attributes = {
+          style: "symbols",
+        }.reject { |_, value| value.nil? }
+
+        xml.list **list_attributes do |xml_list|
+          node.items.each do |item|
+            t_attributes = {
+              anchor: nil,
+            }.reject { |_, value| value.nil? }
+
+            xml_list.t **t_attributes do |xml_t|
+              xml_t << item.text
+              xml_t << item.content if item.blocks?
+            end
           end
         end
-        result << "</list>"
-        result << "</t>" if node.parent.context !~ /paragraph|list_item/
-        result
+      end
+
+      def olist_naked(node, xml)
+        # TODO did I understand spec of @counter correctly?
+        list_attributes = {
+          counter: node.attr("start"),
+          style: OLIST_TYPES[node.style.to_sym],
+        }.reject { |_, value| value.nil? }
+
+        xml.list **list_attributes do |xml_list|
+          node.items.each do |item|
+            t_attributes = {
+              anchor: item.id,
+            }.reject { |_, value| value.nil? }
+
+            xml_list.t **t_attributes do |xml_t|
+              xml_t << item.text
+              xml_t << item.content if item.blocks?
+            end
+          end
+        end
+      end
+
+      def dlist_naked(node, xml)
+        list_attributes = {
+          hangIndent: node.attr("hang-indent"),
+          style: "hanging",
+        }.reject { |_, value| value.nil? }
+
+        xml.list **list_attributes do |xml_list|
+          node.items.each do |terms, dd|
+            t_attributes = {
+              hangText: terms.map(&:text).join(", "),
+            }.reject { |_, value| value.nil? }
+
+            xml_list.t **t_attributes do |xml_t|
+              if dd.blocks?
+                xml_t << dd.text if dd.text?
+                xml_t << dd.content
+              else
+                xml_t << dd.text
+              end
+            end
+          end
+        end
       end
     end
   end
