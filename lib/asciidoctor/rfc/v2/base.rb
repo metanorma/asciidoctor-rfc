@@ -111,19 +111,29 @@ module Asciidoctor
       def inline_anchor(node)
         case node.type
         when :xref
-          text = node.text
-          format = nil
-          if text =~ /^format=(counter|title|none|default):/
-            /^format=(?<format>\S+):\s*(?<text1>.*)$/ =~ text
-            format = set_header_attribute "format", format
-            text = text1
-          end
-          target = set_header_attribute "target", node.target.gsub(/^#/, "")
-          %(<xref#{format}#{target}>#{text}</xref>)
+          matched = /^format=(?<format>counter|title|none|default):\s*(?<text>.*)$/.match node.text
+          xref_contents = matched.nil? ? node.text : matched[:text]
+          matched ||= {}
+
+          xref_attributes = {
+            target: node.target.gsub(/^#/, ""),
+            format: matched[:format],
+            align: node.attr("align"),
+          }.reject { |_, value| value.nil? }
+
+          noko do |xml|
+            xml.xref xref_contents, **xref_attributes
+          end.join
         when :link
-          text = node.text
-          text = nil if node.target == node.text
-          %(<eref target="#{node.target}">#{text}</eref>)
+          eref_contents = node.target == node.text ? nil : node.text
+
+          eref_attributes = {
+            target: node.target,
+          }.reject { |_, value| value.nil? }
+
+          noko do |xml|
+            xml.eref eref_contents, **eref_attributes
+          end.join
         when :bibref
           unless node.xreftext.nil?
             x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
@@ -204,24 +214,36 @@ module Asciidoctor
         if node.attr("style") == "bibliography"
           $xreftext = {}
           $processing_reflist = true
-          title = set_header_attribute "title", node.title
-          result << "<references#{title}>"
-          # require that references be given in a ulist
-          node.blocks.each { |b| result << reflist(b) }
-          result << "</references>"
+
+          references_attributes = {
+            title: node.title,
+          }.reject { |_, value| value.nil? }
+
+          result << noko do |xml|
+            xml.references **references_attributes do |xml_references|
+              node.blocks.each { |b| xml_references << reflist(b).join }
+            end
+          end
+
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false
           $seen_back_matter = true
         else
-          id = set_header_attribute "anchor", node.id
           if node.attr("style") == "appendix"
             result << "</middle><back>" unless $seen_back_matter
             $seen_back_matter = true
           end
-          title = set_header_attribute "title", node.title
-          result << "<section#{id}#{title}>"
-          result << node.content
-          result << "</section>"
+
+          section_attributes = {
+            anchor: node.id,
+            title: node.title,
+          }.reject { |_, value| value.nil? }
+
+          result << noko do |xml|
+            xml.section **section_attributes do |xml_section|
+              xml_section << node.content
+            end
+          end
         end
         result
       end

@@ -134,27 +134,44 @@ module Asciidoctor
           text = node.text
           if text =~ /^\S+ (of|comma|parens|bare)\b/
             # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref
-            relative = set_header_attribute "relative", node.attributes["fragment"]
-            target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
-            /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text1>.*)$/ =~ text
-            section = set_header_attribute "section", section
-            format = set_header_attribute "displayFormat", format
-            target = set_header_attribute "target", target
-            %(<relref#{relative}#{section}#{format}#{target}>#{text1}</relref>)
+            matched = /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text>.*)$/.match node.text
+
+            relref_contents = matched[:text]
+
+            relref_attributes = {
+              relative: node.attributes["fragment"],
+              section: matched[:section],
+              displayFormat: matched[:format],
+              target: node.target.gsub(/\..*$/, "").gsub(/^#/, ""),
+            }.reject { |_, value| value.nil? }
+
+            noko do |xml|
+              xml.relref relref_contents, **relref_attributes
+            end.join
           else
-            format = nil
-            if text =~ /^format=(counter|title|none|default):/
-              /^format=(?<format>\S+):\s*(?<text1>.*)$/ =~ text
-              format = set_header_attribute "format", format
-              text = text1
-            end
-            target = set_header_attribute "target", node.target.gsub(/^#/, "")
-            %(<xref#{format}#{target}>#{text}</xref>)
+            matched = /^format=(?<format>counter|title|none|default):\s*(?<text>.*)$/.match node.text
+            matched ||= {}
+            xref_contents = matched[:text] || node.text
+
+            xref_attributes = {
+              format: matched[:format],
+              target: node.target.gsub(/^#/, ""),
+            }.reject { |_, value| value.nil? }
+
+            noko do |xml|
+              xml.xref xref_contents, **xref_attributes
+            end.join
           end
         when :link
-          text = node.text
-          text = nil if node.target == node.text
-          %(<eref target="#{node.target}">#{text}</eref>)
+          eref_contents = node.target == node.text ? nil : node.text
+
+          eref_attributes = {
+            target: node.target,
+          }.reject { |_, value| value.nil? }
+
+          noko do |xml|
+            xml.eref eref_contents, **eref_attributes
+          end.join
         when :bibref
           unless node.xreftext.nil?
             x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
