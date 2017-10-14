@@ -74,7 +74,7 @@ module Asciidoctor
               year: d.year,
             }
             xml.date **date_attributes
-          rescue
+          rescue ArgumentError # invalid date
             # nop
           end
         end
