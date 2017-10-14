@@ -57,7 +57,7 @@ module Asciidoctor
           version:        "3",
         }.reject { |_, value| value.nil? }
 
-        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, '>')
+        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, ">")
         result << rfc_open
 
         result << (link node)
@@ -111,7 +111,7 @@ module Asciidoctor
           "<em>#{node.text}</em>"
         when :strong
           if $bcp_bold &&
-            node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/
+              node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/
             "<bcp14>#{node.text}</bcp14>"
           else
             "<strong>#{node.text}</strong>"

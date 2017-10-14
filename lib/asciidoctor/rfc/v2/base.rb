@@ -38,7 +38,11 @@ module Asciidoctor
         result << '<?xml version="1.0" encoding="UTF-8"?>'
 
         is_rfc = node.attr("doctype") == "rfc"
-        consensus_value = {'false' => 'no', 'true' => 'yes'}[node.attr("consensus")] || node.attr("consensus")
+
+        consensus_value = {
+          "false" => "no",
+          "true" => "yes",
+        }[node.attr("consensus")] || node.attr("consensus")
 
         rfc_attributes = {
           ipr:            node.attr("ipr"),
@@ -54,7 +58,7 @@ module Asciidoctor
           'xml:lang':     node.attr("xml-lang"),
         }.reject { |_, value| value.nil? }
 
-        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, '>')
+        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, ">")
         result << rfc_open
 
         result << noko { |xml| front node, xml }
@@ -67,11 +71,11 @@ module Asciidoctor
 
         # <middle> needs to move after preamble
         result = result.flatten
-        if result.any? { |e| e =~ /<\/front><middle>/ } && result.any? { |e| e =~ /<\/front><middle1>/ }
-          result = result.reject { |e| e =~ /<\/front><middle1>/ }
-        else
-          result = result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
-        end
+        result = if result.any? { |e| e =~ /<\/front><middle>/ } && result.any? { |e| e =~ /<\/front><middle1>/ }
+                   result.reject { |e| e =~ /<\/front><middle1>/ }
+                 else
+                   result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
+                 end
 
         result * "\n"
       end
