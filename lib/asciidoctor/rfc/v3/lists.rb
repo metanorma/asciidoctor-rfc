@@ -77,15 +77,16 @@ module Asciidoctor
         result
       end
 
-      (OLIST_TYPES = {
-        arabic:     "1",
-        # decimal:    "1", # not supported
-        loweralpha: "a",
-        # lowergreek: "lower-greek", # not supported
-        lowerroman: "i",
-        upperalpha: "A",
-        upperroman: "I",
-      }).default = "1"
+      OLIST_TYPES =
+        Hash.new("1").merge(
+          arabic:     "1",
+          # decimal:    "1", # not supported
+          loweralpha: "a",
+          # lowergreek: "lower-greek", # not supported
+          lowerroman: "i",
+          upperalpha: "A",
+          upperroman: "I",
+        ).freeze
 
       # Syntax:
       #   [[id]]
