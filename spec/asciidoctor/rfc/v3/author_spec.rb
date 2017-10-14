@@ -278,30 +278,30 @@ describe Asciidoctor::RFC::V3::Converter do
       :country: Australia
       :code: 3333
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-       <front>     
-         <title>Document title</title> 
-         <author role="editor">
-           <organization>Ribose</organization>
-           <address>
-             <postal>
-               <street>57 Mt Pleasant St</street>
-               <city>Dullsville</city>
-               <region>NSW</region>
-               <code>3333</code>
-               <country>Australia</country>
-             </postal>
-             <phone>555 5655</phone>
-             <facsimile>555 5555</facsimile>
-             <email>john.doe@email.com</email>
-             <uri>http://example.com</uri>
-           </address>
-         </author>
-       </front><middle>
-       </middle>
-       </rfc>
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc preptime="1970-01-01T00:00:00Z"
+               version="3" submissionType="IETF">
+      <front>
+        <title>Document title</title>
+        <author role="editor">
+          <organization>Ribose</organization>
+          <address>
+            <postal>
+              <street>57 Mt Pleasant St</street>
+              <city>Dullsville</city>
+              <region>NSW</region>
+              <code>3333</code>
+              <country>Australia</country>
+            </postal>
+            <phone>555 5655</phone>
+            <facsimile>555 5555</facsimile>
+            <email>john.doe@email.com</email>
+            <uri>http://example.com</uri>
+          </address>
+        </author>
+      </front><middle>
+      </middle>
+      </rfc>
     OUTPUT
   end
 

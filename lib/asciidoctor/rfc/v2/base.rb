@@ -81,33 +81,38 @@ module Asciidoctor
       end
 
       def inline_break(node)
-        %(#{node.text}<vspace/>)
+        noko do |xml|
+          xml << node.text
+          xml.vspace
+        end.join
       end
 
       def inline_quoted(node)
-        case node.type
-        when :emphasis
-          %(<spanx style="emph">#{node.text}</spanx>)
-        when :strong
-          %(<spanx style="strong">#{node.text}</spanx>)
-        when :monospaced
-          %(<spanx style="verb">#{node.text}</spanx>)
-        when :double
-          "\"#{node.text}\""
-        when :single
-          "'#{node.text}'"
-        when :superscript
-          "^#{node.text}^"
-        when :subscript
-          "_#{node.text}_"
-        else
-          # [bcp14]#MUST NOT#
-          if node.role == "bcp14"
-            %(<spanx style="strong">#{node.text.upcase}</spanx>)
+        noko do |xml|
+          case node.type
+          when :emphasis
+            xml.spanx node.text, style: "emph"
+          when :strong
+            xml.spanx node.text, style: "strong"
+          when :monospaced
+            xml.spanx node.text, style: "verb"
+          when :double
+            xml << "\"#{node.text}\""
+          when :single
+            xml << "'#{node.text}'"
+          when :superscript
+            xml << "^#{node.text}^"
+          when :subscript
+            xml << "_#{node.text}_"
           else
-            node.text
+            # [bcp14]#MUST NOT#
+            if node.role == "bcp14"
+              xml.spanx node.text.upcase, style: "strong"
+            else
+              xml << node.text
+            end
           end
-        end
+        end.join
       end
 
       # Syntax:

@@ -102,38 +102,36 @@ module Asciidoctor
       end
 
       def inline_break(node)
-        %(#{node.text}<br/>)
+        noko do |xml|
+          xml << node.text
+          xml.br
+        end.join
       end
 
       def inline_quoted(node)
-        case node.type
-        when :emphasis
-          "<em>#{node.text}</em>"
-        when :strong
-          if $bcp_bold &&
-              node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/
-            "<bcp14>#{node.text}</bcp14>"
+        noko do |xml|
+          case node.type
+          when :emphasis then xml.em node.text
+          when :strong
+            if $bcp_bold && node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/
+              xml.bcp14 node.text
+            else
+              xml.strong node.text
+            end
+          when :monospaced then xml.tt node.text
+          when :double then xml << "\"#{node.text}\""
+          when :single then xml << "'#{node.text}'"
+          when :superscript then xml.sup node.text
+          when :subscript then xml.sub node.text
           else
-            "<strong>#{node.text}</strong>"
+            # [bcp14]#MUST NOT#
+            if node.role == "bcp14"
+              xml.bcp14 node.text.upcase
+            else
+              xml << node.text
+            end
           end
-        when :monospaced
-          "<tt>#{node.text}</tt>"
-        when :double
-          "\"#{node.text}\""
-        when :single
-          "'#{node.text}'"
-        when :superscript
-          "<sup>#{node.text}</sup>"
-        when :subscript
-          "<sub>#{node.text}</sub>"
-        else
-          # [bcp14]#MUST NOT#
-          if node.role == "bcp14"
-            "<bcp14>#{node.text.upcase}</bcp14>"
-          else
-            node.text
-          end
-        end
+        end.join
       end
 
       # Syntax:

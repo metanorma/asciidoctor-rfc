@@ -127,15 +127,10 @@ module Asciidoctor
       # if node contains blocks, flatten them into a single line
       def flatten(node)
         result = []
+        result << node.text if node.respond_to?(:text)
         if node.blocks?
-          if node.respond_to?(:text)
-            result << node.text
-          end
           node.blocks.each { |b| result << flatten(b) }
         else
-          if node.respond_to?(:text)
-            result << node.text
-          end
           result << node.content
         end
         result.reject(&:empty?)
