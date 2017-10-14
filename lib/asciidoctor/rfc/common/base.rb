@@ -44,17 +44,18 @@ module Asciidoctor
         result
       end
 
-      def authorname(node, suffix)
-        noko do |xml|
-          author_attributes = {
-            fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
-            surname: node.attr("lastname#{suffix}"),
-            initials: node.attr("forename_initials#{suffix}"),
-            role: node.attr("role#{suffix}"),
-          }.reject { |_, value| value.nil? }
-          xml.author **author_attributes
-        end
-      end
+      # TODO: dead code? remove.
+      # def authorname(node, suffix)
+      #   noko do |xml|
+      #     author_attributes = {
+      #       fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
+      #       surname: node.attr("lastname#{suffix}"),
+      #       initials: node.attr("forename_initials#{suffix}"),
+      #       role: node.attr("role#{suffix}"),
+      #     }.reject { |_, value| value.nil? }
+      #     xml.author **author_attributes
+      #   end
+      # end
 
       # Syntax:
       #   = Title
