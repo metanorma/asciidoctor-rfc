@@ -5,9 +5,11 @@ module Asciidoctor
       # [discrete]
       # == Section
       def floating_title(node)
-        result = []
-        result << %{<t><spanx style="strong">#{node.title}</spanx></t>}
-        result
+        noko do |xml|
+          xml.t do |xml_t|
+            xml_t.spanx node.title, style: "strong"
+          end
+        end
       end
 
       # Syntax:
@@ -18,22 +20,26 @@ module Asciidoctor
       #     literal
       #   ....
       def literal(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        type = get_header_attribute node, "type"
-        name = set_header_attribute "name", node.title
+        artwork_attributes = {
+          anchor: node.id,
+          align: node.attr("align"),
+          type: node.attr("type"),
+          name: node.title,
+          alt: node.attr("alt"),
+        }.reject { |_, value| value.nil? }
 
-        result << "<artwork#{id}#{align}#{name}#{type}#{alt}>"
-        node.lines.each do |line|
-          result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        # NOTE: html escaping is performed by Nokogiri
+        artwork_content = node.lines.join("\n")
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork artwork_content, **artwork_attributes
+            end
+          else
+            xml.artwork artwork_content, **artwork_attributes
+          end
         end
-        result << "</artwork>"
-
-        result << "</figure>" if node.parent.context != :example
-        result
       end
 
       # Syntax:
@@ -66,27 +72,42 @@ module Asciidoctor
             result << "</abstract>"
             $seen_abstract = false
           end
-          title = set_header_attribute "title", node.title
-          result << "<note#{title}>"
-          result << (paragraph1 node)
-          result << "</note>"
-        else
-          id = set_header_attribute "anchor", node.id
-          source = get_header_attribute node, "source"
-          if node.parent.context !~ /table|example|paragraph/
-            result << "<t>"
-          end
-          result << "<cref#{id}#{source}>"
-          if node.blocks?
-            warn "asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}"
-            result << flatten(node)
-          else
-            result << node.content
-          end
-          result << "</cref>"
 
-          if node.parent.context !~ /table|example|paragraph/
-            result << "</t>"
+          note_attributes = {
+            title: node.title,
+          }.reject { |_, value| value.nil? }
+
+          note_contents = [paragraph1(node)].flatten.join("\n")
+
+          result << noko do |xml|
+            xml.note **note_attributes do |xml_note|
+              xml_note << note_contents
+            end
+          end
+        else
+          cref_attributes = {
+            anchor: node.id,
+            source: node.attr("source"),
+          }.reject { |_, value| value.nil? }
+
+          cref_contents = node.blocks? ? flatten(node) : node.content
+          cref_contents = [cref_contents].flatten.join("\n")
+          warn <<~WARNING_MESSAGE if node.blocks?
+            asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}
+          WARNING_MESSAGE
+
+          result << noko do |xml|
+            if node.parent.context !~ /table|example|paragraph/
+              xml.t do |xml_t|
+                xml_t.cref **cref_attributes do |xml_cref|
+                  xml_cref << cref_contents
+                end
+              end
+            else
+              xml_t.cref **cref_attributes do |xml_cref|
+                xml_cref << cref_contents
+              end
+            end
           end
         end
         result
@@ -100,34 +121,34 @@ module Asciidoctor
       #   Example
       #   ====
       def example(node)
-        result = []
-        id = set_header_attribute "anchor", node.id
-        alt = set_header_attribute "alt", node.alt
-        title = set_header_attribute "title", node.title
-        suppresstitle = get_header_attribute node, "suppress-title"
-        align = get_header_attribute node, "align"
-        result << "<figure#{id}#{align}#{alt}#{title}#{suppresstitle}>"
-        seen_artwork = false
+        figure_attributes = {
+          anchor: node.id,
+          align: node.attr("align"),
+          alt: node.alt,
+          title: node.title,
+          'suppress-title': node.attr("suppress-title"),
+          # TODO: is 'suppress-title' the correct attribute name?
+        }.reject { |_, value| value.nil? }
         # TODO iref
-        node.blocks.each do |b|
-          if b.context == :listing
-            result << listing(b)
-            seen_artwork = true
-          elsif b.context == :image
-            result << image(b)
-            seen_artwork = true
-          elsif b.context == :literal
-            result << literal(b)
-            seen_artwork = true
-          else
-            result << (seen_artwork ? "<postamble>" : "<preamble>")
-            # we want to see the para text, not its <t> container
-            result << b.content
-            result << (seen_artwork ? "</postamble>" : "</preamble>")
+        seen_artwork = false
+        noko do |xml|
+          xml.figure **figure_attributes do |xml_figure|
+            node.blocks.each do |b|
+              case b.context
+              when :listing, :image, :literal
+                xml_figure << send(b.context, b).join
+                seen_artwork = true
+              else
+                # we want to see the para text, not its <t> container
+                if seen_artwork
+                  xml_figure.postamble b.content
+                else
+                  xml_figure.preamble b.content
+                end
+              end
+            end
           end
         end
-        result << "</figure>"
-        result
       end
 
       # Syntax:
@@ -138,24 +159,28 @@ module Asciidoctor
       #   code
       #   ----
       def listing(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        tag = "artwork"
-        id = set_header_attribute "anchor", node.id
-        name = set_header_attribute "name", node.title
-        type = set_header_attribute "type", node.attr("language")
-        src = set_header_attribute "src", node.attr("src")
-        result << "<#{tag}#{id}#{align}#{name}#{type}#{src}#{alt}>"
-        if src.nil?
-          node.lines.each do |line|
-            result << line.gsub(/\&/, "&amp;").gsub(/</, "&lt;").gsub(/>/, "&gt;")
+        sourcecode_attributes = {
+          anchor: node.id,
+          align: node.attr("align"),
+          alt: node.alt,
+          name: node.title,
+          type: node.attr("language"),
+          src: node.attr("src"),
+        }.reject { |_, value| value.nil? }
+
+        # NOTE: html escaping is performed by Nokogiri
+        sourcecode_content =
+          sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork sourcecode_content, **sourcecode_attributes
+            end
+          else
+            xml.artwork sourcecode_content, **sourcecode_attributes
           end
         end
-        result << "</#{tag}>"
-        result << "</figure>" if node.parent.context != :example
-        result
       end
     end
   end
