@@ -135,6 +135,14 @@ $ ruby ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
 ## WIP: bundle exec asciidoctor -b asciidoctor-rfc2 draft-example-00.adoc # RFC XML v2 output
 ----
 
+You can also use the asciidoctor executable, specifying this gem as a library:
+
+[source,console]
+----
+$ asciidoctor -b rfc3 -r 'asciidoctor/rfc' a.adoc  # RFC XML v3 output
+$ asciidoctor -b rfc2 -r 'asciidoctor/rfc' a.adoc  # RFC XML v2 output
+----
+
 When the script completes, you should see the RFC XML file `draft-example-00.xml` in the
 same directory.
 
