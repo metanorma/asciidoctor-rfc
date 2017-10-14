@@ -4,9 +4,10 @@ require "asciidoctor/rfc/version"
 require "asciidoctor/rfc/common/base"
 require "asciidoctor/rfc/common/front"
 require "asciidoctor/rfc/v2/base"
-require "asciidoctor/rfc/v2/front"
-require "asciidoctor/rfc/v2/lists"
 require "asciidoctor/rfc/v2/blocks"
+require "asciidoctor/rfc/v2/front"
+require "asciidoctor/rfc/v2/inline_anchor"
+require "asciidoctor/rfc/v2/lists"
 require "asciidoctor/rfc/v2/table"
 
 module Asciidoctor
@@ -23,9 +24,10 @@ module Asciidoctor
       include ::Asciidoctor::RFC::Common::Base
       include ::Asciidoctor::RFC::Common::Front
       include ::Asciidoctor::RFC::V2::Base
-      include ::Asciidoctor::RFC::V2::Front
-      include ::Asciidoctor::RFC::V2::Lists
       include ::Asciidoctor::RFC::V2::Blocks
+      include ::Asciidoctor::RFC::V2::Front
+      include ::Asciidoctor::RFC::V2::InlineAnchor
+      include ::Asciidoctor::RFC::V2::Lists
       include ::Asciidoctor::RFC::V2::Table
 
       register_for "rfc2"
