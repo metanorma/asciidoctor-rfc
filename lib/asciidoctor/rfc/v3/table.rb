@@ -23,8 +23,7 @@ module Asciidoctor
               tblsec_tag = "t#{tblsec}"
 
               has_body = true if tblsec == :body
-              # id = set_header_attribute "anchor", tblsec.id
-              # not supported
+              # "anchor" attribute from tblsec.id not supported
               xml_table.send tblsec_tag do |xml_tblsec|
                 node.rows[tblsec].each_with_index do |row, i|
                   # id not supported on row
