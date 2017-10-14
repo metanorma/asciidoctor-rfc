@@ -34,24 +34,32 @@ module Asciidoctor
         $bcp_bold = !(node.attr? "no-rfc-bold-bcp14")
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
-        ipr = get_header_attribute node, "ipr"
-        obsoletes = get_header_attribute node, "obsoletes"
-        updates = get_header_attribute node, "updates"
-        indexInclude = get_header_attribute node, "indexInclude"
-        iprExtract = get_header_attribute node, "iprExtract"
-        sortRefs = get_header_attribute node, "sortRefs"
-        symRefs = get_header_attribute node, "symRefs"
-        tocInclude = get_header_attribute node, "tocInclude"
-        tocDepth = get_header_attribute node, "tocDepth"
-        submissionType = get_header_attribute node, "submissionType", "IETF"
-        xmllang = set_header_attribute "xml:lang", node.attr("xml-lang")
+
         t = Time.now.getutc
-        preptime = set_header_attribute("preptime",
-                                        sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ",
-                                                t.year, t.month, t.day, t.hour, t.min, t.sec))
-        version = set_header_attribute "version", "3"
-        result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}#{xmllang}
-        #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
+        preptime = sprintf(
+          "%04d-%02d-%02dT%02d:%02d:%02dZ",
+          t.year, t.month, t.day, t.hour, t.min, t.sec
+        )
+
+        rfc_attributes = {
+          ipr:            node.attr("ipr"),
+          obsoletes:      node.attr("obsoletes"),
+          updates:        node.attr("updates"),
+          indexInclude:   node.attr("index-include"),
+          iprExtract:     node.attr("ipr-extract"),
+          sortRefs:       node.attr("sort-refs"),
+          symRefs:        node.attr("sym-refs"),
+          tocInclude:     node.attr("toc-include"),
+          tocDepth:       node.attr("toc-depth"),
+          submissionType: node.attr("submission-type") || "IETF",
+          'xml:lang':     node.attr("xml-lang"),
+          preptime:       preptime,
+          version:        "3",
+        }.reject { |_, value| value.nil? }
+
+        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, '>')
+        result << rfc_open
+
         result << (link node)
 
         result << noko { |xml| front node, xml }
@@ -173,12 +181,25 @@ module Asciidoctor
         if node.attr("style") == "bibliography"
           $xreftext = {}
           $processing_reflist = true
-          id = set_header_attribute "anchor", node.id
-          result << "<references#{id}>"
+
+          # references_attributes = {
+          #   anchor: node.id,
+          # }.reject { |_, value| value.nil? }
+
+          # result << noko do |xml|
+          #   xml.references **references_attributes do |references_xml|
+          #     references_xml.name node.title unless node.title.nil?
+          #     node.blocks.each { |b| references_xml << reflist(b).join }
+          #   end
+          # end
+
+          anchor_attribute = node.id.nil? ? nil : " anchor=\"#{node.id}\""
+          result << "<references#{anchor_attribute}>"
           result << "<name>#{node.title}</name>" unless node.title.nil?
           # require that references be given in a ulist
           node.blocks.each { |b| result << reflist(b) }
           result << "</references>"
+
           unless $xreftext.empty?
             result.unshift($xreftext.keys.map { |k| %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
           end
@@ -186,18 +207,24 @@ module Asciidoctor
           $processing_reflist = false
           $seen_back_matter = true
         else
-          id = set_header_attribute "anchor", node.id
-          removeInRFC = get_header_attribute node, "removeInRFC"
-          toc = get_header_attribute node, "toc"
-          numbered = set_header_attribute "numbered", node.attr?("sectnums")
           if node.attr("style") == "appendix"
             result << "</middle><back>" unless $seen_back_matter
             $seen_back_matter = true
           end
-          result << "<section#{id}#{removeInRFC}#{toc}#{numbered}>"
-          result << "<name>#{node.title}</name>" unless node.title.nil?
-          result << node.content
-          result << "</section>"
+
+          section_attributes = {
+            anchor: node.id,
+            removeInRFC: node.attr("remove-in-rfc"),
+            toc: node.attr("toc"),
+            numbered: node.attr?("sectnums"),
+          }.reject { |_, value| value.nil? }
+
+          result << noko do |xml|
+            xml.section **section_attributes do |section_xml|
+              section_xml.name node.title unless node.title.nil?
+              section_xml << node.content
+            end
+          end
         end
         result
       end

@@ -141,24 +141,6 @@ module Asciidoctor
         result.reject { |e| e.empty? }
       end
 
-      def get_header_attribute(node, attr, default = nil)
-        if node.attr? dash(attr)
-          %( #{attr}="#{node.attr dash(attr)}")
-        elsif default.nil?
-          nil
-        else
-          %( #{attr}="#{default}")
-        end
-      end
-
-      def set_header_attribute(attr, val)
-        if val.nil?
-          nil
-        else
-          %( #{attr}="#{val}")
-        end
-      end
-
       def noko(&block)
         fragment = ::Nokogiri::XML::DocumentFragment.parse ""
         ::Nokogiri::XML::Builder.with fragment, &block
