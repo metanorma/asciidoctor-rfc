@@ -47,25 +47,33 @@ module Asciidoctor
       #   * B
       def ulist(node)
         result = []
+
         if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        empty = get_header_attribute node, "empty"
-        spacing = get_header_attribute node, "spacing"
-        result << "<ul#{id}#{empty}#{spacing}>"
-        node.items.each do |item|
-          id = set_header_attribute "anchor", item.id
-          if item.blocks?
-            result << "<li#{id}>#{item.text}"
-            result << item.content
-            result << "</li>"
-          else
-            result << "<li#{id}>#{item.text}</li>"
+
+        result << noko do |xml|
+          ul_attributes = {
+            anchor: node.id,
+            empty: node.attr("empty"),
+            spacing: node.attr("spacing"),
+          }.reject { |_, value| value.nil? }
+
+          xml.ul **ul_attributes do |xml_ul|
+            node.items.each do |item|
+              li_attributes = {
+                anchor: item.id,
+              }.reject { |_, value| value.nil? }
+
+              xml_ul.li **li_attributes do |xml_li|
+                xml_li << item.text
+                xml_li << item.content if item.blocks?
+              end
+            end
           end
         end
-        result << "</ul>"
+
         result
       end
 
@@ -86,28 +94,35 @@ module Asciidoctor
       #   . B
       def olist(node)
         result = []
+
         if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        spacing = set_header_attribute "spacing", "compact" if node.style == "compact"
-        spacing = get_header_attribute node, "spacing" if spacing.nil?
-        start = get_header_attribute node, "start"
-        group = get_header_attribute node, "group"
-        type = set_header_attribute "type", OLIST_TYPES[node.style.to_sym]
-        result << "<ol#{id}#{spacing}#{start}#{group}#{type}>"
-        node.items.each do |item|
-          id = set_header_attribute "anchor", item.id
-          if item.blocks?
-            result << "<li#{id}>#{item.text}"
-            result << item.content
-            result << "</li>"
-          else
-            result << "<li#{id}>#{item.text}</li>"
+
+        result << noko do |xml|
+          ol_attributes = {
+            anchor: node.id,
+            start: node.attr("start"),
+            group: node.attr("group"),
+            type: OLIST_TYPES[node.style.to_sym],
+            spacing: ("compact" if node.style == "compact") || node.attr("spacing"),
+          }.reject { |_, value| value.nil? }
+
+          xml.ol **ol_attributes do |xml_ol|
+            node.items.each do |item|
+              li_attributes = {
+                anchor: item.id,
+              }.reject { |_, value| value.nil? }
+
+              xml_ol.li **li_attributes do |xml_li|
+                xml_li << item.text
+                xml_li << item.content if item.blocks?
+              end
+            end
           end
         end
-        result << "</ol>"
+
         result
       end
 
@@ -118,31 +133,35 @@ module Asciidoctor
       #   C:: D
       def dlist(node)
         result = []
+
         if node.parent.context == :preamble && !$seen_abstract
           $seen_abstract = true
           result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        hanging = set_header_attribute "hanging", "true" if node.style == "horizontal"
-        spacing = set_header_attribute "spacing", "compact" if node.style == "compact"
-        result << "<dl#{id}#{hanging}#{spacing}>"
-        id = nil
-        node.items.each do |terms, dd|
-          [*terms].each do |dt|
-            result << "<dt>#{dt.text}</dt>"
-          end
-          if dd.blocks?
-            result << "<dd>"
-            if dd.text?
-              result << dd.text
+
+        result << noko do |xml|
+          dl_attributes = {
+            anchor: node.id,
+            hanging: ("true" if node.style == "horizontal"),
+            spacing: ("compact" if node.style == "compact"),
+          }.reject { |_, value| value.nil? }
+
+          xml.dl **dl_attributes do |xml_dl|
+            node.items.each do |terms, dd|
+              terms.each { |dt| xml_dl.dt dt.text }
+
+              xml_dl.dd do |xml_dd|
+                if dd.blocks?
+                  xml_dd << dd.text if dd.text?
+                  xml_dd << dd.content
+                else
+                  xml_dd << dd.text
+                end
+              end
             end
-            result << dd.content
-            result << "</dd>"
-          else
-            result << "<dd#{id}>#{dd.text}</dd>"
           end
         end
-        result << "</dl>"
+
         result
       end
     end
