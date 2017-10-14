@@ -2,6 +2,7 @@ require "asciidoctor"
 
 require "asciidoctor/rfc/version"
 require "asciidoctor/rfc/common/base"
+require "asciidoctor/rfc/common/front"
 require "asciidoctor/rfc/v2/base"
 require "asciidoctor/rfc/v2/front"
 require "asciidoctor/rfc/v2/lists"
@@ -20,6 +21,7 @@ module Asciidoctor
       include ::Asciidoctor::Writer
 
       include ::Asciidoctor::RFC::Common::Base
+      include ::Asciidoctor::RFC::Common::Front
       include ::Asciidoctor::RFC::V2::Base
       include ::Asciidoctor::RFC::V2::Front
       include ::Asciidoctor::RFC::V2::Lists

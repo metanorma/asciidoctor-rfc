@@ -53,10 +53,11 @@ module Asciidoctor
         result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{preptime}#{xmllang}
         #{version}#{submissionType}#{indexInclude}#{iprExtract}#{sortRefs}#{symRefs}#{tocInclude}#{tocDepth}>)
         result << (link node)
-        result << noko { |xml| front node, xml }
 
+        result << noko { |xml| front node, xml }
         result.last.last.gsub! /<\/front>$/, "" # FIXME: this is a hack!
         result << "</front><middle1>"
+
         result << node.content if node.blocks?
         result << ($seen_back_matter ? "</back>" : "</middle>")
         result << "</rfc>"
