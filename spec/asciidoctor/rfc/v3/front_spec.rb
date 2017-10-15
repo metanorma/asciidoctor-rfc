@@ -10,6 +10,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :area: horticulture
       :workgroup: IETF
       :keyword: widgets
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -24,6 +27,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <workgroup>IETF</workgroup>
       <keyword>widgets</keyword>
       </front><middle>
+             <section anchor="_section_1" numbered="false">
+                  
+                      <name>Section 1</name>
+                           
+                               <t>Text</t>
+                                    
+                                      </section>
       </middle>
       </rfc>
     OUTPUT

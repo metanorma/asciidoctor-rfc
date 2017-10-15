@@ -6,6 +6,9 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
+
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
@@ -14,6 +17,10 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
+      <t>text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -28,7 +35,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :consensus: false
       :obsoletes: 1, 2
       :updates: 10, 11
-      :index-include: index_include_value
+      :index-include: true
       :ipr-extract: ipr_extract_value
       :sort-refs: true
       :sym-refs: false
@@ -42,14 +49,13 @@ describe Asciidoctor::RFC::V3::Converter do
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" prepTime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IRTF" indexInclude="index_include_value" iprExtract="ipr_extract_value" sortRefs="true" symRefs="false" tocInclude="false" tocDepth="2">
+                version="3" submissionType="IRTF" indexInclude="true" iprExtract="ipr_extract_value" sortRefs="true" symRefs="false" tocInclude="false" tocDepth="2">
       <front>
       <title abbrev="abbrev">Document title</title>
       <author fullname="Author">
       </author>
       </front><middle>
       <section anchor="ipr_extract_value" numbered="false">
-                       
       <name>Section 1</name>
       <t>text</t>
       </section>
@@ -63,6 +69,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :docName:
       Author
 
+      == Section 1
+      text
+
       [appendix]
       == Appendix
       Lipsum.
@@ -75,6 +84,10 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
+      <t>text</t>
+      </section>
       </middle><back>
       <section anchor="_appendix" numbered="false">
       <name>Appendix</name>
