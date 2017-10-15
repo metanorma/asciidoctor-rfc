@@ -43,7 +43,7 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Para 1
 
-      ==== Subsection 1.1
+      === Subsection 1.1
       Para 1a
 
       :sectnums!:

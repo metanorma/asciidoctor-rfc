@@ -9,6 +9,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: informational
       :intended-series: bcp
       :submission-type: IRTF
+      
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -20,6 +23,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+       <section anchor="_section_1" numbered="false">
+     
+         <name>Section 1</name>
+     
+         <t>Text</t>
+     
+       </section>
       </middle>
       </rfc>
     OUTPUT
@@ -33,6 +43,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: full-standard
       :intended-series: fyi 1111
       :submission-type: IRTF
+      
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -44,6 +57,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+       <section anchor="_section_1" numbered="false">
+     
+         <name>Section 1</name>
+     
+         <t>Text</t>
+     
+       </section>
       </middle>
       </rfc>
     OUTPUT
@@ -57,6 +77,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: full-standard
       :intended-series: fyi 1111
       :submission-type: IRTF
+      
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -68,6 +91,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+       <section anchor="_section_1" numbered="false">
+     
+         <name>Section 1</name>
+     
+         <t>Text</t>
+     
+       </section>
       </middle>
       </rfc>
     OUTPUT
@@ -81,6 +111,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: full-standard
       :intended-series: historic
       :submission-type: IRTF
+      
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -92,6 +125,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+       <section anchor="_section_1" numbered="false">
+     
+         <name>Section 1</name>
+     
+         <t>Text</t>
+     
+       </section>
       </middle>
       </rfc>
     OUTPUT
