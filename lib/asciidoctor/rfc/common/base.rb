@@ -120,6 +120,24 @@ module Asciidoctor
         end
       end
 
+      # ulist repurposed as reference list
+      def reflist(node)
+        # ++++
+        # <xml>
+        # ++++
+        result = []
+        if node.context == :pass
+          node.lines.each do |item|
+            # undo XML substitution
+            ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
+            result << ref
+          end
+        else
+          warn %(asciidoctor: WARNING: references are not raw XML: #{node.context})
+        end
+        result
+      end
+
       def dash(camel_cased_word)
         camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
       end

@@ -8,37 +8,37 @@ module Asciidoctor
       #     * [[[ref4]]] C
       #     * [[[ref4]]] D
       # @note ulist repurposed as reference list
-      def reflist(node)
-        result = []
-        if node.context == :ulist
-          node.items.each do |item|
-            # we expect the biblio anchor to be right at the start of the reference
-            if item.blocks?
-              # we expect any list to be embedded, and only one level of embedding
-              # we expect no content in the referencegroup line other than the bibliographic anchor
-              result << "<referencegroup>#{item.text}".gsub(/<referencegroup>\s*\[?<bibanchor="([^"]+)">\]?.*$/, "<referencegroup anchor=\"\\1\">")
-              item.blocks.each { |b| result << reflist(b) }
-              result << "</referencegroup>"
-            else
-              # quoteTitle = get_header_attribute item, "quoteTitle"
-              # target = get_header_attribute item, "target"
-              # annotation = get_header_attribute item, "annotation"
-              # FIXME: [[[x]]] within embedded list is processed as [<bibref>]
-              result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference anchor=\"\\1\"><refcontent>")
-            end
-          end
-        elsif node.context == :pass
-          # we expect raw xml
-          node.lines.each do |item|
-            # undo XML substitution
-            ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
-            result << ref
-          end
-        else
-          warn %(asciidoctor: WARNING: references are not a ulist or raw XML: #{node.context})
-        end
-        result
-      end
+#      def reflist(node)
+#        result = []
+#        if node.context == :ulist
+#          node.items.each do |item|
+#            # we expect the biblio anchor to be right at the start of the reference
+#            if item.blocks?
+#              # we expect any list to be embedded, and only one level of embedding
+#              # we expect no content in the referencegroup line other than the bibliographic anchor
+#              result << "<referencegroup>#{item.text}".gsub(/<referencegroup>\s*\[?<bibanchor="([^"]+)">\]?.*$/, "<referencegroup anchor=\"\\1\">")
+#              item.blocks.each { |b| result << reflist(b) }
+#              result << "</referencegroup>"
+#            else
+#              # quoteTitle = get_header_attribute item, "quoteTitle"
+#              # target = get_header_attribute item, "target"
+#              # annotation = get_header_attribute item, "annotation"
+#              # FIXME: [[[x]]] within embedded list is processed as [<bibref>]
+#              result << "<reference>#{item.text}</refcontent></reference>".gsub(/<reference>\s*\[?<bibanchor="([^"]+)">\]?\s*/, "<reference anchor=\"\\1\"><refcontent>")
+#            end
+#          end
+#        elsif node.context == :pass
+#          # we expect raw xml
+#          node.lines.each do |item|
+#            # undo XML substitution
+#            ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
+#            result << ref
+#          end
+#        else
+#          warn %(asciidoctor: WARNING: references are not a ulist or raw XML: #{node.context})
+#        end
+#        result
+#      end
 
       # Syntax:
       #   [[id]]

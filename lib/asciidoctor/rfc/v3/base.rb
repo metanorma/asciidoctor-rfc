@@ -195,8 +195,17 @@ module Asciidoctor
           anchor_attribute = node.id.nil? ? nil : " anchor=\"#{node.id}\""
           result << "<references#{anchor_attribute}>"
           result << "<name>#{node.title}</name>" unless node.title.nil?
-          # require that references be given in a ulist
-          node.blocks.each { |b| result << reflist(b) }
+          # require that references be a :pass xml block
+          # potentially with an initial block of display reference equivalences
+          node.blocks.each do |b| 
+            if b.context == :pass
+              result << reflist(b) 
+            elsif b.context == :ulist
+              b.items.each do |i|
+                result1 = i.text # we only process the item for its displayreferences
+              end
+            end
+          end
           result << "</references>"
 
           unless $xreftext.empty?

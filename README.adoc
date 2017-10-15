@@ -911,49 +911,20 @@ Sidebar <2>
 
 === References
 
-==== v3 References
-
-This gem has limited support for the list presentation of references supported natively in Asciidoc. 
-However, raw RFC XML markup is preferred for entering references for v3 RFC XML, and it is the only
-method supported for v2 RFC XML.
-
-[source,asciidoc]
---
-[[id]] <1>
-[bibliography]
-== Normative References
-* [[[crossref]]]  Reference1 <2>
-* [[[crossref2,xreftext]]] Reference2 <3>
-
-[[id]] <1>
-[bibliography]
-== Informative References
-* [[[crossref3]]] <4>
-** [[[crossref4]]] Reference4 <5>
-** [[[crossref5]]] Reference5 <5>
---
-<1> `back/references@anchor`
-<2> `back/references/reference@anchor`, `back/references/reference/refcontent`
-<3> `<displayreference target=crossreference to=xyz/>`
-<4> `back/references/referencegroup@anchor`
-<5> `back/references/referencegroup/reference/refcontent`
-
-A referencegroup is identified if there is a nested list of references. Note that other Asciidoc
-renderers do not expect unordered lists of references to be nested, and they may have
-problems rendering such nested bibliographic lists.
-
-==== v2 and v3 References
-
-References for v2 are expected to be provided in raw RFC XML v2 format, and references
-for v3 are encouraged to be provided in raw RFC XML v3 format.
+References are expected to be provided in raw RFC XML v2 format. For v3, a list of crossreferences may
+precede the block of references, with alternative text. This will not be rendered, but it will be used
+to populate `displayreference` elements, mapping the reference anchors to display text. For example,
+a list entry `[[[ref1,alt1]]]` means that any instances of the anchor `ref1` should be displayed as `alt1`,
+and is rendered as `<displayreference target="ref1" to="alt1"/>`.
 
 [source,asciidoc]
 --
 [[id]] <1>
 [bibliography]
 == Normative References
+* [[[ref1,alt1]]] <2>
 ++++
-(raw XML) <2>
+(raw XML) <3>
 ++++
 
 [[id]] <1>
@@ -964,7 +935,8 @@ for v3 are encouraged to be provided in raw RFC XML v3 format.
 ++++
 --
 <1> `back/references@anchor`
-<2> `back/references/reference`
+<2> `back/displayreference@target`, `back/displayreference@to` (only in v3)
+<3> `back/references/reference`
 
 
 

@@ -1,23 +1,6 @@
 module Asciidoctor
   module RFC::V2
     module Lists
-      # ulist repurposed as reference list
-      def reflist(node)
-        # ++++
-        # <xml>
-        # ++++
-        result = []
-        if node.context == :pass
-          node.lines.each do |item|
-            # undo XML substitution
-            ref = item.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">")
-            result << ref
-          end
-        else
-          warn %(asciidoctor: WARNING: references are not raw XML: #{node.context})
-        end
-        result
-      end
 
       # Syntax:
       #   * A
