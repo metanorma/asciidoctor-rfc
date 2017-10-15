@@ -155,11 +155,28 @@ including built-in attributes and styles.
 Extension commands are provided to fully support writing an Internet-Draft/RFC
 in AsciiDoc/asciidoctor syntax.
 
-NOTE: The document model of Asciidoctor and RFC XML are different. In particular,
+[NOTE]
+====
+The document model of Asciidoctor and RFC XML are different. In particular,
+
 * Asciidoctor and RFC XML differ in where they allow anchors to be placed:
 Asciidoctor does not allow anchors within tables and lists, and RFC XML v3 does
 not permit anchors for the `note` or `abstract` elements, while RFC XML v2
 uses anchors for much fewer block elements (e.g. `artwork`, `list`.)
+* Asciidoctor has a more restrctive block model: it regards elements such as
+admonitions, lists, and tables as blocks, and does not allow them to be nested
+within paragraphs. 
+
+As a result, it may be necessary to postedit the RFC XML output, if the block
+model produced does not reflect the intended structure accurately.
+====
+
+NOTE: The gem validates all RFC XML generated through the RELAXNG schema definitions
+of RFC XML. While the gem attempts to generate valid RFC XML, some Asciidoctor
+text may not align with the RFC XML document model, and any highlighted syntax 
+errors will also need to be rectified in postediting, before processing the 
+generated XML further.
+
 
 === Document Type: `rfc` or `internet-draft` (Mandatory)
 
