@@ -7,7 +7,7 @@ describe Asciidoctor::RFC::V3::Converter do
       John Doe Horton <john.doe@email.com>
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
+      <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="John Doe Horton" surname="Horton">
@@ -28,7 +28,7 @@ describe Asciidoctor::RFC::V3::Converter do
       John Doe Horton <john.doe@email.com>; Joanna Diva Munez <joanna.munez@email.com>
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
+      <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="John Doe Horton" surname="Horton">
@@ -67,7 +67,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :code: 3333
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -127,7 +127,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :code_2: 44444
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -189,7 +189,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :code: 3333
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -236,7 +236,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :code: 3333
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -279,7 +279,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :code: 3333
     INPUT
        <?xml version="1.0" encoding="UTF-8"?>
-       <rfc preptime="1970-01-01T00:00:00Z"
+       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
        <front>     
          <title>Document title</title> 
@@ -321,7 +321,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :postal-line: 57 Mt Pleasant St\ Dullsville\ NSW\ Australia\ 3333
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -368,7 +368,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :code: 3333
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>

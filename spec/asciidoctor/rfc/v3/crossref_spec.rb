@@ -12,7 +12,7 @@ describe Asciidoctor::RFC::V3::Converter do
       http://example.com/[linktext]
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
@@ -48,7 +48,7 @@ describe Asciidoctor::RFC::V3::Converter do
       See <<crossreference,format=counter: text>>
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
@@ -95,7 +95,7 @@ describe Asciidoctor::RFC::V3::Converter do
       * [[[crossreference]]] Reference 1
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
@@ -140,7 +140,7 @@ describe Asciidoctor::RFC::V3::Converter do
       * [[[crossreference]]] Reference 1
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc preptime="1970-01-01T00:00:00Z"
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>

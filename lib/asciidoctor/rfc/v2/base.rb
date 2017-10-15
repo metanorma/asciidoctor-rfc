@@ -71,8 +71,9 @@ module Asciidoctor
         else
           result = result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
         end
-
-        result * "\n"
+        ret = result * "\n"
+        Validate::validate(ret)
+        ret
       end
 
       def inline_break(node)

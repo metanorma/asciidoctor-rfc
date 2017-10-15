@@ -7,6 +7,7 @@ require "asciidoctor/rfc/v3/front"
 require "asciidoctor/rfc/v3/lists"
 require "asciidoctor/rfc/v3/blocks"
 require "asciidoctor/rfc/v3/table"
+require "asciidoctor/rfc/v3/validate"
 
 module Asciidoctor
   module RFC::V3
@@ -25,6 +26,7 @@ module Asciidoctor
       include ::Asciidoctor::RFC::V3::Lists
       include ::Asciidoctor::RFC::V3::Blocks
       include ::Asciidoctor::RFC::V3::Table
+      include ::Asciidoctor::RFC::V3::Validate
 
       register_for "rfc3"
 

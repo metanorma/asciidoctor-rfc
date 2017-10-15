@@ -46,7 +46,7 @@ module Asciidoctor
         submissionType = get_header_attribute node, "submissionType", "IETF"
         xmllang = set_header_attribute "xml:lang", node.attr("xml-lang")
         t = Time.now.getutc
-        preptime = set_header_attribute("preptime",
+        preptime = set_header_attribute("prepTime",
                                         sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ",
                                                 t.year, t.month, t.day, t.hour, t.min, t.sec))
         version = set_header_attribute "version", "3"
@@ -68,8 +68,9 @@ module Asciidoctor
                  else
                    result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
                  end
-
-        result * "\n"
+        ret = result * "\n"
+        Validate::validate(ret)
+        ret
       end
 
       # Syntax:
