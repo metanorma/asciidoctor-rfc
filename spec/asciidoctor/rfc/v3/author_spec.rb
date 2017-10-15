@@ -5,6 +5,9 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       John Doe Horton <john.doe@email.com>
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
@@ -16,6 +19,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -26,6 +33,9 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       John Doe Horton <john.doe@email.com>; Joanna Diva Munez <joanna.munez@email.com>
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
@@ -42,6 +52,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -65,6 +79,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -88,6 +105,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -125,6 +146,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :region_2: VIC
       :country_2: UK
       :code_2: 44444
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -164,6 +188,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -187,6 +215,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -211,6 +242,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -234,6 +269,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -257,6 +295,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -277,11 +319,14 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
+
+      == Section 1
+      Text
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
-       <rfc prepTime="1970-01-01T00:00:00Z"
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
-       <front>     
+      <front>     
          <title>Document title</title> 
          <author role="editor">
            <organization>Ribose</organization>
@@ -299,9 +344,13 @@ describe Asciidoctor::RFC::V3::Converter do
              <uri>http://example.com</uri>
            </address>
          </author>
-       </front><middle>
-       </middle>
-       </rfc>
+      </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
+      </middle>
+      </rfc>
     OUTPUT
   end
 
@@ -319,6 +368,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :uri: http://example.com
       :phone: 555 5655
       :postal-line: 57 Mt Pleasant St\ Dullsville\ NSW\ Australia\ 3333
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -342,6 +394,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -366,6 +422,9 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
+
+      == Section 1
+      Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc prepTime="1970-01-01T00:00:00Z"
@@ -389,6 +448,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </address>
       </author>
       </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+        <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT

@@ -155,6 +155,12 @@ including built-in attributes and styles.
 Extension commands are provided to fully support writing an Internet-Draft/RFC
 in AsciiDoc/asciidoctor syntax.
 
+NOTE: The document model of Asciidoctor and RFC XML are different. In particular,
+* Asciidoctor and RFC XML differ in where they allow anchors to be placed:
+Asciidoctor does not allow anchors within tables and lists, and RFC XML v3 does
+not permit anchors for the `note` or `abstract` elements, while RFC XML v2
+uses anchors for much fewer block elements (e.g. `artwork`, `list`.)
+
 === Document Type: `rfc` or `internet-draft` (Mandatory)
 
 Set the `doctype` attribute to set status of this document:

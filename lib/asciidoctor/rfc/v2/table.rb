@@ -61,7 +61,7 @@ module Asciidoctor
               warn "asciidoctor: WARNING: RFC XML v2 tables do not support rowspan attribute" unless cell.rowspan.nil?
 
               ttcol_attributes = {
-                anchor: cell.id,
+                # NOTE: anchor (ttcol.id) not supported
                 align: cell.attr("halign"),
                 width: ("#{widths[i]}%" if !node.option?("autowidth") && (i < widths.size)),
               }.reject { |_, value| value.nil? }

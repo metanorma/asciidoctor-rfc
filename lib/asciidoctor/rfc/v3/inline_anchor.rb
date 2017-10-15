@@ -68,7 +68,6 @@ module Asciidoctor
 
       def inline_anchor_bibref(node)
         unless node.xreftext.nil?
-puts node.xreftext
           x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
           if node.id != x
             $xreftext[node.id] = x

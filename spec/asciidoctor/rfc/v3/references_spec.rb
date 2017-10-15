@@ -41,6 +41,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <name>Text</name>
       <t>Text</t>
       </section>
+      </middle><back>
       <references anchor="_references">
       <name>References</name>
       <reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>

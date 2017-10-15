@@ -21,7 +21,6 @@ module Asciidoctor
       #   ....
       def literal(node)
         artwork_attributes = {
-          anchor: node.id,
           align: node.attr("align"),
           type: node.attr("type"),
           name: node.title,
@@ -160,7 +159,6 @@ module Asciidoctor
       #   ----
       def listing(node)
         sourcecode_attributes = {
-          anchor: node.id,
           align: node.attr("align"),
           alt: node.alt,
           name: node.title,

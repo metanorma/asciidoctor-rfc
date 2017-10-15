@@ -221,7 +221,6 @@ module Asciidoctor
         artwork_attributes = {
           align: node.attr("align"),
           alt: node.alt,
-          anchor: node.id,
           height: node.attr("height"),
           name: node.title,
           src: uri,
