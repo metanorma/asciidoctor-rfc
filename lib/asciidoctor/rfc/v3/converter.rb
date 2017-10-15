@@ -2,10 +2,12 @@ require "asciidoctor"
 
 require "asciidoctor/rfc/version"
 require "asciidoctor/rfc/common/base"
+require "asciidoctor/rfc/common/front"
 require "asciidoctor/rfc/v3/base"
-require "asciidoctor/rfc/v3/front"
-require "asciidoctor/rfc/v3/lists"
 require "asciidoctor/rfc/v3/blocks"
+require "asciidoctor/rfc/v3/front"
+require "asciidoctor/rfc/v3/inline_anchor"
+require "asciidoctor/rfc/v3/lists"
 require "asciidoctor/rfc/v3/table"
 require "asciidoctor/rfc/v3/validate"
 
@@ -21,10 +23,12 @@ module Asciidoctor
       include ::Asciidoctor::Writer
 
       include ::Asciidoctor::RFC::Common::Base
+      include ::Asciidoctor::RFC::Common::Front
       include ::Asciidoctor::RFC::V3::Base
-      include ::Asciidoctor::RFC::V3::Front
-      include ::Asciidoctor::RFC::V3::Lists
       include ::Asciidoctor::RFC::V3::Blocks
+      include ::Asciidoctor::RFC::V3::Front
+      include ::Asciidoctor::RFC::V3::InlineAnchor
+      include ::Asciidoctor::RFC::V3::Lists
       include ::Asciidoctor::RFC::V3::Table
       include ::Asciidoctor::RFC::V3::Validate
 

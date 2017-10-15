@@ -36,111 +36,85 @@ module Asciidoctor
         $seen_abstract = false
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
-        doctype = node.attr "doctype"
-        is_rfc = (doctype == "rfc")
-        category = set_header_attribute "category", node.attr("status")
-        consensus_value = node.attr("consensus")
-        consensus_value  = "no" if consensus_value == "false"
-        consensus_value  = "yes" if consensus_value == "true"
-        consensus = set_header_attribute "consensus", consensus_value
-        if is_rfc
-          number = set_header_attribute "number", node.attr("name")
-        else
-          docName = set_header_attribute "docName", node.attr("name")
-        end
-        ipr = get_header_attribute node, "ipr"
-        iprExtract = get_header_attribute node, "iprExtract"
-        obsoletes = get_header_attribute node, "obsoletes"
-        updates = get_header_attribute node, "updates"
-        seriesNo = get_header_attribute node, "seriesNo"
-        submissionType = get_header_attribute node, "submissionType", "IETF"
-        xmllang = set_header_attribute "xml:lang", node.attr("xml-lang")
 
-        result << %(<rfc#{document_ns_attributes node}#{ipr}#{obsoletes}#{updates}#{category}
-        #{consensus}#{submissionType}#{iprExtract}#{docName}#{number}#{seriesNo}#{xmllang}>)
-        result << (front node)
+        is_rfc = node.attr("doctype") == "rfc"
+
+        consensus_value = {
+          "false" => "no",
+          "true" => "yes",
+        }[node.attr("consensus")] || node.attr("consensus")
+
+        rfc_attributes = {
+          ipr:            node.attr("ipr"),
+          obsoletes:      node.attr("obsoletes"),
+          updates:        node.attr("updates"),
+          category:       node.attr("status"),
+          consensus:      consensus_value,
+          submissionType: node.attr("submission-type") || "IETF",
+          iprExtract:     node.attr("ipr-extract"),
+          docName:        (node.attr("name") unless is_rfc),
+          number:         (node.attr("name") if is_rfc),
+          seriesNo:       node.attr("series-no"),
+          'xml:lang':     node.attr("xml-lang"),
+        }.reject { |_, value| value.nil? }
+
+        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, ">")
+        result << rfc_open
+
+        result << noko { |xml| front node, xml }
+        result.last.last.gsub! /<\/front>$/, "" # FIXME: this is a hack!
         result << "</front><middle1>"
+
         result << node.content if node.blocks?
         result << ($seen_back_matter ? "</back>" : "</middle>")
         result << "</rfc>"
 
         # <middle> needs to move after preamble
         result = result.flatten
-        if result.any? { |e| e =~ /<\/front><middle>/ } && result.any? { |e| e =~ /<\/front><middle1>/ }
-          result = result.reject { |e| e =~ /<\/front><middle1>/ }
-        else
-          result = result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
-        end
+        result = if result.any? { |e| e =~ /<\/front><middle>/ } && result.any? { |e| e =~ /<\/front><middle1>/ }
+                   result.reject { |e| e =~ /<\/front><middle1>/ }
+                 else
+                   result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
+                 end
+
         ret = result * "\n"
         Validate::validate(ret)
         ret
       end
 
       def inline_break(node)
-        %(#{node.text}<vspace/>)
+        noko do |xml|
+          xml << node.text
+          xml.vspace
+        end.join
       end
 
       def inline_quoted(node)
-        case node.type
-        when :emphasis
-          %(<spanx style="emph">#{node.text}</spanx>)
-        when :strong
-          %(<spanx style="strong">#{node.text}</spanx>)
-        when :monospaced
-          %(<spanx style="verb">#{node.text}</spanx>)
-        when :double
-          "\"#{node.text}\""
-        when :single
-          "'#{node.text}'"
-        when :superscript
-          "^#{node.text}^"
-        when :subscript
-          "_#{node.text}_"
-        else
-          # [bcp14]#MUST NOT#
-          if node.role == "bcp14"
-            %(<spanx style="strong">#{node.text.upcase}</spanx>)
+        noko do |xml|
+          case node.type
+          when :emphasis
+            xml.spanx node.text, style: "emph"
+          when :strong
+            xml.spanx node.text, style: "strong"
+          when :monospaced
+            xml.spanx node.text, style: "verb"
+          when :double
+            xml << "\"#{node.text}\""
+          when :single
+            xml << "'#{node.text}'"
+          when :superscript
+            xml << "^#{node.text}^"
+          when :subscript
+            xml << "_#{node.text}_"
           else
-            node.text
-          end
-        end
-      end
-
-      def inline_anchor(node)
-        case node.type
-        when :xref
-          text = node.text
-          format = nil
-          if text =~ /^format=(counter|title|none|default):/
-            /^format=(?<format>\S+):\s*(?<text1>.*)$/ =~ text
-            format = set_header_attribute "format", format
-            text = text1
-          end
-          target = set_header_attribute "target", node.target.gsub(/^#/, "")
-          %(<xref#{format}#{target}>#{text}</xref>)
-        when :link
-          text = node.text
-          text = nil if node.target == node.text
-          %(<eref target="#{node.target}">#{text}</eref>)
-        when :bibref
-          unless node.xreftext.nil?
-            x = node.xreftext.gsub(/^\[(.+)\]$/, "\\1")
-            if node.id != x
-              $xreftext[node.id] = x
+            # [bcp14]#MUST NOT#
+            if node.role == "bcp14"
+              xml.spanx node.text.upcase, style: "strong"
+            else
+              xml << node.text
             end
           end
-          # NOTE technically node.text should be node.reftext, but subs have already been applied to text
-          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-        when :ref
-          # If this is within referencegroup, output as bibanchor anyway
-          if $processing_reflist
-            %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-          else
-            warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
-          end
-        else
-          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
-        end
+        end.join
       end
 
       # Syntax:
@@ -148,23 +122,43 @@ module Asciidoctor
       #   Text
       def paragraph(node)
         result = []
-        if (node.parent.context == :preamble) && (not $seen_abstract)
-          result << "<abstract>"
+
+        if (node.parent.context == :preamble) && !$seen_abstract
           $seen_abstract = true
+          result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        result << "<t#{id}>#{node.content}</t>"
+
+        t_attributes = {
+          anchor: node.id,
+        }.reject { |_, value| value.nil? }
+
+        result << noko do |xml|
+          xml.t **t_attributes do |xml_t|
+            xml_t << node.content
+          end
+        end
+
         result
       end
 
       def verse(node)
         result = []
-        if (node.parent.context == :preamble) && (not $seen_abstract)
-          result << "<abstract>"
+
+        if (node.parent.context == :preamble) && !$seen_abstract
           $seen_abstract = true
+          result << "<abstract>"
         end
-        id = set_header_attribute "anchor", node.id
-        result << "<t#{id}>#{node.content.gsub("\n", "<br/>\n")}</t>"
+
+        t_attributes = {
+          anchor: node.id,
+        }.reject { |_, value| value.nil? }
+
+        result << noko do |xml|
+          xml.t **t_attributes do |xml_t|
+            xml_t << node.content.gsub("\n", "<br/>")
+          end
+        end
+
         result
       end
 
@@ -182,24 +176,36 @@ module Asciidoctor
         if node.attr("style") == "bibliography"
           $xreftext = {}
           $processing_reflist = true
-          title = set_header_attribute "title", node.title
-          result << "<references#{title}>"
-          # require that references be given in a ulist
-          node.blocks.each { |b| result << reflist(b) }
-          result << "</references>"
+
+          references_attributes = {
+            title: node.title,
+          }.reject { |_, value| value.nil? }
+
+          result << noko do |xml|
+            xml.references **references_attributes do |xml_references|
+              node.blocks.each { |b| xml_references << reflist(b).join }
+            end
+          end
+
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false
           $seen_back_matter = true
         else
-          id = set_header_attribute "anchor", node.id
           if node.attr("style") == "appendix"
             result << "</middle><back>" unless $seen_back_matter
             $seen_back_matter = true
           end
-          title = set_header_attribute "title", node.title
-          result << "<section#{id}#{title}>"
-          result << node.content
-          result << "</section>"
+
+          section_attributes = {
+            anchor: node.id,
+            title: node.title,
+          }.reject { |_, value| value.nil? }
+
+          result << noko do |xml|
+            xml.section **section_attributes do |xml_section|
+              xml_section << node.content
+            end
+          end
         end
         result
       end
@@ -211,20 +217,27 @@ module Asciidoctor
       #   image::filename[alt_text,width,height]
       # @note ignoring width, height attributes
       def image(node)
-        result = []
-        result << "<figure>" if node.parent.context != :example
-        id = set_header_attribute "anchor", node.id
-        align = get_header_attribute node, "align"
-        alt = set_header_attribute "alt", node.alt
-        link = (node.image_uri node.attr("target"))
-        src = set_header_attribute "src", link
-        type = get_header_attribute node, "type"
-        name = set_header_attribute "name", node.title
-        width = get_header_attribute node, "width"
-        height = get_header_attribute node, "height"
-        result << "<artwork#{id}#{name}#{align}#{alt}#{type}#{src}#{width}#{height}/>"
-        result << "</figure>" if node.parent.context != :example
-        result
+        uri = node.image_uri node.attr("target")
+        artwork_attributes = {
+          align: node.attr("align"),
+          alt: node.alt,
+          anchor: node.id,
+          height: node.attr("height"),
+          name: node.title,
+          src: uri,
+          type: node.attr("type"),
+          width: node.attr("width"),
+        }.reject { |_, value| value.nil? }
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork **artwork_attributes
+            end
+          else
+            xml.artwork **artwork_attributes
+          end
+        end
       end
     end
   end

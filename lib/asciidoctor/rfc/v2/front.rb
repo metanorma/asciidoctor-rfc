@@ -5,16 +5,15 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :METADATA
-      def front(node)
-        result = []
-        result << "<front>"
-        abbrev = get_header_attribute node, "abbrev"
-        result << "<title#{abbrev}>#{node.doctitle}</title>"
-        result << (author node)
-        result << (date node)
-        result << (area node)
-        result << (workgroup node)
-        result << (keyword node)
+      def front(node, xml)
+        xml.front do |xml_front|
+          title node, xml_front
+          author node, xml_front
+          date node, xml_front
+          area node, xml_front
+          workgroup node, xml_front
+          keyword node, xml_front
+        end
       end
 
       def organization(node, suffix, xml)
@@ -57,80 +56,10 @@ module Asciidoctor
 
       # Syntax:
       #   = Title
-      #   Author;Author_2;Author_3
-      #   :fullname
-      #   :lastname
-      #   :organization
-      #   :email
-      #   :fullname_2
-      #   :lastname_2
-      #   :organization_2
-      #   :email_2
-      #   :fullname_3
-      #   :lastname_3
-      #   :organization_3
-      #   :email_3
-      # @note recurse: author, author_2, author_3...
-      def author(node)
-        result = []
-        result << author1(node, "")
-        i = 2
-        loop do
-          suffix = "_#{i}"
-          author = node.attr("author#{suffix}")
-          fullname = node.attr("fullname#{suffix}")
-          if author.nil? && fullname.nil?
-            break
-          end
-          result << author1(node, suffix)
-          i += 1
-        end
-        result.flatten
-      end
-
-      # Syntax:
-      #   = Title
-      #   Author (contains author firstname lastname middlename authorinitials email: Firstname Middlename Lastname <Email>)
-      #   :fullname
-      #   :lastname
-      #   :forename_initials (excludes surname, unlike Asciidoc "initials" attribute)
-      #   :organization
-      #   :email
-      #   :role
-      #   :fax
-      #   :uri
-      #   :phone
-      #   :postalLine (mutually exclusive with street city etc) (lines broken up by "\ ")
-      #   :street
-      #   :city
-      #   :region
-      #   :country
-      #   :code
-      def author1(node, suffix)
-        noko do |xml|
-          author_attributes = {
-            fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
-            surname: node.attr("lastname#{suffix}"),
-            initials: node.attr("forename_initials#{suffix}"),
-            role: node.attr("role#{suffix}"),
-          }.reject { |_, value| value.nil? }
-
-          xml.author **author_attributes do |xml_sub|
-            organization node, suffix, xml_sub
-            address node, suffix, xml_sub
-          end
-        end
-      end
-
-      # Syntax:
-      #   = Title
       #   Author
       #   :revdate or :date
-      def date(node)
-        result = []
-        revdate = node.attr("revdate")
-        revdate = node.attr("date") if revdate.nil?
-        # date is mandatory in v2: use today
+      def date(node, xml)
+        revdate = node.attr("revdate") || node.attr("date")
         if revdate.nil?
           revdate = DateTime.now.iso8601
           warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
@@ -139,15 +68,16 @@ module Asciidoctor
           begin
             revdate.gsub!(/T.*$/, "")
             d = Date.iso8601 revdate
-            day = set_header_attribute "day", d.day
-            month = set_header_attribute "month", Date::MONTHNAMES[d.month]
-            year = set_header_attribute "year", d.year
-            result << "<date#{day}#{month}#{year}/>"
-          rescue
+            date_attributes = {
+              day: d.day,
+              month: Date::MONTHNAMES[d.month],
+              year: d.year,
+            }
+            xml.date **date_attributes
+          rescue ArgumentError # invalid date
             # nop
           end
         end
-        result
       end
     end
   end

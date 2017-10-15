@@ -44,27 +44,26 @@ module Asciidoctor
         result
       end
 
-      def authorname(node, suffix)
-        noko do |xml|
-          author_attributes = {
-            fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
-            surname: node.attr("lastname#{suffix}"),
-            initials: node.attr("forename_initials#{suffix}"),
-            role: node.attr("role#{suffix}"),
-          }.reject { |_, value| value.nil? }
-          xml.author **author_attributes
-        end
-      end
+      # TODO: dead code? remove.
+      # def authorname(node, suffix)
+      #   noko do |xml|
+      #     author_attributes = {
+      #       fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
+      #       surname: node.attr("lastname#{suffix}"),
+      #       initials: node.attr("forename_initials#{suffix}"),
+      #       role: node.attr("role#{suffix}"),
+      #     }.reject { |_, value| value.nil? }
+      #     xml.author **author_attributes
+      #   end
+      # end
 
       # Syntax:
       #   = Title
       #   Author
       #   :area x, y
-      def area(node)
-        noko do |xml|
-          node.attr("area")&.split(/, ?/)&.each do |ar|
-            xml.area ar
-          end
+      def area(node, xml)
+        node.attr("area")&.split(/, ?/)&.each do |ar|
+          xml.area ar
         end
       end
 
@@ -72,11 +71,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :workgroup x, y
-      def workgroup(node)
-        noko do |xml|
-          node.attr("workgroup")&.split(/, ?/)&.each do |wg|
-            xml.workgroup wg
-          end
+      def workgroup(node, xml)
+        node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+          xml.workgroup wg
         end
       end
 
@@ -84,11 +81,9 @@ module Asciidoctor
       #   = Title
       #   Author
       #   :keyword x, y
-      def keyword(node)
-        noko do |xml|
-          node.attr("keyword")&.split(/, ?/)&.each do |kw|
-            xml.keyword kw
-          end
+      def keyword(node, xml)
+        node.attr("keyword")&.split(/, ?/)&.each do |kw|
+          xml.keyword kw
         end
       end
 
@@ -98,8 +93,10 @@ module Asciidoctor
         if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
           result = result1
         else
-          id = set_header_attribute "anchor", node.id
-          result << "<t#{id}>#{result1}</t>"
+          t_attributes = {
+            anchor: node.id,
+          }.reject { |_, value| value.nil? }
+          result << noko { |xml| xml.t result1, **t_attributes }
         end
         result
       end
@@ -108,14 +105,18 @@ module Asciidoctor
         # supports only primary and secondary terms
         # primary attribute (highlighted major entry) not supported
         if node.type == :visible
-          item = set_header_attribute "item", node.text
-          "#{node.text}<iref#{item}/>"
+          iref_attributes = {
+            item: node.text,
+          }.reject { |_, value| value.nil? }
+          node.text + noko { |xml| xml.iref **iref_attributes }.join
         else
           terms = node.attr "terms"
-          item = set_header_attribute "item", terms[0]
-          subitem = set_header_attribute "subitem", (terms.size > 1 ? terms[1] : nil)
           warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2
-          "<iref#{item}#{subitem}/>"
+          iref_attributes = {
+            item: terms[0],
+            subitem: (terms.size > 1 ? terms[1] : nil),
+          }.reject { |_, value| value.nil? }
+          noko { |xml| xml.iref **iref_attributes }.join
         end
       end
 
@@ -126,36 +127,13 @@ module Asciidoctor
       # if node contains blocks, flatten them into a single line
       def flatten(node)
         result = []
+        result << node.text if node.respond_to?(:text)
         if node.blocks?
-          if node.respond_to?(:text)
-            result << node.text
-          end
           node.blocks.each { |b| result << flatten(b) }
         else
-          if node.respond_to?(:text)
-            result << node.text
-          end
           result << node.content
         end
-        result.reject { |e| e.empty? }
-      end
-
-      def get_header_attribute(node, attr, default = nil)
-        if node.attr? dash(attr)
-          %( #{attr}="#{node.attr dash(attr)}")
-        elsif default.nil?
-          nil
-        else
-          %( #{attr}="#{default}")
-        end
-      end
-
-      def set_header_attribute(attr, val)
-        if val.nil?
-          nil
-        else
-          %( #{attr}="#{val}")
-        end
+        result.reject(&:empty?)
       end
 
       def noko(&block)
