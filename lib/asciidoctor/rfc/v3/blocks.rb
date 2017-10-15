@@ -107,11 +107,6 @@ module Asciidoctor
       def admonition(node)
         result = []
         if node.parent.context == :preamble
-          if $seen_abstract
-            result << "</abstract>"
-            $seen_abstract = false
-          end
-
           note_attributes = {
             removeInRFC: node.attr("remove-in-rfc"),
           }.reject { |_, value| value.nil? }

@@ -48,11 +48,6 @@ module Asciidoctor
       def ulist(node)
         result = []
 
-        if node.parent.context == :preamble && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-
         result << noko do |xml|
           ul_attributes = {
             anchor: node.id,
@@ -96,11 +91,6 @@ module Asciidoctor
       def olist(node)
         result = []
 
-        if node.parent.context == :preamble && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-
         result << noko do |xml|
           ol_attributes = {
             anchor: node.id,
@@ -134,11 +124,6 @@ module Asciidoctor
       #   C:: D
       def dlist(node)
         result = []
-
-        if node.parent.context == :preamble && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
 
         result << noko do |xml|
           dl_attributes = {

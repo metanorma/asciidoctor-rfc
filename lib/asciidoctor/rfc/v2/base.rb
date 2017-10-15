@@ -33,7 +33,6 @@ module Asciidoctor
       #   == Appendix
       def document(node)
         $seen_back_matter = false
-        $seen_abstract = false
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -123,11 +122,6 @@ module Asciidoctor
       def paragraph(node)
         result = []
 
-        if (node.parent.context == :preamble) && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-
         t_attributes = {
           anchor: node.id,
         }.reject { |_, value| value.nil? }
@@ -143,11 +137,6 @@ module Asciidoctor
 
       def verse(node)
         result = []
-
-        if (node.parent.context == :preamble) && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
 
         t_attributes = {
           anchor: node.id,

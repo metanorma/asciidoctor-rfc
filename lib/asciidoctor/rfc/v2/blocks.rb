@@ -68,11 +68,6 @@ module Asciidoctor
       def admonition(node)
         result = []
         if node.parent.context == :preamble
-          if $seen_abstract
-            result << "</abstract>"
-            $seen_abstract = false
-          end
-
           note_attributes = {
             title: node.title,
           }.reject { |_, value| value.nil? }

@@ -35,7 +35,6 @@ module Asciidoctor
       register_for "rfc3"
 
       $seen_back_matter = false
-      $seen_abstract = false
       $xreftext = {}
 
       def initialize(backend, opts)
