@@ -35,6 +35,10 @@ describe Asciidoctor::RFC::V3::Converter do
       :toc-include: false
       :toc-depth: 2
       :submission-type: IRTF
+
+      [[ipr_extract_value]]
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" prepTime="1970-01-01T00:00:00Z"
@@ -44,6 +48,11 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       </front><middle>
+      <section anchor="ipr_extract_value" numbered="false">
+                       
+      <name>Section 1</name>
+      <t>text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
