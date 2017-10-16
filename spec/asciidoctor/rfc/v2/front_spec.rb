@@ -10,6 +10,9 @@ describe Asciidoctor::RFC::V2::Converter do
       :area: horticulture
       :workgroup: IETF
       :keyword: widgets
+      
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc
@@ -22,6 +25,11 @@ describe Asciidoctor::RFC::V2::Converter do
       <workgroup>IETF</workgroup>
       <keyword>widgets</keyword>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">
+     
+         <t>text</t>
+     
+      </section>
       </middle>
       </rfc>
     OUTPUT

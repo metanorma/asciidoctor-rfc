@@ -7,6 +7,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
 
+      == Section 1
       This ((indexterm))
       is visible in the text,
       this one is not (((indexterm, index-subterm))).
@@ -19,9 +20,11 @@ describe Asciidoctor::RFC::V2::Converter do
       <author fullname="Author"/>
       <date day="1" month="January" year="1970"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">
       <t>This indexterm<iref item="indexterm"/>
       is visible in the text,
       this one is not <iref item="indexterm" subitem="index-subterm"/>.</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -34,6 +37,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
 
+      == Section 1
       This ((indexterm))
       is visible in the text,
       this one with a tertiary term is not (((indexterm, index-subterm, index-subsubterm))).
@@ -46,9 +50,11 @@ describe Asciidoctor::RFC::V2::Converter do
       <author fullname="Author"/>
       <date day="1" month="January" year="1970"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">
       <t>This indexterm<iref item="indexterm"/>
       is visible in the text,
       this one with a tertiary term is not <iref item="indexterm" subitem="index-subterm"/>.</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT

@@ -19,10 +19,8 @@ describe Asciidoctor::RFC::V2::Converter do
       <date day="1" month="January" year="1970"/>
       <workgroup>first_workgroup</workgroup><workgroup>second_workgroup</workgroup>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">
-     
+      <section anchor="_section_1" title="Section 1">     
          <t>text</t>
-     
       </section>
       </middle>
       </rfc>

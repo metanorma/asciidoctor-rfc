@@ -44,8 +44,32 @@ describe Asciidoctor::RFC::V2::Converter do
 
       [bibliography]
       == Biblio
-      * Reference1
-
+      ++++
+      <reference anchor='ref' target='https://www.iso.org/standard/67116.html'>
+        <front>
+          <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
+          <author>
+            <organization>International Organization for Standardization</organization>
+            <address>
+              <postal>
+                <street>BIBC II</street>
+                <street>Chemin de Blandonnet 8</street>
+                <street>CP 401</street>
+                <city>Vernier</city>
+                <region>Geneva</region>
+                <code>1214</code>
+                <country>Switzerland</country>
+              </postal>
+              <phone>+41 22 749 01 11</phone>
+              <email>central@iso.org</email>
+              <uri>https://www.iso.org/</uri>
+            </address>
+          </author>
+          <date day='15' month='September' year='2017'/>
+        </front>
+      </reference>
+      ++++
+      
       == Appendix
       text
     INPUT
@@ -62,6 +86,29 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
       </middle><back>
       <references title="Biblio">
+      <reference anchor="ref" target="https://www.iso.org/standard/67116.html">
+         <front>
+           <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
+           <author>
+             <organization>International Organization for Standardization</organization>
+             <address>
+               <postal>
+                 <street>BIBC II</street>
+                 <street>Chemin de Blandonnet 8</street>
+                 <street>CP 401</street>
+                 <city>Vernier</city>
+                 <region>Geneva</region>
+                 <code>1214</code>
+                 <country>Switzerland</country>
+               </postal>
+               <phone>+41 22 749 01 11</phone>
+               <email>central@iso.org</email>
+               <uri>https://www.iso.org/</uri>
+             </address>
+           </author>
+           <date day="15" month="September" year="2017"/>
+         </front>
+      </reference>
       </references>
       <section anchor="_appendix" title="Appendix">
       <t>text</t>

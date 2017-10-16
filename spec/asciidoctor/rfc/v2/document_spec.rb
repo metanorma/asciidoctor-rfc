@@ -6,6 +6,9 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       Author
+      
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc
@@ -15,6 +18,11 @@ describe Asciidoctor::RFC::V2::Converter do
       <author fullname="Author"/>
       <date day="1" month="January" year="1970"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">
+     
+         <t>text</t>
+     
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -27,14 +35,14 @@ describe Asciidoctor::RFC::V2::Converter do
       :name: 1111
       :abbrev: abbrev
       :doctype: rfc
-      :ipr: ipr_value
+      :ipr: full3978
       :consensus: false
       :obsoletes: 1, 2
       :updates: 10, 11
       :index-include: index_include_value
       :ipr-extract: ipr_extract_value
       :submission-type: IRTF
-      :status: category1
+      :status: info
       :series-no: 12
       :xml-lang: en
 
@@ -43,7 +51,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
+      <rfc ipr="full3978" obsoletes="1, 2" updates="10, 11" category="info" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
       <front>
 
          <title abbrev="abbrev">Document title</title>
@@ -71,13 +79,13 @@ describe Asciidoctor::RFC::V2::Converter do
       :name: draft-03-draft
       :abbrev: abbrev
       :doctype: internet-draft
-      :ipr: ipr_value
+      :ipr: full3978
       :consensus: false
       :obsoletes: 1, 2
       :updates: 10, 11
       :ipr-extract: ipr_extract_value
       :submission-type: IRTF
-      :status: category1
+      :status: info
       :series-no: 12
       :xml-lang: en
 
@@ -86,7 +94,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
+      <rfc ipr="full3978" obsoletes="1, 2" updates="10, 11" category="info" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
       <front>
 
          <title abbrev="abbrev">Document title</title>
@@ -113,21 +121,30 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
 
+      == Section 1
+      Text
+
       [appendix]
       == Appendix
       Lipsum.
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc
-               submissionType="IETF">
+      <rfc submissionType="IETF">
       <front>
-      <title>Document title</title>
-      <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+         <title>Document title</title>
+         <author fullname="Author"/>
+         <date day="1" month="January" year="1970"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">
+     
+         <t>Text</t>
+     
+      </section>
       </middle><back>
       <section anchor="_appendix" title="Appendix">
-      <t>Lipsum.</t>
+     
+         <t>Lipsum.</t>
+     
       </section>
       </back>
       </rfc>

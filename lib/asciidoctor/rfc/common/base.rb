@@ -154,6 +154,23 @@ module Asciidoctor
         result.reject(&:empty?)
       end
 
+      # if node contains blocks, flatten them into a single line; and extract only raw text
+      def flatten_rawtext(node)
+        result = []
+        if node.blocks?
+          node.blocks.each { |b| result << flatten_rawtext(b) }
+        elsif node.respond_to?(:lines)
+          node.lines.each do |x|
+            result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+          end
+        elsif node.respond_to?(:text)
+          result << node.text.gsub(/<[^>]*>/,"")
+        else
+          result << node.content.gsub(/<[^>]*>/,"")
+        end
+        result.reject(&:empty?)
+      end
+
       def noko(&block)
         fragment = ::Nokogiri::XML::DocumentFragment.parse ""
         ::Nokogiri::XML::Builder.with fragment, &block

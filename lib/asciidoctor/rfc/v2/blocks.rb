@@ -90,7 +90,8 @@ module Asciidoctor
             source: node.attr("source"),
           }.reject { |_, value| value.nil? }
 
-          cref_contents = node.blocks? ? flatten(node) : node.content
+          # remove all formatting: cref content is pure text
+          cref_contents = node.blocks? ? flatten_rawtext(node) : flatten_rawtext(node)
           cref_contents = [cref_contents].flatten.join("\n")
           warn <<~WARNING_MESSAGE if node.blocks?
             asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}

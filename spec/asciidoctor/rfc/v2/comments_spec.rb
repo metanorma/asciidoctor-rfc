@@ -96,7 +96,7 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
-  it "uses full range of inline formatting within Asciidoc inline admonition" do
+  it "strips any inline formatting within Asciidoc inline admonition" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :abbrev: abbrev_value
@@ -110,7 +110,31 @@ describe Asciidoctor::RFC::V2::Converter do
       WARNING: Text _Text_ *Text* `Text` ~Text~ ^Text^ http://example.com/[linktext] <<ref>>
       [bibliography]
       == References
-      * [[[ref]]] Ref1
+      ++++
+      <reference anchor='ref' target='https://www.iso.org/standard/67116.html'>
+        <front>
+          <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
+          <author>
+            <organization>International Organization for Standardization</organization>
+            <address>
+              <postal>
+                <street>BIBC II</street>
+                <street>Chemin de Blandonnet 8</street>
+                <street>CP 401</street>
+                <city>Vernier</city>
+                <region>Geneva</region>
+                <code>1214</code>
+                <country>Switzerland</country>
+              </postal>
+              <phone>+41 22 749 01 11</phone>
+              <email>central@iso.org</email>
+              <uri>https://www.iso.org/</uri>
+            </address>
+          </author>
+          <date day='15' month='September' year='2017'/>
+        </front>
+      </reference>
+      ++++
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc submissionType="IETF">
@@ -124,11 +148,35 @@ describe Asciidoctor::RFC::V2::Converter do
      
      
       </front><middle>
-      <section anchor="sect1" title="Section1"><t>Text<cref>Text <spanx style="emph">Text</spanx> <spanx style="strong">Text</spanx> <spanx style="verb">Text</spanx> _Text_ ^Text^ <eref target="http://example.com/">linktext</eref> <xref target="ref"/></cref></t>
+      <section anchor="sect1" title="Section1"><t>Text<cref>Text _Text_ *Text* `Text` ~Text~ ^Text^ http://example.com/[linktext] &lt;&lt;ref&gt;&gt;</cref></t>
      
       </section>
       </middle><back>
-      <references title="References"/>
+      <references title="References">
+      <reference anchor="ref" target="https://www.iso.org/standard/67116.html">
+         <front>
+           <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
+           <author>
+             <organization>International Organization for Standardization</organization>
+             <address>
+               <postal>
+                 <street>BIBC II</street>
+                 <street>Chemin de Blandonnet 8</street>
+                 <street>CP 401</street>
+                 <city>Vernier</city>
+                 <region>Geneva</region>
+                 <code>1214</code>
+                 <country>Switzerland</country>
+               </postal>
+               <phone>+41 22 749 01 11</phone>
+               <email>central@iso.org</email>
+               <uri>https://www.iso.org/</uri>
+             </address>
+           </author>
+           <date day="15" month="September" year="2017"/>
+         </front>
+      </reference>
+      </references>
       </back>
       </rfc>
     OUTPUT
@@ -149,7 +197,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
       While werewolves are hardy community members, keep in mind the following dietary concerns:
 
-      . They are allergic to cinnamon.
+      . They are allergic to *cinnamon*.
       . More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
       . Celery makes them sad.
       ====

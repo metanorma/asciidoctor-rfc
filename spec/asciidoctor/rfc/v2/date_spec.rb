@@ -7,6 +7,9 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :revdate: 2070-01-01T00:00:00Z
+      
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc
@@ -16,6 +19,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <author fullname="Author"/>
       <date day="1" month="January" year="2070"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">     
+         <t>text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -27,6 +33,9 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :date: 1970-01-01T00:00:00Z
+      
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc
@@ -36,6 +45,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <author fullname="Author"/>
       <date day="1" month="January" year="1970"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">     
+         <t>text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
@@ -48,6 +60,9 @@ describe Asciidoctor::RFC::V2::Converter do
       Author
       :revdate: 2070-01-01T00:00:00Z
       :date: 1970-01-01T00:00:00Z
+      
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc
@@ -57,6 +72,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <author fullname="Author"/>
       <date day="1" month="January" year="2070"/>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">     
+         <t>text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
