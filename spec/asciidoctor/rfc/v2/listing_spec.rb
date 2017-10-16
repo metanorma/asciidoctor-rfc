@@ -13,7 +13,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ----
     INPUT
       <figure>
-        <artwork anchor="literal-id" name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
+        <artwork name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
         </artwork>
       </figure>
     OUTPUT
@@ -32,7 +32,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ----
     INPUT
       <figure>
-      <artwork anchor="literal-id" name="filename.rb" type="ruby">
+      <artwork name="filename.rb" type="ruby">
       def listing(node)
         result = []
         result &lt;&lt; "&lt;figure&gt;" if node.parent.context != :example

@@ -14,7 +14,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <figure anchor="id" align="left" alt="Alt Text" title="Figure 1" suppress-title="true">
-      <artwork anchor="id2" name="figure1.txt">
+      <artwork name="figure1.txt">
       Figures are only permitted to contain listings (sourcecode), images (artwork), or literal (artwork)
       </artwork>
       </figure>

@@ -78,7 +78,7 @@ module Asciidoctor
                    result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
                  end
         ret = result * "\n"
-        ret = cleanup ret
+        #ret = cleanup ret
         Validate::validate(ret)
         ret
       end

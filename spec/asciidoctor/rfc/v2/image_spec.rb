@@ -8,7 +8,7 @@ describe Asciidoctor::RFC::V2::Converter do
       image::http:://www.example/org/filename.jpg[]
     INPUT
       <figure>
-      <artwork anchor="id" name="Title" align="center" alt="alt_text" type="img/jpeg" src="http:://www.example/org/filename.jpg"/>
+      <artwork name="Title" align="center" alt="alt_text" type="img/jpeg" src="http:://www.example/org/filename.jpg"/>
       </figure>
     OUTPUT
   end
@@ -19,7 +19,7 @@ describe Asciidoctor::RFC::V2::Converter do
       image::http:://www.example/org/filename.jpg[alt_text,300,200]
     INPUT
       <figure>
-      <artwork anchor="id" name="Title" alt="alt_text" src="http:://www.example/org/filename.jpg" width="300" height="200"/>
+      <artwork name="Title" alt="alt_text" src="http:://www.example/org/filename.jpg" width="300" height="200"/>
       </figure>
     OUTPUT
   end
