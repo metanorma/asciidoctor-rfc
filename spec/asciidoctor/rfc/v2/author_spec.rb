@@ -120,7 +120,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :fullname_2: Billy Bob Thornton
       :lastname_2: Thornton
       :forename_initials_2: B. B.
-      :role_2: author
+      :role_2: editor
       :organization_2: International Business Machines
       :organization_abbrev_2: IBM
       :fax_2: 555 6666
@@ -154,7 +154,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <uri>http://example.com</uri>
          </address>
       </author>
-      <author fullname="Billy Bob Thornton" surname="Thornton" initials="B. B." role="author">
+      <author fullname="Billy Bob Thornton" surname="Thornton" initials="B. B." role="editor">
          <organization abbrev="IBM">International Business Machines</organization>
          <address>
            <postal>

@@ -111,7 +111,7 @@ module Asciidoctor
           node.text + noko { |xml| xml.iref **iref_attributes }.join
         else
           terms = node.attr "terms"
-          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}") if terms.size > 2
+          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}) if terms.size > 2
           iref_attributes = {
             item: terms[0],
             subitem: (terms.size > 1 ? terms[1] : nil),

@@ -643,7 +643,7 @@ This is another note <3>
 <2> `front/abstract`
 <3> `front/note`
 <4> v3 only: `front/note@removeInRFC` (attribute only available in v3)
-<5> v3: `front/note/name`; v2: `front/note@title`
+<5> v3: `front/note/name`; v2: `front/note@title` (mandatory attribute; if not provided, `NOTE` is supplied)
 
 
 === Sections and Subsections
@@ -779,7 +779,7 @@ Any admonition inside the body of the text is a comment.
 <1> `<cref>Any admonition inside the body of the text is a comment.</cref>`
 <2> `cref@anchor`
 <3> v3 only: `cref@display` (not supported in v2); v2: `cref@source`
-<4> v3 only: `cref/name`
+<4> v3 only: `cref/name` (not suppported in v2)
 
 
 === Source Code Listings

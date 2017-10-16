@@ -6,6 +6,9 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :workgroup: first_workgroup, second_workgroup
+      
+      == Section 1
+      text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc
@@ -16,6 +19,11 @@ describe Asciidoctor::RFC::V2::Converter do
       <date day="1" month="January" year="1970"/>
       <workgroup>first_workgroup</workgroup><workgroup>second_workgroup</workgroup>
       </front><middle>
+      <section anchor="_section_1" title="Section 1">
+     
+         <t>text</t>
+     
+      </section>
       </middle>
       </rfc>
     OUTPUT

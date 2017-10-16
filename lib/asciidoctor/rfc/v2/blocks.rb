@@ -73,7 +73,8 @@ module Asciidoctor
           end
 
           note_attributes = {
-            title: node.title,
+            # default title provided: title is mandatory
+            title: (node.title.nil? ? "NOTE" : node.title),
           }.reject { |_, value| value.nil? }
 
           note_contents = [paragraph1(node)].flatten.join("\n")

@@ -64,8 +64,6 @@ describe Asciidoctor::RFC::V2::Converter do
       Author
       :docName:
 
-      NOTE: This is a note.
-
       [NOTE]
       .Title of Note
       ====
@@ -82,10 +80,45 @@ describe Asciidoctor::RFC::V2::Converter do
       <title>Document title</title>
       <author fullname="Author"/>
       <date day="1" month="January" year="1970"/>
-      <note>
+      <note title="Title of Note">
+      <t>This is another note.</t>
+      </note>
+      </front><middle>
+      <section anchor="_lorem" title="Lorem">
+      <t>Ipsum.</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+  
+  it "supplies default titles for notes" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+      :docName:
+
+      NOTE: This is a note.
+
+      [NOTE]
+      ====
+      This is another note.
+      ====
+
+      == Lorem
+      Ipsum.
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title>Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      <note title="NOTE">
       <t>This is a note.</t>
       </note>
-      <note title="Title of Note">
+      <note title="NOTE">
       <t>This is another note.</t>
       </note>
       </front><middle>

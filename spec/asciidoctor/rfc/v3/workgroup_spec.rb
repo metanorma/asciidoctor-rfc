@@ -19,10 +19,10 @@ describe Asciidoctor::RFC::V3::Converter do
       <workgroup>first_workgroup</workgroup>
       <workgroup>second_workgroup</workgroup>
       </front><middle>
-             <section anchor="_section_1" numbered="false">
-                      <name>Section 1</name>
-                               <t>Text</t>
-                                      </section>
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
+      <t>Text</t>
+      </section>
       </middle>
       </rfc>
     OUTPUT
