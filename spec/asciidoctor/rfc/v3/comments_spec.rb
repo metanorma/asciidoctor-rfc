@@ -261,4 +261,18 @@ describe Asciidoctor::RFC::V3::Converter do
       </rfc>
     OUTPUT
   end
+
+  it "has a comment at the start of a section" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      NOTE: This is an initial note
+
+      Text
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+    OUTPUT
+  end
 end

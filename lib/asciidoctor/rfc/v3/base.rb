@@ -78,6 +78,7 @@ module Asciidoctor
                    result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
                  end
         ret = result * "\n"
+        ret = cleanup ret
         Validate::validate(ret)
         ret
       end
@@ -263,6 +264,25 @@ module Asciidoctor
             end
           else
             xml.artwork **artwork_attributes
+          end
+        end
+      end
+
+      # clean up XML
+      def cleanup(doc)
+        xml = Nokogiri::XML(doc)
+        crefs = xml.xpath("//cref")
+        # any crefs that are direct children of section should become children of the preceding
+        # paragraph, if it exists; otherwise, they need to be wrapped in a paragraph
+        crefs.each do |cref|
+          if cref.parent.name == "section"
+            if !cref.previous_sibling.nil? && cref.previous_sibling.name == "t"
+              cref.parent = cref.previous_sibling
+            else
+              t = Nokogiri::XML::Node.new("t", doc)
+              t.parent = cref.parent
+              cref.parent = t
+            end
           end
         end
       end

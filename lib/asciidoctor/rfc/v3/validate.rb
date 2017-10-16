@@ -5,7 +5,7 @@ module Asciidoctor
     module Validate
       class << self
         def validate(doc)
-          schemadoc = relaxng
+          schemadoc = relaxng()
           schema = Nokogiri::XML::RelaxNG(schemadoc)
           schema.validate(Nokogiri::XML(doc)).each do |error|
             puts "RELAXNG Validation: #{error.message}"
@@ -14,7 +14,7 @@ module Asciidoctor
 
         def relaxng
           svg_location = File.join(File.dirname(__FILE__), "svg.rng")
-          <<~RELAXNG
+          <<RELAXNG
             <?xml version="1.0" encoding="UTF-8"?>
             <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
               <!-- xml2rfc Version 3 grammar -->
