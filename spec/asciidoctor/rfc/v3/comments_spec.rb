@@ -10,7 +10,7 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section1
       Text
       //Ignorable comment
-      
+
       ////
         Multiblock ignorable comment
       ////

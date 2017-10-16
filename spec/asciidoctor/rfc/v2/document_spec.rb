@@ -45,19 +45,19 @@ describe Asciidoctor::RFC::V2::Converter do
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
       <front>
-     
+
          <title abbrev="abbrev">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="1970"/>
-     
-     
+
+
       </front><middle>
       <section anchor="ipr_extract_value" title="Section 1">
-     
+
          <t>Text</t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -88,19 +88,19 @@ describe Asciidoctor::RFC::V2::Converter do
       <?xml version="1.0" encoding="UTF-8"?>
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" category="category1" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
       <front>
-     
+
          <title abbrev="abbrev">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="1970"/>
-     
-     
+
+
       </front><middle>
       <section anchor="ipr_extract_value" title="Section 1">
-     
+
          <t>Text</t>
-     
+
       </section>
       </middle>
       </rfc>

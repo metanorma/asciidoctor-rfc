@@ -9,7 +9,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: informational
       :intended-series: bcp
       :submission-type: IRTF
-      
+
       == Section 1
       Text
     INPUT
@@ -24,11 +24,11 @@ describe Asciidoctor::RFC::V3::Converter do
       </author>
       </front><middle>
        <section anchor="_section_1" numbered="false">
-     
+
          <name>Section 1</name>
-     
+
          <t>Text</t>
-     
+
        </section>
       </middle>
       </rfc>
@@ -43,7 +43,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: full-standard
       :intended-series: fyi 1111
       :submission-type: IRTF
-      
+
       == Section 1
       Text
     INPUT
@@ -58,11 +58,11 @@ describe Asciidoctor::RFC::V3::Converter do
       </author>
       </front><middle>
        <section anchor="_section_1" numbered="false">
-     
+
          <name>Section 1</name>
-     
+
          <t>Text</t>
-     
+
        </section>
       </middle>
       </rfc>
@@ -77,7 +77,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: full-standard
       :intended-series: fyi 1111
       :submission-type: IRTF
-      
+
       == Section 1
       Text
     INPUT
@@ -92,11 +92,11 @@ describe Asciidoctor::RFC::V3::Converter do
       </author>
       </front><middle>
        <section anchor="_section_1" numbered="false">
-     
+
          <name>Section 1</name>
-     
+
          <t>Text</t>
-     
+
        </section>
       </middle>
       </rfc>
@@ -111,7 +111,7 @@ describe Asciidoctor::RFC::V3::Converter do
       :status: full-standard
       :intended-series: historic
       :submission-type: IRTF
-      
+
       == Section 1
       Text
     INPUT
@@ -126,11 +126,11 @@ describe Asciidoctor::RFC::V3::Converter do
       </author>
       </front><middle>
        <section anchor="_section_1" numbered="false">
-     
+
          <name>Section 1</name>
-     
+
          <t>Text</t>
-     
+
        </section>
       </middle>
       </rfc>

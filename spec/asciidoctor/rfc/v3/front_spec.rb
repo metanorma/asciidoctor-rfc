@@ -28,11 +28,11 @@ describe Asciidoctor::RFC::V3::Converter do
       <keyword>widgets</keyword>
       </front><middle>
              <section anchor="_section_1" numbered="false">
-                  
+
                       <name>Section 1</name>
-                           
+
                                <t>Text</t>
-                                    
+
                                       </section>
       </middle>
       </rfc>
