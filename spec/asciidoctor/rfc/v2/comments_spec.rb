@@ -45,20 +45,19 @@ describe Asciidoctor::RFC::V2::Converter do
       NOTE: This is a note
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc
-               submissionType="IETF">
+      <rfc submissionType="IETF">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+         <date day="1" month="January" year="1970"/>
+     
+     
       </front><middle>
-      <section anchor="_section1" title="Section1">
-      <t>Text</t>
-      <t>
-      <cref>
-      This is a note
-      </cref>
-      </t>
+      <section anchor="_section1" title="Section1"><t>Text<cref>This is a note</cref></t>
+     
       </section>
       </middle>
       </rfc>
@@ -78,20 +77,19 @@ describe Asciidoctor::RFC::V2::Converter do
       WARNING: This is a note
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc
-               submissionType="IETF">
+      <rfc submissionType="IETF">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+         <date day="1" month="January" year="1970"/>
+     
+     
       </front><middle>
-      <section anchor="_section1" title="Section1">
-      <t>Text</t>
-      <t>
-      <cref>
-      This is a note
-      </cref>
-      </t>
+      <section anchor="_section1" title="Section1"><t>Text<cref>This is a note</cref></t>
+     
       </section>
       </middle>
       </rfc>
@@ -115,24 +113,22 @@ describe Asciidoctor::RFC::V2::Converter do
       * [[[ref]]] Ref1
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc
-               submissionType="IETF">
+      <rfc submissionType="IETF">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+         <date day="1" month="January" year="1970"/>
+     
+     
       </front><middle>
-      <section anchor="sect1" title="Section1">
-      <t>Text</t>
-      <t>
-      <cref>
-      Text <spanx style="emph">Text</spanx> <spanx style="strong">Text</spanx> <spanx style="verb">Text</spanx> _Text_ ^Text^ <eref target="http://example.com/">linktext</eref> <xref target="ref"></xref>
-      </cref>
-      </t>
+      <section anchor="sect1" title="Section1"><t>Text<cref>Text <spanx style="emph">Text</spanx> <spanx style="strong">Text</spanx> <spanx style="verb">Text</spanx> _Text_ ^Text^ <eref target="http://example.com/">linktext</eref> <xref target="ref"/></cref></t>
+     
       </section>
       </middle><back>
-      <references title="References">
-      </references>
+      <references title="References"/>
       </back>
       </rfc>
     OUTPUT
@@ -159,23 +155,31 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc
-               submissionType="IETF">
+      <rfc submissionType="IETF">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+         <date day="1" month="January" year="1970"/>
+     
+     
       </front><middle>
-      <section anchor="_section1" title="Section1">
-      <t>Text</t>
-      <t>
-      <cref>
-      While werewolves are hardy community members, keep in mind the following dietary concerns:
+      <section anchor="_section1" title="Section1"><t>Text<cref>While werewolves are hardy community members, keep in mind the following dietary concerns:
+     
+     
+     
       They are allergic to cinnamon.
+     
+     
+     
       More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
-      Celery makes them sad.
-      </cref>
-      </t>
+     
+     
+     
+      Celery makes them sad.</cref></t>
+     
       </section>
       </middle>
       </rfc>
@@ -200,21 +204,48 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc
-               submissionType="IETF">
+      <rfc submissionType="IETF">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+         <date day="1" month="January" year="1970"/>
+     
+     
       </front><middle>
-      <section anchor="_section1" title="Section1">
-      <t>Text</t>
-      <t>
-      <cref anchor="id" source="GBS">
-      Any admonition inside the body of the text is a comment.
-      </cref>
-      </t>
+      <section anchor="_section1" title="Section1"><t>Text<cref anchor="id" source="GBS">Any admonition inside the body of the text is a comment.</cref></t>
+     
       </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+  
+    it "has a comment at the start of a section" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      NOTE: This is an initial note
+
+      Text
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <front>
+     
+         <title>Document title</title>
+     
+         <author fullname="Author"/>
+     
+     
+      </front><middle>
+      <section anchor="_section_1" numbered="false"><name>Section 1</name><t><cref>This is an initial note</cref></t>
+     
+      <t>Text</t></section>
       </middle>
       </rfc>
     OUTPUT

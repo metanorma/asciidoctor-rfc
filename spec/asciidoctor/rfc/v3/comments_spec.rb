@@ -45,18 +45,17 @@ describe Asciidoctor::RFC::V3::Converter do
       NOTE: This is a note
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc prepTime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+     
       </front><middle>
-      <section anchor="_section1" numbered="false">
-      <name>Section1</name>
-      <t>Text</t>
-      <cref>
-      This is a note
-      </cref>
+      <section anchor="_section1" numbered="false"><name>Section1</name><t>Text<cref>This is a note</cref></t>
+     
       </section>
       </middle>
       </rfc>
@@ -76,18 +75,17 @@ describe Asciidoctor::RFC::V3::Converter do
       WARNING: This is a note
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc prepTime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+     
       </front><middle>
-      <section anchor="_section1" numbered="false">
-      <name>Section1</name>
-      <t>Text</t>
-      <cref>
-      This is a note
-      </cref>
+      <section anchor="_section1" numbered="false"><name>Section1</name><t>Text<cref>This is a note</cref></t>
+     
       </section>
       </middle>
       </rfc>
@@ -136,22 +134,22 @@ describe Asciidoctor::RFC::V3::Converter do
       ++++
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
-      <rfc prepTime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author"/>
+     
+         <title abbrev="abbrev_value">Document title</title>
+     
+         <author fullname="Author"/>
+     
+     
       </front><middle>
-      <section anchor="sect1" numbered="false">
-      <name>Section1</name>
-      <t>Text</t>
-      <cref>
-      Text <em>Text</em> <strong>Text</strong> <tt>Text</tt> <sub>Text</sub> <sup>Text</sup> <eref target="http://example.com/">linktext</eref> <xref target="ref"></xref> <relref relative="fragment" section="section" displayFormat="bare" target="crossreference">text</relref>       </cref>
+      <section anchor="sect1" numbered="false"><name>Section1</name><t>Text<cref>Text <em>Text</em> <strong>Text</strong> <tt>Text</tt> <sub>Text</sub> <sup>Text</sup> <eref target="http://example.com/">linktext</eref> <xref target="ref"/> <relref relative="fragment" section="section" displayFormat="bare" target="crossreference">text</relref></cref></t>
+     
       </section>
       </middle><back>
       <references anchor="_references">
       <name>References</name>
-      <reference anchor='ref' target='https://www.iso.org/standard/67116.html'>
+      <reference anchor="ref" target="https://www.iso.org/standard/67116.html">
          <front>
            <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
            <author>
@@ -171,7 +169,7 @@ describe Asciidoctor::RFC::V3::Converter do
                <uri>https://www.iso.org/</uri>
              </address>
            </author>
-           <date day='15' month='September' year='2017'/>
+           <date day="15" month="September" year="2017"/>
          </front>
       </reference>
       </references>
@@ -209,13 +207,13 @@ describe Asciidoctor::RFC::V3::Converter do
       </front><middle>
       <section anchor="_section1" numbered="false">
       <name>Section1</name>
-      <t>Text</t>
+      <t>Text
       <cref>
       While werewolves are hardy community members, keep in mind the following dietary concerns:
       They are allergic to cinnamon.
       More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
       Celery makes them sad.
-      </cref>
+      </cref></t>
       </section>
       </middle>
       </rfc>
@@ -249,10 +247,10 @@ describe Asciidoctor::RFC::V3::Converter do
       </front><middle>
       <section anchor="_section1" numbered="false">
       <name>Section1</name>
-      <t>Text</t>
+      <t>Text
       <cref anchor="id" display="true" source="GBS">
       Any admonition inside the body of the text is a comment.
-      </cref>
+      </cref></t>
       </section>
       </middle>
       </rfc>
@@ -273,6 +271,21 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <front>
+                   
+      <title>Document title</title>
+                            
+      <author fullname="Author"/>
+                                     
+                                     
+      </front><middle>
+      <section anchor="_section_1" numbered="false"><name>Section 1</name>
+      <t><cref>This is an initial note</cref></t>
+                                                   
+      <t>Text</t></section>
+      </middle>
+      </rfc>
     OUTPUT
   end
 end

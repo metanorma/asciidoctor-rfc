@@ -96,14 +96,14 @@ module Asciidoctor
           WARNING_MESSAGE
 
           result << noko do |xml|
-            if node.parent.context !~ /table|example|paragraph/
+            if node.parent.context !~ /table|example|paragraph|section/
               xml.t do |xml_t|
                 xml_t.cref **cref_attributes do |xml_cref|
                   xml_cref << cref_contents
                 end
               end
             else
-              xml_t.cref **cref_attributes do |xml_cref|
+              xml.cref **cref_attributes do |xml_cref|
                 xml_cref << cref_contents
               end
             end

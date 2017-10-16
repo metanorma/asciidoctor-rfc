@@ -78,7 +78,7 @@ module Asciidoctor
                    result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
                  end
         ret = result * "\n"
-        #ret = cleanup ret
+        ret = cleanup ret
         Validate::validate(ret)
         ret
       end
@@ -270,21 +270,23 @@ module Asciidoctor
 
       # clean up XML
       def cleanup(doc)
-        xml = Nokogiri::XML(doc)
-        crefs = xml.xpath("//cref")
+        xmldoc = Nokogiri::XML(doc)
+        crefs = xmldoc.xpath("//cref")
         # any crefs that are direct children of section should become children of the preceding
         # paragraph, if it exists; otherwise, they need to be wrapped in a paragraph
         crefs.each do |cref|
           if cref.parent.name == "section"
-            if !cref.previous_sibling.nil? && cref.previous_sibling.name == "t"
-              cref.parent = cref.previous_sibling
+            prev = cref.previous_element
+            if !prev.nil? && prev.name == "t"
+              cref.parent = prev
             else
-              t = Nokogiri::XML::Node.new("t", doc)
-              t.parent = cref.parent
+              t = Nokogiri::XML::Element.new("t", xmldoc)
+              cref.before(t)
               cref.parent = t
             end
           end
         end
+        xmldoc.to_s
       end
     end
   end
