@@ -197,9 +197,9 @@ module Asciidoctor
           result << "<name>#{node.title}</name>" unless node.title.nil?
           # require that references be a :pass xml block
           # potentially with an initial block of display reference equivalences
-          node.blocks.each do |b| 
+          node.blocks.each do |b|
             if b.context == :pass
-              result << reflist(b) 
+              result << reflist(b)
             elsif b.context == :ulist
               b.items.each do |i|
                 result1 = i.text # we only process the item for its displayreferences

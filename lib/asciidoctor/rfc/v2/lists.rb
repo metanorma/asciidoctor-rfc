@@ -1,7 +1,6 @@
 module Asciidoctor
   module RFC::V2
     module Lists
-
       # Syntax:
       #   * A
       #   * B
