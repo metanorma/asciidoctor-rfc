@@ -2,6 +2,10 @@ require "spec_helper"
 describe Asciidoctor::RFC::V2::Converter do
   it "renders a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       [[id]]
       [suppress-title=false,align=left,grid=cols]
       .Table Title
@@ -17,6 +21,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" title="Section 1">
       <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
       <ttcol align="left" width="50%"> head</ttcol>
       <ttcol align="left" width="50%">head</ttcol>
@@ -33,11 +38,16 @@ describe Asciidoctor::RFC::V2::Converter do
       <c>foot</c>
       <c>foot</c>
       </texttable>
+      </section>
     OUTPUT
   end
 
   it "ignores cell anchors in a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       [[id]]
       [suppress-title=false,align=left,grid=cols]
       .Table Title
@@ -53,6 +63,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" title="Section 1">
       <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
       <ttcol align="left" width="50%"> head</ttcol>
       <ttcol align="left" width="50%">head</ttcol>
@@ -69,11 +80,16 @@ describe Asciidoctor::RFC::V2::Converter do
       <c>foot</c>
       <c>foot</c>
       </texttable>
+      </section>
     OUTPUT
   end
 
   it "ignores colspan and rowspan in table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       [[id]]
       [suppress-title=false,align=left,grid=cols]
       .Table Title
@@ -92,6 +108,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" title="Section 1">
       <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
       <ttcol align="left" width="50%"> head</ttcol>
       <ttcol align="left" width="50%">head</ttcol>
@@ -112,10 +129,15 @@ describe Asciidoctor::RFC::V2::Converter do
       <c>foot</c>
       <c>foot</c>
       </texttable>
+      </section>
     OUTPUT
   end
   it "renders inline formatting within a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       .Table Title
       |===
       |head | head
@@ -129,6 +151,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" title="Section 1">
       <texttable title="Table Title" suppress-title="false" style="all">
          <ttcol align="left" width="50%">head</ttcol>
          <ttcol align="left" width="50%">head</ttcol>
@@ -145,10 +168,15 @@ describe Asciidoctor::RFC::V2::Converter do
          <c>foot</c>
          <c>foot</c>
       </texttable>
+      </section>
     OUTPUT
   end
   it "ignores block formatting within a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       [cols="2"]
       .Table Title
       |===
@@ -166,6 +194,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" title="Section 1">
       <texttable title="Table Title" suppress-title="false" style="all">
          <ttcol align="left" width="50%">head</ttcol>
          <ttcol align="left" width="50%">head</ttcol>
@@ -183,6 +212,7 @@ describe Asciidoctor::RFC::V2::Converter do
          <c>foot</c>
          <c>foot</c>
       </texttable>
+      </section>
     OUTPUT
   end
 

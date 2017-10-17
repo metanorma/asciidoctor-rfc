@@ -62,7 +62,7 @@ David Waitzman <dwaitzman@BBN.COM>
 :abbrev: IP Datagrams on Avian Carriers
 :obsoletes: 10, 120
 :updates: 2010, 2120
-:category: info
+:status: info
 :name: internet-draft-avian-transmission-00
 :ipr: trust200902
 :area: Internet

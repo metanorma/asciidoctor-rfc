@@ -2,32 +2,53 @@ require "spec_helper"
 describe Asciidoctor::RFC::V3::Converter do
   it "renders an ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
       [[id]]
       [start=3,group=5,arabic,spacing=compact]
       . First
       . Second
     INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <ol anchor="id" spacing="compact" start="3" group="5" type="1">
       <li>First</li>
       <li>Second</li>
       </ol>
+      </section>
     OUTPUT
   end
   it "ignores anchors on list items" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
       [[id]]
       [start=3,group=5,arabic,spacing=compact]
       . First
       . [[id1]] Second
     INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <ol anchor="id" spacing="compact" start="3" group="5" type="1">
       <li>First</li>
       <li>Second</li>
       </ol>
+      </section>
     OUTPUT
   end
   it "renders a nested ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
       [[id]]
       [loweralpha]
       . First
@@ -38,6 +59,8 @@ describe Asciidoctor::RFC::V3::Converter do
       . Fifth
       . Sixth
     INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <ol anchor="id" type="a">
       <li>First</li>
       <li>Second
@@ -49,10 +72,16 @@ describe Asciidoctor::RFC::V3::Converter do
       <li>Fifth</li>
       <li>Sixth</li>
       </ol>
+      </section>
     OUTPUT
   end
   it "renders a nested ordered/unordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
       [[id]]
       [lowerroman]
       . First
@@ -60,6 +89,8 @@ describe Asciidoctor::RFC::V3::Converter do
       ** Third
       ** Fourth
     INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <ol anchor="id" type="i">
       <li>First</li>
       <li>Second
@@ -69,32 +100,49 @@ describe Asciidoctor::RFC::V3::Converter do
       </ul>
       </li>
       </ol>
+      </section>
     OUTPUT
   end
   it "renders decimal lists as arabic" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
       [[id]]
       [decimal]
       . First
       . Second
     INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <ol anchor="id" type="1">
       <li>First</li>
       <li>Second</li>
       </ol>
+      </section>
     OUTPUT
   end
   it "renders lowergreek lists as arabic" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
       [[id]]
       [lowergreek]
       . First
       . Second
     INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <ol anchor="id" type="1">
       <li>First</li>
       <li>Second</li>
       </ol>
+      </section>
     OUTPUT
   end
 end

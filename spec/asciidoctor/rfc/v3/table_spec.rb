@@ -2,6 +2,10 @@ require "spec_helper"
 describe Asciidoctor::RFC::V3::Converter do
   it "renders a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       [[id]]
       .Table Title
       |===
@@ -18,6 +22,8 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" numbered="false">    
+      <name>Section 1</name>
       <table anchor="id">
       <name>Table Title</name>
       <thead>
@@ -63,10 +69,15 @@ describe Asciidoctor::RFC::V3::Converter do
       </tr>
       </tbody>
       </table>
+      </section>
     OUTPUT
   end
   it "ignores cell anchors in a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       [[id]]
       .Table Title
       |===
@@ -83,6 +94,8 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" numbered="false">    
+      <name>Section 1</name>
       <table anchor="id">
       <name>Table Title</name>
       <thead>
@@ -128,10 +141,15 @@ describe Asciidoctor::RFC::V3::Converter do
       </tr>
       </tbody>
       </table>
+      </section>
     OUTPUT
   end
   it "renders inline formatting within a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
       .Table Title
       |===
       |head | head
@@ -145,6 +163,8 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" numbered="false">    
+      <name>Section 1</name>
       <table>
          <name>Table Title</name>
          <thead>
@@ -180,10 +200,16 @@ describe Asciidoctor::RFC::V3::Converter do
            </tr>
          </tbody>
       </table>
+      </section>
     OUTPUT
   end
   it "renders block formatting within a table" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+    
+      == Section 1
       [cols="2"]
       .Table Title
       |===
@@ -201,6 +227,8 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
+      <section anchor="_section_1" numbered="false">    
+      <name>Section 1</name>
       <table>
          <name>Table Title</name>
          <thead>
@@ -241,6 +269,7 @@ describe Asciidoctor::RFC::V3::Converter do
            </tr>
          </tbody>
       </table>
+      </section>
     OUTPUT
   end
 end

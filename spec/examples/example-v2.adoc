@@ -1,9 +1,10 @@
 = RFC XML v2 Example: A Standard for the Transmission of IP Datagrams on Avian Carriers
 David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
+:doctype: rfc
 :abbrev: IP Datagrams on Avian Carriers
 :obsoletes: 10, 120
 :updates: 2010, 2120
-:category: info
+:status: info
 :name: rfc-1149
 :ipr: trust200902
 :area: Internet
@@ -47,7 +48,7 @@ The scroll of paper is wrapped around one leg of the avian carrier.
 A band of duct tape is used to secure the datagram's edges.  The
 bandwidth is limited to the leg length.  The MTU is variable, and
 paradoxically, generally increases with increased carrier age.  A
-typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
+typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253,alt>>
 
 Upon receipt, the duct tape is removed and the paper copy of the
 datagram is optically scanned into a electronically transmittable

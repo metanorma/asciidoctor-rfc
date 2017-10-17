@@ -67,8 +67,14 @@ module Asciidoctor
               }.reject { |_, value| value.nil? }
 
               xml_ul.li **li_attributes do |xml_li|
-                xml_li << item.text
-                xml_li << item.content if item.blocks?
+                if item.blocks?
+                  xml_li.t do |t|
+                    t << item.text
+                  end
+                  xml_li << item.content 
+                else
+                  xml_li << item.text
+                end
               end
             end
           end
@@ -86,7 +92,7 @@ module Asciidoctor
           lowerroman: "i",
           upperalpha: "A",
           upperroman: "I",
-        ).freeze
+      ).freeze
 
       # Syntax:
       #   [[id]]
@@ -117,8 +123,14 @@ module Asciidoctor
               }.reject { |_, value| value.nil? }
 
               xml_ol.li **li_attributes do |xml_li|
-                xml_li << item.text
-                xml_li << item.content if item.blocks?
+                if item.blocks?
+                  xml_li.t do |t|
+                    t << item.text
+                  end
+                  xml_li << item.content 
+                else
+                  xml_li << item.text
+                end
               end
             end
           end
@@ -152,11 +164,17 @@ module Asciidoctor
               terms.each { |dt| xml_dl.dt dt.text }
 
               xml_dl.dd do |xml_dd|
-                if dd.blocks?
-                  xml_dd << dd.text if dd.text?
-                  xml_dd << dd.content
-                else
-                  xml_dd << dd.text
+                if !dd.nil?
+                  if dd.blocks?
+                    if dd.text?
+                      xml_dd.t do |t|
+                        t << dd.text if dd.text?
+                      end
+                    end
+                    xml_dd << dd.content
+                  else
+                    xml_dd << dd.text
+                  end
                 end
               end
             end
