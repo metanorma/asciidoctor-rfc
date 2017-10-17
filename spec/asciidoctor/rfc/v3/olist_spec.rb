@@ -63,7 +63,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <name>Section 1</name>
       <ol anchor="id" type="a">
       <li>First</li>
-      <li>Second
+      <li><t>Second</t>
       <ol type="A">
       <li>Third</li>
       <li>Fourth</li>
@@ -93,7 +93,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <name>Section 1</name>
       <ol anchor="id" type="i">
       <li>First</li>
-      <li>Second
+      <li><t>Second</t>
       <ul>
       <li>Third</li>
       <li>Fourth</li>

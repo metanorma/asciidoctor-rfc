@@ -39,7 +39,7 @@ describe Asciidoctor::RFC::V3::Converter do
     INPUT
       <ul anchor="id">
       <li>First</li>
-      <li>Second
+      <li><t>Second</t>
       <ul>
       <li>Third</li>
       <li>Fourth</li>
@@ -62,7 +62,7 @@ describe Asciidoctor::RFC::V3::Converter do
     INPUT
       <ul anchor="id">
       <li>First</li>
-      <li>Second
+      <li><t>Second</t>
       <ol type="i">
       <li>Third</li>
       <li>Fourth</li>
