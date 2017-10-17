@@ -30,7 +30,7 @@ describe Asciidoctor::RFC::V3::Converter do
       </dl>
     OUTPUT
   end
-  it "renders hybrid description list" do
+  it "renders nested description list/ulist" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       Dairy::
       * Milk
@@ -56,6 +56,39 @@ describe Asciidoctor::RFC::V3::Converter do
       </dd>
       <dt>Produce</dt>
       <dd>
+      <ul>
+      <li>Bananas</li>
+      </ul>
+      </dd>
+      </dl>
+    OUTPUT
+  end
+  it "renders hybrid nested description list/ulist" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      Dairy:: That is,
+      * Milk
+      * Eggs
+      Bakery:: Namely,
+      * Bread
+      Produce:: Viz.,
+      * Bananas
+    INPUT
+      <dl>
+      <dt>Dairy</dt>
+      <dd><t>That is,</t>
+      <ul>
+      <li>Milk</li>
+      <li>Eggs</li>
+      </ul>
+      </dd>
+      <dt>Bakery</dt>
+      <dd><t>Namely,</t>
+      <ul>
+      <li>Bread</li>
+      </ul>
+      </dd>
+      <dt>Produce</dt>
+      <dd><t>Viz.,</t>
       <ul>
       <li>Bananas</li>
       </ul>
