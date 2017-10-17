@@ -999,7 +999,7 @@ asciidoctor commands:
 | `reference@target`               | N          | N
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
-| `table@style = headers`           | N/A        | N
+| `table@style = headers`          | N/A        | N
 | `artwork@width`                  | Only on images | Only on images
 | `artwork@height`                 | Only on images | Only on images
 |===
@@ -1017,9 +1017,11 @@ These asciidoctor features are not supported in output of these formats:
 | http://asciidoctor.org/docs/user-manual/#index-terms[Index Term]: Tertiary 2+| Ignored
 | List: http://asciidoctor.org/docs/user-manual/#numbering-styles[Ordered List numbering] `decimal`, `lowergreek` 2+| Treated as `arabic`
 | http://asciidoctor.org/docs/user-manual/#callouts[Callouts] 2+| Ignored
+| http://asciidoctor.org/docs/user-manual/#admonition[Adminitions: formatting] | Ignored | Supported
 | Formatting: http://asciidoctor.org/docs/user-manual/#discrete-headings[Floating Title] 2+| Rendered as strong paragraph
 | Formatting: http://asciidoctor.org/docs/user-manual/#page-break[Page Break] 2+| Ignored
 | Formatting: http://asciidoctor.org/docs/user-manual/#horizontal-rules[Horizontal Rule] 2+| Ignored
+| Formatting: http://asciidoctor.org/docs/user-manual/#line-breaks[Line breaks] | Supported | Only supported within table cells
 | Media: http://asciidoctor.org/docs/user-manual/#audio[Audio] 2+| Ignored
 | Media: http://asciidoctor.org/docs/user-manual/#video[Video] 2+| Ignored
 | Media: http://asciidoctor.org/docs/user-manual/#images[Inline images] 2+| Ignored
@@ -1033,6 +1035,7 @@ These asciidoctor features are not supported in output of these formats:
 | Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: frame] 2+| Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: rowspan] | Ignored | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: colspan] | Ignored | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: Asciidoctor formatting (blocks within cells)] | Ignored | Supported
 |===
 
 
