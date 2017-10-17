@@ -93,13 +93,28 @@ are used in a tactical environment.<<pp>>
 
 [bibliography]
 == References
-
-* <bib><text>1</text></bib>
-* +++<bib><text>1</text></bib>+++
-* [[[pp]]] 
-** [[[xxx]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
-  From Journeyman to Master. Addison-Wesley. 1999.
-** [[[xxxx]]] 1ac Gidday.
-* [[[gof,2]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides. Design Patterns:
-  Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
-* <bib><text>1</text></bib>
+[bibliography]
+== References
+++++
+<reference anchor='SM2' target='http://www.oscca.gov.cn/UpFile/2010122214822692.pdf'>
+  <front>
+    <title>Public Key Cryptographic Algorithm SM2 Based on Elliptic Curves</title>
+    <author>
+      <organization>Organization of State Commercial Administration of China</organization>
+      <address>
+        <postal>
+         <street>7 Dian Chang Lu, Fengtai Qu</street>
+         <city>Beijing</city>
+         <region>Beijing</region>
+         <code>100036</code>
+         <country>People's Republic of China</country>
+        </postal>
+        <phone>+86 (0)10 5970-3789</phone>
+        <!--<email>contact@oscca.gov.cn</email>-->
+        <uri>http://www.oscca.gov.cn</uri>
+      </address>
+    </author>
+    <date month='December' year='2010'/>
+  </front>
+</reference>
+++++
