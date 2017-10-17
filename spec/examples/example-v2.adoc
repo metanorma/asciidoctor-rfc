@@ -93,7 +93,7 @@ y^2 = x^3 + ax + b
 
 ==== Curve Parameters
 
-[[curveparam1]
+[[curveparam1]]
 .Curve Parameters Listing
 ====
 ....

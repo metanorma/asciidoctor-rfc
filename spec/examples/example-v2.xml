@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rfc ipr="trust200902" obsoletes="10, 120" updates="2010, 2120" category="info" submissionType="IETF" number="rfc-1149">
+<front>
+
+  <title abbrev="IP Datagrams on Avian Carriers">RFC XML v2 Example: A Standard for the Transmission of IP Datagrams on Avian Carriers</title>
+
+  <author fullname="David Waitzman" surname="Waitzman">
+
+    <organization>BBN STC</organization>
+
+    <address>
+
+      <postal>
+
+        <street>10 Moulton Street</street>
+
+        <city>Cambridge</city>
+
+        <code>MA 02238</code>
+
+      </postal>
+
+      <phone>(617) 873-4323</phone>
+
+      <email>dwaitzman@BBN.COM</email>
+
+      <uri>http://bbn.com</uri>
+
+    </address>
+
+  </author>
+
+  <author fullname="Nick Nicholas" surname="Nicholas">
+
+    <organization>BBN STC</organization>
+
+    <address>
+
+      <postal>
+
+        <street>10 Moulton Street</street>
+
+        <city>Cambridge</city>
+
+        <code>MA 02238</code>
+
+      </postal>
+
+      <phone>(617) 873-4323</phone>
+
+      <email>opoudjis@gmail.com</email>
+
+      <uri>http://opoudjis.net</uri>
+
+    </address>
+
+  </author>
+
+  <date day="1" month="April" year="1990"/>
+
+  <area>Internet</area>
+
+  <workgroup>Network Working Group</workgroup>
+
+  <keyword>this</keyword>
+
+  <keyword>that</keyword>
+
+
+<abstract>
+<t>Avian carriers can provide high delay, low throughput, and low
+
+altitude service.  The connection topology is limited to a single
+
+point-to-point path for each carrier, used with standard carriers,
+
+but many carriers can be used without significant interference with
+
+each other, outside of early spring.  This is because of the 3D ether
+
+space available to the carriers, in contrast to the 1D ether used by
+
+IEEE802.3.  The carriers have an intrinsic collision avoidance
+
+system, which increases availability.  Unlike some network
+
+technologies, such as packet radio, communication is not limited to
+
+line-of-sight distance.  Connection oriented service is available in
+
+some cities, usually based upon a central hub topology.</t>
+</abstract>
+<note title="NOTE">
+
+  <t>Yes, this is an April Fool&amp;#8217;s RFC.</t>
+
+</note>
+</front><middle>
+<section anchor="frame" title="Frame Format"><t>The IP <spanx style="emph">datagram</spanx> is <spanx style="strong">printed</spanx>, on a small scroll of paper, in
+
+
+
+hexadecimal, with each octet separated by whitestuff and blackstuff.
+
+
+
+The scroll of paper is wrapped around one leg of the avian carrier.
+
+
+
+A band of duct tape is used to secure the datagram’s edges.  The
+
+
+
+bandwidth is limited to the leg length.  The MTU is variable, and
+
+
+
+paradoxically, generally increases with increased carrier age.  A
+
+
+
+typical MTU is 256 milligrams.  Some datagram padding may be needed.<xref target="RFC7253">alt</xref></t>
+
+<t>Upon receipt, the duct tape is removed and the paper copy of the
+
+
+
+datagram is optically scanned into a electronically transmittable
+
+
+
+form.<xref target="RFC7253"/></t>
+
+<t>This document extends OpenPGP and its ECC extension to support SM2, SM3 and SM4:</t>
+
+<t>
+
+
+
+  <list style="symbols">
+
+
+
+    <t>support the SM3 hash algorithm for data validation purposes</t>
+
+
+
+    <t>support signatures utilizing the combination of SM3 with other digital
+
+
+
+signing algorithms, such as RSA, ECDSA and SM2</t>
+
+
+
+    <t>support the SM2 asymmetric encryption algorithm for public key
+
+
+
+operations</t>
+
+
+
+    <t>support usage of SM2 in combination with supported hash algorithms, such as
+
+
+
+SHA-256 and SM3</t>
+
+
+
+    <t>support the SM4 symmetric encryption algorithm for data protection purposes</t>
+
+
+
+    <t>defines the OpenPGP profile "OSCCA-SM234" to enable usage of OpenPGP
+
+
+
+in an OSCCA-compliant manner.</t>
+
+
+
+  </list>
+
+
+
+</t>
+
+<t>Algorithm-Specific Fields for SM2DSA keys:</t>
+
+<t>
+
+
+
+  <list style="symbols">
+
+
+
+    <t>a variable-length field containing a curve OID, formatted
+
+
+
+as follows:<list style="format %c">
+
+
+
+
+
+
+
+  <t>a one-octet size of the following field; values 0 and
+
+
+
+
+
+
+
+0xFF are reserved for future extensions</t>
+
+
+
+
+
+
+
+  <t>octets representing a curve OID.</t>
+
+
+
+
+
+
+
+</list></t>
+
+
+
+    <t>MPI of an EC point representing a public key</t>
+
+
+
+  </list>
+
+
+
+</t>
+
+<section anchor="_definitions" title="Definitions"><t>
+
+
+
+
+
+
+
+  <list style="hanging">
+
+
+
+
+
+
+
+    <t hangText="OSCCA-compliant">All cryptographic algorithms used are compliant with OSCCA  regulations.</t>
+
+
+
+
+
+
+
+    <t hangText="SM2DSA">The elliptic curve digital signature algorithm. <xref target="ISO.IEC.10118-3"/></t>
+
+
+
+
+
+
+
+    <t hangText="SM2KEP">The elliptic curve key exchange protocol.</t>
+
+
+
+
+
+
+
+    <t hangText="SM2PKE">The public key encryption algorithm.</t>
+
+
+
+
+
+
+
+  </list>
+
+
+
+
+
+
+
+</t>
+
+
+
+<section anchor="_elliptic_curve_formula" title="Elliptic Curve Formula">
+
+
+
+
+
+
+
+  <figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <artwork>y^2 = x^3 + ax + b</artwork>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</figure>
+
+
+
+
+
+
+
+</section>
+
+
+
+<section anchor="_curve_parameters" title="Curve Parameters">
+
+
+
+
+
+
+
+  <figure anchor="curveparam1" title="Curve Parameters Listing">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <artwork>p   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      FFFFFFFF 00000000 FFFFFFFF FFFFFFFF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      FFFFFFFF 00000000 FFFFFFFF FFFFFFFC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b   = 28E9FA9E 9D9F5E34 4D5A9E4B CF6509A7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      F39789F5 15AB8F92 DDBCBD41 4D940E93
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n   = FFFFFFFE FFFFFFFF FFFFFFFF FFFFFFFF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      7203DF6B 21C6052B 53BBF409 39D54123
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x_G = 32C4AE2C 1F198119 5F990446 6A39C994
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      8FE30BBF F2660BE1 715A4589 334C74C7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+y_G = BC3736A2 F4F6779C 59BDCEE3 6B692153
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      D0A9877C C62A4740 02DF32E5 2139F0A0</artwork>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</figure>
+
+
+
+
+
+
+
+</section></section></section>
+<section anchor="_supported_algorithms" title="Supported Algorithms">
+
+  <section anchor="_public_key_algorithms" title="Public Key Algorithms"><t>The SM2 algorithm is supported with the following extension.<cref>ECDH is defined in Section 8 of this document.</cref></t>
+
+
+
+
+
+
+
+<t>The following public key algorithm IDs are added to expand Section
+
+
+
+
+
+
+
+9.1 of RFC4880, "Public-Key Algorithms":</t>
+
+
+
+<texttable title="Table 2" suppress-title="false" style="all">
+
+
+
+
+
+
+
+  <ttcol align="left" width="50%">ID</ttcol>
+
+
+
+
+
+
+
+  <ttcol align="left" width="50%">Description of Algorithm</ttcol>
+
+
+
+
+
+
+
+  <c>TBD</c>
+
+
+
+
+
+
+
+  <c>SM2</c>
+
+
+
+
+
+
+
+</texttable></section>
+
+</section>
+<section anchor="_security_considerations" title="Security Considerations">
+
+  <t>Security is not generally a problem in normal operation, but special<vspace/>
+
+
+
+measures <spanx style="strong">MUST</spanx> be taken (such as data encryption) when avian carriers
+
+
+
+are used in a tactical environment.<xref target="RFC7253"/>, <xref target="ISO.IEC.10118-3"/></t>
+
+</section>
+</middle><back>
+<references title="References">
+
+  <reference anchor="ISO.IEC.10118-3" target="https://www.iso.org/standard/67116.html">  <front>    <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>    <author>      <organization>International Organization for Standardization</organization>      <address>        <postal>          <street>BIBC II</street>          <street>Chemin de Blandonnet 8</street>          <street>CP 401</street>          <city>Vernier</city>          <region>Geneva</region>          <code>1214</code>          <country>Switzerland</country>        </postal>        <phone>+41 22 749 01 11</phone>        <email>central@iso.org</email>        <uri>https://www.iso.org/</uri>      </address>    </author>    <date day="15" month="September" year="2017"/>  </front></reference>
+
+  <reference anchor="RFC7253" target="https://tools.ietf.org/html/rfc7253">  <front>    <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>    <author initials="T." surname="Krovetz">      <organization>Sacramento State</organization>    </author>    <author initials="P." surname="Rogaway">      <organization>UC Davis</organization>    </author>    <date month="May" year="2014"/>  </front>  <seriesInfo name="RFC" value="7253"/></reference>
+
+</references>
+</back>
+</rfc>
