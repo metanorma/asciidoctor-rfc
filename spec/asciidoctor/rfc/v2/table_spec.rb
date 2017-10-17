@@ -114,4 +114,76 @@ describe Asciidoctor::RFC::V2::Converter do
       </texttable>
     OUTPUT
   end
+  it "renders inline formatting within a table" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      .Table Title
+      |===
+      |head | head
+
+      h|header cell | *body* _cell_
+      | | body cell<<x>>
+      ^|centre aligned cell | cell
+      <|left aligned cell | cell
+      >|right aligned cell | cell
+
+      |foot | foot
+      |===
+    INPUT
+      <texttable title="Table Title" suppress-title="false" style="all">
+         <ttcol align="left" width="50%">head</ttcol>
+         <ttcol align="left" width="50%">head</ttcol>
+         <c>header cell</c>
+         <c><spanx style="strong">body</spanx> <spanx style="emph">cell</spanx></c>
+         <c/>
+         <c>body cell<xref target="x"/></c>
+         <c>centre aligned cell</c>
+         <c>cell</c>
+         <c>left aligned cell</c>
+         <c>cell</c>
+         <c>right aligned cell</c>
+         <c>cell</c>
+         <c>foot</c>
+         <c>foot</c>
+      </texttable>
+    OUTPUT
+  end
+  it "ignores block formatting within a table" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      [cols="2"]
+      .Table Title
+      |===
+      |head | head
+
+      h|header cell 
+      a| 
+      * List 1
+      * List 2
+      | | body cell<<x>>
+      ^|centre aligned cell | cell
+      <|left aligned cell | cell
+      >|right aligned cell | cell
+
+      |foot | foot
+      |===
+    INPUT
+      <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
+      <ttcol align="left" width="50%"> head</ttcol>
+      <ttcol align="left" width="50%">head</ttcol>
+      <c>header cell</c>
+      <c>body cell</c>
+      <c></c>
+      <c>body cell</c>
+      <c>centre aligned cell</c>
+      <c>cell</c>
+      <c>left aligned cell</c>
+      <c>cell</c>
+      <c>right aligned cell</c>
+      <c>cell</c>
+      <c>foot</c>
+      <c>foot</c>
+      </texttable>
+    OUTPUT
+  end
+
+
 end

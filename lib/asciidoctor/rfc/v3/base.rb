@@ -104,9 +104,10 @@ module Asciidoctor
       end
 
       def inline_break(node)
+        # <br> is only defined within tables
         noko do |xml|
           xml << node.text
-          xml.br
+          xml.br if node.parent.context == :cell
         end.join
       end
 
