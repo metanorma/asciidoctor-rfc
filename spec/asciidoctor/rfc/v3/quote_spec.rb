@@ -84,7 +84,7 @@ describe Asciidoctor::RFC::V3::Converter do
       The *fog* comes
       on little cat feet.
     INPUT
-      <blockquote anchor="verse-id" quotedFrom="Carl Sandburg">The <strong>fog</strong> comes<br/>
+      <blockquote anchor="verse-id" quotedFrom="Carl Sandburg">The <strong>fog</strong> comes
       on little cat feet.</blockquote>
     OUTPUT
   end
