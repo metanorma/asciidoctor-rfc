@@ -174,7 +174,7 @@ module Asciidoctor
       def noko(&block)
         fragment = ::Nokogiri::XML::DocumentFragment.parse ""
         ::Nokogiri::XML::Builder.with fragment, &block
-        fragment.to_xml.lines
+        fragment.to_xml.lines.map { |l| l.gsub(/\s*\n/, "") }
       end
     end
   end

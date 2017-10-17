@@ -30,7 +30,7 @@ module Asciidoctor
         # NOTE: html escaping is performed by Nokogiri
         artwork_content = node.lines.join("\n")
 
-        noko do |xml|
+        ret = noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
               xml_figure.artwork artwork_content, **artwork_attributes
@@ -39,6 +39,7 @@ module Asciidoctor
             xml.artwork artwork_content, **artwork_attributes
           end
         end
+        ret
       end
 
       # Syntax:
