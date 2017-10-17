@@ -148,7 +148,7 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
   it "ignores block formatting within a table" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [cols="2"]
       .Table Title
       |===
@@ -166,21 +166,22 @@ describe Asciidoctor::RFC::V2::Converter do
       |foot | foot
       |===
     INPUT
-      <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
-      <ttcol align="left" width="50%"> head</ttcol>
-      <ttcol align="left" width="50%">head</ttcol>
-      <c>header cell</c>
-      <c>body cell</c>
-      <c></c>
-      <c>body cell</c>
-      <c>centre aligned cell</c>
-      <c>cell</c>
-      <c>left aligned cell</c>
-      <c>cell</c>
-      <c>right aligned cell</c>
-      <c>cell</c>
-      <c>foot</c>
-      <c>foot</c>
+      <texttable title="Table Title" suppress-title="false" style="all">
+         <ttcol align="left" width="50%">head</ttcol>
+         <ttcol align="left" width="50%">head</ttcol>
+         <c>header cell</c>
+         <c>* List 1
+       * List 2</c>
+         <c/>
+         <c>body cell<xref target="x"/></c>
+         <c>centre aligned cell</c>
+         <c>cell</c>
+         <c>left aligned cell</c>
+         <c>cell</c>
+         <c>right aligned cell</c>
+         <c>cell</c>
+         <c>foot</c>
+         <c>foot</c>
       </texttable>
     OUTPUT
   end

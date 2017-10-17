@@ -69,6 +69,7 @@ module Asciidoctor
               rowlength += cell.text.size
               xml.ttcol **ttcol_attributes do |ttcol|
                 ttcol << cell.text
+                # NOT cell.content: v2 does not permit blocks in cells
               end
             end
             warn "asciidoctor: WARNING: header row of table is longer than 72 ascii characters" if rowlength > 72
@@ -85,6 +86,7 @@ module Asciidoctor
               rowlength += cell.text.size
               xml.c do |c|
                 c << cell.text
+                # NOT cell.content: v2 does not permit blocks in cells
               end
             end
             warn "asciidoctor: WARNING: row #{i} of table is longer than 72 ascii characters" if rowlength > 72

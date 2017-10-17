@@ -50,11 +50,9 @@ module Asciidoctor
                   cell_tag = (tblsec == :head || cell.style == :header ? "th" : "td")
 
                   rowlength += cell.text.size
-                  #xml_tr.send cell_tag, cell.text, **cell_attributes
                   xml_tr.send cell_tag, **cell_attributes do |thd|
-                    thd << cell.text
+                    thd << (cell.style == :asciidoc ?  cell.content : cell.text )
                   end
-                  # xml_tr.send cell_tag, cell.content, **cell_attributes
                 end
                 warn "asciidoctor: WARNING: row #{i} of table (count including header rows) is longer than 72 ascii characters" if rowlength > 72
               end

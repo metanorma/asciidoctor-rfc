@@ -201,22 +201,46 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
-      <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
-      <ttcol align="left" width="50%"> head</ttcol>
-      <ttcol align="left" width="50%">head</ttcol>
-      <c>header cell</c>
-      <c>body cell</c>
-      <c></c>
-      <c>body cell</c>
-      <c>centre aligned cell</c>
-      <c>cell</c>
-      <c>left aligned cell</c>
-      <c>cell</c>
-      <c>right aligned cell</c>
-      <c>cell</c>
-      <c>foot</c>
-      <c>foot</c>
-      </texttable>
+      <table>
+         <name>Table Title</name>
+         <thead>
+           <tr>
+             <th align="left">head</th>
+             <th align="left">head</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <th align="left">header cell</th>
+             <td align="left">
+               <ul>
+         <li>List 1</li>
+         <li>List 2</li>
+       </ul>
+             </td>
+           </tr>
+           <tr>
+             <td align="left"/>
+             <td align="left">body cell<xref target="x"/></td>
+           </tr>
+           <tr>
+             <td align="center">centre aligned cell</td>
+             <td align="left">cell</td>
+           </tr>
+           <tr>
+             <td align="left">left aligned cell</td>
+             <td align="left">cell</td>
+           </tr>
+           <tr>
+             <td align="right">right aligned cell</td>
+             <td align="left">cell</td>
+           </tr>
+           <tr>
+             <td align="left">foot</td>
+             <td align="left">foot</td>
+           </tr>
+         </tbody>
+      </table>
     OUTPUT
   end
 end

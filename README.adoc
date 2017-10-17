@@ -920,6 +920,8 @@ h|header cell | body cell <5>
 <6> v3: `table/tbody/tr/td@anchor` (attribute only available in v3)
 <7> v3: `table/tfoot/tr/td`; v2: `texttable/c`
 
+Note that v3 permits table cells to contain block elements, such as paragraphs and lists. (This is done in Asciidoc by prefixing
+the table cell with `a|`.) However v2 only permits inline tagging, and any block tags are ignored.
 
 === Sidebar (v3 only)
 
