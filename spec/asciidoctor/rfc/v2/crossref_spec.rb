@@ -132,4 +132,68 @@ describe Asciidoctor::RFC::V2::Converter do
       </rfc>
     OUTPUT
   end
+  it "renders relref references" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+
+      == Section 1
+      See <<crossreference,1.3 of>>
+      <<crossreference,1.4 comma: text>>
+      <<crossreference#fragment1,2.5.3 parens>>
+      <<crossreference#fragment2,6.2a bare: text>>
+
+      [bibliography]
+      == References
+      ++++
+      <reference anchor='crossreference' target='https://www.iso.org/standard/67116.html'>
+        <front>
+          <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
+          <author>
+            <organization>International Organization for Standardization</organization>
+            <address>
+              <postal>
+                <street>BIBC II</street>
+                <street>Chemin de Blandonnet 8</street>
+                <street>CP 401</street>
+                <city>Vernier</city>
+                <region>Geneva</region>
+                <code>1214</code>
+                <country>Switzerland</country>
+              </postal>
+              <phone>+41 22 749 01 11</phone>
+              <email>central@iso.org</email>
+              <uri>https://www.iso.org/</uri>
+            </address>
+          </author>
+          <date day='15' month='September' year='2017'/>
+        </front>
+      </reference>
+      ++++
+    INPUT
+       <?xml version="1.0" encoding="UTF-8"?>
+       <rfc submissionType="IETF">
+       <front>
+         <title abbrev="abbrev_value">Document title</title>
+         <author fullname="Author"/>
+         <date day="1" month="January" year="1970"/>
+      </front><middle>
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
+       <section anchor="_section_1" title="Section 1">
+         <t>See <xref target="crossreference#crossreference">Section 1.3 of [crossreference#crossreference]</xref>
+       <xref target="crossreference#crossreference">[crossreference#crossreference], Section 1.4</xref>
+       <xref target="crossreference#fragment1">[crossreference#fragment1] (Section 2.5.3)</xref>
+       <xref target="crossreference#fragment2">6.2a</xref></t>
+       </section>
+       </middle><back>
+       <references title="References">
+         <reference anchor="crossreference" target="https://www.iso.org/standard/67116.html">  <front>    <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>    <author>      <organization>International Organization for Standardization</organization>      <address>        <postal>          <street>BIBC II</street>          <street>Chemin de Blandonnet 8</street>          <street>CP 401</street>          <city>Vernier</city>          <region>Geneva</region>          <code>1214</code>          <country>Switzerland</country>        </postal>        <phone>+41 22 749 01 11</phone>        <email>central@iso.org</email>        <uri>https://www.iso.org/</uri>      </address>    </author>    <date day="15" month="September" year="2017"/>  </front></reference>
+       </references>
+      </back>
+      </rfc>
+    OUTPUT
+  end
 end

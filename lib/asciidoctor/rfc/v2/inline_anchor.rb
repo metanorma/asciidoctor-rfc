@@ -19,15 +19,44 @@ module Asciidoctor
       private
 
       def inline_anchor_xref(node)
-        matched = /^format=(?<format>counter|title|none|default):\s*(?<text>.*)$/.match node.text
-        xref_contents = matched.nil? ? node.text : matched[:text]
-        matched ||= {}
+        if node.text =~ /^\S+ (of|comma|parens|bare)\b/
+          # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref: 
+          # render equivalent in v2
+          matched = /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text>.*)$/.match node.text
 
-        xref_attributes = {
-          target: node.target.gsub(/^#/, ""),
-          format: matched[:format],
-          align: node.attr("align"),
-        }.reject { |_, value| value.nil? }
+          relref_contents = matched[:text]
+          target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
+          target = "#{target}##{node.attributes["fragment"]}" unless node.attributes["fragment"].nil?
+
+          xref_contents = case matched[:format]
+                          when "of"
+                            "Section #{matched[:section]} of [#{target}]"
+                          when "comma"
+                            "[#{target}], Section #{matched[:section]}"
+                          when "parens"
+                            "[#{target}] (Section #{matched[:section]})"
+                          when "bare"
+                            matched[:section]
+                          else
+                            "Section #{matched[:section]} of #{target}"
+                          end
+
+          xref_attributes = {
+            target: target
+          }.reject { |_, value| value.nil? }
+
+        else
+
+          matched = /^format=(?<format>counter|title|none|default):\s*(?<text>.*)$/.match node.text
+          xref_contents = matched.nil? ? node.text : matched[:text]
+          matched ||= {}
+
+          xref_attributes = {
+            target: node.target.gsub(/^#/, ""),
+            format: matched[:format],
+            align: node.attr("align"),
+          }.reject { |_, value| value.nil? }
+        end
 
         noko do |xml|
           xml.xref xref_contents, **xref_attributes

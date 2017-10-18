@@ -702,6 +702,9 @@ The following represent the v3 relref element
 <7> v3 only: `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference"/>` (element only available in v3)
 <8> v3 only: `<relref relative="fragment" displayFormat="of|comma|parens|bare" section="section_number" target="crossreference">text</relref>` (element only available in v3)
 
+In v2, the relref style crossreferences are rendered as equivalent `xref` crossreferences,
+inserting section numbers as appropriate.
+
 
 === Indexing
 
