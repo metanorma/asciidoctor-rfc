@@ -509,7 +509,8 @@ includes surname.
 | `front/author@surname`
 
 | `:role{_i}:`
-| Optional. Defaults to `author`. Possible values: `author`, `editor`.
+| Optional. Defaults to `author`. Possible values: `author`, `editor`. If `author` is supplied,
+the attribute is not populated.
 | `front/author@role`
 
 | `:organization{_i}:`

@@ -56,11 +56,13 @@ module Asciidoctor
       #   :country
       #   :code
       def author1(node, suffix, xml)
+        role = node.attr("role#{suffix}")
+        role = nil if role == "author"
         author_attributes = {
           fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
           surname: node.attr("lastname#{suffix}"),
           initials: node.attr("forename_initials#{suffix}"),
-          role: node.attr("role#{suffix}"),
+          role: role
         }.reject { |_, value| value.nil? }
 
         xml.author **author_attributes do |xml_sub|
