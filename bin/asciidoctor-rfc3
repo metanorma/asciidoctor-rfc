@@ -2,6 +2,7 @@
 
 require "asciidoctor/cli"
 require "asciidoctor/rfc/v3/converter"
+require "asciidoctor-bibliography"
 
 options = Asciidoctor::Cli::Options.new backend: "rfc3", header_footer: true
 # FIXME This is a really bizarre API. Please make me simpler.
