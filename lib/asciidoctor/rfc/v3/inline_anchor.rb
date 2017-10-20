@@ -27,7 +27,7 @@ module Asciidoctor
           relref_contents = matched[:text]
 
           relref_attributes = {
-            relative: node.attributes["fragment"],
+            relative: node.attributes["path"].nil? ? nil : node.attributes["fragment"],
             section: matched[:section],
             displayFormat: matched[:format],
             target: node.target.gsub(/\..*$/, "").gsub(/^#/, ""),

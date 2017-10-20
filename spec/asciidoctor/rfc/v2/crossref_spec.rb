@@ -180,12 +180,10 @@ describe Asciidoctor::RFC::V2::Converter do
          <author fullname="Author"/>
          <date day="1" month="January" year="1970"/>
       </front><middle>
-      <section anchor="_section_1" numbered="false">
-      <name>Section 1</name>
-       <section anchor="_section_1" title="Section 1">
-         <t>See <xref target="crossreference#crossreference">Section 1.3 of [crossreference#crossreference]</xref>
-       <xref target="crossreference#crossreference">[crossreference#crossreference], Section 1.4</xref>
-       <xref target="crossreference#fragment1">[crossreference#fragment1] (Section 2.5.3)</xref>
+      <section anchor="_section_1" title="Section 1">
+         <t>See <xref target="crossreference">Section 1.3 of [crossreference]</xref>
+       <xref target="crossreference">[crossreference], Section 1.4</xref>
+       <xref target="crossreference#fragment1">[crossreference] (Section 2.5.3)</xref>
        <xref target="crossreference#fragment2">6.2a</xref></t>
        </section>
        </middle><back>

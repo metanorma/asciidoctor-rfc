@@ -100,11 +100,13 @@ module Asciidoctor
             }.reject { |_, value| value.nil? }
 
             xml_list.t **t_attributes do |xml_t|
-              if dd.blocks?
-                xml_t << dd.text if dd.text?
-                xml_t << dd.content
-              else
-                xml_t << dd.text
+              if !dd.nil?
+                if dd.blocks?
+                  xml_t << dd.text if dd.text?
+                  xml_t << dd.content
+                else
+                  xml_t << dd.text
+                end
               end
             end
           end

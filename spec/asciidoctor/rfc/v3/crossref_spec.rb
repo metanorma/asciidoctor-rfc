@@ -219,8 +219,8 @@ describe Asciidoctor::RFC::V3::Converter do
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
-      <t>See <relref relative="crossreference" section="1.3" displayFormat="of" target="crossreference"></relref>
-      <relref relative="crossreference" section="1.4" displayFormat="comma" target="crossreference">text</relref>
+      <t>See <relref section="1.3" displayFormat="of" target="crossreference"></relref>
+      <relref section="1.4" displayFormat="comma" target="crossreference">text</relref>
       <relref relative="fragment1" section="2.5.3" displayFormat="parens" target="crossreference"></relref>
       <relref relative="fragment2" section="6.2a" displayFormat="bare" target="crossreference">text</relref></t>
       </section>
