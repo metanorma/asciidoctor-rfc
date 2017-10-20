@@ -161,10 +161,17 @@ module Asciidoctor
 
           xml.dl **dl_attributes do |xml_dl|
             node.items.each do |terms, dd|
-              terms.each { |dt| xml_dl.dt dt.text }
+              terms.each_with_index do |dt, idx| 
+                xml_dl.dt dt.text 
+                if idx < terms.size - 1
+                  xml_dl.dd
+                end
+              end
 
-              xml_dl.dd do |xml_dd|
-                if !dd.nil?
+              if dd.nil?
+                xml_dl.dd
+              else
+                xml_dl.dd do |xml_dd|
                   if dd.blocks?
                     if dd.text?
                       xml_dd.t do |t|

@@ -1516,8 +1516,8 @@ Special notes::  The components correspond, in sequence, to the sex
 Sex component:::  A single letter.  `M` stands for "male", `F` stands
       for "female", `O` stands for "other", `N` stands for "none or not
       applicable", `U` stands for "unknown".
-+
-Gender identity component::  Free-form text.
+
+Gender identity component:::  Free-form text.
 
 ABNF::
 +
@@ -2095,7 +2095,7 @@ Value type::  A single URI.  It can also be reset to a single text
 
 Cardinality::  *
 
-Special notes:  The TYPE parameter [bcp14]#MAY# be used to characterize the
+Special notes::  The TYPE parameter [bcp14]#MAY# be used to characterize the
    related entity.  It contains a comma-separated list of values that
    are registered with IANA as described in <<section10_2,Section 10.2>>.  The
    registry is pre-populated with the values defined in <<xfn>>.  This
@@ -2103,9 +2103,10 @@ Special notes:  The TYPE parameter [bcp14]#MAY# be used to characterize the
 
 agent:::  an entity who may sometimes act on behalf of the entity
       associated with the vCard.
-+
+
 emergency:::  indicates an emergency contact
 
++
 ABNF::
 +
 [source,abnf]
@@ -2431,30 +2432,24 @@ Example::
         VERSION:4.0
 ....
 
-6.8.  Security Properties
+[[section6_8]]
+===  Security Properties
 
 These properties are concerned with the security of communication
 pathways or access to the vCard.
 
-6.8.1.  KEY
+[[section6_8_1]]
+====  KEY
 
-Purpose:  To specify a public key or authentication certificate
+Purpose::  To specify a public key or authentication certificate
    associated with the object that the vCard represents.
 
-Value type:  A single URI.  It can also be reset to a text value.
+Value type::  A single URI.  It can also be reset to a text value.
 
-Cardinality:  *
-
-
-
-
-
-
-
+Cardinality::  *
 
 ABNF:
-
-
++
 [source,abnf]
 ----
   KEY-param = KEY-uri-param / KEY-text-param
@@ -2481,40 +2476,33 @@ Examples::
   KEY:data:application/pgp-keys;base64,MIICajCCAdOgAwIBAgICBE
    UwDQYJKoZIhvcNAQEEBQAwdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05l
    <... remainder of base64-encoded data ...>
+....
 
-6.9.  Calendar Properties
+[[section6_9]]
+====  Calendar Properties
 
 These properties are further specified in <<RFC2739>>.
 
-6.9.1.  FBURL
+[[secton6_9_1]]
+====  FBURL
 
-Purpose:  To specify the URI for the busy time associated with the
+Purpose::  To specify the URI for the busy time associated with the
    object that the vCard represents.
 
-Value type:  A single URI value.
+Value type::  A single URI value.
 
-Cardinality:  *
+Cardinality::  *
 
-Special notes:  Where multiple FBURL properties are specified, the
-   default FBURL property is indicated with the PREF parameter.  The
-   FTP <<RFC1738>> or HTTP <<RFC2616>> type of URI points to an iCalendar
+Special notes::  Where multiple `FBURL` properties are specified, the
+   default `FBURL` property is indicated with the `PREF` parameter.  The
+   `FTP` <<RFC1738>> or `HTTP` <<RFC2616>> type of URI points to an iCalendar
    <<RFC5545>> object associated with a snapshot of the next few weeks
    or months of busy time data.  If the iCalendar object is
    represented as a file or document, its file extension should be
-   ".ifb".
+   `".ifb"`.
 
-
-
-
-
-
-
-
-
-
-ABNF:
-
-
+ABNF::
++
 [source,abnf]
 ----
   FBURL-param = "VALUE=uri" / pid-param / pref-param / type-param
@@ -2527,24 +2515,25 @@ Examples::
 ....
   FBURL;PREF=1:http://www.example.com/busy/janedoe
   FBURL;MEDIATYPE=text/calendar:ftp://example.com/busy/project-a.ifb
+....
 
-6.9.2.  CALADRURI
+[[section6_9_2]]
+====  CALADRURI
 
-Purpose:  To specify the calendar user address <<RFC5545>> to which a
+Purpose::  To specify the calendar user address <<RFC5545>> to which a
    scheduling request <<RFC5546>> should be sent for the object
    represented by the vCard.
 
-Value type:  A single URI value.
+Value type::  A single URI value.
 
-Cardinality:  *
+Cardinality::  *
 
-Special notes:  Where multiple CALADRURI properties are specified,
-   the default CALADRURI property is indicated with the PREF
+Special notes:  Where multiple `CALADRURI` properties are specified,
+   the default `CALADRURI` property is indicated with the `PREF`
    parameter.
 
-ABNF:
-
-
+ABNF::
++
 [source,abnf]
 ----
   CALADRURI-param = "VALUE=uri" / pid-param / pref-param / type-param
@@ -2557,33 +2546,27 @@ Example::
 ....
   CALADRURI;PREF=1:mailto:janedoe@example.com
   CALADRURI:http://example.com/calendar/jdoe
+....
 
-6.9.3.  CALURI
+[[section6_9_3]]
+====  CALURI
 
-Purpose:  To specify the URI for a calendar associated with the
+Purpose::  To specify the URI for a calendar associated with the
    object represented by the vCard.
 
-Value type:  A single URI value.
+Value type::  A single URI value.
 
-Cardinality:  *
+Cardinality::  *
 
-Special notes:  Where multiple CALURI properties are specified, the
-   default CALURI property is indicated with the PREF parameter.  The
+Special notes::  Where multiple `CALURI` properties are specified, the
+   default `CALURI` property is indicated with the `PREF` parameter.  The
    property should contain a URI pointing to an iCalendar <<RFC3986>>
-
-
-
-
-
-
-
    object associated with a snapshot of the user's calendar store.
    If the iCalendar object is represented as a file or document, its
-   file extension should be ".ics".
+   file extension should be `".ics"`.
 
-ABNF:
-
-
+ABNF::
++
 [source,abnf]
 ----
   CALURI-param = "VALUE=uri" / pid-param / pref-param / type-param
@@ -2596,25 +2579,29 @@ Examples::
 ....
   CALURI;PREF=1:http://cal.example.com/calA
   CALURI;MEDIATYPE=text/calendar:ftp://ftp.example.com/calA.ics
+....
 
-6.10.  Extended Properties and Parameters
+[[section6_10]]
+===  Extended Properties and Parameters
 
 The properties and parameters defined by this document can be
 extended.  Non-standard, private properties and parameters with a
-name starting with "X-" may be defined bilaterally between two
+name starting with `"X-"` may be defined bilaterally between two
 cooperating agents without outside registration or standardization.
 
-7.  Synchronization
+[[section7]]
+==  Synchronization
 
 vCard data often needs to be synchronized between devices.  In this
 context, synchronization is defined as the intelligent merging of two
 representations of the same object. vCard 4.0 includes mechanisms to
 aid this process.
 
-7.1.  Mechanisms
+[[section7_1]]
+===  Mechanisms
 
-Two mechanisms are available: the UID property is used to match
-multiple instances of the same vCard, while the PID parameter is used
+Two mechanisms are available: the `UID` property is used to match
+multiple instances of the same vCard, while the `PID` parameter is used
 to match multiple instances of the same property.
 
 The term "matching" is used here to mean recognizing that two
@@ -2624,94 +2611,86 @@ vCard instances.  After they have evolved separately, they still
 represent the same object, and therefore may be matched by a
 synchronization engine.
 
-7.1.1.  Matching vCard Instances
+[[section7_1_1]]
+====  Matching vCard Instances
 
-vCard instances for which the UID properties (Section 6.7.6) are
+vCard instances for which the UID properties (<<section6_7_6,Section 6.7.6>>) are
 equivalent [bcp14]#MUST# be matched.  Equivalence is determined as specified
-in [RFC3986], Section 6.
-
-
-
-
-
-
-
+in <<RFC3986, 6 comma>>.
 
 In all other cases, vCard instances [bcp14]#MAY# be matched at the discretion
 of the synchronization engine.
 
-7.1.2.  Matching Property Instances
+[[section7_1_2]]
+====  Matching Property Instances
 
 Property instances belonging to unmatched vCards [bcp14]#MUST NOT# be matched.
 
-Property instances whose name (e.g., EMAIL, TEL, etc.) is not the
+Property instances whose name (e.g., `EMAIL`, `TEL`, etc.) is not the
 same [bcp14]#MUST NOT# be matched.
 
-Property instances whose name is CLIENTPIDMAP are handled separately
+Property instances whose name is `CLIENTPIDMAP` are handled separately
 and [bcp14]#MUST NOT# be matched.  The synchronization [bcp14]#MUST# ensure that there
-is consistency of CLIENTPIDMAPs among matched vCard instances.
+is consistency of `CLIENTPIDMAP`s among matched vCard instances.
 
 Property instances belonging to matched vCards, whose name is the
 same, and whose maximum cardinality is 1, [bcp14]#MUST# be matched.
 
 Property instances belonging to matched vCards, whose name is the
-same, and whose PID parameters match, [bcp14]#MUST# be matched.  See
-Section 7.1.3 for details on PID matching.
+same, and whose `PID` parameters match, [bcp14]#MUST# be matched.  See
+<<section7_1_3,Section 7.1.3>> for details on `PID` matching.
 
 In all other cases, property instances [bcp14]#MAY# be matched at the
 discretion of the synchronization engine.
 
-7.1.3.  PID Matching
+[[section7_1_3]]
+====  PID Matching
 
-Two PID values for which the first fields are equivalent represent
+Two `PID` values for which the first fields are equivalent represent
 the same local value.
 
-Two PID values representing the same local value and for which the
-second fields point to CLIENTPIDMAP properties whose second field
-URIs are equivalent (as specified in [RFC3986], Section 6) also
+Two `PID` values representing the same local value and for which the
+second fields point to `CLIENTPIDMAP` properties whose second field
+URIs are equivalent (as specified in <<RFC3986,6 comma>>) also
 represent the same global value.
 
-PID parameters for which at least one pair of their values represent
+`PID` parameters for which at least one pair of their values represent
 the same global value [bcp14]#MUST# be matched.
 
-In all other cases, PID parameters [bcp14]#MAY# be matched at the discretion
+In all other cases, `PID` parameters [bcp14]#MAY# be matched at the discretion
 of the synchronization engine.
 
-For example, PID value "5.1", in the first vCard below, and PID value
-"5.2", in the second vCard below, represent the same global value.
+For example, `PID` value `"5.1"`, in the first vCard below, and `PID` value
+`"5.2"`, in the second vCard below, represent the same global value.
 
 
-
-
-
-
-
-
-
-
-
-
-
+....
   BEGIN:VCARD
   VERSION:4.0
   EMAIL;PID=4.2,5.1:jdoe@example.com
   CLIENTPIDMAP:1;urn:uuid:3eef374e-7179-4196-a914-27358c3e6527
   CLIENTPIDMAP:2;urn:uuid:42bcd5a7-1699-4514-87b4-056edf68e9cc
   END:VCARD
+....
 
+....
   BEGIN:VCARD
   VERSION:4.0
   EMAIL;PID=5.1,5.2:john@example.com
   CLIENTPIDMAP:1;urn:uuid:0c75c629-6a8d-4d5e-a07f-1bb35846854d
   CLIENTPIDMAP:2;urn:uuid:3eef374e-7179-4196-a914-27358c3e6527
   END:VCARD
+....
 
-7.2.  Example
+[[section7_2]]
+===  Example
 
-7.2.1.  Creation
+[[section7_2_1]]
+====  Creation
 
 The following simple vCard is first created on a given device.
 
+....
   BEGIN:VCARD
   VERSION:4.0
   UID:urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1
@@ -2720,39 +2699,34 @@ The following simple vCard is first created on a given device.
   EMAIL;PID=1.1:jdoe@example.com
   CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
   END:VCARD
+....
 
 This new vCard is assigned the UID
-"urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1" by the creating
-device.  The FN and EMAIL properties are assigned the same local
-value of 1, and this value is given global context by associating it
-with "urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556", which
+`"urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1"` by the creating
+device.  The `FN` and `EMAIL` properties are assigned the same local
+value of `1`, and this value is given global context by associating it
+with `"urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"`, which
 represents the creating device.  We are at liberty to reuse the same
 local value since instances of different properties will never be
-matched.  The N property has no PID because it is forbidden by its
+matched.  The `N` property has no `PID` because it is forbidden by its
 maximum cardinality of 1.
 
-7.2.2.  Initial Sharing
+[[section7_2_2]]
+====  Initial Sharing
 
-This vCard is shared with a second device.  Upon inspecting the UID
+This vCard is shared with a second device.  Upon inspecting the `UID`
 property, the second device understands that this is a new vCard
 (i.e., unmatched) and thus the synchronization results in a simple
 copy.
 
-
-
-
-
-
-
-
-
-
-7.2.3.  Adding and Sharing a Property
+[[section7_2_3]]
+====  Adding and Sharing a Property
 
 A new phone number is created on the first device, then the vCard is
 shared with the second device.  This is what the second device
 receives:
 
+....
   BEGIN:VCARD
   VERSION:4.0
   UID:urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1
@@ -2762,46 +2736,42 @@ receives:
   TEL;PID=1.1;VALUE=uri:tel:+1-555-555-5555
   CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
   END:VCARD
+....
 
-Upon inspecting the UID property, the second device matches the vCard
+Upon inspecting the `UID` property, the second device matches the vCard
 it received to the vCard that it already has stored.  It then starts
 comparing the properties of the two vCards in same-named pairs.
 
-The FN properties are matched because the PID parameters have the
+The FN properties are matched because the `PID` parameters have the
 same global value.  Since the property value is the same, no update
 takes place.
 
-The N properties are matched automatically because their maximum
+The `N` properties are matched automatically because their maximum
 cardinality is 1.  Since the property value is the same, no update
 takes place.
 
-The EMAIL properties are matched because the PID parameters have the
+The `EMAIL` properties are matched because the `PID` parameters have the
 same global value.  Since the property value is the same, no update
 takes place.
 
-The TEL property in the new vCard is not matched to any in the stored
+The `TEL` property in the new vCard is not matched to any in the stored
 vCard because no property in the stored vCard has the same name.
 Therefore, this property is copied from the new vCard to the stored
 vCard.
 
-The CLIENTPIDMAP property is handled separately by the
+The `CLIENTPIDMAP` property is handled separately by the
 synchronization engine.  It ensures that it is consistent with the
 stored one.  If it was not, the results would be up to the
 synchronization engine, and thus undefined by this document.
 
-7.2.4.  Simultaneous Editing
+[[section7_2_4]]
+====  Simultaneous Editing
 
 A new email address and a new phone number are added to the vCard on
 each of the two devices, and then a new synchronization event
 happens.  Here are the vCards that are communicated to each other:
 
-
-
-
-
-
-
-
+....
   BEGIN:VCARD
   VERSION:4.0
   UID:urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1
@@ -2813,7 +2783,9 @@ happens.  Here are the vCards that are communicated to each other:
   TEL;PID=2.1;VALUE=uri:tel:+1-666-666-6666
   CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
   END:VCARD
+....
 
+....
   BEGIN:VCARD
   VERSION:4.0
   UID:urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1
@@ -2826,22 +2798,23 @@ happens.  Here are the vCards that are communicated to each other:
   CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
   CLIENTPIDMAP:2;urn:uuid:1f762d2b-03c4-4a83-9a03-75ff658a6eee
   END:VCARD
+....
 
-On the first device, the same PID source identifier (1) is reused for
-the new EMAIL and TEL properties.  On the second device, a new source
-identifier (2) is generated, and a corresponding CLIENTPIDMAP
+On the first device, the same `PID` source identifier (1) is reused for
+the new `EMAIL` and `TEL` properties.  On the second device, a new source
+identifier (2) is generated, and a corresponding `CLIENTPIDMAP`
 property is created.  It contains the second device's identifier,
-"urn:uuid:1f762d2b-03c4-4a83-9a03-75ff658a6eee".
+`"urn:uuid:1f762d2b-03c4-4a83-9a03-75ff658a6eee"`.
 
-The new EMAIL properties are unmatched on both sides since the PID
+The new `EMAIL` properties are unmatched on both sides since the `PID`
 global value is new in both cases.  The sync thus results in a copy
 on both sides.
 
-Although the situation appears to be the same for the TEL properties,
+Although the situation appears to be the same for the `TEL` properties,
 in this case, the synchronization engine is particularly smart and
-matches the two new TEL properties even though their PID global
+matches the two new `TEL` properties even though their `PID` global
 values are different.  Note that in this case, the rules of
-Section 7.1.2 state that two properties [bcp14]#MAY# be matched at the
+<<section7_1_2,Section 7.1.2>> state that two properties [bcp14]#MAY# be matched at the
 discretion of the synchronization engine.  Therefore, the two
 properties are merged.
 
@@ -2849,14 +2822,7 @@ All this results in the following vCard, which is stored on both
 devices:
 
 
-
-
-
-
-
-
-
-
+....
   BEGIN:VCARD
   VERSION:4.0
   UID:urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1
@@ -2870,14 +2836,17 @@ devices:
   CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
   CLIENTPIDMAP:2;urn:uuid:1f762d2b-03c4-4a83-9a03-75ff658a6eee
   END:VCARD
+....
 
-7.2.5.  Global Context Simplification
+[[section7_2_5]]
+====  Global Context Simplification
 
 The two devices finish their synchronization procedure by simplifying
 their global contexts.  Since they haven't talked to any other
 device, the following vCard is for all purposes equivalent to the
 above.  It is also shorter.
 
+....
   BEGIN:VCARD
   VERSION:4.0
   UID:urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1
@@ -2890,14 +2859,17 @@ above.  It is also shorter.
   TEL;PID=2.1;VALUE=uri:tel:+1-666-666-6666
   CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
   END:VCARD
+....
 
 The details of global context simplification are unspecified by this
 document.  They are left up to the synchronization engine.  This
 example is merely intended to illustrate the possibility, which
 investigating would be, in the author's opinion, worthwhile.
 
-8.  Example: Author's vCard
+[[section8]]
+==  Example: Author's vCard
 
+....
  BEGIN:VCARD
  VERSION:4.0
  FN:Simon Perreault
@@ -2905,13 +2877,6 @@ investigating would be, in the author's opinion, worthwhile.
  BDAY:--0203
  ANNIVERSARY:20090808T1430-0500
  GENDER:M
-
-
-
-
-
-
-
  LANG;PREF=1:fr
  LANG;PREF=2:en
  ORG;TYPE=work:Viagenie
@@ -2926,10 +2891,12 @@ investigating would be, in the author's opinion, worthwhile.
  TZ:-0500
  URL;TYPE=home:http://nomis80.org
  END:VCARD
+....
 
-9.  Security Considerations
+[[section9]]
+==  Security Considerations
 
-o  Internet mail is often used to transport vCards and is subject to
+* Internet mail is often used to transport vCards and is subject to
    many well-known security attacks, including monitoring, replay,
    and forgery.  Care should be taken by any directory service in
    allowing information to leave the scope of the service itself,
@@ -2937,10 +2904,10 @@ o  Internet mail is often used to transport vCards and is subject to
    guaranteed.  Applications should also take care to display
    directory data in a "safe" environment.
 
-o  vCards can carry cryptographic keys or certificates, as described
-   in Section 6.8.1.
+*  vCards can carry cryptographic keys or certificates, as described
+   in <<section6_8_1,Section 6.8.1>>.
 
-o  vCards often carry information that can be sensitive (e.g.,
+*  vCards often carry information that can be sensitive (e.g.,
    birthday, address, and phone information).  Although vCards have
    no inherent authentication or confidentiality provisions, they can
    easily be carried by any security mechanism that transfers MIME
@@ -2948,23 +2915,17 @@ o  vCards often carry information that can be sensitive (e.g.,
    <<RFC5751>>, OpenPGP <<RFC4880>>).  In cases where the confidentiality
    or authenticity of information contained in vCard is a concern,
    the vCard [bcp14]#SHOULD# be transported using one of these secure
-   mechanisms.  The KEY property (Section 6.8.1) can be used to
+   mechanisms.  The `KEY` property (<<section6_8_1,Section 6.8.1>>) can be used to
    transport the public key used by these mechanisms.
 
-o  The information in a vCard may become out of date.  In cases where
+*  The information in a vCard may become out of date.  In cases where
    the vitality of data is important to an originator of a vCard, the
-   SOURCE property (Section 6.1.3) [bcp14]#SHOULD# be specified.  In addition,
-   the "REV" type described in Section 6.7.4 can be specified to
+   `SOURCE` property (<<section6_1_3,Section 6.1.3>>) [bcp14]#SHOULD# be specified.  In addition,
+   the `"REV"` type described in <<section6_7_4,Section 6.7.4>> can be specified to
    indicate the last time that the vCard data was updated.
 
-o  Many vCard properties may be used to transport URIs.  Please refer
-   to [RFC3986], Section 7, for considerations related to URIs.
-
-
-
-
-
-
+*  Many vCard properties may be used to transport URIs.  Please refer
+   to <<RFC3986,7 comma>>, for considerations related to URIs.
 
 [[section10]]
 == IANA Considerations
@@ -2973,89 +2934,84 @@ o  Many vCard properties may be used to transport URIs.  Please refer
 ===  Media Type Registration
 
 IANA has registered the following Media Type (in
-<http://www.iana.org/>) and marked the text/directory Media Type as
+<http://www.iana.org/[]>) and marked the text/directory Media Type as
 DEPRECATED.
 
-To:  ietf-types@iana.org
+To::  ietf-types@iana.org
 
-Subject:  Registration of media type text/vcard
+Subject::  Registration of media type text/vcard
 
-Type name:  text
+Type name::  text
 
-Subtype name:  vcard
+Subtype name::  vcard
 
-Required parameters:  none
+Required parameters::  none
 
-Optional parameters:  version
-
-   The "version" parameter is to be interpreted identically as the
-   VERSION vCard property.  If this parameter is present, all vCards
-   in a text/vcard body part [bcp14]#MUST# have a VERSION property with value
+Optional parameters::  version
++
+The "version" parameter is to be interpreted identically as the
+   `VERSION` vCard property.  If this parameter is present, all vCards
+   in a text/vcard body part [bcp14]#MUST# have a `VERSION` property with value
    identical to that of this MIME parameter.
-
-   "charset": as defined for text/plain <<RFC2046>>; encodings other
++
+"charset": as defined for text/plain <<RFC2046>>; encodings other
    than UTF-8 <<RFC3629>> [bcp14]#MUST NOT# be used.
 
-Encoding considerations:  8bit
+Encoding considerations::  8bit
 
-Security considerations:  See Section 9.
+Security considerations::  See <<section9,Section 9>>.
 
-Interoperability considerations:  The text/vcard media type is
+Interoperability considerations::  The text/vcard media type is
    intended to identify vCard data of any version.  There are older
    specifications of vCard <<RFC2426>> [vCard21] still in common use.
    While these formats are similar, they are not strictly compatible.
-   In general, it is necessary to inspect the value of the VERSION
-   property (see Section 6.7.9) for identifying the standard to which
+   In general, it is necessary to inspect the value of the `VERSION`
+   property (see <<section6_7_9,Section 6.7.9>>) for identifying the standard to which
    a given vCard object conforms.
-
-   In addition, the following media types are known to have been used
++
+In addition, the following media types are known to have been used
    to refer to vCard data.  They should be considered deprecated in
    favor of text/vcard.
++
+*  text/directory
+*  text/directory; profile=vcard
+*  text/x-vcard
 
-   *  text/directory
-   *  text/directory; profile=vcard
-   *  text/x-vcard
+Published specification::  RFC 6350
 
-
-
-
-
-
-
-
-Published specification:  RFC 6350
-
-Applications that use this media type:  They are numerous, diverse,
+Applications that use this media type::  They are numerous, diverse,
    and include mail user agents, instant messaging clients, address
    book applications, directory servers, and customer relationship
    management software.
 
-Additional information:
+Additional information:: 
 
-   Magic number(s):
+Magic number(s)::: 
 
-   File extension(s):  .vcf .vcard
+File extension(s):::  .vcf .vcard
 
-   Macintosh file type code(s):
+Macintosh file type code(s):::
 
-Person & email address to contact for further information:  vCard
+Person & email address to contact for further information::  vCard
    discussion mailing list <vcarddav@ietf.org>
 
-Intended usage:  COMMON
+Intended usage::  COMMON
 
-Restrictions on usage:  none
+Restrictions on usage::  none
 
-Author:  Simon Perreault
+Author::  Simon Perreault
 
-Change controller:  IETF
+Change controller::  IETF
 
-10.2.  Registering New vCard Elements
+[[section10_2]]
+===  Registering New vCard Elements
 
 This section defines the process for registering new or modified
 vCard elements (i.e., properties, parameters, value data types, and
 values) with IANA.
 
-10.2.1.  Registration Procedure
+[[section10_2_1]]
+====  Registration Procedure
 
 The IETF has created a mailing list, vcarddav@ietf.org, which can be
 used for public discussion of vCard element proposals prior to
@@ -3069,14 +3025,6 @@ for the registration of new value data types that modify existing
 properties.  A Standards Track RFC is also [bcp14]#REQUIRED# for registration
 of vCard elements that modify vCard elements previously documented in
 a Standards Track RFC.
-
-
-
-
-
-
-
-
 
 The registration procedure begins when a completed registration
 template, defined in the sections below, is sent to vcarddav@ietf.org
@@ -3102,7 +3050,8 @@ Finally, note that there is an XML representation for vCard defined
 in <<RFC6351>>.  An XML representation [bcp14]#SHOULD# be defined for new vCard
 elements.
 
-10.2.2.  Vendor Namespace
+[[section10_2_2]]
+====  Vendor Namespace
 
 The vendor namespace is used for vCard elements associated with
 commercially available products.  "Vendor" or "producer" are
@@ -3116,10 +3065,10 @@ registered.  Changes to the specification will be made at their
 request, as discussed in subsequent sections.
 
 vCard elements belonging to the vendor namespace will be
-distinguished by the "VND-" prefix.  This is followed by an IANA-
+distinguished by the `"VND-"` prefix.  This is followed by an IANA-
 registered Private Enterprise Number (PEN), a dash, and a vCard
-element designation of the vendor's choosing (e.g., "VND-123456-
-MUDPIE").
+element designation of the vendor's choosing (e.g., `"VND-123456-
+MUDPIE"`).
 
 While public exposure and review of vCard elements to be registered
 in the vendor namespace are not required, using the vcarddav@ietf.org
@@ -3127,68 +3076,57 @@ mailing list for review is strongly encouraged to improve the quality
 of those specifications.  Registrations in the vendor namespace may
 be submitted directly to the IANA.
 
-
-
-
-
-
-
-10.2.3.  Registration Template for Properties
+[[section10_2_3]]
+====  Registration Template for Properties
 
 A property is defined by completing the following template.
 
-Namespace:  Empty for the global namespace, "VND-NNNN-" for a vendor-
-   specific property (where NNNN is replaced by the vendor's PEN).
+Namespace::  Empty for the global namespace, `"VND-NNNN-"` for a vendor-
+   specific property (where `NNNN` is replaced by the vendor's PEN).
 
-Property name:  The name of the property.
+Property name::  The name of the property.
 
-Purpose:  The purpose of the property.  Give a short but clear
+Purpose::  The purpose of the property.  Give a short but clear
    description.
 
-Value type:  Any of the valid value types for the property value
+Value type::  Any of the valid value types for the property value
    needs to be specified.  The default value type also needs to be
    specified.
 
-Cardinality:  See Section 6.
+Cardinality::  See <<section6,Section 6>>.
 
-Property parameters:  Any of the valid property parameters for the
+Property parameters::  Any of the valid property parameters for the
    property [bcp14]#MUST# be specified.
 
-Description:  Any special notes about the property, how it is to be
+Description::  Any special notes about the property, how it is to be
    used, etc.
 
-Format definition:  The ABNF for the property definition needs to be
+Format definition::  The ABNF for the property definition needs to be
    specified.
 
-Example(s):  One or more examples of instances of the property need
+Example(s)::  One or more examples of instances of the property need
    to be specified.
 
-10.2.4.  Registration Template for Parameters
+[[section10_2_4]]
+====  Registration Template for Parameters
 
 A parameter is defined by completing the following template.
 
-Namespace:  Empty for the global namespace, "VND-NNNN-" for a vendor-
-   specific property (where NNNN is replaced by the vendor's PEN).
+Namespace::  Empty for the global namespace, `"VND-NNNN-"` for a vendor-
+   specific property (where `NNNN` is replaced by the vendor's PEN).
 
-Parameter name:  The name of the parameter.
+Parameter name::  The name of the parameter.
 
-Purpose:  The purpose of the parameter.  Give a short but clear
+Purpose::  The purpose of the parameter.  Give a short but clear
    description.
 
-Description:  Any special notes about the parameter, how it is to be
+Description::  Any special notes about the parameter, how it is to be
    used, etc.
 
-Format definition:  The ABNF for the parameter definition needs to be
+Format definition::  The ABNF for the parameter definition needs to be
    specified.
 
-
-
-
-
-
-
-
-Example(s):  One or more examples of instances of the parameter need
+Example(s)::  One or more examples of instances of the parameter need
    to be specified.
 
 10.2.5.  Registration Template for Value Data Types
