@@ -260,6 +260,18 @@ module Asciidoctor
         end
         xmldoc.to_s
       end
+
+      # replace any <t>text</t> instances with <vspace/>text
+      def para_to_vspace(doc)
+        xmldoc = Nokogiri::XML("<fragment>#{doc}</fragment>")
+        paras = xmldoc.xpath("/fragment/t")
+        paras.each do |para|
+          vspace = Nokogiri::XML::Element.new("vspace", xmldoc.document)
+          para.before(vspace)
+          para.replace(para.children)
+        end
+        xmldoc.root.children.to_s
+      end
     end
   end
 end

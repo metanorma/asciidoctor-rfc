@@ -523,7 +523,7 @@ the attribute is not populated.
 
 |===
 
-Note that you can provide organization information without providing name information
+NOTE: You can provide organization information without providing name information
 for an author.
 
 ===== Author Address
@@ -868,7 +868,7 @@ Postamble text <11>
 <6> v2: `list/start`, `list@style` (`empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type`
 <7> v2: `list/t`; v3: `ol/li`
 
-Note that asciidoctor does not permit anchors on list items: the anchors in the following are ignored.
+NOTE: Asciidoctor does not permit anchors on list items: the anchors in the following are ignored.
 
 [source,asciidoc]
 --
@@ -876,6 +876,9 @@ Note that asciidoctor does not permit anchors on list items: the anchors in the 
 
 . [[id2]] A
 --
+
+NOTE: RFC XML v2 does not support multiparagraph list items. Following the specification recommendation,
+paragraphs within v2 list items are replaced with `vspace` tages.
 
 === Definition Lists
 
@@ -889,13 +892,16 @@ A:: B <3>
 <2> v3 only: `dl@hanging`, `dl@spacing` (attributes only available in v3); v2 only: `list@hangIndent` (attribute only available in v2). Note that the `compact` and `horizontal` attributes are mutually exclusive in AsciiDoc.
 <3> v3: `dl/dt`, `dl/dd`; v2: `list[@style="hanging"]/t@hangText`, `list[@style="hanging"]/t`
 
-Note that asciidoctor does not permit anchors on either definition list terms,
+NOTE: Asciidoctor does not permit anchors on either definition list terms,
 or definition list definitions: the anchors in the following are ignored.
 
 [source,asciidoc]
 --
 [[id1]] A:: [[id2]]B
 --
+
+NOTE: RFC XML v2 does not support multiparagraph list items. Following the specification recommendation,
+paragraphs within v2 list items are replaced with `vspace` tages.
 
 === Tables
 
@@ -924,7 +930,7 @@ h|header cell | body cell <5>
 <6> v3: `table/tbody/tr/td@anchor` (attribute only available in v3)
 <7> v3: `table/tfoot/tr/td`; v2: `texttable/c`
 
-Note that v3 permits table cells to contain block elements, such as paragraphs and lists. (This is done in Asciidoc by prefixing
+NOTE: v3 permits table cells to contain block elements, such as paragraphs and lists. (This is done in Asciidoc by prefixing
 the table cell with `a|`.) However v2 only permits inline tagging, and any block tags are ignored.
 
 === Sidebar (v3 only)

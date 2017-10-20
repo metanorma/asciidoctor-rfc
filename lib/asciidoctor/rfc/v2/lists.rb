@@ -95,17 +95,28 @@ module Asciidoctor
 
         xml.list **list_attributes do |xml_list|
           node.items.each do |terms, dd|
-            t_attributes = {
-              hangText: terms.map(&:text).join(", "),
-            }.reject { |_, value| value.nil? }
+            # all but last term have empty dd
+            terms.each_with_index do |term, idx|
+              t_attributes = {
+                hangText: term.text
+              }.reject { |_, value| value.nil? }
 
-            xml_list.t **t_attributes do |xml_t|
-              if !dd.nil?
-                if dd.blocks?
-                  xml_t << dd.text if dd.text?
-                  xml_t << dd.content
-                else
-                  xml_t << dd.text
+              if idx < terms.size - 1 
+                xml_list.t **t_attributes
+              else
+                xml_list.t **t_attributes do |xml_t|
+                  if !dd.nil?
+                    if dd.blocks?
+                      if dd.text?
+                        xml_t << dd.text 
+                      end
+                      # v2 does not support multi paragraph list items;
+                      # vspace is used to emulate them
+                      xml_t << para_to_vspace(dd.content)
+                    else
+                      xml_t << dd.text
+                    end
+                  end
                 end
               end
             end

@@ -175,7 +175,7 @@ module Asciidoctor
                   if dd.blocks?
                     if dd.text?
                       xml_dd.t do |t|
-                        t << dd.text if dd.text?
+                        t << dd.text
                       end
                     end
                     xml_dd << dd.content
