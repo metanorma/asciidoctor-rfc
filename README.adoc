@@ -263,7 +263,8 @@ https://tools.ietf.org/html/rfc7841[RFC7841]. Allowed values: `IETF` (default),
 
 | `:revdate:`
 | Optional. Latest revision date of document. Default value is current time.
-Accepts ISO 8601 date. For consistency with AsciiDoc, `:revdate:` is given as
+Accepts ISO 8601 date. Also accepts YYYY year, and YYYY[-]MM year/month.
+For consistency with AsciiDoc, `:revdate:` is given as
 an ISO 8601 date; the converter breaks it down into day, month name and year
 | `front/date@day`, `front/date@month`, `front/date@year`
 

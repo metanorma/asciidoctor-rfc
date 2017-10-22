@@ -77,6 +77,12 @@ module Asciidoctor
           date_attributes = {
             year: revdate
           }
+        elsif revdate =~ /^\d\d\d\d-?\d\d$/
+          matched = /^(?<year>\d\d\d\d)-(?<month>\d\d)$/.match revdate
+          date_attributes = {
+            month: Date::MONTHNAMES[(matched[:month]).to_i],
+            year: matched[:year],
+          }
         else
           d = Date.iso8601 revdate
           date_attributes = {
