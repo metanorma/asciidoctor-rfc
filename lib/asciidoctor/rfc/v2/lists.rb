@@ -60,7 +60,7 @@ module Asciidoctor
 
             xml_list.t **t_attributes do |xml_t|
               xml_t << item.text
-              xml_t << item.content if item.blocks?
+              xml_t << para_to_vspace(item.content) if item.blocks?
             end
           end
         end
@@ -81,7 +81,7 @@ module Asciidoctor
 
             xml_list.t **t_attributes do |xml_t|
               xml_t << item.text
-              xml_t << item.content if item.blocks?
+              xml_t << para_to_vspace(item.content) if item.blocks?
             end
           end
         end
