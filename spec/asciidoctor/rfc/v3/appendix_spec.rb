@@ -20,6 +20,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -81,6 +82,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>

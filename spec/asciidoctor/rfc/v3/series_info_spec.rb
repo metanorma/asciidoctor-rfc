@@ -22,6 +22,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="bcp" value="internet-draft-this-is-an-internet-draft-00"/>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 
@@ -56,6 +57,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="fyi" value="1111"/>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 
@@ -90,6 +92,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="fyi" value="1111"/>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 
@@ -124,6 +127,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="historic" value="1111"/>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 

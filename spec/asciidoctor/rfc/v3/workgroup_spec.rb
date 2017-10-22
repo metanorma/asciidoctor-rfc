@@ -16,6 +16,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       <workgroup>first_workgroup</workgroup>
       <workgroup>second_workgroup</workgroup>
       </front><middle>

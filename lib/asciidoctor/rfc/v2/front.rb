@@ -54,6 +54,23 @@ module Asciidoctor
         end
       end
 
+      def date1(revdate, xml)
+            revdate.gsub!(/T.*$/, "")
+            if revdate.length == 4 
+              date_attributes = {
+                year: revdate
+              }
+            else
+              d = Date.iso8601 revdate
+              date_attributes = {
+                day: d.day,
+                month: Date::MONTHNAMES[d.month],
+                year: d.year,
+              }
+            end
+            xml.date **date_attributes
+      end
+
       # Syntax:
       #   = Title
       #   Author
@@ -64,18 +81,13 @@ module Asciidoctor
           revdate = DateTime.now.iso8601
           warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
         end
+        puts revdate
         unless revdate.nil?
           begin
-            revdate.gsub!(/T.*$/, "")
-            d = Date.iso8601 revdate
-            date_attributes = {
-              day: d.day,
-              month: Date::MONTHNAMES[d.month],
-              year: d.year,
-            }
-            xml.date **date_attributes
+            date1(revdate, xml)
           rescue ArgumentError # invalid date
-            # nop
+            warn %(asciidoctor: WARNING: invalid date in header, provided current date)
+            date1(DateTime.now.iso8601, xml)
           end
         end
       end

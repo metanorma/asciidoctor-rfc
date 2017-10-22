@@ -71,28 +71,6 @@ module Asciidoctor
         xml.organization organization unless organization.nil?
       end
 
-      # Syntax:
-      #   = Title
-      #   Author
-      #   :revdate or :date
-      def date(node, xml)
-        revdate = node.attr("revdate") || node.attr("date")
-        unless revdate.nil?
-          begin
-            revdate.gsub!(/T.*$/, "")
-            d = Date.iso8601 revdate
-            date_attributes = {
-              day: d.day,
-              month: Date::MONTHNAMES[d.month],
-              year: d.year,
-            }
-            xml.date **date_attributes
-          rescue ArgumentError # invalid date
-            # nop
-          end
-        end
-      end
-
       def address(node, suffix, xml)
         email = node.attr("email#{suffix}")
         facsimile = node.attr("fax#{suffix}")

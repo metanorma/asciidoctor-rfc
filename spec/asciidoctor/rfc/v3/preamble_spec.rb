@@ -16,6 +16,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       </front><middle>
       <section anchor="_lorem" numbered="false">
       <name>Lorem</name>
@@ -45,6 +46,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       <abstract>
       <t>Preamble content.</t>
       <t>More Preamble content.</t>
@@ -82,6 +84,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <title>Document title</title>
       <author fullname="Author">
       </author>
+      <date day="1" month="January" year="1970"/>
       <note>
       <t>
       This is a note.
