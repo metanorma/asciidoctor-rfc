@@ -211,4 +211,30 @@ describe Asciidoctor::RFC::V3::Converter do
       </rfc>
     OUTPUT
   end
+  it "deals with HTML entities" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+      :stem:
+
+      == Section 1
+      Hello &lt;&nbsp;(&amp;lt;)
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <front>
+         <title abbrev="abbrev_value">Document title</title>
+         <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <t>Hello &lt;&nbsp;(&amp;lt;)</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
 end

@@ -40,7 +40,7 @@ module Asciidoctor
 
       def initialize(backend, opts)
         super
-        # basebackend 'html'
+        basebackend 'html'
         outfilesuffix ".xml"
       end
 
