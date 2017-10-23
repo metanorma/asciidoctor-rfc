@@ -138,7 +138,7 @@ module Asciidoctor
             node.blocks.each do |b|
               case b.context
               when :listing, :image, :literal
-                xml_figure << send(b.context, b).join
+                xml_figure << send(b.context, b).join("\n")
                 seen_artwork = true
               else
                 # we want to see the para text, not its <t> container
