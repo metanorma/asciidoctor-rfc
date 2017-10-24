@@ -16,7 +16,7 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
-  it "ignores anchors on list items" do
+  it "ignores anchors on ordered list items" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
       [counter=idx,group=5,arabic,spacing=compact]
@@ -27,6 +27,21 @@ describe Asciidoctor::RFC::V2::Converter do
       <list counter="idx" style="numbers">
       <t>First</t>
       <t> Second</t>
+      </list>
+      </t>
+    OUTPUT
+  end
+
+  it "renders an ordered list with empty style" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      [empty]
+      . First
+      . Second
+    INPUT
+      <t>
+      <list style="empty">
+      <t>First</t>
+      <t>Second</t>
       </list>
       </t>
     OUTPUT

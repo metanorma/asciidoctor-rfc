@@ -22,6 +22,28 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
+  it "renders a description list with empty style" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [[id]]
+      [empty,hang-indent=5]
+      A:: B
+      C:: D
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+         <t>
+         <list hangIndent="5" style="empty">
+           <t hangText="A">B</t>
+           <t hangText="C">D</t>
+         </list>
+       </t>
+      </section>
+    OUTPUT
+  end
+
   it "renders hybrid description list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
