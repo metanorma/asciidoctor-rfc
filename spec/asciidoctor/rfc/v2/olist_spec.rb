@@ -75,10 +75,10 @@ describe Asciidoctor::RFC::V2::Converter do
       . Sixth
     INPUT
       <t>
-      <list style="format %c">
+      <list style="letters">
       <t>First</t>
       <t>Second
-      <list style="format %C">
+      <list style="format %C.">
       <t>Third</t>
       <t>Fourth</t>
       </list>
@@ -100,7 +100,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ** Fourth
     INPUT
       <t>
-      <list style="format %i">
+      <list style="format %i.">
       <t>First</t>
       <t>Second
       <list style="symbols">

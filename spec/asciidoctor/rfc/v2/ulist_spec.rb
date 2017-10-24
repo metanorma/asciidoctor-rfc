@@ -84,7 +84,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <list style="symbols">
       <t>First</t>
       <t>Second
-      <list style="format %i">
+      <list style="format %i.">
       <t>Third</t>
       <t>Fourth</t>
       </list>
