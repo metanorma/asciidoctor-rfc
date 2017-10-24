@@ -51,7 +51,7 @@ module Asciidoctor
         style = "symbols"
         style = "empty" if node.attr("empty") == "true"
         list_attributes = {
-          style: style
+          style: style,
           hangIndent: node.attr("hang-indent"),
         }.reject { |_, value| value.nil? }
 
