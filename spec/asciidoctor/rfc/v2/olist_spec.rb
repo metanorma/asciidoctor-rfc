@@ -3,12 +3,12 @@ describe Asciidoctor::RFC::V2::Converter do
   it "renders an ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
-      [start=3,arabic]
+      [counter=idx,arabic]
       . First
       . Second
     INPUT
       <t>
-      <list counter="3" style="numbers">
+      <list counter="idx" style="numbers">
       <t>First</t>
       <t>Second</t>
       </list>
@@ -19,12 +19,12 @@ describe Asciidoctor::RFC::V2::Converter do
   it "ignores anchors on list items" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]
-      [start=3,group=5,arabic,spacing=compact]
+      [counter=idx,group=5,arabic,spacing=compact]
       . First
       . [[id1]] Second
     INPUT
       <t>
-      <list counter="3" style="numbers">
+      <list counter="idx" style="numbers">
       <t>First</t>
       <t> Second</t>
       </list>

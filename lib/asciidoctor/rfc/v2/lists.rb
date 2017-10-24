@@ -20,7 +20,7 @@ module Asciidoctor
         ).freeze
 
       # Syntax:
-      #   [start=n] (optional)
+      #   [counter=token] (optional)
       #   . A
       #   . B
       def olist(node)
@@ -67,9 +67,8 @@ module Asciidoctor
       end
 
       def olist_naked(node, xml)
-        # TODO did I understand spec of @counter correctly?
         list_attributes = {
-          counter: node.attr("start"),
+          counter: node.attr("counter"),
           style: OLIST_TYPES[node.style.to_sym],
         }.reject { |_, value| value.nil? }
 
