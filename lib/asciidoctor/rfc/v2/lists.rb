@@ -71,7 +71,7 @@ module Asciidoctor
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
           counter: node.attr("counter"),
-          style: OLIST_TYPES[node.style.to_sym],
+          style: node.attr("empty") == "true" ?  OLIST_TYPES[node.style.to_sym],
         }.reject { |_, value| value.nil? }
 
         xml.list **list_attributes do |xml_list|
@@ -91,7 +91,7 @@ module Asciidoctor
       def dlist_naked(node, xml)
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
-          style: "hanging",
+          style: node.attr("empty") == "true" ?  "hanging",
         }.reject { |_, value| value.nil? }
 
         xml.list **list_attributes do |xml_list|
