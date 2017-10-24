@@ -50,12 +50,12 @@ module Asciidoctor
       def ulist_naked(node, xml)
         list_attributes = {
           style: "symbols",
+          hangIndent: node.attr("hang-indent"),
         }.reject { |_, value| value.nil? }
 
         xml.list **list_attributes do |xml_list|
           node.items.each do |item|
             t_attributes = {
-              hangIndent: node.attr("hang-indent"),
               anchor: nil,
             }.reject { |_, value| value.nil? }
 
@@ -69,6 +69,7 @@ module Asciidoctor
 
       def olist_naked(node, xml)
         list_attributes = {
+          hangIndent: node.attr("hang-indent"),
           counter: node.attr("counter"),
           style: OLIST_TYPES[node.style.to_sym],
         }.reject { |_, value| value.nil? }
@@ -76,7 +77,6 @@ module Asciidoctor
         xml.list **list_attributes do |xml_list|
           node.items.each do |item|
             t_attributes = {
-              hangIndent: node.attr("hang-indent"),
               anchor: item.id,
             }.reject { |_, value| value.nil? }
 
