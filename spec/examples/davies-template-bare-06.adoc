@@ -65,9 +65,7 @@ The CDATA means you don't need to escape meta-characters (especially
 &lt;&nbsp;(&amp;lt;) and &amp;&nbsp;(&amp;amp;)) but is not essential.
 Figures may also have a title attribute but it won't be displayed unless
 there is also an anchor. White space, both horizontal and vertical, is
-significant in figures even if you don't use CDATA.</t>
-
-   <!-- This PI places the pagebreak correctly (before the section title) in the text output. -->
+significant in figures even if you don't use CDATA.
 
 == Subsections and Tables
 === A Subsection
@@ -76,16 +74,17 @@ can be adjusted with the value of the "tocdepth" processing
 instruction.
 
 === Tables
-.. are very similar to figures:
+... are very similar to figures:
 
 Tables use ttcol to define column headers and widths. Every cell then has a "c" element for its content. [Note: Asciidoc does not support preambles and postambles within tables.]
          
 [[table_example]]
 .A Very Simple Table
+[cols="2*^"]
 |===
 |ttcol #1 |ttcol #2
 
-|c #1 |c #2<
+|c #1 |c #2
 |c #3 |c #4
 |c #5 |c #6
 |===
@@ -102,7 +101,7 @@ short:: With a label shorter than the hangIndent.
 
 fantastically long label:: With a label longer than the hangIndent.
 
-vspace_trick::  +
+vspace_trick:: {blank} +
 Forces the new item to start on a new line.
 
 Simulating more than one paragraph in a list item using
