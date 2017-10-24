@@ -21,16 +21,19 @@ Editor name <Editor email>
 :keyword: Network Management,Management Information Base,MIB,SMIv2
 
 [abstract]
-NOTE: This template is for authors of IETF specifications containing MIB
+
+(In RFC XML v2, an absract cannot begin with a note!)
+
+Note --- This template is for authors of IETF specifications containing MIB
   modules.  This template can be used as a starting point to produce
   specifications that comply with the Operations & Management Area
   guidelines for MIB module internet drafts. Throughout the template, the marker "[TEMPLATE TODO]" is used as a placeholder to indicate an
   element or text that requires replacement or removal. All the places with [TEMPLATE TODO] markers 
   should  be replaced or removed before the document is submitted.
   
-his memo defines a portion of the Management Information Base (MIB)
-      for use with network management protocols. In particular it defines
-      objects for managing [TEMPLATE TODO].
+This memo defines a portion of the Management Information Base (MIB)
+for use with network management protocols. In particular it defines
+objects for managing [TEMPLATE TODO].
       
 
 NOTE: [TEMPLATE TODO]: describe what functionality will be managed using this MIB
@@ -40,9 +43,9 @@ NOTE: [TEMPLATE TODO]: describe what functionality will be managed using this MI
  in the abstract, and expand your  acronyms. 
 
  
-[note]
+[NOTE]
 .Foreword to template users
-===
+====
 This template is intended to help authors write the surrounding text needed in a
 MIB module internet draft, but does not provide a template for writing 
 the MIB module itself.
@@ -75,7 +78,7 @@ to automate the checking of MIB module internet drafts, to speed the WG
 and IESG review processes.
 
 An XML2RFC template is also available. For information on XML2RFC, see
-RFC2629 <<RFC2629>>>, and documentation available at
+RFC2629 <<RFC2629>>, and documentation available at
 http://xml.resource.org. The XML2RFC version includes
 advice describing how to fill in each section of the template. XML2RFC generates the 
 actual internet-draft from your information, and automatically handles getting up-to-date 
@@ -91,15 +94,15 @@ document before submission.
 
 [TEMPLATE TODO] Remove all page headings from the template document, and
 replace them with the appropriate headings for your internet draft.
-===
+====
 
 [NOTE]
 .Note to RFC Editor re: [TEMPLATE TODO] markers  
-===
+====
 Note to RFC Editor: When a document is developed using this template, the editor of the 
 document should replace or remove all the places marked [TEMPLATE TODO] before submitting the document.
 If there are still [TEMPLATE TODO] markers, please send the document back to the editor.
-===
+====
 
 == Introduction
 This memo defines a portion of the Management Information Base (MIB)
@@ -128,7 +131,7 @@ the Management Information Base or MIB. MIB objects are generally
 accessed through the Simple Network Management Protocol (SNMP). Objects
 in the MIB are defined using the mechanisms defined in the Structure of
 Management Information (SMI). This memo specifies a MIB module that is
-compliant to the SMIv2, which is described in STD 58, RFC 2578 <<RFC2578>>>, STD 58, RFC 2579 <<RFC2579>> and STD 58, RFC 2580 <<RFC2580>>.
+compliant to the SMIv2, which is described in STD 58, RFC 2578 <<RFC2578>>, STD 58, RFC 2579 <<RFC2579>> and STD 58, RFC 2580 <<RFC2580>>.
 
 == Conventions
 NOTE: [TEMPLATE TODO] This boilerplate should be used if the RFC2119 key words 
@@ -344,32 +347,193 @@ NOTE: [TEMPLATE TODO] This optional section can be used to mention contributors 
 [bibliography]
 == Normative References
 ++++
-    <references title="Normative References">
         <!-- [TEMPLATE TODO] rfc2119, 2578, 2579, and 2580 are required to support MIB
       module boilerplate text. -->
 
-      &rfc2119;
+<reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+<front>
+<title>
+Key words for use in RFCs to Indicate Requirement Levels
+</title>
+<author initials="S." surname="Bradner" fullname="S. Bradner">
+<organization/>
+</author>
+<date year="1997" month="March"/>
+<abstract>
+<t>
+In many standards track documents several words are used to signify the requirements in the specification. These words are often capitalized. This document defines these words as they should be interpreted in IETF documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
 
-      &rfc2578;
+ <reference anchor="RFC2578" target="https://www.rfc-editor.org/info/rfc2578">
+<front>
+<title>
+Structure of Management Information Version 2 (SMIv2)
+</title>
+<author initials="K." surname="McCloghrie" fullname="K. McCloghrie" role="editor">
+<organization/>
+</author>
+<author initials="D." surname="Perkins" fullname="D. Perkins" role="editor">
+<organization/>
+</author>
+<author initials="J." surname="Schoenwaelder" fullname="J. Schoenwaelder" role="editor">
+<organization/>
+</author>
+<date year="1999" month="April"/>
+<abstract>
+<t>
+It is the purpose of this document, the Structure of Management Information Version 2 (SMIv2), to define that adapted subset, and to assign a set of associated administrative values. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="STD" value="58"/>
+<seriesInfo name="RFC" value="2578"/>
+<seriesInfo name="DOI" value="10.17487/RFC2578"/>
+</reference>
 
-      &rfc2579;
+<reference anchor="RFC2579" target="https://www.rfc-editor.org/info/rfc2579">
+<front>
+<title>Textual Conventions for SMIv2</title>
+<author initials="K." surname="McCloghrie" fullname="K. McCloghrie" role="editor">
+<organization/>
+</author>
+<author initials="D." surname="Perkins" fullname="D. Perkins" role="editor">
+<organization/>
+</author>
+<author initials="J." surname="Schoenwaelder" fullname="J. Schoenwaelder" role="editor">
+<organization/>
+</author>
+<date year="1999" month="April"/>
+<abstract>
+<t>
+It is the purpose of this document to define the initial set of textual conventions available to all MIB modules. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="STD" value="58"/>
+<seriesInfo name="RFC" value="2579"/>
+<seriesInfo name="DOI" value="10.17487/RFC2579"/>
+</reference>
 
-      &rfc2580;
-
-    </references>
+<reference anchor="RFC2580" target="https://www.rfc-editor.org/info/rfc2580">
+<front>
+<title>Conformance Statements for SMIv2</title>
+<author initials="K." surname="McCloghrie" fullname="K. McCloghrie" role="editor">
+<organization/>
+</author>
+<author initials="D." surname="Perkins" fullname="D. Perkins" role="editor">
+<organization/>
+</author>
+<author initials="J." surname="Schoenwaelder" fullname="J. Schoenwaelder" role="editor">
+<organization/>
+</author>
+<date year="1999" month="April"/>
+<abstract>
+<t>
+Collections of related objects are defined in MIB modules. It may be useful to define the acceptable lower-bounds of implementation, along with the actual level of implementation achieved. It is the purpose of this document to define the notation used for these purposes. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="STD" value="58"/>
+<seriesInfo name="RFC" value="2580"/>
+<seriesInfo name="DOI" value="10.17487/RFC2580"/>
+</reference>
 ++++
+
 [bibliography]
 == Informative References
 ++++
-    <references title="Informative References">
 
 <!--  RFC3410 is required to support the boilerplate text.-->
-      &rfc2223;
-      &rfc3410;
+<reference anchor="RFC2223" target="https://www.rfc-editor.org/info/rfc2223">
+<front>
+<title>Instructions to RFC Authors</title>
+<author initials="J." surname="Postel" fullname="J. Postel">
+<organization/>
+</author>
+<author initials="J." surname="Reynolds" fullname="J. Reynolds">
+<organization/>
+</author>
+<date year="1997" month="October"/>
+<abstract>
+<t>
+This Request for Comments (RFC) provides information about the preparation of RFCs, and certain policies relating to the publication of RFCs. This memo provides information for the Internet community. This memo does not specify an Internet standard of any kind.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2223"/>
+<seriesInfo name="DOI" value="10.17487/RFC2223"/>
+</reference>
 
-     &rfc2629;
+<reference anchor="RFC3410" target="https://www.rfc-editor.org/info/rfc3410">
+<front>
+<title>
+Introduction and Applicability Statements for Internet-Standard Management Framework
+</title>
+<author initials="J." surname="Case" fullname="J. Case">
+<organization/>
+</author>
+<author initials="R." surname="Mundy" fullname="R. Mundy">
+<organization/>
+</author>
+<author initials="D." surname="Partain" fullname="D. Partain">
+<organization/>
+</author>
+<author initials="B." surname="Stewart" fullname="B. Stewart">
+<organization/>
+</author>
+<date year="2002" month="December"/>
+<abstract>
+<t>
+The purpose of this document is to provide an overview of the third version of the Internet-Standard Management Framework, termed the SNMP version 3 Framework (SNMPv3). This Framework is derived from and builds upon both the original Internet-Standard Management Framework (SNMPv1) and the second Internet-Standard Management Framework (SNMPv2). The architecture is designed to be modular to allow the evolution of the Framework over time. The document explains why using SNMPv3 instead of SNMPv1 or SNMPv2 is strongly recommended. The document also recommends that RFCs 1157, 1441, 1901, 1909 and 1910 be retired by moving them to Historic status. This document obsoletes RFC 2570. This memo provides information for the Internet community.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="3410"/>
+<seriesInfo name="DOI" value="10.17487/RFC3410"/>
+</reference>
 
-       &rfc4181;
+<reference anchor="RFC2629" target="https://www.rfc-editor.org/info/rfc2629">
+<front>
+<title>Writing I-Ds and RFCs using XML</title>
+<author initials="M." surname="Rose" fullname="M. Rose">
+<organization/>
+</author>
+<date year="1999" month="June"/>
+<abstract>
+<t>
+This memo presents a technique for using XML (Extensible Markup Language) as a source format for documents in the Internet-Drafts (I-Ds) and Request for Comments (RFC) series. This memo provides information for the Internet community.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2629"/>
+<seriesInfo name="DOI" value="10.17487/RFC2629"/>
+</reference>
+
+<reference anchor="RFC4181" target="https://www.rfc-editor.org/info/rfc4181">
+<front>
+<title>
+Guidelines for Authors and Reviewers of MIB Documents
+</title>
+<author initials="C." surname="Heard" fullname="C. Heard" role="editor">
+<organization/>
+</author>
+<date year="2005" month="September"/>
+<abstract>
+<t>
+This memo provides guidelines for authors and reviewers of IETF standards-track specifications containing MIB modules. Applicable portions may be used as a basis for reviews of other MIB documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="111"/>
+<seriesInfo name="RFC" value="4181"/>
+<seriesInfo name="DOI" value="10.17487/RFC4181"/>
+</reference>
 
     </references>
     
