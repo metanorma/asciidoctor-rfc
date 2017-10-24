@@ -12,11 +12,11 @@ module Asciidoctor
         Hash.new("numbers").merge(
           arabic:     "numbers",
           # decimal:    "1", # not supported
-          loweralpha: "format %c",
+          loweralpha: "letters",
           # lowergreek: "lower-greek", # not supported
-          lowerroman: "format %i",
-          upperalpha: "format %C",
-          upperroman: "format %I",
+          lowerroman: "format %i.",
+          upperalpha: "format %C.",
+          upperroman: "format %I.",
       ).freeze
 
       # Syntax:
