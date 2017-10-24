@@ -47,6 +47,21 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
+  it "renders an ordered list with custom style" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      [format="#%d"]
+      . First
+      . Second
+    INPUT
+      <t>
+      <list style="format #%d">
+      <t>First</t>
+      <t>Second</t>
+      </list>
+      </t>
+    OUTPUT
+  end
+
   it "renders a nested ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]

@@ -857,7 +857,7 @@ Postamble text <11>
 ** Nested list <4>
 
 [[id]] <5>
-[spacing=compact,start=n,group=n,counter=token,hang-indent=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
+[spacing=compact,start=n,group=n,counter=token,hang-indent=n,format=List #%d,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
 . A <7>
 . B <7>
 --
@@ -866,7 +866,7 @@ Postamble text <11>
 <3> v2: `list[@style="symbols"]/t`; v3: ul/li
 <4> v2: `list[@style="symbols"]/t/list[@style="symbols"]/t`; v3: `ul/li/ul/li`
 <5> v3: `ol@anchor`; attribute only available in v3
-<6> v2: `list/counter`, `list@style`, `list@hangIndent` (`start`, `empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type` (`counter`, `hangIndent` not available)
+<6> v2: `list/counter`,  `list@hangIndent`, `list@style = format List #%d`, `list@style` (for arabic|loweralpha|upperralpha|lowerroman|upperroman) (`start`, `empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type = "#%d", `ol@type` (for arabic|loweralpha|upperralpha|lowerroman|upperroman) (`counter`, `hangIndent` not available)
 <7> v2: `list/t`; v3: `ol/li`
 
 NOTE: Asciidoctor does not permit anchors on list items: the anchors in the following are ignored.

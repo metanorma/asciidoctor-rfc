@@ -42,6 +42,26 @@ describe Asciidoctor::RFC::V3::Converter do
       </section>
     OUTPUT
   end
+  it "renders an ordered list with custom style" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :docName:
+      Author
+
+      == Section 1
+      [format="#%d"]
+      . First
+      . Second
+    INPUT
+      <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
+      <ol type="#%d">
+      <li>First</li>
+      <li>Second</li>
+      </ol>
+      </section>
+    OUTPUT
+  end
   it "renders a nested ordered list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title

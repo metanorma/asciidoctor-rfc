@@ -48,8 +48,10 @@ module Asciidoctor
       end
 
       def ulist_naked(node, xml)
+        style = "symbols"
+        style = "empty" if node.attr("empty") == "true"
         list_attributes = {
-          style: node.attr("empty") == "true" ? "empty" : "symbols",
+          style: style
           hangIndent: node.attr("hang-indent"),
         }.reject { |_, value| value.nil? }
 
@@ -68,10 +70,13 @@ module Asciidoctor
       end
 
       def olist_naked(node, xml)
+        style = OLIST_TYPES[node.style.to_sym]
+        style = "empty" if node.attr("empty") == "true"
+        style = "format #{node.attr("format")}" unless node.attr("format").nil?
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
           counter: node.attr("counter"),
-          style: node.attr("empty") == "true" ?  OLIST_TYPES[node.style.to_sym],
+          style: style
         }.reject { |_, value| value.nil? }
 
         xml.list **list_attributes do |xml_list|
@@ -89,9 +94,11 @@ module Asciidoctor
       end
 
       def dlist_naked(node, xml)
+        style = "hanging"
+        style = "empty" if node.attr("empty") == "true"
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
-          style: node.attr("empty") == "true" ?  "hanging",
+          style: style
         }.reject { |_, value| value.nil? }
 
         xml.list **list_attributes do |xml_list|
