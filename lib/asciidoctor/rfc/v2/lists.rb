@@ -49,7 +49,7 @@ module Asciidoctor
 
       def ulist_naked(node, xml)
         style = "symbols"
-        style = "empty" if node.option?("empty")
+        style = "empty" if node.attr("style") == "empty"
         list_attributes = {
           style: style,
           hangIndent: node.attr("hang-indent"),
@@ -71,7 +71,7 @@ module Asciidoctor
 
       def olist_naked(node, xml)
         style = OLIST_TYPES[node.style.to_sym]
-        style = "empty" if node.option?("empty")
+        style = "empty" if node.attr("style") == "empty"
         style = "format #{node.attr("format")}" unless node.attr("format").nil?
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
@@ -94,8 +94,9 @@ module Asciidoctor
       end
 
       def dlist_naked(node, xml)
+        puts node.attributes
         style = "hanging"
-        style = "empty" if node.option?("empty")
+        style = "empty" if node.attr("style") == "empty"
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
           style: style

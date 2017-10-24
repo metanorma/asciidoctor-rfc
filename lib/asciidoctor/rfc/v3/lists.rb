@@ -109,7 +109,7 @@ module Asciidoctor
 
         result << noko do |xml|
           type = OLIST_TYPES[node.style.to_sym]
-          type = "format #{node.attr("format")}" unless node.attr("format").nil?
+          type = node.attr("format") unless node.attr("format").nil?
           ol_attributes = {
             anchor: node.id,
             start: node.attr("start"),
