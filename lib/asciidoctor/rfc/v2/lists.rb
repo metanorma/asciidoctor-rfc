@@ -94,7 +94,6 @@ module Asciidoctor
       end
 
       def dlist_naked(node, xml)
-        puts node.attributes
         style = "hanging"
         style = "empty" if node.attr("style") == "empty"
         list_attributes = {
