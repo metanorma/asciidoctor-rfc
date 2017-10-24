@@ -17,7 +17,7 @@ module Asciidoctor
           lowerroman: "format %i",
           upperalpha: "format %C",
           upperroman: "format %I",
-        ).freeze
+      ).freeze
 
       # Syntax:
       #   [counter=token] (optional)
@@ -55,6 +55,7 @@ module Asciidoctor
         xml.list **list_attributes do |xml_list|
           node.items.each do |item|
             t_attributes = {
+              hangIndent: node.attr("hang-indent"),
               anchor: nil,
             }.reject { |_, value| value.nil? }
 
@@ -75,6 +76,7 @@ module Asciidoctor
         xml.list **list_attributes do |xml_list|
           node.items.each do |item|
             t_attributes = {
+              hangIndent: node.attr("hang-indent"),
               anchor: item.id,
             }.reject { |_, value| value.nil? }
 
