@@ -49,7 +49,7 @@ module Asciidoctor
 
       def ulist_naked(node, xml)
         list_attributes = {
-          style: "symbols",
+          style: node.attr("empty") == "true" ? "empty" : "symbols",
           hangIndent: node.attr("hang-indent"),
         }.reject { |_, value| value.nil? }
 

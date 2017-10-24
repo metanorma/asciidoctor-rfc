@@ -851,22 +851,22 @@ Postamble text <11>
 [source,asciidoc]
 --
 [[id]] <1>
-[empty=true,spacing=normal|compact] <2>
+[empty=true,spacing=normal|compact,hang-indent=n] <2>
 * Unordered list 1 <3>
 * Unordered list 2 <3>
 ** Nested list <4>
 
 [[id]] <5>
-[spacing=compact,start=n,group=n,counter=token,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
+[spacing=compact,start=n,group=n,counter=token,hang-indent=n,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
 . A <7>
 . B <7>
 --
 <1> v3: `ul@anchor`; attribute only available in v3
-<2> v3: `ul@empty`, `ul@spacing`; attributes only available in v3
+<2> v3: `ul@empty`, `ul@spacing` (`hangIndent` not available); v2: `ul@style = empty`, `ul@hangIndent` (`spacing` not available)
 <3> v2: `list[@style="symbols"]/t`; v3: ul/li
 <4> v2: `list[@style="symbols"]/t/list[@style="symbols"]/t`; v3: `ul/li/ul/li`
 <5> v3: `ol@anchor`; attribute only available in v3
-<6> v2: `list/counter`, `list@style` (`start`, `empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type` (`counter` not available)
+<6> v2: `list/counter`, `list@style`, `list@hangIndent` (`start`, `empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type` (`counter`, `hangIndent` not available)
 <7> v2: `list/t`; v3: `ol/li`
 
 NOTE: Asciidoctor does not permit anchors on list items: the anchors in the following are ignored.
