@@ -172,11 +172,23 @@ module Asciidoctor
       end
 
       def noko(&block)
-        xhtml = xhtml()
-        fragment = ::Nokogiri::XML::DocumentFragment.parse("")
-        #fragment = ::Nokogiri::HTML::DocumentFragment.parse("")
+        #fragment = ::Nokogiri::XML::DocumentFragment.parse("")
+        #fragment.doc.create_internal_subset("xml", nil, "xhtml.dtd")
+head = <<HERE
+        <!DOCTYPE html SYSTEM
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+        <title></title>
+        <meta charset="UTF-8" />
+        </head>
+        <body>
+        </body>
+        </html>
+HERE
+        doc = ::Nokogiri::XML.parse(head)
+        fragment = doc.fragment("")
         ::Nokogiri::XML::Builder.with fragment, &block
-        #::Nokogiri::HTML::Builder.with fragment, &block
         fragment.to_xml(:encoding => "US-ASCII").lines.map { |l| l.gsub(/\s*\n/, "") }
       end
     end
