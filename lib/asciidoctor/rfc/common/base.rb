@@ -172,6 +172,7 @@ module Asciidoctor
       end
 
       def noko(&block)
+        xhtml = xhtml()
         fragment = ::Nokogiri::XML::DocumentFragment.parse("")
         #fragment = ::Nokogiri::HTML::DocumentFragment.parse("")
         ::Nokogiri::XML::Builder.with fragment, &block

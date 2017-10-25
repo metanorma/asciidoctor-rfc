@@ -3,6 +3,7 @@ require "asciidoctor"
 require "asciidoctor/rfc/version"
 require "asciidoctor/rfc/common/base"
 require "asciidoctor/rfc/common/front"
+require "asciidoctor/rfc/common/xhtml"
 require "asciidoctor/rfc/v2/base"
 require "asciidoctor/rfc/v2/blocks"
 require "asciidoctor/rfc/v2/front"
@@ -24,6 +25,7 @@ module Asciidoctor
 
       include ::Asciidoctor::RFC::Common::Base
       include ::Asciidoctor::RFC::Common::Front
+      include ::Asciidoctor::RFC::Common::Xhtml
       include ::Asciidoctor::RFC::V2::Base
       include ::Asciidoctor::RFC::V2::Blocks
       include ::Asciidoctor::RFC::V2::Front
