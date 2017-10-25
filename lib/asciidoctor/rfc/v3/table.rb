@@ -14,9 +14,9 @@ module Asciidoctor
 
           table_attributes = {
             anchor: node.id,
-          }.reject { |_, value| value.nil? }
+          }
 
-          xml.table **table_attributes do |xml_table|
+          xml.table **attr_code(table_attributes) do |xml_table|
             [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
               has_body = true if tblsec == :body
             end
@@ -45,12 +45,12 @@ module Asciidoctor
                     colspan: cell.colspan,
                     rowspan: cell.rowspan,
                     align: cell.attr("halign"),
-                  }.reject { |_, value| value.nil? }
+                  }
 
                   cell_tag = (tblsec == :head || cell.style == :header ? "th" : "td")
 
                   rowlength += cell.text.size
-                  xml_tr.send cell_tag, **cell_attributes do |thd|
+                  xml_tr.send cell_tag, **attr_code(cell_attributes) do |thd|
                     thd << (cell.style == :asciidoc ?  cell.content : cell.text )
                   end
                 end

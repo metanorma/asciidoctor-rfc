@@ -53,15 +53,15 @@ module Asciidoctor
         list_attributes = {
           style: style,
           hangIndent: node.attr("hang-indent"),
-        }.reject { |_, value| value.nil? }
+        }
 
-        xml.list **list_attributes do |xml_list|
+        xml.list **attr_code(list_attributes) do |xml_list|
           node.items.each do |item|
             t_attributes = {
               anchor: nil,
-            }.reject { |_, value| value.nil? }
+            }
 
-            xml_list.t **t_attributes do |xml_t|
+            xml_list.t **attr_code(t_attributes) do |xml_t|
               xml_t << item.text
               xml_t << para_to_vspace(item.content) if item.blocks?
             end
@@ -77,15 +77,15 @@ module Asciidoctor
           hangIndent: node.attr("hang-indent"),
           counter: node.attr("counter"),
           style: style
-        }.reject { |_, value| value.nil? }
+        }
 
-        xml.list **list_attributes do |xml_list|
+        xml.list **attr_code(list_attributes) do |xml_list|
           node.items.each do |item|
             t_attributes = {
               anchor: item.id,
-            }.reject { |_, value| value.nil? }
+            }
 
-            xml_list.t **t_attributes do |xml_t|
+            xml_list.t **attr_code(t_attributes) do |xml_t|
               xml_t << item.text
               xml_t << para_to_vspace(item.content) if item.blocks?
             end
@@ -99,20 +99,20 @@ module Asciidoctor
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
           style: style
-        }.reject { |_, value| value.nil? }
+        }
 
-        xml.list **list_attributes do |xml_list|
+        xml.list **attr_code(list_attributes) do |xml_list|
           node.items.each do |terms, dd|
             # all but last term have empty dd
             terms.each_with_index do |term, idx|
               t_attributes = {
                 hangText: term.text
-              }.reject { |_, value| value.nil? }
+              }
 
               if idx < terms.size - 1 
-                xml_list.t **t_attributes
+                xml_list.t **attr_code(t_attributes)
               else
-                xml_list.t **t_attributes do |xml_t|
+                xml_list.t **attr_code(t_attributes) do |xml_t|
                   if !dd.nil?
                     if dd.blocks?
                       if dd.text?

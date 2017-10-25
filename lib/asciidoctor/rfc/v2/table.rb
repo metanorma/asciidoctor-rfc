@@ -29,10 +29,10 @@ module Asciidoctor
           'suppress-title': node.attr("supress-title") ? true : false,
           align: node.attr("align"),
           style: style_value,
-        }.reject { |_, value| value.nil? }
+        }
 
         noko do |xml|
-          xml.texttable **texttable_attributes do |xml_texttable|
+          xml.texttable **attr_code(texttable_attributes) do |xml_texttable|
             [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
               has_body = true if tblsec == :body
             end
@@ -64,10 +64,10 @@ module Asciidoctor
                 # NOTE: anchor (ttcol.id) not supported
                 align: cell.attr("halign"),
                 width: ("#{widths[i]}%" if !node.option?("autowidth") && (i < widths.size)),
-              }.reject { |_, value| value.nil? }
+              }
 
               rowlength += cell.text.size
-              xml.ttcol **ttcol_attributes do |ttcol|
+              xml.ttcol **attr_code(ttcol_attributes) do |ttcol|
                 ttcol << cell.text
                 # NOT cell.content: v2 does not permit blocks in cells
               end

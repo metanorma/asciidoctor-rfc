@@ -56,9 +56,9 @@ module Asciidoctor
           number:         (node.attr("name") if is_rfc),
           seriesNo:       node.attr("series-no"),
           'xml:lang':     node.attr("xml-lang"),
-        }.reject { |_, value| value.nil? }
+        }
 
-        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, ">")
+        rfc_open = noko { |xml| xml.rfc **attr_code(rfc_attributes) }.join.gsub(/\/>$/, ">")
         result << rfc_open
 
         result << noko { |xml| front node, xml }
@@ -131,10 +131,10 @@ module Asciidoctor
 
         t_attributes = {
           anchor: node.id,
-        }.reject { |_, value| value.nil? }
+        }
 
         result << noko do |xml|
-          xml.t **t_attributes do |xml_t|
+          xml.t **attr_code(t_attributes) do |xml_t|
             xml_t << node.content
           end
         end
@@ -151,10 +151,10 @@ module Asciidoctor
 
         t_attributes = {
           anchor: node.id,
-        }.reject { |_, value| value.nil? }
+        }
 
         result << noko do |xml|
-          xml.t **t_attributes do |xml_t|
+          xml.t **attr_code(t_attributes) do |xml_t|
             xml_t << node.content.gsub("\n", "<br/>")
           end
         end
@@ -179,10 +179,10 @@ module Asciidoctor
 
           references_attributes = {
             title: node.title,
-          }.reject { |_, value| value.nil? }
+          }
 
           result << noko do |xml|
-            xml.references **references_attributes do |xml_references|
+            xml.references **attr_code(references_attributes) do |xml_references|
               node.blocks.each { |b| xml_references << reflist(b).join }
             end
           end
@@ -199,10 +199,10 @@ module Asciidoctor
           section_attributes = {
             anchor: node.id,
             title: node.title,
-          }.reject { |_, value| value.nil? }
+          }
 
           result << noko do |xml|
-            xml.section **section_attributes do |xml_section|
+            xml.section **attr_code(section_attributes) do |xml_section|
               xml_section << node.content
             end
           end
@@ -227,15 +227,15 @@ module Asciidoctor
           src: uri,
           type: node.attr("type"),
           width: node.attr("width"),
-        }.reject { |_, value| value.nil? }
+        }
 
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.artwork **artwork_attributes
+              xml_figure.artwork **attr_code(artwork_attributes)
             end
           else
-            xml.artwork **artwork_attributes
+            xml.artwork **attr_code(artwork_attributes)
           end
         end
       end

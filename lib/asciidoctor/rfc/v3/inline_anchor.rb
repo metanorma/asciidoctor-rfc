@@ -31,10 +31,10 @@ module Asciidoctor
             section: matched[:section],
             displayFormat: matched[:format],
             target: node.target.gsub(/\..*$/, "").gsub(/^#/, ""),
-          }.reject { |_, value| value.nil? }
+          }
 
           noko do |xml|
-            xml.relref relref_contents, **relref_attributes
+            xml.relref relref_contents, **attr_code(relref_attributes)
           end.join
         else
           xref_contents = node.text
@@ -46,10 +46,10 @@ module Asciidoctor
           xref_attributes = {
             format: matched&.[](:format),
             target: node.target.gsub(/^#/, ""),
-          }.reject { |_, value| value.nil? }
+          }
 
           noko do |xml|
-            xml.xref xref_contents, **xref_attributes
+            xml.xref xref_contents, **attr_code(xref_attributes)
           end.join
         end
       end
@@ -59,10 +59,10 @@ module Asciidoctor
 
         eref_attributes = {
           target: node.target,
-        }.reject { |_, value| value.nil? }
+        }
 
         noko do |xml|
-          xml.eref eref_contents, **eref_attributes
+          xml.eref eref_contents, **attr_code(eref_attributes)
         end.join
       end
 

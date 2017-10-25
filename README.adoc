@@ -215,6 +215,8 @@ Override default assumption that boldface uppercase BCP14 word is to be rendered
 `asciidoctor-rfc` allows setting the RFC XML document header using the following
 document attributes. Complying with AsciiDoc syntax, no blank lines are
 permitted between the title, listing of authors, and the document attributes.
+Also following AsciiDoc syntax, character entities will be ignored in the document
+header: `&nbsp;` in the header for example will be rendered as `&amp;nbsp;`.
 
 Shared RFC XML v3/v2 syntax:
 

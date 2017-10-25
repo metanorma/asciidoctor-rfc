@@ -56,11 +56,11 @@ module Asciidoctor
             target: node.target.gsub(/^#/, ""),
             format: matched[:format],
             align: node.attr("align"),
-          }.reject { |_, value| value.nil? }
+          }
         end
 
         noko do |xml|
-          xml.xref xref_contents, **xref_attributes
+          xml.xref xref_contents, **attr_code(xref_attributes)
         end.join
       end
 
@@ -69,10 +69,10 @@ module Asciidoctor
 
         eref_attributes = {
           target: node.target,
-        }.reject { |_, value| value.nil? }
+        }
 
         noko do |xml|
-          xml.eref eref_contents, **eref_attributes
+          xml.eref eref_contents, **attr_code(eref_attributes)
         end.join
       end
 

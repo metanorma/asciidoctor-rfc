@@ -21,8 +21,12 @@ module Asciidoctor
         organization_abbrev = node.attr("organization_abbrev#{suffix}")
         organization_attributes = {
           abbrev: organization_abbrev,
-        }.reject { |_, value| value.nil? }
-        xml.organization organization, **organization_attributes unless organization.nil?
+        }
+        unless organization.nil?
+          xml.organization **attr_code(organization_attributes) do |org|
+            org << organization
+          end
+        end
       end
 
       def address(node, suffix, xml)
@@ -39,17 +43,17 @@ module Asciidoctor
                 code = node.attr("code#{suffix}")
                 country = node.attr("country#{suffix}")
                 region = node.attr("region#{suffix}")
-                street&.split("\\ ")&.each { |st| xml_postal.street st }
-                xml_postal.city city unless city.nil?
-                xml_postal.region region unless region.nil?
-                xml_postal.code code unless code.nil?
-                xml_postal.country country unless country.nil?
+                street&.split("\\ ")&.each { |st| xml_postal.street { |s| s << st } }
+                xml_postal.city { |c| c << city } unless city.nil?
+                xml_postal.region { |r| r << region } unless region.nil?
+                xml_postal.code { |c| c << code } unless code.nil?
+                xml_postal.country { |c| c << country } unless country.nil?
               end
             end
-            xml_address.phone phone unless phone.nil?
-            xml_address.facsimile facsimile unless facsimile.nil?
-            xml_address.email email unless email.nil?
-            xml_address.uri uri unless uri.nil?
+            xml_address.phone { |p| p << phone } unless phone.nil?
+            xml_address.facsimile { |f| f << facsimile } unless facsimile.nil?
+            xml_address.email { |e| e << email } unless email.nil?
+            xml_address.uri { |u| u << uri } unless uri.nil?
           end
         end
       end

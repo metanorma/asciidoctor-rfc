@@ -31,8 +31,8 @@ module Asciidoctor
           status: node.attr("status"),
           stream: node.attr("submission-type") || "IETF",
           value: value,
-        }.reject { |_, val| val.nil? }
-        xml.seriesInfo **seriesInfo_attributes
+        }
+        xml.seriesInfo **attr_code(seriesInfo_attributes)
 
         intendedstatus = node.attr("intended-series")
         if !is_rfc && !intendedstatus.nil?
@@ -43,8 +43,8 @@ module Asciidoctor
             name: "",
             status: intendedstatus,
             value: value,
-          }.reject { |_, val| val.nil? }
-          xml.seriesInfo **seriesInfo_attributes
+          }
+          xml.seriesInfo **attr_code(seriesInfo_attributes)
         end
 
         rfcstatus = intendedstatus
@@ -61,14 +61,14 @@ module Asciidoctor
             name: "",
             status: m.nil? ? rfcstatus : m[1],
             value: m.nil? ? value : m[2],
-          }.reject { |_, val| val.nil? }
-          xml.seriesInfo **seriesInfo_attributes
+          }
+          xml.seriesInfo **attr_code(seriesInfo_attributes)
         end
       end
 
       def organization(node, suffix, xml)
         organization = node.attr("organization#{suffix}")
-        xml.organization organization unless organization.nil?
+        xml.organization { |org| org << organization } unless organization.nil?
       end
 
       def address(node, suffix, xml)
@@ -81,10 +81,10 @@ module Asciidoctor
         if [email, facsimile, phone, postalline, street, uri].any?
           xml.address do |xml_address|
             address1 node, suffix, xml_address if [postalline, street].any?
-            xml_address.phone phone unless phone.nil?
-            xml_address.facsimile facsimile unless facsimile.nil?
-            xml_address.email email unless email.nil?
-            xml_address.uri uri unless uri.nil?
+            xml_address.phone { |p| p << phone } unless phone.nil?
+            xml_address.facsimile { |f| f << facsimile } unless facsimile.nil?
+            xml_address.email { |e| e << email } unless email.nil?
+            xml_address.uri { |u| u << uri } unless uri.nil?
           end
         end
       end
@@ -100,13 +100,13 @@ module Asciidoctor
             code = node.attr("code#{suffix}")
             country = node.attr("country#{suffix}")
             region = node.attr("region#{suffix}")
-            street&.split("\\ ")&.each { |st| xml_postal.street st }
-            xml_postal.city city unless city.nil?
-            xml_postal.region region unless region.nil?
-            xml_postal.code code unless code.nil?
-            xml_postal.country country unless country.nil?
+            street&.split("\\ ")&.each { |st| xml_postal.street { |s| s << st } }
+            xml_postal.city { |c| c << city } unless city.nil?
+            xml_postal.region { |r| r << region } unless region.nil?
+            xml_postal.code { |c| c << code } unless code.nil?
+            xml_postal.country { |c| c << country } unless country.nil?
           else
-            postalline&.split("\\ ")&.each { |pl| xml_postal.postalLine pl }
+            postalline&.split("\\ ")&.each { |pl| xml_postal.postalLine { |p| p << pl } }
           end
         end
       end

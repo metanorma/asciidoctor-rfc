@@ -117,6 +117,58 @@ describe Asciidoctor::RFC::V3::Converter do
     OUTPUT
   end
 
+  it "deals with entities for all options under long author syntax" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :fullname: John <Doe> Horton
+      :lastname: Horton & Horton
+      :forename_initials: J. & D.
+      :organization: Ribose & co.
+      :organization_abbrev: RBM & co.
+      :fax: <555 5555>
+      :email: <john.doe@email.com>
+      :uri: http://example.com?x&y
+      :phone: 555 5655 & 999
+      :street: Cnr Mt Pleasant St & Dullsvile Cnr
+      :city: Dullsville & Pleasantville
+      :region: NSW & ACT
+      :country: Australia & New Zealand
+      :code: 3333 & 3334
+      
+      == Section 1
+      text
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <front>
+      <title>Document title</title>
+         <author fullname="John &lt;Doe&gt; Horton" surname="Horton &amp; Horton" initials="J. &amp; D.">
+           <organization>Ribose &amp; co.</organization>
+           <address>
+             <postal>
+               <street>Cnr Mt Pleasant St &amp; Dullsvile Cnr</street>
+               <city>Dullsville &amp; Pleasantville</city>
+               <region>NSW &amp; ACT</region>
+               <code>3333 &amp; 3334</code>
+               <country>Australia &amp; New Zealand</country>
+             </postal>
+             <phone>555 5655 &amp; 999</phone>
+             <facsimile>&lt;555 5555&gt;</facsimile>
+             <email>&lt;john.doe@email.com&gt;</email>
+             <uri>http://example.com?x&amp;y</uri>
+           </address>
+         </author>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      <section anchor="_section_1" numbered="false">
+        <name>Section 1</name>
+         <t>text</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+
   it "renders all options with multiple long author syntax" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title

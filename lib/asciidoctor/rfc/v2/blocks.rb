@@ -25,7 +25,7 @@ module Asciidoctor
           type: node.attr("type"),
           name: node.title,
           alt: node.attr("alt"),
-        }.reject { |_, value| value.nil? }
+        }
 
         # NOTE: html escaping is performed by Nokogiri
         artwork_content = node.lines.join("\n")
@@ -33,10 +33,10 @@ module Asciidoctor
         ret = noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.artwork artwork_content, **artwork_attributes
+              xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
             end
           else
-            xml.artwork artwork_content, **artwork_attributes
+            xml.artwork artwork_content, **attr_code(artwork_attributes)
           end
         end
         ret
@@ -76,12 +76,12 @@ module Asciidoctor
           note_attributes = {
             # default title provided: title is mandatory
             title: (node.title.nil? ? "NOTE" : node.title),
-          }.reject { |_, value| value.nil? }
+          }
 
           note_contents = [paragraph1(node)].flatten.join("\n")
 
           result << noko do |xml|
-            xml.note **note_attributes do |xml_note|
+            xml.note **attr_code(note_attributes) do |xml_note|
               xml_note << note_contents
             end
           end
@@ -89,7 +89,7 @@ module Asciidoctor
           cref_attributes = {
             anchor: node.id,
             source: node.attr("source"),
-          }.reject { |_, value| value.nil? }
+          }
 
           # remove all formatting: cref content is pure text
           cref_contents = node.blocks? ? flatten_rawtext(node) : flatten_rawtext(node)
@@ -101,12 +101,12 @@ module Asciidoctor
           result << noko do |xml|
             if node.parent.context !~ /table|example|paragraph|section/
               xml.t do |xml_t|
-                xml_t.cref **cref_attributes do |xml_cref|
+                xml_t.cref **attr_code(cref_attributes) do |xml_cref|
                   xml_cref << cref_contents
                 end
               end
             else
-              xml.cref **cref_attributes do |xml_cref|
+              xml.cref **attr_code(cref_attributes) do |xml_cref|
                 xml_cref << cref_contents
               end
             end
@@ -130,11 +130,11 @@ module Asciidoctor
           title: node.title,
           'suppress-title': node.attr("suppress-title"),
           # TODO: is 'suppress-title' the correct attribute name?
-        }.reject { |_, value| value.nil? }
+        }
         # TODO iref
         seen_artwork = false
         noko do |xml|
-          xml.figure **figure_attributes do |xml_figure|
+          xml.figure **attr_code(figure_attributes) do |xml_figure|
             node.blocks.each do |b|
               case b.context
               when :listing, :image, :literal
@@ -171,7 +171,7 @@ module Asciidoctor
           name: node.title,
           type: node.attr("language"),
           src: node.attr("src"),
-        }.reject { |_, value| value.nil? }
+        }
 
         # NOTE: html escaping is performed by Nokogiri
         sourcecode_content =
@@ -180,10 +180,10 @@ module Asciidoctor
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.artwork sourcecode_content, **sourcecode_attributes
+              xml_figure.artwork sourcecode_content, **attr_code(sourcecode_attributes)
             end
           else
-            xml.artwork sourcecode_content, **sourcecode_attributes
+            xml.artwork sourcecode_content, **attr_code(sourcecode_attributes)
           end
         end
       end

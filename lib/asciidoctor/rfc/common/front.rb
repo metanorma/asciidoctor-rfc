@@ -4,8 +4,10 @@ module Asciidoctor
       def title(node, xml)
         title_attributes = {
           abbrev: node.attr("abbrev"),
-        }.reject { |_, val| val.nil? }
-        xml.title node.doctitle, **title_attributes
+        }
+        xml.title **attr_code(title_attributes) do |t|
+          t << node.doctitle
+        end
       end
 
       # Syntax:
@@ -63,9 +65,9 @@ module Asciidoctor
           surname: node.attr("lastname#{suffix}"),
           initials: node.attr("forename_initials#{suffix}"),
           role: role
-        }.reject { |_, value| value.nil? }
+        }
 
-        xml.author **author_attributes do |xml_sub|
+        xml.author **attr_code(author_attributes) do |xml_sub|
           organization node, suffix, xml_sub
           address node, suffix, xml_sub
         end
@@ -91,7 +93,7 @@ module Asciidoctor
             year: d.year,
           }
         end
-        xml.date **date_attributes
+        xml.date **attr_code(date_attributes)
       end
 
       # Syntax:

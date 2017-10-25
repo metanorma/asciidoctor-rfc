@@ -58,15 +58,15 @@ module Asciidoctor
             anchor: node.id,
             empty: node.attr("empty"),
             spacing: node.attr("spacing"),
-          }.reject { |_, value| value.nil? }
+          }
 
-          xml.ul **ul_attributes do |xml_ul|
+          xml.ul **attr_code(ul_attributes) do |xml_ul|
             node.items.each do |item|
               li_attributes = {
                 anchor: item.id,
-              }.reject { |_, value| value.nil? }
+              }
 
-              xml_ul.li **li_attributes do |xml_li|
+              xml_ul.li **attr_code(li_attributes) do |xml_li|
                 if item.blocks?
                   xml_li.t do |t|
                     t << item.text
@@ -116,15 +116,15 @@ module Asciidoctor
             group: node.attr("group"),
             type: type,
             spacing: ("compact" if node.style == "compact") || node.attr("spacing"),
-          }.reject { |_, value| value.nil? }
+          }
 
-          xml.ol **ol_attributes do |xml_ol|
+          xml.ol **attr_code(ol_attributes) do |xml_ol|
             node.items.each do |item|
               li_attributes = {
                 anchor: item.id,
-              }.reject { |_, value| value.nil? }
+              }
 
-              xml_ol.li **li_attributes do |xml_li|
+              xml_ol.li **attr_code(li_attributes) do |xml_li|
                 if item.blocks?
                   xml_li.t do |t|
                     t << item.text
@@ -159,9 +159,9 @@ module Asciidoctor
             anchor: node.id,
             hanging: ("true" if node.style == "horizontal"),
             spacing: ("compact" if node.style == "compact"),
-          }.reject { |_, value| value.nil? }
+          }
 
-          xml.dl **dl_attributes do |xml_dl|
+          xml.dl **attr_code(dl_attributes) do |xml_dl|
             node.items.each do |terms, dd|
               terms.each_with_index do |dt, idx| 
                 xml_dl.dt dt.text 

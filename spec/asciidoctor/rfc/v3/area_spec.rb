@@ -34,7 +34,7 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
-      :area: first_area & second_area&nbsp;third_area
+      :area: first_area & second_area
       
       == Section 1
       Text
@@ -46,7 +46,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <author fullname="Author">
       </author>
       <date day="1" month="January" year="1970"/>
-      <area>first_area & second_area&nbsp;third_area</area>
+      <area>first_area &amp; second_area</area>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>

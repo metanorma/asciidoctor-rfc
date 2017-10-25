@@ -63,7 +63,7 @@ module Asciidoctor
       #   :area x, y
       def area(node, xml)
         node.attr("area")&.split(/, ?/)&.each do |ar|
-          xml.area ar
+          xml.area { |a| a << ar }
         end
       end
 
@@ -73,7 +73,7 @@ module Asciidoctor
       #   :workgroup x, y
       def workgroup(node, xml)
         node.attr("workgroup")&.split(/, ?/)&.each do |wg|
-          xml.workgroup wg
+          xml.workgroup { |w| w << wg }
         end
       end
 
@@ -83,7 +83,7 @@ module Asciidoctor
       #   :keyword x, y
       def keyword(node, xml)
         node.attr("keyword")&.split(/, ?/)&.each do |kw|
-          xml.keyword kw
+          xml.keyword { |k| k << kw }
         end
       end
 
@@ -95,8 +95,8 @@ module Asciidoctor
         else
           t_attributes = {
             anchor: node.id,
-          }.reject { |_, value| value.nil? }
-          result << noko { |xml| xml.t result1, **t_attributes }
+          }
+          result << noko { |xml| xml.t result1, **attr_code(t_attributes) }
         end
         result
       end
@@ -107,16 +107,16 @@ module Asciidoctor
         if node.type == :visible
           iref_attributes = {
             item: node.text,
-          }.reject { |_, value| value.nil? }
-          node.text + noko { |xml| xml.iref **iref_attributes }.join
+          }
+          node.text + noko { |xml| xml.iref **attr_code(iref_attributes) }.join
         else
           terms = node.attr "terms"
           warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}) if terms.size > 2
           iref_attributes = {
             item: terms[0],
             subitem: (terms.size > 1 ? terms[1] : nil),
-          }.reject { |_, value| value.nil? }
-          noko { |xml| xml.iref **iref_attributes }.join
+          }
+          noko { |xml| xml.iref **attr_code(iref_attributes) }.join
         end
       end
 
@@ -190,6 +190,14 @@ HERE
         fragment = doc.fragment("")
         ::Nokogiri::XML::Builder.with fragment, &block
         fragment.to_xml(:encoding => "US-ASCII").lines.map { |l| l.gsub(/\s*\n/, "") }
+      end
+
+      def attr_code(attributes)
+        attributes = attributes.reject { |_, val| val.nil? }.map
+        return attributes.map do |k, v| 
+          [k, ((v.is_a? String) ? 
+               v.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">").gsub(/\&amp;/, "&") : v)] 
+        end.to_h
       end
     end
   end

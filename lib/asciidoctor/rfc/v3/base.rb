@@ -55,9 +55,9 @@ module Asciidoctor
           'xml:lang':     node.attr("xml-lang"),
           prepTime:       preptime,
           version:        "3",
-        }.reject { |_, value| value.nil? }
+        }
 
-        rfc_open = noko { |xml| xml.rfc **rfc_attributes }.join.gsub(/\/>$/, ">")
+        rfc_open = noko { |xml| xml.rfc **attr_code(rfc_attributes) }.join.gsub(/\/>$/, ">")
         result << rfc_open
 
         result << (link node)
@@ -96,8 +96,8 @@ module Asciidoctor
             link_attributes = {
               href: matched.nil? ? link : matched[:href],
               rel: matched.nil? ? nil : matched[:rel],
-            }.reject { |_, value| value.nil? }
-            xml.link **link_attributes
+            }
+            xml.link **attr_code(link_attributes)
           end
         end
         result
@@ -153,10 +153,10 @@ module Asciidoctor
           anchor: node.id,
           keepWithNext: node.attr("keep-with-next"),
           keepWithPrevious: node.attr("keep-with-previous"),
-        }.reject { |_, value| value.nil? }
+        }
 
         result << noko do |xml|
-          xml.t **t_attributes do |xml_t|
+          xml.t **attr_code(t_attributes) do |xml_t|
             xml_t << node.content
           end
         end
@@ -227,10 +227,10 @@ module Asciidoctor
             removeInRFC: node.attr("remove-in-rfc"),
             toc: node.attr("toc"),
             numbered: node.attr?("sectnums"),
-          }.reject { |_, value| value.nil? }
+          }
 
           result << noko do |xml|
-            xml.section **section_attributes do |section_xml|
+            xml.section **attr_code(section_attributes) do |section_xml|
               section_xml.name node.title unless node.title.nil?
               section_xml << node.content
             end
@@ -256,15 +256,15 @@ module Asciidoctor
           src: uri,
           type: (uri =~ /\.svg$/ ? "svg" : "binary-art"),
           width: node.attr("width"),
-        }.reject { |_, value| value.nil? }
+        }
 
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.artwork **artwork_attributes
+              xml_figure.artwork **attr_code(artwork_attributes)
             end
           else
-            xml.artwork **artwork_attributes
+            xml.artwork **attr_code(artwork_attributes)
           end
         end
       end
