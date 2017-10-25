@@ -24,6 +24,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.add_dependency "asciidoctor", "~> 1.5.6"
+  spec.add_dependency "htmlentities", "~> 4.3.4"
+  spec.add_dependency "nokogiri", "~> 1.8.1"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 12.0"

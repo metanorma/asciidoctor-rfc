@@ -1,5 +1,6 @@
 require "date"
 require "nokogiri"
+require "htmlentities"
 
 module Asciidoctor
   module RFC::Common
@@ -195,8 +196,7 @@ HERE
       def attr_code(attributes)
         attributes = attributes.reject { |_, val| val.nil? }.map
         return attributes.map do |k, v| 
-          [k, ((v.is_a? String) ? 
-               v.gsub(/\&lt;/, "<").gsub(/\&gt;/, ">").gsub(/\&amp;/, "&") : v)] 
+          [k, ((v.is_a? String) ? HTMLEntities.new.decode(v) : v)]
         end.to_h
       end
     end

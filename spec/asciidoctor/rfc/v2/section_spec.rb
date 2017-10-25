@@ -30,6 +30,36 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
+  it "renders HTML entities and Non-ASCII characters and in section title attributes" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+
+      [[id]]
+      == Section&nbsp;(Секция) 1
+      Para 1
+
+      Para 2
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title abbrev="abbrev_value">Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      <section anchor="id" title="Section&#160;(&#1057;&#1077;&#1082;&#1094;&#1080;&#1103;) 1">
+      <t>Para 1</t>
+      <t>Para 2</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+
   it "renders subsections" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
