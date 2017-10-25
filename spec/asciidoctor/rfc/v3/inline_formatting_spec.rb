@@ -211,6 +211,32 @@ describe Asciidoctor::RFC::V3::Converter do
       </rfc>
     OUTPUT
   end
+  it "deals with non-Ascii characters" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+
+      == Section 1
+      Hello René! Hello Владимир!
+
+    INPUT
+      <?xml version="1.0" encoding="US-ASCII"?>
+      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <front>
+         <title abbrev="abbrev_value">Document title</title>
+         <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <t>Hello Ren&#233;! Hello &#1042;&#1083;&#1072;&#1076;&#1080;&#1084;&#1080;&#1088;!</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
   it "deals with HTML entities" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -221,8 +247,11 @@ describe Asciidoctor::RFC::V3::Converter do
 
       == Section 1
       Hello &lt;&nbsp;(&amp;lt;)
+
+      == Section 2
+      Hello &lt;&nbsp;(&amp;lt;)
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>
@@ -231,7 +260,11 @@ describe Asciidoctor::RFC::V3::Converter do
       </front><middle>
       <section anchor="_section_1" numbered="false">
          <name>Section 1</name>
-         <t>Hello &lt;&nbsp;(&amp;lt;)</t>
+         <t>Hello &lt;&#160;(&amp;lt;)</t>
+      </section>
+      <section anchor="_section_2" numbered="false">
+         <name>Section 2</name>
+         <t>Hello &lt;&#160;(&amp;lt;)</t>
       </section>
       </middle>
       </rfc>

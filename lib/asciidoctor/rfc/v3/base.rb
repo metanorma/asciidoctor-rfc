@@ -287,7 +287,7 @@ module Asciidoctor
             end
           end
         end
-        xmldoc.to_s
+        xmldoc.to_xml(:encoding => "US-ASCII")
       end
     end
   end

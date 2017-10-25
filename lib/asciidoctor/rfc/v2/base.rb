@@ -138,7 +138,6 @@ module Asciidoctor
             xml_t << node.content
           end
         end
-
         result
       end
 
@@ -208,6 +207,7 @@ module Asciidoctor
             end
           end
         end
+
         result
       end
 
@@ -242,7 +242,12 @@ module Asciidoctor
 
       # clean up XML
       def cleanup(doc)
-        xmldoc = Nokogiri::XML(doc)
+        xmldoc = Nokogiri::XML(doc) do |config|
+          config.noent
+        end
+        xmldoc1 = Nokogiri::XML(doc) do |config|
+          config.nonoent
+        end
         crefs = xmldoc.xpath("//cref")
         # any crefs that are direct children of section should become children of the preceding
         # paragraph, if it exists; otherwise, they need to be wrapped in a paragraph
@@ -258,7 +263,7 @@ module Asciidoctor
             end
           end
         end
-        xmldoc.to_s
+        xmldoc.to_xml(:encoding => "US-ASCII")
       end
 
       # replace any <t>text</t> instances with <vspace/>text
@@ -270,7 +275,7 @@ module Asciidoctor
           para.before(vspace)
           para.replace(para.children)
         end
-        xmldoc.root.children.to_s
+        xmldoc.root.children.to_xml(:encoding => "US-ASCII")
       end
     end
   end

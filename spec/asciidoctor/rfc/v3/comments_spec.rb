@@ -136,24 +136,20 @@ describe Asciidoctor::RFC::V3::Converter do
       </reference>
       ++++
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
-      <front>
-     
+      <?xml version="1.0" encoding="US-ASCII"?>
+       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+       <front>
          <title abbrev="abbrev_value">Document title</title>
-     
          <author fullname="Author"/>
+         <date day="1" month="January" year="1970"/>
      
-     
-      <date day="1" month="January" year="1970"/>
-      </front><middle>
-      <section anchor="sect1" numbered="false"><name>Section1</name><t>Text<cref>Text <em>Text</em> <strong>Text</strong> <tt>Text</tt> <sub>Text</sub> <sup>Text</sup> <eref target="http://example.com/">linktext</eref> <xref target="ref"/> <relref relative="fragment" section="section" displayFormat="bare" target="crossreference">text</relref></cref></t>
-     
-      </section>
-      </middle><back>
-      <references anchor="_references">
-      <name>References</name>
-      <reference anchor="ref" target="https://www.iso.org/standard/67116.html">
+       </front><middle>
+       <section anchor="sect1" numbered="false"><name>Section1</name><t>Text<cref>Text <em>Text</em> <strong>Text</strong> <tt>Text</tt> <sub>Text</sub> <sup>Text</sup> <eref target="http://example.com/">linktext</eref> <xref target="ref"/> <relref relative="fragment" section="section" displayFormat="bare" target="crossreference">text</relref></cref></t>
+       </section>
+       </middle><back>
+       <references anchor="_references">
+       <name>References</name>
+       <reference anchor="ref" target="https://www.iso.org/standard/67116.html">
          <front>
            <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
            <author>
@@ -175,9 +171,9 @@ describe Asciidoctor::RFC::V3::Converter do
            </author>
            <date day="15" month="September" year="2017"/>
          </front>
-      </reference>
-      </references>
-      </back>
+       </reference>
+       </references>
+       </back>
       </rfc>
     OUTPUT
   end

@@ -172,10 +172,11 @@ module Asciidoctor
       end
 
       def noko(&block)
-        # options = Nokogiri::XML::ParseOptions.new.noent
         fragment = ::Nokogiri::XML::DocumentFragment.parse("")
+        #fragment = ::Nokogiri::HTML::DocumentFragment.parse("")
         ::Nokogiri::XML::Builder.with fragment, &block
-        fragment.to_xml.lines.map { |l| l.gsub(/\s*\n/, "") }
+        #::Nokogiri::HTML::Builder.with fragment, &block
+        fragment.to_xml(:encoding => "US-ASCII").lines.map { |l| l.gsub(/\s*\n/, "") }
       end
     end
   end

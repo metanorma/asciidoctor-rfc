@@ -212,26 +212,25 @@ describe Asciidoctor::RFC::V3::Converter do
       </reference>
       ++++
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rfc prepTime="1970-01-01T00:00:00Z"
-                version="3" submissionType="IETF">
-      <front>
-      <title abbrev="abbrev_value">Document title</title>
-      <author fullname="Author">
-      </author>
-      <date day="1" month="January" year="1970"/>
-      </front><middle>
-      <section anchor="_section_1" numbered="false">
-      <name>Section 1</name>
-      <t>See <relref section="1.3" displayFormat="of" target="crossreference"></relref>
-      <relref section="1.4" displayFormat="comma" target="crossreference">text</relref>
-      <relref relative="fragment1" section="2.5.3" displayFormat="parens" target="crossreference"></relref>
-      <relref relative="fragment2" section="6.2a" displayFormat="bare" target="crossreference">text</relref></t>
-      </section>
-      </middle><back>
-      <references anchor="_references">
-      <name>References</name>
-      <reference anchor='crossreference' target='https://www.iso.org/standard/67116.html'>
+     <?xml version="1.0" encoding="US-ASCII"?>
+       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+       <front>
+         <title abbrev="abbrev_value">Document title</title>
+         <author fullname="Author"/>
+         <date day="1" month="January" year="1970"/>
+     
+       </front><middle>
+       <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <t>See <relref section="1.3" displayFormat="of" target="crossreference"/>
+       <relref section="1.4" displayFormat="comma" target="crossreference">text</relref>
+       <relref relative="fragment1" section="2.5.3" displayFormat="parens" target="crossreference"/>
+       <relref relative="fragment2" section="6.2a" displayFormat="bare" target="crossreference">text</relref></t>
+       </section>
+       </middle><back>
+       <references anchor="_references">
+       <name>References</name>
+       <reference anchor="crossreference" target="https://www.iso.org/standard/67116.html">
          <front>
            <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>
            <author>
@@ -251,11 +250,11 @@ describe Asciidoctor::RFC::V3::Converter do
                <uri>https://www.iso.org/</uri>
              </address>
            </author>
-           <date day='15' month='September' year='2017'/>
+           <date day="15" month="September" year="2017"/>
          </front>
-      </reference>
-      </references>
-      </back>
+       </reference>
+       </references>
+       </back>
       </rfc>
     OUTPUT
   end
