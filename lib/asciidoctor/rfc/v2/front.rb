@@ -35,22 +35,23 @@ module Asciidoctor
         phone = node.attr("phone#{suffix}")
         street = node.attr("street#{suffix}")
         uri = node.attr("uri#{suffix}")
+
+        # If there is no provided elements for address, don't show it
         return unless [email, facsimile, phone, street, uri].any?
 
-        xml.address do |xml_address|
+        # https://tools.ietf.org/html/rfc7749#section-2.27
+        # Note that at least one <street> element needs to be present;
+        # however, formatters will handle empty values just fine.
+        street = street ? street.split("\\ ") : [""]
 
+        xml.address do |xml_address|
           xml_address.postal do |xml_postal|
             city = node.attr("city#{suffix}")
             code = node.attr("code#{suffix}")
             country = node.attr("country#{suffix}")
             region = node.attr("region#{suffix}")
 
-            # https://tools.ietf.org/html/rfc7749#section-2.27
-            # Note that at least one <street> element needs to be present; however,
-            # formatters will handle empty values just fine.
-            street = street ? street.split("\\ ") : [""]
             street.each { |st| xml_postal.street { |s| s << st } }
-
             xml_postal.city { |c| c << city } unless city.nil?
             xml_postal.region { |r| r << region } unless region.nil?
             xml_postal.code { |c| c << code } unless code.nil?
