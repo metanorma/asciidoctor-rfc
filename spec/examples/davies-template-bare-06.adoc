@@ -90,7 +90,7 @@ Tables use ttcol to define column headers and widths. Every cell then has a "c" 
 
 [[table_example]]
 .A Very Simple Table
-[cols="2*^"]
+[cols="2*^", frame="sides", grid="cols"]
 |===
 |ttcol #1 |ttcol #2
 
