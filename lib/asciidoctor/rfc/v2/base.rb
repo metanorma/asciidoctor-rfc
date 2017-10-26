@@ -78,6 +78,7 @@ module Asciidoctor
                  end
 
         ret = result * "\n"
+        ret = set_pis(node, Nokogiri::XML(ret)).to_xml
         ret = cleanup(ret)
         Validate::validate(ret)
         ret
@@ -264,6 +265,53 @@ module Asciidoctor
           end
         end
         xmldoc.to_xml(:encoding => "US-ASCII")
+      end
+
+      def set_pis(node, doc)
+
+        # Below are generally applicable Processing Instructions (PIs)
+        # that most I-Ds might want to use. (Here they are set differently than
+        # their defaults in xml2rfc v1.32)
+
+        rfc_pis = {
+          # give errors regarding ID-nits and DTD validation
+          strict: "yes",
+
+          # TOC control
+          # generate a ToC
+          toc: node.attr("toc-include") == "false" ? "no" : "yes",
+
+          # the number of levels of subsections in ToC. default: 3
+          tocdepth: node.attr("toc-depth") || "4",
+
+          # References control
+
+          # use symbolic references tags, i.e, [RFC2119] instead of [1]
+          symrefs: "yes",
+
+          # sort the reference entries alphabetically
+          sortrefs: "yes",
+
+          # Vertical whitespace control
+          # (using these PIs as follows is recommended by the RFC Editor)
+
+          # do not start each main section on a new page
+          compact: "yes",
+
+          # keep one blank line between list items
+          subcompact: "no"
+        }
+
+        rfc_pis.each_pair do |k, v|
+          pi = Nokogiri::XML::ProcessingInstruction.new(
+            doc,
+            "rfc",
+            "#{k.to_s}=\"#{v}\""
+          )
+          doc.root.add_previous_sibling(pi)
+        end
+
+        doc
       end
 
       # replace any <t>text</t> instances with <vspace/>text

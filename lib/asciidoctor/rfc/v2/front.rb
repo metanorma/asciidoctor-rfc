@@ -35,27 +35,34 @@ module Asciidoctor
         phone = node.attr("phone#{suffix}")
         street = node.attr("street#{suffix}")
         uri = node.attr("uri#{suffix}")
-        if [email, facsimile, phone, street, uri].any?
-          xml.address do |xml_address|
-            if [street].any?
-              xml_address.postal do |xml_postal|
-                city = node.attr("city#{suffix}")
-                code = node.attr("code#{suffix}")
-                country = node.attr("country#{suffix}")
-                region = node.attr("region#{suffix}")
-                street&.split("\\ ")&.each { |st| xml_postal.street { |s| s << st } }
-                xml_postal.city { |c| c << city } unless city.nil?
-                xml_postal.region { |r| r << region } unless region.nil?
-                xml_postal.code { |c| c << code } unless code.nil?
-                xml_postal.country { |c| c << country } unless country.nil?
-              end
-            end
-            xml_address.phone { |p| p << phone } unless phone.nil?
-            xml_address.facsimile { |f| f << facsimile } unless facsimile.nil?
-            xml_address.email { |e| e << email } unless email.nil?
-            xml_address.uri { |u| u << uri } unless uri.nil?
+        return unless [email, facsimile, phone, street, uri].any?
+
+        xml.address do |xml_address|
+
+          xml_address.postal do |xml_postal|
+            city = node.attr("city#{suffix}")
+            code = node.attr("code#{suffix}")
+            country = node.attr("country#{suffix}")
+            region = node.attr("region#{suffix}")
+
+            # https://tools.ietf.org/html/rfc7749#section-2.27
+            # Note that at least one <street> element needs to be present; however,
+            # formatters will handle empty values just fine.
+            street = street ? street.split("\\ ") : [""]
+            street.each { |st| xml_postal.street { |s| s << st } }
+
+            xml_postal.city { |c| c << city } unless city.nil?
+            xml_postal.region { |r| r << region } unless region.nil?
+            xml_postal.code { |c| c << code } unless code.nil?
+            xml_postal.country { |c| c << country } unless country.nil?
           end
+
+          xml_address.phone { |p| p << phone } unless phone.nil?
+          xml_address.facsimile { |f| f << facsimile } unless facsimile.nil?
+          xml_address.email { |e| e << email } unless email.nil?
+          xml_address.uri { |u| u << uri } unless uri.nil?
         end
+
       end
     end
   end
