@@ -23,8 +23,8 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <section anchor="_section_1" title="Section 1">
       <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
-      <ttcol align="left" width="50%"> head</ttcol>
-      <ttcol align="left" width="50%">head</ttcol>
+      <ttcol align="left"> head</ttcol>
+      <ttcol align="left">head</ttcol>
       <c>header cell</c>
       <c>body cell</c>
       <c></c>
@@ -65,8 +65,8 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <section anchor="_section_1" title="Section 1">
       <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
-      <ttcol align="left" width="50%"> head</ttcol>
-      <ttcol align="left" width="50%">head</ttcol>
+      <ttcol align="left"> head</ttcol>
+      <ttcol align="left">head</ttcol>
       <c>header cell</c>
       <c>body cell</c>
       <c></c>
@@ -110,8 +110,8 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <section anchor="_section_1" title="Section 1">
       <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
-      <ttcol align="left" width="50%"> head</ttcol>
-      <ttcol align="left" width="50%">head</ttcol>
+      <ttcol align="left"> head</ttcol>
+      <ttcol align="left">head</ttcol>
       <c>header cell</c>
       <c>body cell</c>
       <c></c>
@@ -153,8 +153,8 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <section anchor="_section_1" title="Section 1">
       <texttable title="Table Title" suppress-title="false" style="all">
-         <ttcol align="left" width="50%">head</ttcol>
-         <ttcol align="left" width="50%">head</ttcol>
+         <ttcol align="left">head</ttcol>
+         <ttcol align="left">head</ttcol>
          <c>header cell</c>
          <c><spanx style="strong">body</spanx> <spanx style="emph">cell</spanx></c>
          <c/>
@@ -196,8 +196,8 @@ describe Asciidoctor::RFC::V2::Converter do
     INPUT
       <section anchor="_section_1" title="Section 1">
       <texttable title="Table Title" suppress-title="false" style="all">
-         <ttcol align="left" width="50%">head</ttcol>
-         <ttcol align="left" width="50%">head</ttcol>
+         <ttcol align="left">head</ttcol>
+         <ttcol align="left">head</ttcol>
          <c>header cell</c>
          <c>* List 1
        * List 2</c>
@@ -211,6 +211,81 @@ describe Asciidoctor::RFC::V2::Converter do
          <c>cell</c>
          <c>foot</c>
          <c>foot</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+  it "renders relative column widths in a table" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
+      [cols="1,2,5"]
+      |===
+      |a |b |c
+      
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="all">
+         <ttcol align="left" width="12.5%">a</ttcol>
+         <ttcol align="left" width="25%">b</ttcol>
+         <ttcol align="left" width="62.5%">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+  it "renders percentage column widths in a table" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
+      [cols="10%,20%,70%"]
+      |===
+      |a |b |c
+      
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="all">
+         <ttcol align="left" width="10%">a</ttcol>
+         <ttcol align="left" width="20%">b</ttcol>
+         <ttcol align="left" width="70%">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+  it "ignores '1,1,1,1,...' column widths in a table" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+    
+      == Section 1
+      [cols="1,1,1"]
+      |===
+      |a |b |c
+      
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="all">
+         <ttcol align="left">a</ttcol>
+         <ttcol align="left">b</ttcol>
+         <ttcol align="left">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
       </texttable>
       </section>
     OUTPUT

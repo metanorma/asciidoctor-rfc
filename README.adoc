@@ -915,7 +915,11 @@ paragraphs within v2 list items are replaced with `vspace` tages.
 === Tables
 
 The converter respects the AsciiDoc (horizontal) align attributes of cells (v2,
-v3) and `colspan`, `rowspan` attributes (v3).
+v3), column widths (v2), and `colspan`, `rowspan` attributes (v3). 
+
+(Exceptionally,
+column widths specified for v2 as `"1,1,1,1,1,1...."` will be ignored, since Asciidoctor
+internally treats them identically to unspecified column widths on a table.)
 
 [source,asciidoc]
 --
@@ -1055,6 +1059,7 @@ These asciidoctor features are not supported in output of these formats:
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: rowspan] | Ignored | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: colspan] | Ignored | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: Asciidoctor formatting (blocks within cells)] | Ignored | Supported
+| Table: http://asciidoctor.org/docs/user-manual/#cols-format[Table columns: width] | Supported | Ignored
 |===
 
 
