@@ -50,6 +50,7 @@ module Asciidoctor
       def ulist_naked(node, xml)
         style = "symbols"
         style = "empty" if node.attr("style") == "empty"
+        style = "empty" if node.option?("empty")
         list_attributes = {
           style: style,
           hangIndent: node.attr("hang-indent"),

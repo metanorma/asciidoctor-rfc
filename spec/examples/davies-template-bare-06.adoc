@@ -128,7 +128,7 @@ NOTE: In Asciidoc, it *is* a separate paragraph.
 
 Simple indented paragraph using the "empty" style:
 
-[hang-indent=8,empty]
+[empty,hang-indent=8]
 * The quick, brown fox jumped over the lazy dog and lived to fool
          many another hunter in the great wood in the west.
 
