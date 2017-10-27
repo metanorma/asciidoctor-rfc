@@ -300,6 +300,7 @@ module Asciidoctor
           subcompact: 'no'
         }
 
+        doc.create_internal_subset('rfc', nil, 'rfc2629.dtd')
         rfc_pis.each_pair do |k, v|
           pi = Nokogiri::XML::ProcessingInstruction.new(doc,
             'rfc',

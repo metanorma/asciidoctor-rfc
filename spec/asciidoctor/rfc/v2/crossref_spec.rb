@@ -11,7 +11,9 @@ describe Asciidoctor::RFC::V2::Converter do
       http://example.com/
       http://example.com/[linktext]
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -47,7 +49,9 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 4
       See <<crossreference,format=counter: text>>
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -100,7 +104,9 @@ describe Asciidoctor::RFC::V2::Converter do
       </reference>
       ++++
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -173,7 +179,9 @@ describe Asciidoctor::RFC::V2::Converter do
       </reference>
       ++++
     INPUT
-       <?xml version="1.0" encoding="UTF-8"?>
+       <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
        <rfc submissionType="IETF">
        <front>
          <title abbrev="abbrev_value">Document title</title>

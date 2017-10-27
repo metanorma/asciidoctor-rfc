@@ -13,7 +13,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -43,7 +45,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -79,7 +83,9 @@ describe Asciidoctor::RFC::V2::Converter do
       ==== Subsection 1.2.1
       Para 3
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -125,7 +131,9 @@ describe Asciidoctor::RFC::V2::Converter do
       ==== Subsection 1.2.1
       Para 3
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -164,7 +172,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -195,7 +205,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -226,7 +238,9 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 2
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>

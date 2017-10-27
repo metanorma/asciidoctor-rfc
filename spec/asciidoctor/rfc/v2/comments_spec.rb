@@ -16,7 +16,9 @@ describe Asciidoctor::RFC::V2::Converter do
         Multiblock ignorable comment
       ////
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                 submissionType="IETF">
       <front>
@@ -44,7 +46,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       NOTE: This is a note
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
      
@@ -76,7 +80,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       WARNING: This is a note
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
      
@@ -136,7 +142,9 @@ describe Asciidoctor::RFC::V2::Converter do
       </reference>
       ++++
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
      
@@ -202,7 +210,9 @@ describe Asciidoctor::RFC::V2::Converter do
       . Celery makes them sad.
       ====
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
      
@@ -251,7 +261,9 @@ describe Asciidoctor::RFC::V2::Converter do
       Any admonition inside the body of the text is a comment.
       ====
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
      
@@ -281,7 +293,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
      

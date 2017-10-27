@@ -10,7 +10,9 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 1
       text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc
                submissionType="IETF">
       <front>
@@ -50,7 +52,9 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc ipr="full3978" obsoletes="1, 2" updates="10, 11" category="info" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
       <front>
 
@@ -93,7 +97,9 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc ipr="full3978" obsoletes="1, 2" updates="10, 11" category="info" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
       <front>
 
@@ -128,7 +134,9 @@ describe Asciidoctor::RFC::V2::Converter do
       == Appendix
       Lipsum.
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF">
       <front>
          <title>Document title</title>
