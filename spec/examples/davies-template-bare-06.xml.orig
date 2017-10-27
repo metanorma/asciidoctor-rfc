@@ -83,7 +83,7 @@
      </address>
    </author>
 
-   <date year="2010" />
+   <date year="2010" month="April" day="1"/>
 
    <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
         in the current day for you. If only the current year is specified, xml2rfc will fill 

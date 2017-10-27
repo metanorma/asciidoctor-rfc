@@ -14,7 +14,7 @@ Elwyn Davies <elwynd@dial.pipex.com>
 :country: UK
 :phone: +44 7889 488 335
 :email: elwynd@dial.pipex.com
-:revdate: 2010
+:revdate: 2010-04-01
 :area: General
 :workgroup: Internet Engineering Task Force
 :keyword: template
@@ -24,15 +24,18 @@ Insert an abstract: MANDATORY. This template is for creating an
 Internet Draft.
 
 == Introduction
-The original specification of xml2rfc format is in <<RFC2629,RFC&#x00A0;2629>>.
+
+The original specification of xml2rfc format is in <<RFC2629,RFC 2629>>.
 
 === Requirements Language
+
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in <<RFC2119,RFC 2119>>.
 
 [[simple_list]]
 == Simple List
+
 List styles: 'empty', 'symbols', 'letters', 'numbers', 'hanging',
 'format'.
 
@@ -40,9 +43,11 @@ List styles: 'empty', 'symbols', 'letters', 'numbers', 'hanging',
 
 * Second bullet
 
-You can write text here as well. [Note: Asciidoc will force new paragraph]
+You can write text here as well.
+//[Note: Asciidoc will force new paragraph]
 
 == Figures
+
 Figures should not exceed 69 characters wide to allow for the indent
 of sections.
 
@@ -62,25 +67,30 @@ Cross-references allowed in pre- and postamble. <<min_ref>>.
 ====
 
 The CDATA means you don't need to escape meta-characters (especially
-&lt;&nbsp;(&amp;lt;) and &amp;&nbsp;(&amp;amp;)) but is not essential.
+< (\&lt;) and & (\&amp;)) but is not essential.
 Figures may also have a title attribute but it won't be displayed unless
 there is also an anchor. White space, both horizontal and vertical, is
 significant in figures even if you don't use CDATA.
 
 == Subsections and Tables
+
 === A Subsection
+
 By default 3 levels of nesting show in table of contents but that
 can be adjusted with the value of the "tocdepth" processing
 instruction.
 
 === Tables
-... are very similar to figures:
 
-Tables use ttcol to define column headers and widths. Every cell then has a "c" element for its content. [Note: Asciidoc does not support preambles and postambles within tables.]
-         
+pass:[..] are very similar to figures:
+
+//[Note: Asciidoc does not support preambles and postambles within tables.]
+
+Tables use ttcol to define column headers and widths. Every cell then has a "c" element for its content.
+
 [[table_example]]
 .A Very Simple Table
-[cols="2*^"]
+[cols="2*^", frame="sides", grid="cols"]
 |===
 |ttcol #1 |ttcol #2
 
@@ -94,7 +104,7 @@ which is a very simple example.
 [[nested_lists]]
 == More about Lists
 Lists with 'hanging labels': the list item is indented the amount of
-the hangIndent: 
+the hangIndent:
 
 [hang-indent=8]
 short:: With a label shorter than the hangIndent.
@@ -105,8 +115,8 @@ vspace_trick:: {blank} +
 Forces the new item to start on a new line.
 
 Simulating more than one paragraph in a list item using
-&lt;vspace&gt;: 
-     
+<vspace>:
+
 [loweralpha]
 . First, a short item.
 
@@ -116,19 +126,19 @@ And something that looks like a separate pararaph..
 
 NOTE: In Asciidoc, it *is* a separate paragraph.
 
-Simple indented paragraph using the "empty" style: 
+Simple indented paragraph using the "empty" style:
 
 [hang-indent=8,empty]
 * The quick, brown fox jumped over the lazy dog and lived to fool
          many another hunter in the great wood in the west.
-         
-         
+
+
 === Numbering Lists across Lists and Sections
 Numbering items continuously although they are in separate
-&lt;list&gt; elements, maybe in separate sections using the "format"
+<list> elements, maybe in separate sections using the "format"
 style and a "counter" variable.
 
-First list: 
+First list:
 
 [hang-indent=4,counter=reqs,format=R%d]
 . #1
@@ -140,7 +150,7 @@ First list:
 Specify the indent explicitly so that all the items line up
 nicely.
 
-Second list: 
+Second list:
 [hang-indent=4,counter=reqs,format=R%d]
 . #4
 
@@ -151,7 +161,7 @@ Second list:
 === Where the List Numbering Continues
 List continues here.
 
-Third list: 
+Third list:
 [hang-indent=4,counter=reqs,format=R%d]
 . #7
 
@@ -166,8 +176,11 @@ The end of the list.
 [[codeExample]]
 == Example of Code or MIB Module To Be Extracted
 
+// NOTE: in asciidoctor-rfc output we're missing an empty line before
+// the code block and after it. Can't figure out a way to create that...
+
 ====
-The &lt;artwork&gt; element has a number of extra attributes
+The <artwork> element has a number of extra attributes
 that can be used to substitute a more aesthetically pleasing rendition
 into HTML output while continuing to use the ASCII art version in the
 text and nroff outputs (see the xml2rfc README for details). It also
@@ -228,173 +241,89 @@ See <<RFC3552,RFC 3552>> for a guide.
 == Normative References
 ++++
 
-<reference anchor='RFC2119'>
-
+<reference  anchor='RFC2119' target='https://www.rfc-editor.org/info/rfc2119'>
 <front>
-<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
-<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
-<organization>Harvard University</organization>
-<address>
-<postal>
-<street>1350 Mass. Ave.</street>
-<street>Cambridge</street>
-<street>MA 02138</street></postal>
-<phone>- +1 617 495 3864</phone>
-<email>sob@harvard.edu</email></address></author>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author initials='S.' surname='Bradner' fullname='S. Bradner'><organization /></author>
 <date year='1997' month='March' />
-<area>General</area>
-<keyword>keyword</keyword>
-<abstract>
-<t>
-   In many standards track documents several words are used to signify
-   the requirements in the specification.  These words are often
-   capitalized.  This document defines these words as they should be
-   interpreted in IETF documents.  Authors who follow these guidelines
-   should incorporate this phrase near the beginning of their document:
-
-<list>
-<t>
-      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
-      "OPTIONAL" in this document are to be interpreted as described in
-      RFC 2119.
-</t></list></t>
-<t>
-   Note that the force of these words is modified by the requirement
-   level of the document in which they are used.
-</t></abstract></front>
-
-<seriesInfo name='BCP' value='14' />
-<seriesInfo name='RFC' value='2119' />
-<format type='TXT' octets='4723' target='ftp://ftp.isi.edu/in-notes/rfc2119.txt' />
-<format type='HTML' octets='17491' target='http://xml.resource.org/public/rfc/html/rfc2119.html' />
-<format type='XML' octets='5777' target='http://xml.resource.org/public/rfc/xml/rfc2119.xml' />
+<abstract><t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized. This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract>
+</front>
+<seriesInfo name='BCP' value='14'/>
+<seriesInfo name='RFC' value='2119'/>
+<seriesInfo name='DOI' value='10.17487/RFC2119'/>
 </reference>
 
-     <reference anchor="min_ref">
-       <!-- the following is the minimum to make xml2rfc happy -->
+<reference anchor="min_ref">
+ <!-- the following is the minimum to make xml2rfc happy -->
 
-       <front>
-         <title>Minimal Reference</title>
+ <front>
+   <title>Minimal Reference</title>
 
-         <author initials="authInitials" surname="authSurName">
-           <organization></organization>
-         </author>
+   <author initials="authInitials" surname="authSurName">
+     <organization></organization>
+   </author>
 
-         <date year="2006" />
-       </front>
-     </reference>
+   <date year="2006" />
+ </front>
+</reference>
 ++++
 
 [bibliography]
 == Informative References
 ++++
-     <!-- Here we use entities that we defined at the beginning. -->
+<!-- Here we use entities that we defined at the beginning. -->
 
-
-<reference anchor='RFC2629'>
-
+<reference  anchor='RFC2629' target='https://www.rfc-editor.org/info/rfc2629'>
 <front>
 <title>Writing I-Ds and RFCs using XML</title>
-<author initials='M.T.' surname='Rose' fullname='Marshall T. Rose'>
-<organization>Invisible Worlds, Inc.</organization>
-<address>
-<postal>
-<street>660 York Street</street>
-<city>San Francisco</city>
-<region>CA</region>
-<code>94110</code>
-<country>US</country></postal>
-<phone>+1 415 695 3975</phone>
-<email>mrose@not.invisible.net</email>
-<uri>http://invisible.net/</uri></address></author>
+<author initials='M.' surname='Rose' fullname='M. Rose'><organization /></author>
 <date year='1999' month='June' />
-<area>General</area>
-<keyword>RFC</keyword>
-<keyword>Request for Comments</keyword>
-<keyword>I-D</keyword>
-<keyword>Internet-Draft</keyword>
-<keyword>XML</keyword>
-<keyword>Extensible Markup Language</keyword>
-<abstract>
-<t>This memo presents a technique for using XML
-(Extensible Markup Language)
-as a source format for documents in the Internet-Drafts (I-Ds) and
-Request for Comments (RFC) series.</t></abstract></front>
-
-<seriesInfo name='RFC' value='2629' />
-<format type='TXT' octets='48677' target='http://www.rfc-editor.org/rfc/rfc2629.txt' />
-<format type='HTML' octets='71741' target='http://xml.resource.org/public/rfc/html/rfc2629.html' />
-<format type='XML' octets='53481' target='http://xml.resource.org/public/rfc/xml/rfc2629.xml' />
-</reference>
-
-
-<reference anchor="RFC3552" target="https://www.rfc-editor.org/info/rfc3552">
-<front>
-<title>
-Guidelines for Writing RFC Text on Security Considerations
-</title>
-<author initials="E." surname="Rescorla" fullname="E. Rescorla">
-<organization/>
-</author>
-<author initials="B." surname="Korver" fullname="B. Korver">
-<organization/>
-</author>
-<date year="2003" month="July"/>
-<abstract>
-<t>
-All RFCs are required to have a Security Considerations section. Historically, such sections have been relatively weak. This document provides guidelines to RFC authors on how to write a good Security Considerations section. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
-</t>
-</abstract>
+<abstract><t>This memo presents a technique for using XML (Extensible Markup Language) as a source format for documents in the Internet-Drafts (I-Ds) and Request for Comments (RFC) series.  This memo provides information for the Internet community.</t></abstract>
 </front>
-<seriesInfo name="BCP" value="72"/>
-<seriesInfo name="RFC" value="3552"/>
-<seriesInfo name="DOI" value="10.17487/RFC3552"/>
+<seriesInfo name='RFC' value='2629'/>
+<seriesInfo name='DOI' value='10.17487/RFC2629'/>
 </reference>
 
-
-<reference anchor="RFC5226" target="https://www.rfc-editor.org/info/rfc5226">
+<reference  anchor='RFC3552' target='https://www.rfc-editor.org/info/rfc3552'>
 <front>
-<title>
-Guidelines for Writing an IANA Considerations Section in RFCs
-</title>
-<author initials="T." surname="Narten" fullname="T. Narten">
-<organization/>
-</author>
-<author initials="H." surname="Alvestrand" fullname="H. Alvestrand">
-<organization/>
-</author>
-<date year="2008" month="May"/>
-<abstract>
-<t>
-Many protocols make use of identifiers consisting of constants and other well-known values. Even after a protocol has been defined and deployment has begun, new values may need to be assigned (e.g., for a new option type in DHCP, or a new encryption or authentication transform for IPsec). To ensure that such quantities have consistent values and interpretations across all implementations, their assignment must be administered by a central authority. For IETF protocols, that role is provided by the Internet Assigned Numbers Authority (IANA).
-</t>
-<t>
-In order for IANA to manage a given namespace prudently, it needs guidelines describing the conditions under which new values can be assigned or when modifications to existing values can be made. If IANA is expected to play a role in the management of a namespace, IANA must be given clear and concise instructions describing that role. This document discusses issues that should be considered in formulating a policy for assigning values to a namespace and provides guidelines for authors on the specific text that must be included in documents that place demands on IANA.
-</t>
-<t>
-This document obsoletes RFC 2434. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
-</t>
-</abstract>
+<title>Guidelines for Writing RFC Text on Security Considerations</title>
+<author initials='E.' surname='Rescorla' fullname='E. Rescorla'><organization /></author>
+<author initials='B.' surname='Korver' fullname='B. Korver'><organization /></author>
+<date year='2003' month='July' />
+<abstract><t>All RFCs are required to have a Security Considerations section. Historically, such sections have been relatively weak.  This document provides guidelines to RFC authors on how to write a good Security Considerations section.   This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract>
 </front>
-<seriesInfo name="RFC" value="5226"/>
-<seriesInfo name="DOI" value="10.17487/RFC5226"/>
+<seriesInfo name='BCP' value='72'/>
+<seriesInfo name='RFC' value='3552'/>
+<seriesInfo name='DOI' value='10.17487/RFC3552'/>
 </reference>
 
-     <!-- A reference written by by an organization not a person. -->
+<reference  anchor='RFC5226' target='https://www.rfc-editor.org/info/rfc5226'>
+<front>
+<title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
+<author initials='T.' surname='Narten' fullname='T. Narten'><organization /></author>
+<author initials='H.' surname='Alvestrand' fullname='H. Alvestrand'><organization /></author>
+<date year='2008' month='May' />
+<abstract><t>Many protocols make use of identifiers consisting of constants and other well-known values.  Even after a protocol has been defined and deployment has begun, new values may need to be assigned (e.g., for a new option type in DHCP, or a new encryption or authentication transform for IPsec).  To ensure that such quantities have consistent values and interpretations across all implementations, their assignment must be administered by a central authority.  For IETF protocols, that role is provided by the Internet Assigned Numbers Authority (IANA).</t><t>In order for IANA to manage a given namespace prudently, it needs guidelines describing the conditions under which new values can be assigned or when modifications to existing values can be made.  If IANA is expected to play a role in the management of a namespace, IANA must be given clear and concise instructions describing that role.  This document discusses issues that should be considered in formulating a policy for assigning values to a namespace and provides guidelines for authors on the specific text that must be included in documents that place demands on IANA.</t><t>This document obsoletes RFC 2434.  This document specifies an Internet Best  Current Practices for the Internet Community, and requests discussion and  suggestions for improvements.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='5226'/>
+<seriesInfo name='DOI' value='10.17487/RFC5226'/>
+</reference>
 
-     <reference anchor="DOMINATION"
-                target="http://www.example.com/dominator.html">
-       <front>
-         <title>Ultimate Plan for Taking Over the World</title>
 
-         <author>
-           <organization>Mad Dominators, Inc.</organization>
-         </author>
+<!-- A reference written by by an organization not a person. -->
 
-         <date year="1984" />
-       </front>
-     </reference>
+<reference anchor="DOMINATION"
+           target="http://www.example.com/dominator.html">
+  <front>
+    <title>Ultimate Plan for Taking Over the World</title>
+
+    <author>
+      <organization>Mad Dominators, Inc.</organization>
+    </author>
+
+    <date year="1984" />
+  </front>
+</reference>
 ++++
 
 [[app-additional]]
@@ -402,7 +331,7 @@ This document obsoletes RFC 2434. This document specifies an Internet Best Curre
 == Additional Stuff
 This becomes an Appendix.
 
-
+////
    <!-- Change Log
 
 v00 2006-03-15  EBD   Initial version
@@ -417,9 +346,10 @@ v03 2007-03-09  EBD   Added comments on null IANA sections and fixed heading cap
                      Fixed up the date specification comments to reflect current truth.
 v04 2007-03-09 AH     Major changes: shortened discussion of PIs,
                      added discussion of rfc include.
-v05 2007-03-10 EBD    Added preamble to C program example to tell about ABNF and alternative 
+v05 2007-03-10 EBD    Added preamble to C program example to tell about ABNF and alternative
                      images. Removed meta-characters from comments (causes problems).
 
 v06 2010-04-01 TT     Changed ipr attribute values to latest ones. Changed date to
-                     year only, to be consistent with the comments. Updated the 
+                     year only, to be consistent with the comments. Updated the
                      IANA guidelines reference from the I-D to the finished RFC.  -->
+////
