@@ -10,12 +10,22 @@ describe Asciidoctor::RFC::V2::Converter do
       text
  INPUT
       <?xml version="1.0" encoding="UTF-8"?>
+       <?rfc strict="yes"?>
+       <?rfc toc="yes"?>
+       <?rfc tocdepth="4"?>
+       <?rfc symrefs="yes"?>
+       <?rfc sortrefs="yes"?>
+       <?rfc compact="yes"?>
+       <?rfc subcompact="no"?>
       <rfc
                 submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="John Doe Horton" surname="Horton">
          <address>
+             <postal>
+               <street/>
+             </postal>
            <email>john.doe@email.com</email>
          </address>
       </author>
@@ -45,11 +55,17 @@ describe Asciidoctor::RFC::V2::Converter do
       <title>Document title</title>
       <author fullname="John Doe Horton" surname="Horton">
          <address>
+             <postal>
+               <street/>
+             </postal>
            <email>john.doe@email.com</email>
          </address>
       </author>
       <author fullname="Joanna Diva Munez" surname="Munez">
          <address>
+             <postal>
+               <street/>
+             </postal>
            <email>joanna.munez@email.com</email>
          </address>
       </author>
