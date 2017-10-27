@@ -13,7 +13,9 @@ describe Asciidoctor::RFC::V3::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -56,7 +58,9 @@ describe Asciidoctor::RFC::V3::Converter do
       ==== Subsection 1.2.1
       Para 3
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -100,7 +104,9 @@ describe Asciidoctor::RFC::V3::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -133,7 +139,9 @@ describe Asciidoctor::RFC::V3::Converter do
 
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -166,7 +174,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 2
       Para 2
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>

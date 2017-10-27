@@ -10,7 +10,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       This [bcp14]#must not# stand
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -37,7 +39,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       This *MUST NOT* stand
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -65,7 +69,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       This *MUST NOT* stand
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -92,7 +98,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       _Text_ *Text* `Text` "Text" 'Text' ^Superscript^ ~Subscript~
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -120,7 +128,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       stem:[sqrt(4) = 2]
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -154,7 +164,9 @@ describe Asciidoctor::RFC::V3::Converter do
       cell
       |===
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
          <title>Document title</title>
@@ -195,7 +207,9 @@ describe Asciidoctor::RFC::V3::Converter do
       Hello +
       This is a line break
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>
@@ -223,6 +237,8 @@ describe Asciidoctor::RFC::V3::Converter do
 
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>
@@ -252,6 +268,8 @@ describe Asciidoctor::RFC::V3::Converter do
       Hello &lt;&nbsp;(&amp;lt;)
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>

@@ -15,7 +15,8 @@ module Asciidoctor
         def relaxng
           svg_location = File.join(File.dirname(__FILE__), "svg.rng")
           <<RELAXNG
-            <?xml version="1.0" encoding="UTF-8"?>
+            <?xml version="1.0" encoding="US-ASCII"?>
+
             <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
               <!-- xml2rfc Version 3 grammar -->
               <define name="rfc">

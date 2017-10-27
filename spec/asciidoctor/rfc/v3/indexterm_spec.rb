@@ -12,7 +12,9 @@ describe Asciidoctor::RFC::V3::Converter do
       is visible in the text,
       this one is not (((indexterm, index-subterm))).
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -43,7 +45,9 @@ describe Asciidoctor::RFC::V3::Converter do
       is visible in the text,
       this one with a tertiary term is not (((indexterm, index-subterm, index-subsubterm))).
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>

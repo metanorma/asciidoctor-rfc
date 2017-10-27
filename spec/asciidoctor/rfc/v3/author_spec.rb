@@ -9,7 +9,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -38,7 +40,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
@@ -85,7 +89,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -138,7 +144,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
        <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
       <front>
       <title>Document title</title>
@@ -205,7 +213,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -275,7 +285,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -330,7 +342,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -381,7 +395,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -431,7 +447,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
@@ -486,7 +504,9 @@ describe Asciidoctor::RFC::V3::Converter do
       == Section 1
       Text
     INPUT
-      <?xml version="1.0" encoding="UTF-8"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
       <rfc prepTime="1970-01-01T00:00:00Z"
                 version="3" submissionType="IETF">
       <front>
