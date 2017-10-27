@@ -122,6 +122,8 @@ Simulating more than one paragraph in a list item using
 
 . Second, a longer list item.
 +
+{blank}
++
 And something that looks like a separate pararaph..
 
 NOTE: In Asciidoc, it *is* a separate paragraph.
@@ -194,6 +196,8 @@ components. Checking of additional "types" may be provided in future
 versions of xml2rfc.
 
 ----
+
+
 /**** an example C program */
 
 #include <stdio.h>
