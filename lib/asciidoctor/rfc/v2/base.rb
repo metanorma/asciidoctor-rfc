@@ -34,6 +34,8 @@ module Asciidoctor
       def document(node)
         $seen_back_matter = false
         $seen_abstract = false
+        $smart_quotes = (node.attr("smart-quotes") != "false")
+
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -101,9 +103,17 @@ module Asciidoctor
           when :monospaced
             xml.spanx node.text, style: "verb"
           when :double
-            xml << "\"#{node.text}\""
+            if $smart_quotes
+              xml << "“#{node.text}”"
+            else
+              xml << "\"#{node.text}\""
+            end
           when :single
-            xml << "'#{node.text}'"
+            if $smart_quotes
+              xml << "‘#{node.text}’"
+            else
+              xml << "'#{node.text}'"
+            end
           when :superscript
             xml << "^#{node.text}^"
           when :subscript
@@ -246,9 +256,6 @@ module Asciidoctor
         xmldoc = Nokogiri::XML(doc) do |config|
           config.noent
         end
-        xmldoc1 = Nokogiri::XML(doc) do |config|
-          config.nonoent
-        end
         crefs = xmldoc.xpath("//cref")
         # any crefs that are direct children of section should become children of the preceding
         # paragraph, if it exists; otherwise, they need to be wrapped in a paragraph
@@ -261,6 +268,17 @@ module Asciidoctor
               t = Nokogiri::XML::Element.new("t", xmldoc)
               cref.before(t)
               cref.parent = t
+            end
+          end
+        end
+        unless $smart_quotes
+          xmldoc.traverse do |node|
+            if node.text?
+              node.content = node.content.gsub(/\u2019/, "'")
+            elsif node.element?
+              node.attributes.each do |k, v|
+                node.set_attribute(k, v.content.gsub(/\u2019/, "'"))
+              end
             end
           end
         end
@@ -303,9 +321,9 @@ module Asciidoctor
         doc.create_internal_subset('rfc', nil, 'rfc2629.dtd')
         rfc_pis.each_pair do |k, v|
           pi = Nokogiri::XML::ProcessingInstruction.new(doc,
-            'rfc',
-            "#{k}=\"#{v}\"",
-          )
+                                                        'rfc',
+                                                        "#{k}=\"#{v}\"",
+                                                       )
           doc.root.add_previous_sibling(pi)
         end
 

@@ -207,6 +207,12 @@ Set the `doctype` attribute to set status of this document:
 | Optional. Default value `true`. Allowed values: `true`, `false`.
 Override default assumption that boldface uppercase BCP14 word is to be rendered with `bcp14` tag.
 
+|`:smart-quotes:`
+|Optional. Default value `true`. Allowed values: `true`, `false`.
+Permit smart quotes, when they are specified explicitly in Asciidoc (as `"`...`"`, `'`...`'`.) 
+When disabled, smart quotes are rendered as straight quotes, and Asciidoc's default conversion
+of straight apostrophes to smart is undone.
+
 |===
 
 

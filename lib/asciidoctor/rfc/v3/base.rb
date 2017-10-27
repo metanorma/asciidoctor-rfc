@@ -32,6 +32,7 @@ module Asciidoctor
         $seen_abstract = false
         # If this is present, then BCP14 keywords in boldface are not assumed to be <bcp14> tags. By default they are.
         $bcp_bold = !(node.attr? "no-rfc-bold-bcp14")
+        $smart_quotes = (node.attr("smart-quotes") != "false")
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -168,8 +169,18 @@ module Asciidoctor
               xml.strong node.text
             end
           when :monospaced then xml.tt node.text
-          when :double then xml << "\"#{node.text}\""
-          when :single then xml << "'#{node.text}'"
+          when :double
+            if $smart_quotes
+              xml << "“#{node.text}”"
+            else
+              xml << "\"#{node.text}\""
+            end
+          when :single
+            if $smart_quotes
+              xml << "‘#{node.text}’"
+            else
+              xml << "'#{node.text}'"
+            end
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
           else
@@ -277,7 +288,7 @@ module Asciidoctor
 
           result << noko do |xml|
             xml.section **attr_code(section_attributes) do |section_xml|
-              section_xml.name node.title unless node.title.nil?
+              section_xml.name { |name| name << node.title } unless node.title.nil?
               section_xml << node.content
             end
           end
@@ -333,6 +344,18 @@ module Asciidoctor
             end
           end
         end
+        unless $smart_quotes
+          xmldoc.traverse do |node|
+            if node.text?
+              node.content = node.content.gsub(/\u2019/, "'")
+            elsif node.element?
+              node.attributes.each do |k, v|
+                node.set_attribute(k, v.content.gsub(/\u2019/, "'"))
+              end
+            end
+          end
+        end
+
         xmldoc.to_xml(:encoding => "US-ASCII")
       end
     end

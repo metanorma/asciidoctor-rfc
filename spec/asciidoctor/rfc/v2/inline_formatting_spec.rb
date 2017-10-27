@@ -36,7 +36,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Author
 
       == Section 1
-      _Text_ *Text* `Text` "Text" 'Text' ^Superscript^ ~Subscript~
+      _Text_ *Text* `Text` "`Text`" '`Text`' ^Superscript^ ~Subscript~
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
@@ -49,7 +49,36 @@ describe Asciidoctor::RFC::V2::Converter do
       <date day="1" month="January" year="1970"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-      <t><spanx style="emph">Text</spanx> <spanx style="strong">Text</spanx> <spanx style="verb">Text</spanx> "Text" 'Text' ^Superscript^ _Subscript_</t>
+      <t><spanx style="emph">Text</spanx> <spanx style="strong">Text</spanx> <spanx style="verb">Text</spanx> &#8220;Text&#8221; &#8216;Text&#8217; ^Superscript^ _Subscript_</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+
+  it "allows suppression of smart quotes" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      :smart-quotes: false
+      Author
+
+      == Section 1
+      "`Text`" '`Text`'
+    INPUT
+      <?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title abbrev="abbrev_value">Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="1970"/>
+      </front><middle>
+      <section anchor="_section_1" title="Section 1">
+      <t>"Text" 'Text'</t>
       </section>
       </middle>
       </rfc>
