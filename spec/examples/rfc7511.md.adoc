@@ -1,0 +1,407 @@
+= Scenic Routing for IPv6
+Maximilian Wilhelm <max@rfc2324.org>
+:doctype: rfc
+:abbrev: Scenic Routing for IPv6
+:status: info
+:name: rfc-7511
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:revdate: 2015-04-01T00:00:00Z
+:forename_initials: M.
+:phone: +49 176 62 05 94 27
+:city: Paderborn, NRW
+:country: Germany
+
+[abstract]
+== Abstract
+
+This document specifies a new routing scheme for the current version
+of the Internet Protocol version 6 (IPv6) in the spirit of "Green
+IT", whereby packets will be routed to get as much fresh-air time as
+possible.
+
+== Introduction
+
+In times of Green IT, a lot of effort is put into reducing the energy
+consumption of routers, switches, servers, hosts, etc., to preserve
+our environment.  This document looks at Green IT from a different
+angle and focuses on network packets being routed and switched around
+the world.
+
+Most likely, no one ever thought about the millions of packets being
+disassembled into bits every second and forced through copper wires
+or being shot through dark fiber lines by powerful lasers at
+continuously increasing speeds.  Although RFC 5841 <<RFC5841>> provided
+some thoughts about Packet Moods and began to represent them as a TCP
+option, this doesn't help the packets escape their torturous routine.
+
+This document defines another way to deal with Green IT for traffic
+and network engineers and will hopefully aid the wellbeing of a
+myriad of network packets around the world.  It proposes Scenic
+Routing, which incorporates the green-ness of a network path into the
+routing decision.  A routing engine implementing Scenic Routing
+should therefore choose paths based on Avian IP Carriers <<RFC1149>>
+and/or wireless technologies so the packets will get out of the
+miles/kilometers of dark fibers that are in the ground and get as
+much fresh-air time and sunlight as possible.
+
+As of the widely known acceptance of the current version of the
+Internet Protocol (IPv6), this document only focuses on version 6 and
+ignores communication still based on Vintage IP <<RFC0791>>.
+
+===  Conventions and Terminology
+
+The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**",
+"**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this
+document are to be interpreted as described in RFC 2119 <<RFC2119>>.
+
+Additionally, the key words "**MIGHT**", "**COULD**", "**MAY WISH TO**", "**WOULD
+PROBABLY**", "**SHOULD CONSIDER**", and "**MUST (BUT WE KNOW YOU WON'T)**" in
+this document are to interpreted as described in RFC 6919 <<RFC6919>>.
+
+==  Scenic Routing
+
+Scenic Routing can be enabled with a new option for IPv6 datagrams.
+
+[[scenic-routing-option-sro]]
+===  Scenic Routing Option (SRO)
+
+The Scenic Routing Option (SRO) is placed in the IPv6 Hop-by-Hop
+Options Header that must be examined by every node along a packet's
+delivery path <<RFC2460>>.
+
+The SRO can be included in any IPv6 datagram, but multiple SROs **MUST
+NOT** be present in the same IPv6 datagram.  The SRO has no alignment
+requirement.
+
+If the SRO is set for a packet, every node en route from the packet
+source to the packet's final destination **MUST** preserve the option.
+
+The following Hop-by-Hop Option is proposed according to the
+specification in <<RFC2460,4.2 of>>.
+
+[#fig-scenic-routing-option-layout]
+.Scenic Routing Option Layout
+====
+....
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+                                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                |  Option Type  | Option Length |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   SRO Param   |                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+....
+====
+
+Option Type:: {blank}
++
+8-bit identifier of the type of option.  The option identifier
+0x0A (On Air) is proposed for Scenic Routing.
++
+[#fig-option-type]
+.Scenic Routing Option Type
+====
+....
+    HEX         act  chg  rest
+    ---         ---  ---  -----
+    0A           00   0   01010     Scenic Routing
+....
+====
++
+The highest-order two bits are set to 00 so any node not
+    implementing Scenic Routing will skip over this option and
+    continue processing the header.  The third-highest-order bit
+    indicates that the SRO does not change en route to the packet's
+    final destination.
+
+Option Length:: {blank}
++
+8-bit unsigned integer.  The length of the option in octets
+    (excluding the Option Type and Option Length fields).  The value
+    **MUST** be greater than 0.
+
+SRO Param::
++
+8-bit identifier indicating Scenic Routing parameters encoded as a bit string.
++
+[#fig-bit-string-layout]
+.SRO Param Bit String Layout
+====
+....
+    +-+-+-+-+-+-+-+-+
+    | SR A W AA X Y |
+    +-+-+-+-+-+-+-+-+
+....
+====
++
+The highest-order two bits (SR) define the urgency of Scenic
+    Routing:
++
+[empty]
+* 00 - Scenic Routing **MUST NOT** be used for this packet.
+* 01 - Scenic Routing **MIGHT** be used for this packet.
+* 10 - Scenic Routing **SHOULD** be used for this packet.
+* 11 - Scenic Routing **MUST** be used for this packet.
++
+The following BIT (A) defines if Avian IP Carriers should be used:
++
+[empty]
+* 0 - Don't use Avian IP Carrier links (maybe the packet is
+      afraid of pigeons).
+* 1 - Avian IP Carrier links may be used.
++
+The following BIT (W) defines if wireless links should be used:
++
+[empty]
+* 0 - Don't use wireless links (maybe the packet is afraid of
+      radiation).
+* 1 - Wireless links may be used.
++
+The following two bits (AA) define the affinity for link types:
++
+[empty]
+* 00 - No affinity.
+* 01 - Avian IP Carriers **SHOULD** be preferred.
+* 10 - Wireless links **SHOULD** be preferred.
+* 11 - RESERVED
++
+The lowest-order two bits (XY) are currently unused and reserved
+    for future use.
+
+== Implications
+
+=== Routing Implications
+
+If Scenic Routing is requested for a packet, the path with the known
+longest Avian IP Carrier and/or wireless portion **MUST** be used.
+
+Backbone operators who desire to be fully compliant with Scenic
+Routing **MAY WISH TO** -- well, they **SHOULD** -- have separate MPLS paths
+ready that provide the most fresh-air time for a given path and are
+to be used when Scenic Routing is requested by a packet.  If such a
+path exists, the path MUST be used in favor of any other path, even
+if another path is considered cheaper according to the path costs
+used regularly, without taking Scenic Routing into account.
+
+=== Implications for Hosts
+
+Host systems implementing this option of receiving packets with
+Scenic Routing requested **MUST** honor this request and **MUST** activate
+Scenic Routing for any packets sent back to the originating host for
+the current connection.
+
+If Scenic Routing is requested for connections of local origin, the
+host MUST obey the request and route the packet(s) over a wireless
+link or use Avian IP Carriers (if available and as requested within
+the SRO Params).
+
+System administrators **MIGHT** want to configure sensible default
+parameters for Scenic Routing, when Scenic Routing has been widely
+adopted by operating systems.  System administrators **SHOULD** deploy
+Scenic Routing information where applicable.
+
+===  Proxy Servers
+
+If a host is running a proxy server or any other packet-relaying
+application, an application implementing Scenic Routing **MUST** set the
+same SRO Params on the outgoing packet as seen on the incoming
+packet.
+
+Developers **SHOULD CONSIDER** Scenic Routing when designing and
+implementing any network service.
+
+==  Security Considerations
+
+The security considerations of RFC 6214 <<RFC6214>> apply for links
+provided by Avian IP Carriers.
+
+General security considerations of wireless communication apply for
+links using wireless technologies.
+
+As the user is able to influence where flows and packets are being
+routed within the network, this **MIGHT** influence traffic-engineering
+considerations and network operators **MAY WISH TO** take this into
+account before enabling Scenic Routing on their devices.
+
+==  IANA Considerations
+
+This document defines a new IPv6 Hop-by-Hop Option, the Scenic
+Routing Option, described in <<scenic-routing-option-sro>>.
+If this work is standardized, IANA is requested to assign a value from the "Destination Options and
+Hop-by-Hop Options" registry for the purpose of Scenic Routing.
+
+There are no IANA actions requested at this time.
+
+==  Related Work
+
+As Scenic Routing is heavily dependent on network paths and routing
+information, it might be worth looking at designing extensions for
+popular routing protocols like BGP or OSPF to leverage the full
+potential of Scenic Routing in large networks built upon lots of
+wireless links and/or Avian IP Carriers.  When incorporating
+information about links compatible with Scenic Routing, the routing
+algorithms could easily calculate the optimal paths providing the
+most fresh-air time for a packet for any given destination.
+
+This would even allow preference for wireless paths going alongside
+popular or culturally important places.  This way, the packets don't
+only avoid the dark fibers, but they get to see the world outside of
+the Internet and are exposed to different cultures around the globe,
+which may help build an understanding of cultural differences and
+promote acceptance of these differences.
+
+[bibliography]
+== Normative References
+++++
+<reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+<front>
+<title>
+Key words for use in RFCs to Indicate Requirement Levels
+</title>
+<author initials="S." surname="Bradner" fullname="S. Bradner">
+<organization/>
+</author>
+<date year="1997" month="March"/>
+<abstract>
+<t>
+In many standards track documents several words are used to signify the requirements in the specification. These words are often capitalized. This document defines these words as they should be interpreted in IETF documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+
+<reference anchor="RFC2460" target="https://www.rfc-editor.org/info/rfc2460">
+<front>
+<title>Internet Protocol, Version 6 (IPv6) Specification</title>
+<author initials="S." surname="Deering" fullname="S. Deering">
+<organization/>
+</author>
+<author initials="R." surname="Hinden" fullname="R. Hinden">
+<organization/>
+</author>
+<date year="1998" month="December"/>
+<abstract>
+<t>
+This document specifies version 6 of the Internet Protocol (IPv6), also sometimes referred to as IP Next Generation or IPng. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2460"/>
+<seriesInfo name="DOI" value="10.17487/RFC2460"/>
+</reference>
+
+<reference anchor="RFC5841" target="https://www.rfc-editor.org/info/rfc5841">
+<front>
+<title>TCP Option to Denote Packet Mood</title>
+<author initials="R." surname="Hay" fullname="R. Hay">
+<organization/>
+</author>
+<author initials="W." surname="Turkal" fullname="W. Turkal">
+<organization/>
+</author>
+<date year="2010" month="April"/>
+<abstract>
+<t>
+This document proposes a new TCP option to denote packet mood. This document is not an Internet Standards Track specification; it is published for informational purposes.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5841"/>
+<seriesInfo name="DOI" value="10.17487/RFC5841"/>
+</reference>
+
+<reference anchor="RFC6214" target="https://www.rfc-editor.org/info/rfc6214">
+<front>
+<title>Adaptation of RFC 1149 for IPv6</title>
+<author initials="B." surname="Carpenter" fullname="B. Carpenter">
+<organization/>
+</author>
+<author initials="R." surname="Hinden" fullname="R. Hinden">
+<organization/>
+</author>
+<date year="2011" month="April"/>
+<abstract>
+<t>
+This document specifies a method for transmission of IPv6 datagrams over the same medium as specified for IPv4 datagrams in RFC 1149. This document is not an Internet Standards Track specification; it is published for informational purposes.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="6214"/>
+<seriesInfo name="DOI" value="10.17487/RFC6214"/>
+</reference>
+
+<reference anchor="RFC6919" target="https://www.rfc-editor.org/info/rfc6919">
+<front>
+<title>
+Further Key Words for Use in RFCs to Indicate Requirement Levels
+</title>
+<author initials="R." surname="Barnes" fullname="R. Barnes">
+<organization/>
+</author>
+<author initials="S." surname="Kent" fullname="S. Kent">
+<organization/>
+</author>
+<author initials="E." surname="Rescorla" fullname="E. Rescorla">
+<organization/>
+</author>
+<date year="2013" month="April"/>
+<abstract>
+<t>
+RFC 2119 defines a standard set of key words for describing requirements of a specification. Many IETF documents have found that these words cannot accurately capture the nuanced requirements of their specification. This document defines additional key words that can be used to address alternative requirements scenarios. Authors who follow these guidelines should incorporate this phrase near the beginning of their document:
+</t>
+<t>
+The key words "MUST (BUT WE KNOW YOU WON\'T)", "SHOULD CONSIDER", "REALLY SHOULD NOT", "OUGHT TO", "WOULD PROBABLY", "MAY WISH TO", "COULD", "POSSIBLE", and "MIGHT" in this document are to be interpreted as described in RFC 6919.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="6919"/>
+<seriesInfo name="DOI" value="10.17487/RFC6919"/>
+</reference>
+++++
+
+[bibliography]
+++++
+== Informative References
+
+<reference anchor="RFC0791" target="https://www.rfc-editor.org/info/rfc791">
+<front>
+<title>Internet Protocol</title>
+<author initials="J." surname="Postel" fullname="J. Postel">
+<organization/>
+</author>
+<date year="1981" month="September"/>
+</front>
+<seriesInfo name="STD" value="5"/>
+<seriesInfo name="RFC" value="791"/>
+<seriesInfo name="DOI" value="10.17487/RFC0791"/>
+</reference>
+
+<reference anchor="RFC1149" target="https://www.rfc-editor.org/info/rfc1149">
+<front>
+<title>
+Standard for the transmission of IP datagrams on avian carriers
+</title>
+<author initials="D." surname="Waitzman" fullname="D. Waitzman">
+<organization/>
+</author>
+<date year="1990" month="April"/>
+<abstract>
+<t>
+This memo describes an experimental method for the encapsulation of IP datagrams in avian carriers. This specification is primarily useful in Metropolitan Area Networks. This is an experimental, not recommended standard.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="1149"/>
+<seriesInfo name="DOI" value="10.17487/RFC1149"/>
+</reference>
+++++
+
+== Acknowledgements
+
+The author wishes to thank all those poor friends who were kindly
+forced to read this document and that provided some nifty comments.

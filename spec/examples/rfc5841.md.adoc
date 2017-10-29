@@ -1,0 +1,414 @@
+= TCP Option to Denote Packet Mood
+Richard Hay <rhay@google.com>, Warren Turkal <turkal@google.com>
+:doctype: rfc
+:abbrev: TCP Option to Denote Packet Mood
+:status: info
+:name: rfc-5841
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:revdate: 2010-04-01T00:00:00Z
+:forename_initials: R.
+:organization: Google
+:street: 1600 Amphitheatre Pkwy
+:city: Mountain View
+:code: CA 94043
+:toc-include: no
+:forename_initials_2: W.
+:organization_2: Google
+:street_2: 1600 Amphitheatre Pkwy
+:city_2: Mountain View
+:code_2: CA 94043
+
+[abstract]
+== Abstract
+
+This document proposes a new TCP option to denote packet mood.
+
+== Introduction
+
+In an attempt to anthropomorphize the bit streams on countless
+physical layer networks throughout the world, we propose a TCP option
+to express packet mood <<DSM-IV>>.
+
+Packets cannot feel.  They are created for the purpose of moving data
+from one system to another.  However, it is clear that in specific
+situations some measure of emotion can be inferred or added.  For
+instance, a packet that is retransmitted to resend data for a packet
+for which no ACK was received could be described as an 'angry'
+packet, or a 'frustrated' packet (if it is not the first
+retransmission for instance).  So how can these kinds of feelings be
+conveyed in the packets themselves.  This can be addressed by adding
+TCP Options <<RFC0793>> to the TCP header, using ASCII characters that
+encode commonly used "emoticons" to convey packet mood.
+
+=== Terminology
+
+The keywords **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**,
+**SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL**, when they appear in this
+document, are to be interpreted as described in <<RFC2119>>.
+
+== Syntax
+
+A TCP Option has a 1-byte kind field, followed by a 1-byte length
+field <<RFC0793>>.  It is proposed that option 25 (released 2000-12-18)
+be used to define packet mood.  This option would have a length value
+of 4 or 5 bytes.  All the simple emotions described as expressible
+via this mechanism can be displayed with two or three 7-bit, ASCII-
+encoded characters.  Multiple mood options may appear in a TCP
+header, so as to express more complex moods than those defined here
+(for instance if a packet were happy and surprised).
+
+.TCP Header Format
+====
+....
+         Kind     Length     Meaning
+         ----     --------   -------
+          25      Variable   Packet Mood
+....
+====
+
+In more detail:
+
+....
+           +--------+--------+--------+--------+
+           |00011001|00000100|00111010|00101001|
+           +--------+--------+--------+--------+
+            Kind=25  Length=4 ASCII :  ASCII )
+
+           +--------+--------+--------+--------+--------+
+           |00011001|00000101|00111110|00111010|01000000|
+           +--------+--------+--------+--------+--------+
+            Kind=25  Length=5 ASCII >  ACSII :  ASCII @
+....
+
+[[simple-emotional-representation]]
+== Simple Emotional Representation
+
+It is proposed that common emoticons be used to denote packet mood.
+Packets do not "feel" per se.  The emotions they could be tagged with
+are a reflection of the user mood expressed through packets.
+
+So the humanity expressed in a packet would be entirely sourced from
+humans.
+
+To this end, it is proposed that simple emotions be used convey mood
+as follows.
+
+|===
+|ASCII                | Mood
+
+|      :)             |      Happy
+|      :(             |      Sad
+|      :D             |      Amused
+|      %(             |      Confused
+|      :o             |      Bored
+|      :O             |      Surprised
+|      :P             |      Silly
+|      :@             |      Frustrated
+|      >:@            |      Angry
+|      :|             |      Apathetic
+|      ;)             |      Sneaky
+|      >:)            |      Evil
+|===
+
+Proposed ASCII character encoding
+
+|===
+| Binary          | Dec  | Hex     | Character
+
+|      010 0101   |     37  | 25   |   %
+|      010 1000   |     40  | 28   |   (
+|      010 1001   |     41  | 29   |   )
+|      011 1010   |     58  | 3A   |   :
+|      011 1011   |     59  | 3B   |   ;
+|      011 1110   |     62  | 3E   |   >
+|      100 0000   |     64  | 40   |   @
+|      100 0100   |     68  | 44   |   D
+|      100 1111   |     79  | 4F   |   O
+|      101 0000   |     80  | 50   |   P
+|      110 1111   |     111 | 6F   |   o
+|      111 1100   |     124 | 7C   |   \|
+|===
+
+For the purposes of this RFC, 7-bit ASCII encoding is sufficient for
+representing emoticons.  The ASCII characters will be sent in 8-bit
+bytes with the leading bit always set to 0.
+
+== Use Cases
+
+There are two ways to denote packet mood.  One is to infer the mood
+based on an event in the TCP session.  The other is to derive mood
+from a higher-order action at a higher layer (subject matter of
+payload for instance).
+
+For packets where the 'mood' is inferred from activity within the TCP
+session, the 'mood' **MUST** be set by the host that is watching for the
+trigger event.  If a client sends a frame and receives no ACK, then
+the retransmitted frame **MAY** contain the TCP OPTION header with a mood
+set.
+
+Any packet that exhibits behavior that allows for mood to be inferred
+**SHOULD** add the TCP OPTION to the packets with the implied mood.
+
+Applications can take advantage of the defined moods by expressing
+them in the packets.  This can be done in the SYN packet sent from
+the client.  All packets in the session can be then tagged with the
+mood set in the SYN packet, but this would have a per-packet
+performance cost (see <<performance-considerations,Performance Considerations>>).
+
+Each application **MUST** define the preconditions for marking packets as
+happy, sad, bored, confused, angry, apathetic, and so on.  This is a
+framework for defining how such moods can be expressed, but it is up
+to the developers to determine when to apply these encoded labels.
+
+=== Happy Packets
+
+Healthy packets are happy packets you could say.  If the ACK packets
+return within <10 ms end-to-end from a sender's stack to a receiver's
+stack and back again, this would reflect high-speed bidirectional
+capability, and if no retransmits are required and all ACKs are
+received, all subsequent packets in that session **SHOULD** be marked as
+'happy'.
+
+No loss, low-latency packets also makes for happy users.  So the
+packet would be reflecting the end-user experience.
+
+=== Sad Packets
+
+If retransmission rates achieve greater than 20% of all packets sent
+in a session, it is fair to say the session can be in mourning for
+all of the good packets lost in the senseless wasteland of the wild
+Internet.
+
+This should not be confused with retransmitted packets marked as
+'angry' since this tag would apply to all frames in the session
+numbed by the staggering loss of packet life.
+
+=== Amused Packets
+
+Any packet that is carrying a text joke **SHOULD** be marked as 'amused'.
+
+Example:
+
+....
+      1: Knock Knock
+      2: Who's there?
+      1: Impatient chicken
+      2: Impatient chi...
+      1: BAWK!!!!
+....
+
+If such a joke is in the packet payload then, honestly, how can you
+not be amused by one of the only knock-knock jokes that survives the
+3rd grade?
+
+=== Confused Packets
+
+When is a packet confused?  There are network elements that perform
+per-packet load balancing, and if there are asymmetries in the
+latencies between end-to-end paths, out-of-order packet delivery can
+occur.
+
+When a receiver host gets out-of-order packets, it **SHOULD** mark TCP
+ACK packets sent back to the sender as confused.
+
+The same can be said for packets that are sent to incorrect VLAN
+segments or are misdirected.  The receivers might be aware that the
+packet is confused, but there is no way to know at ingress if that
+will be the fate of the frame.
+
+That being said, application developers **SHOULD** mark packets as
+confused if the payload contains complex philosophical questions that
+make one ponder the meaning of life and one's place in the universe.
+
+=== Bored Packets
+
+Packets carrying accounting data with debits, credits, and so on **MUST**
+be marked as 'bored'.
+
+It could be said that many people consider RFCs boring.  Packets
+containing RFC text **MAY** be marked as 'bored'.
+
+Packets with phone book listings **MUST** be marked 'bored'.
+
+Packets containing legal disclaimers and anything in Latin **SHOULD** be
+marked 'bored'.
+
+=== Surprised Packets
+
+Who doesn't love when the out-of-order packets in your session
+surprise you while waiting in a congested queue for 20 ms?
+
+Packets do not have birthdays, so packets can be marked as surprised
+when they encounter unexpected error conditions.
+
+So when ICMP destination unreachable messages are received (perhaps
+due to a routing loop or congestion discards), all subsequent packets
+in that session **SHOULD** be marked as surprised.
+
+=== Silly Packets
+
+Not all packets are sent as part of a session.  Random keepalives
+during a TCP session **MAY** be set up as a repartee between systems
+connected as client and server.  Such random and even playful
+interchanges **SHOULD** be marked as silly.
+
+=== Frustrated Packets
+
+Packets that are retransmitted more than once **SHOULD** be marked as
+frustrated.
+
+=== Angry Packets
+
+Packets that are retransmitted **SHOULD** be marked as angry.
+
+=== Apathetic Packets
+
+When sending a RST packet to a connected system, the packet should be
+marked as apathetic so that the receiver knows that your system does
+not care what happens after that.
+
+===  Sneaky Packets
+
+When a packet is used in a particularly clever way, it **SHOULD** be
+marked as sneaky.  What is "clever" is rather subjective, so it would
+be prudent to get a few opinions about a particular use to make sure
+that it is clever.
+
+=== Evil Packets
+
+It is hard for a TCP packet to discern higher moral quandaries like
+the meaning of life or what exactly defines 'evil' and from whose
+perspective such a characterization is being made.  However,
+developers of TCP-based applications **MAY** choose to see some
+activities as evil when viewed through their particular lens of the
+world.  At that point, they **SHOULD** mark packets as evil.
+
+Some organizations are prohibited from using this mood by mission
+statement.  This would also prohibit using the security flag in the
+IP header described in <<RFC3514>> for the same reasons.
+
+[[performance-considerations]]
+== Performance Considerations
+
+Adding extensions to the TCP header has a cost.  Using TCP extensions
+with the ASCII-encoded mood of the packet would detract from the
+available MSS usable for data payload.  If the TCP header is more
+than 20 bytes, then the extra bytes would be unavailable for use in
+the payload of the frame.
+
+This added per-packet overhead should be considered when using packet
+mood extensions.
+
+== Security Considerations
+
+The TCP checksum, as a 16-bit value, could be mistaken if ASCII
+characters with the same number of zeros and ones were substituted
+out.  A happy `:)` could be replaced with a frown by a malicious
+attacker, by using a winking eye `;(`.  This could misrepresent the
+intended mood of the sender to the receiver.
+
+== Related Work
+
+This document does not seek to build a sentient network stack.
+However, this framework could be used to express the emotions of a
+sentient stack.  If that were to happen, a new technical job class of
+network psychologists could be created.  Who doesn't like new jobs? :)
+
+== IANA Considerations
+
+If this work is standardized, IANA is requested to officially assign
+value 25 as described in <<simple-emotional-representation>>.  Additional moods and emoticon
+representations would require IESG approval or standards action <<RFC5226>>.
+
+[bibliography]
+== Informative References
+++++
+
+<reference anchor="RFC0793" target="https://www.rfc-editor.org/info/rfc793">
+<front>
+<title>Transmission Control Protocol</title>
+<author initials="J." surname="Postel" fullname="J. Postel">
+<organization/>
+</author>
+<date year="1981" month="September"/>
+</front>
+<seriesInfo name="STD" value="7"/>
+<seriesInfo name="RFC" value="793"/>
+<seriesInfo name="DOI" value="10.17487/RFC0793"/>
+</reference>
+
+<reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+<front>
+<title>
+Key words for use in RFCs to Indicate Requirement Levels
+</title>
+<author initials="S." surname="Bradner" fullname="S. Bradner">
+<organization/>
+</author>
+<date year="1997" month="March"/>
+<abstract>
+<t>
+In many standards track documents several words are used to signify the requirements in the specification. These words are often capitalized. This document defines these words as they should be interpreted in IETF documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+
+<reference anchor="RFC3514" target="https://www.rfc-editor.org/info/rfc3514">
+<front>
+<title>The Security Flag in the IPv4 Header</title>
+<author initials="S." surname="Bellovin" fullname="S. Bellovin">
+<organization/>
+</author>
+<date year="2003" month="April"/>
+<abstract>
+<t>
+Firewalls, packet filters, intrusion detection systems, and the like often have difficulty distinguishing between packets that have malicious intent and those that are merely unusual. We define a security flag in the IPv4 header as a means of distinguishing the two cases. This memo provides information for the Internet community.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="3514"/>
+<seriesInfo name="DOI" value="10.17487/RFC3514"/>
+</reference>
+
+<reference anchor="RFC5226" target="https://www.rfc-editor.org/info/rfc5226">
+<front>
+<title>
+Guidelines for Writing an IANA Considerations Section in RFCs
+</title>
+<author initials="T." surname="Narten" fullname="T. Narten">
+<organization/>
+</author>
+<author initials="H." surname="Alvestrand" fullname="H. Alvestrand">
+<organization/>
+</author>
+<date year="2008" month="May"/>
+<abstract>
+<t>
+Many protocols make use of identifiers consisting of constants and other well-known values. Even after a protocol has been defined and deployment has begun, new values may need to be assigned (e.g., for a new option type in DHCP, or a new encryption or authentication transform for IPsec). To ensure that such quantities have consistent values and interpretations across all implementations, their assignment must be administered by a central authority. For IETF protocols, that role is provided by the Internet Assigned Numbers Authority (IANA).
+</t>
+<t>
+In order for IANA to manage a given namespace prudently, it needs guidelines describing the conditions under which new values can be assigned or when modifications to existing values can be made. If IANA is expected to play a role in the management of a namespace, IANA must be given clear and concise instructions describing that role. This document discusses issues that should be considered in formulating a policy for assigning values to a namespace and provides guidelines for authors on the specific text that must be included in documents that place demands on IANA.
+</t>
+<t>
+This document obsoletes RFC 2434. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5226"/>
+<seriesInfo name="DOI" value="10.17487/RFC5226"/>
+</reference>
+
+<reference anchor='DSM-IV' target='http://www.psychiatryonline.com/resourceTOC.aspx?resourceID=1'>
+  <front>
+   <title>Diagnostic and Statistical Manual of Mental Disorders (DSM)</title>
+   <author></author>
+   <date></date>
+  </front>
+</reference>
+++++
