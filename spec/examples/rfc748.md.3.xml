@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="info" docName="rfc-748">
+<front>
+<title abbrev="TELNET RANDOMLY-LOSE Option">TELNET RANDOMLY-LOSE Option</title>
+
+<author initials="M." surname="Crispin" fullname="M. Crispin">
+<organization>SU-AI</organization>
+<address>
+<postal>
+<street></street>
+<city></city>
+<code></code>
+<country></country>
+<region></region>
+</postal>
+<phone></phone>
+<email></email>
+<uri></uri>
+</address>
+</author>
+<date year="1978" month="April" day="1"/>
+
+<area>Internet</area>
+<workgroup>Network Working Group</workgroup>
+<keyword></keyword>
+
+</front>
+
+<middle>
+
+<section anchor="command-name-and-code">
+<name>Command name and code</name>
+<artwork>
+RANDOMLY-LOSE    256
+</artwork>
+</section>
+
+<section anchor="command-meanings">
+<name>Command meanings</name>
+<dl>
+<dt>IAC WILL RANDOMLY-LOSE:</dt>
+<dd>The sender of this command REQUESTS permission to, or confirms
+that it will, randomly lose.</dd>
+<dt>IAC WON'T RANDOMLY-LOSE:</dt>
+<dd>The sender of this command REFUSES to randomly lose.</dd>
+<dt>IAC DO RANDOMLY-LOSE:</dt>
+<dd>The sender of this command REQUESTS that the receiver, or grants
+the receiver permission to, randomly lose.</dd>
+<dt>IAC DON'T RANDOMLY-LOSE:</dt>
+<dd>The command sender DEMANDS that the receiver not randomly lose.</dd>
+</dl>
+</section>
+
+<section anchor="default">
+<name>Default</name>
+<artwork align="left">
+    WON'T RANDOMLY-LOSE
+
+    DON'T RANDOMLY-LOSE
+</artwork>
+<t>
+i.e., random lossage will not happen.
+</t>
+</section>
+
+<section anchor="motivation-for-the-option">
+<name>Motivation for the option</name>
+<t>
+Several hosts appear to provide random lossage, such as system
+crashes, lost data, incorrectly functioning programs, etc., as part
+of their services. These services are often undocumented and are in
+general quite confusing to the novice user.  A general means is
+needed to allow the user to disable these features.
+</t>
+</section>
+
+<section anchor="description-of-the-option">
+<name>Description of the option</name>
+<t>
+The normal mode does not allow random lossage; therefore the system
+is not allowed to crash, mung user files, etc. If the server wants
+to provide random lossage, it must first ask for permission from the
+user by sending IAC WILL RANDOMLY-LOSE.
+</t>
+<t>
+If the user wants to permit the server to randomly lose, it replys
+with IAC DO  RANDOMLY-LOSE. Otherwise it  sends  IAC  DONT
+RANDOMLY-LOSE, and the server is forbidden from randomly losing.
+</t>
+<t>
+Alternatively, the user could request the server to randomly lose, by
+sending IAC DO RANDOMLY-LOSE, and the server will either reply with
+IAC WILL RANDOMLY-LOSE, meaning that it will then proceed to do some
+random lossage (garbaging disk files is recommended for an initial
+implementation).  Or, it could send IAC WONT RANDOMLY-LOSE, meaning
+that it insists upon being reliable.
+</t>
+<t>
+Since this is implemented as a TELNET option, it is expected that
+servers which do not implement this option will not randomly lose;
+ie, they will provide 100% reliable uptime.
+</t>
+</section>
+
+</middle>
+<back>
+
+</back>
+</rfc>

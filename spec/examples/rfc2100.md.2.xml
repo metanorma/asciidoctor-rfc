@@ -1,0 +1,176 @@
+<!-- separator -->
+<!-- separator -->
+<!-- separator -->
+<!-- separator -->
+<!-- separator -->
+<!-- separator -->
+<!-- separator -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd' []>
+<rfc ipr="trust200902" category="info" docName="rfc-2100">
+<?rfc toc="no"?>
+<?rfc symrefs="no"?>
+<?rfc sortrefs="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc private=""?>
+<?rfc topblock="yes"?>
+<?rfc comments="no"?>
+<front>
+<title abbrev="The Naming of Hosts">The Naming of Hosts</title>
+
+<author initials="J. R." surname="Ashworth" fullname="Jay R. Ashworth">
+<organization abbrev="Ashworth &amp; Associates">Advanced Technology Consulting</organization>
+<address>
+<postal>
+<street></street>
+<city>St. Petersburg</city>
+<code>FL 33709-4819</code>
+<country></country>
+<region></region>
+</postal>
+<phone>+1 813 790 7592</phone>
+<email>jra@scfn.thpl.lib.fl.us</email>
+<uri></uri>
+</address>
+</author>
+<date year="1997" month="April" day="1"/>
+
+<area>Internet</area>
+<workgroup>Network Working Group</workgroup>
+<keyword></keyword>
+
+
+</front>
+
+<middle>
+
+<section anchor="introduction" title="Introduction">
+<t>This RFC is a commentary on the difficulty of deciding upon an
+acceptably distinctive hostname for one's computer, a problem which
+grows in direct proportion to the logarithmically increasing size of
+the Internet.
+</t>
+<t>Distribution of this memo is unlimited.
+</t>
+<t>Except to TS Eliot.
+</t>
+<t>And, for that matter, to David Addison, who hates iambic pentameter.
+</t>
+</section>
+
+<section anchor="poetry" title="Poetry">
+
+<figure align="left"><artwork align="left">
+The Naming of Hosts is a difficult matter,
+    It isn't just one of your holiday games;
+You may think at first I'm as mad as a hatter
+    When I tell you, a host must have THREE DIFFERENT NAMES.
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+First of all, there's the name that the users use daily,
+    Such as venus, athena, and cisco, and ames,
+Such as titan or sirius, hobbes or europa--
+    All of them sensible everyday names.
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+There are fancier names if you think they sound sweeter,
+    Some for the web pages, some for the flames:
+Such as mercury, phoenix, orion, and charon--
+    But all of them sensible everyday names.
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+But I tell you, a host needs a name that's particular,
+    A name that's peculiar, and more dignified,
+Else how can it keep its home page perpendicular,
+    And spread out its data, send pages world wide?
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+Of names of this kind, I can give you a quorum,
+    Like lothlorien, pothole, or kobyashi-maru,
+Such as pearly-gates.vatican, or else diplomatic-
+    Names that never belong to more than one host.
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+But above and beyond there's still one name left over,
+    And that is the name that you never will guess;
+The name that no human research can discover--
+    But THE NAMESERVER KNOWS, and will us'ually confess.
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+When you notice a client in rapt meditation,
+    The reason, I tell you, is always the same:
+The code is engaged in a deep consultation
+    On the address, the address, the address of its name:
+</artwork></figure>
+
+<figure align="left"><artwork align="left">
+            It's ineffable,
+            effable,
+            Effanineffable,
+            Deep and inscrutable,
+            singular
+            Name.
+</artwork></figure>
+</section>
+
+<section anchor="credits" title="Credits">
+<t>Thanks to Don Libes, Mark Lottor, and a host of twisted
+individuals^W^Wcreative sysadmins for providing source material for
+this memo, to Andrew Lloyd-Webber, Cameron Mackintosh, and a cast of
+thousands (particularly including Terrance Mann) who drew my
+attention to the necessity, and of course, to Thomas Stearns Eliot,
+for making this all necessary.
+   
+</t>
+</section>
+
+<section anchor="security-considerations" title="Security Considerations">
+<t>Security issues are not discussed in this memo.
+</t>
+<t>Particularly the cardiac security of certain famous poets.
+</t>
+</section>
+
+</middle>
+<back>
+<references title="Informative References">
+<reference anchor='libes' target=''>
+ <front>
+ <title>Choosing a Name for Your Computer</title>
+  <author initials='D.' surname='Libes' fullname='D. Libes'></author>
+  <date year='1989' month='November'/>
+ </front>
+ <seriesInfo name="Communications of the ACM" value='Vol. 32, No. 11, Pg. 1289' />
+ </reference>
+<reference anchor='lottor' target='namedroppers@internic.net'>
+ <front>
+ <title>Domain Name Survey</title>
+  <author initials='M.' surname='Lottor' fullname='M. Lottor'></author>
+  <date year='1997' month='January'/>
+ </front>
+ </reference>
+<reference anchor='ts' target=''>
+ <front>
+ <title>Old Possum's Book of Practical Cats</title>
+  <author initials='TS' surname='Stearns' fullname='TS. Stearns'></author>
+  <date/>
+ </front>
+ </reference>
+<reference anchor='wong' target='http://www.seas.upenn.edu/~mengwong/coolhosts.html'>
+ <front>
+ <title>Cool Hostnames</title>
+  <author initials='M.' surname='Wong' fullname='M. Wong'></author>
+  <date/>
+ </front>
+ </reference>
+</references>
+
+</back>
+</rfc>

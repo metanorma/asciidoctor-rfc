@@ -13,8 +13,9 @@ David Waitzman <dwaitzman@BBN.COM>
 :street: 10 Moulton Street
 :city: Cambridge
 :code: MA 02238
-:organization_2: BBN STC
+:smart-quotes: false
 
+[[overview-and-rational]]
 == Overview and Rational
 
 Avian carriers can provide high delay, low throughput, and low
@@ -29,6 +30,7 @@ technologies, such as packet radio, communication is not limited to
 line-of-sight distance.  Connection oriented service is available in
 some cities, usually based upon a central hub topology.
 
+[[frame-format]]
 == Frame Format
 
 The IP datagram is printed, on a small scroll of paper, in
@@ -43,6 +45,7 @@ Upon receipt, the duct tape is removed and the paper copy of the
 datagram is optically scanned into a electronically transmittable
 form.
 
+[[discussion]]
 == Discussion
 
 Multiple types of service can be provided with a prioritized pecking
@@ -54,6 +57,7 @@ data loss.  There is persistent delivery retry, until the carrier
 drops.  Audit trails are automatically generated, and can often be
 found on logs and cable trays.
 
+[[security-considerations]]
 == Security Considerations
 
 Security is not generally a problem in normal operation, but special
