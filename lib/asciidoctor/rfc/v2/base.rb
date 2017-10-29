@@ -275,9 +275,13 @@ module Asciidoctor
           xmldoc.traverse do |node|
             if node.text?
               node.content = node.content.gsub(/\u2019/, "'")
+              node.content = node.content.gsub(/\&#8217;/, "'")
+              node.content = node.content.gsub(/\&#x2019;/, "'")
             elsif node.element?
               node.attributes.each do |k, v|
                 node.set_attribute(k, v.content.gsub(/\u2019/, "'"))
+                node.set_attribute(k, v.content.gsub(/\&#8217;/, "'"))
+                node.set_attribute(k, v.content.gsub(/\&#x2019;/, "'"))
               end
             end
           end

@@ -98,7 +98,7 @@ Enter the full document title and an abbreviated version
     <!-- month and day will be generated automatically by XML2RFC; 
 be sure the year is current.-->
 
-    <date  year="2008" />
+    <date  year="2008" month="January" day="1" />
 
     <!-- IETF area is optional -->
 

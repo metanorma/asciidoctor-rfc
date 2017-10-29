@@ -15,32 +15,33 @@ Editor name <Editor email>
 :country: Editor affiliation address
 :phone: Editor address
 :email: Editor email
-:revdate: 2008
+:revdate: 2008-01-01
 :area: Operations & Management Area
 :workgroup: Internet Engineering Task Force
 :keyword: Network Management,Management Information Base,MIB,SMIv2
+:smart-quotes: false
 
 [abstract]
 
 (In RFC XML v2, an absract cannot begin with a note!)
 
-Note --- This template is for authors of IETF specifications containing MIB
+[[CREF1: This template is for authors of IETF specifications containing MIB
   modules.  This template can be used as a starting point to produce
   specifications that comply with the Operations & Management Area
   guidelines for MIB module internet drafts. Throughout the template, the marker "[TEMPLATE TODO]" is used as a placeholder to indicate an
   element or text that requires replacement or removal. All the places with [TEMPLATE TODO] markers 
-  should  be replaced or removed before the document is submitted.
+  should  be replaced or removed before the document is submitted.]]
   
 This memo defines a portion of the Management Information Base (MIB)
 for use with network management protocols. In particular it defines
 objects for managing [TEMPLATE TODO].
       
 
-NOTE: [TEMPLATE TODO]: describe what functionality will be managed using this MIB
+[[CREF2: [TEMPLATE TODO]: describe what functionality will be managed using this MIB
  module. It can be good to mention the protocol being managed, and
  whether there is a particular aspect of the protocol to be managed, or a
  particular goal of the module. But keep it brief. Remember, don't put any citations 
- in the abstract, and expand your  acronyms. 
+ in the abstract, and expand your  acronyms. ]]
 
  
 [NOTE]
@@ -109,18 +110,18 @@ This memo defines a portion of the Management Information Base (MIB)
 for use with network management protocols. In particular it defines
 objects for managing the [TEMPLATE TODO].
 
-NOTE: [TEMPLATE TODO]: describe what functionality will be managed using this MIB
+[[CREF3: [TEMPLATE TODO]: describe what functionality will be managed using this MIB
 module. Include citations for protocol specifications, architectures, related MIB modules, and protocol-specific
 management requirements. Provide an overview of why a MIB module is appropriate for this protocol,  whether there is a 
 particular aspect of the protocol to be managed, and how the module is expected to be used to 
 achieve particular goals. Highlight anything 'different' about the module. For example, 
-a read-only MIB module.
+a read-only MIB module.]]
 
 == The Internet-Standard Management Framework
-NOTE: The title and text for this section has been copied from the 
+[[CREF4: The title and text for this section has been copied from the 
 official boilerplate, and should not be modified unless the official boilerplate text 
 from the OPS Area web site has changed. See RFC4818 
-section 3.1 for a discussion of the boilerplate section.
+section 3.1 for a discussion of the boilerplate section.]]
 
 For a detailed overview of the documents that describe the current
 Internet-Standard Management Framework, please refer to section 7 of RFC
@@ -134,53 +135,53 @@ Management Information (SMI). This memo specifies a MIB module that is
 compliant to the SMIv2, which is described in STD 58, RFC 2578 <<RFC2578>>, STD 58, RFC 2579 <<RFC2579>> and STD 58, RFC 2580 <<RFC2580>>.
 
 == Conventions
-NOTE: [TEMPLATE TODO] This boilerplate should be used if the RFC2119 key words 
+[[CREF5: [TEMPLATE TODO] This boilerplate should be used if the RFC2119 key words 
 are used in the internet draft. The text in this section has been 
-copied from the official boilerplate, and should not be modified. 
+copied from the official boilerplate, and should not be modified. ]]
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in BCP 14, RFC 2119 <<RFC2119>>.
       
 == Overview
-NOTE: [TEMPLATE TODO] The narrative part should include an overview section that
+[[CREF6: [TEMPLATE TODO] The narrative part should include an overview section that
 describes the scope and field of application of the MIB modules
 defined by the specification.  See RFC4181 section 3.2 for a
-discussion of the Narrative section.
+discussion of the Narrative section.  ]]
 
 == Structure of the MIB Module
 
-NOTE: [TEMPLATE TODO] The narrative part SHOULD include one or more sections to
+[[CREF7: [TEMPLATE TODO] The narrative part SHOULD include one or more sections to
 briefly describe the structure of the MIB modules defined in the
-specification.
+specification.]]
 
 
 === Textual Conventions
-NOTE: [TEMPLATE TODO] describe the textual conventions defined in the MIB
+[[CREF8: [TEMPLATE TODO] describe the textual conventions defined in the MIB
 module, and their purpose. It may be helpful to highlight any textual conventions
 imported from partner documents. Generic and Common Textual Conventions can be found summarized at 
 the OPS Area web site. If there are no textual conventions used in your MIB module,
-this section should be removed.<
+this section should be removed.]]
 
 === The [TEMPLATE TODO] Subtree
-NOTE: [TEMPLATE TODO] copy this section for each subtree in the MIB module, and
+[[CREF9: [TEMPLATE TODO] copy this section for each subtree in the MIB module, and
 describe the purpose of the subtree. For example, "The fooStats subtree
 provides information for identifying fault conditions and performance
-degradation of the foo functionality.
+degradation of the foo functionality."]]
 
 === The Notifications Subtree
-NOTE: [TEMPLATE TODO] describe the notifications defined in the MIB module, and
+[[CREF10: [TEMPLATE TODO] describe the notifications defined in the MIB module, and
 their purpose. Include a discussion of congestion control. You might
-want to discuss throttling as well. See RFC2914.
+want to discuss throttling as well. See RFC2914.]]
 
 === The Table Structures
-NOTE: [TEMPLATE TODO] Describe the tables in the MIB module, their purpose, and their
+[[CREF11: [TEMPLATE TODO] Describe the tables in the MIB module, their purpose, and their
 reltionship to each other. If the row in one table is related to a row in 
 another table, what happens when one of the rows is deleted? Should the 
-related row be deleted as well? Consider both directions.
+related row be deleted as well? Consider both directions.]]
 
 == Relationship to Other MIB Modules
-NOTE: [TEMPLATE TODO]: The narrative part should include a section that specifies the
+[[CREF12: [TEMPLATE TODO]: The narrative part should include a section that specifies the
 relationship (if any) of the MIB modules contained in this internet drafts to
 other standards, particularly to standards containing other MIB
 modules. If the MIB modules defined by the specification import
@@ -192,21 +193,21 @@ module portions of the internet draft, but documents used for Imported items
 are Normative references, so the citations should exist in the narrative
 section of the internet draft. The preferred 
 way to fill in a REFERENCE clause in a MIB module is of the form: "Guidelines 
-for Writing an IANA Considerations Section in RFCs", RFC2434, section 2.3.
+for Writing an IANA Considerations Section in RFCs", RFC2434, section 2.3.]]
 
 === Relationship to the [TEMPLATE TODO] MIB
-NOTE: Example: The Interface MIB [RFC2863] requires that any
+[[CREF13: Example: The Interface MIB [RFC2863] requires that any
 MIB module which is an adjunct of the Interface MIB clarify specific
 areas within the Interface MIB. These areas were intentionally left
 vague in the Interface MIB to avoid over-constraining the MIB, thereby
 precluding management of certain media-types. Section 4 of [RFC2863] enumerates several
 areas which a media-specific MIB must clarify. The implementor is
 referred to [RFC2863] in order to understand the
-general intent of these areas.
+general intent of these areas.]]
 
 === MIB modules required for IMPORTS
 
-NOTE: [TEMPLATE TODO]: Citations are not permitted within a MIB module, but any
+[[CREF14: [TEMPLATE TODO]: Citations are not permitted within a MIB module, but any
 module mentioned in an IMPORTS clause or document mentioned in a
 REFERENCE clause is a Normative reference, and must be cited someplace
 within the narrative sections. If there are imported items in the MIB
@@ -215,13 +216,13 @@ can be cited in text here. Since relationships to other MIB modules
 should be described in the narrative text, this section is typically
 used to cite modules from which Textual Conventions are imported. Example: "The following MIB module IMPORTS objects from SNMPv2-SMI [RFC2578], 
 SNMPv2-TC [RFC2579],
-SNMPv2-CONF [RFC2580], and IF-MIB [RFC2863]."
+SNMPv2-CONF [RFC2580], and IF-MIB [RFC2863]."]]
 
 == Definitions
-NOTE: This section contains the actual MIB module(s).
+[[CREF15: This section contains the actual MIB module(s).
 These MIB modules MUST be written in SMIv2 [RFC2578] [RFC2579]
 [RFC2580]. See Section 4 of RFC 4181 for guidelines on SMIv2 usage. 
-See Appendix C of RFC 4181 for suggested naming conventions.
+See Appendix C of RFC 4181 for suggested naming conventions.]]
 
 ....
 [TEMPLATE TODO]: put your valid MIB module here. 
@@ -231,14 +232,14 @@ Area web site.
 ....
 
 == Security Considerations
-NOTE: [TEMPLATE TODO] Each internet draft that defines one or more MIB modules MUST
+[[CREF16: [TEMPLATE TODO] Each internet draft that defines one or more MIB modules MUST
 contain a section that discusses security considerations relevant to
 those modules. This section MUST be patterned after the latest approved
-template (available at the OPS Area web site).
+template (available at the OPS Area web site).   ]]
 
 
-NOTE: [TEMPLATE TODO] if you have any read-write and/or read-create objects, please
-describe their specific sensitivity or vulnerability. RFC 2669 has a very good example.
+[[CREF17: [TEMPLATE TODO] if you have any read-write and/or read-create objects, please
+describe their specific sensitivity or vulnerability. RFC 2669 has a very good example.   ]]
 
 There are a number of management objects defined in this MIB module
 with a MAX-ACCESS clause of read-write and/or read-create. Such objects
@@ -250,8 +251,8 @@ sensitivity/vulnerability:
 
 * {blank}
 
-NOTE: [TEMPLATE TODO] else if there are no read-write or read-create objects in your MIB module,
-use the following boilerplate paragraph.
+[[CREF18: [TEMPLATE TODO] else if there are no read-write or read-create objects in your MIB module,
+use the following boilerplate paragraph.]]
 
 There are no management objects defined in this MIB module that have
 a MAX-ACCESS clause of read-write and/or read-create. So, if this MIB
@@ -259,10 +260,10 @@ module is implemented correctly, then there is no risk that an intruder
 can alter or create any management objects of this MIB module via direct
 SNMP SET operations.
 
-NOTE: For all MIB modules you must evaluate whether any readable objects
+[[CREF19: For all MIB modules you must evaluate whether any readable objects
 are sensitive or vulnerable (for instance, if they might reveal customer
 information or violate personal privacy laws such as those of the
-European Union if exposed to unathorized parties).
+European Union if exposed to unathorized parties).]]
 
 Some of the readable objects in this MIB module (i.e., objects with a
 MAX-ACCESS other than not-accessible) may be considered sensitive or
@@ -274,13 +275,13 @@ sensitivity/vulnerability:
 
 * {blank}
 
-NOTE: [TEMPLATE TODO] you should explicitly list by name any readable objects that
+* [[CREF20: [TEMPLATE TODO] you should explicitly list by name any readable objects that
 are sensitive or vulnerable and the associated security risks should
-be spelled out.
+be spelled out.]]
 
-NOTE: [TEMPLATE TODO] The following three boilerplate paragraphs
+[[CREF21: [TEMPLATE TODO] The following three boilerplate paragraphs
 should not be changed without very good reason. Changes will almost
-certainly require justification during IESG review.
+certainly require justification during IESG review.]]
 
 SNMP versions prior to SNMPv3 did not include adequate security.
 Even if the network itself is secure (for example by using IPsec),
@@ -305,13 +306,13 @@ those principals (users) that have legitimate rights to indeed GET or
 SET (change/create/delete) them.
 
 == IANA Considerations
-NOTE: [TEMPLATE TODO] In order to comply with IESG policy as set forth in
+[[CREF22: [TEMPLATE TODO] In order to comply with IESG policy as set forth in
 http://www.ietf.org/ID-Checklist.html, every Internet-Draft that is
 submitted to the IESG for publication MUST contain an IANA
 Considerations section. The requirements for this section vary depending
 what actions are required of the IANA. See "Guidelines for Writing an IANA 
 Considerations Section in RFCs" [RFC2434]. and see RFC4181 section 3.5 for more
-information on writing an IANA clause for a MIB module internet draft.
+information on writing an IANA clause for a MIB module internet draft.]]
 
 Option #1:
 
@@ -534,10 +535,11 @@ This memo provides guidelines for authors and reviewers of IETF standards-track 
 <seriesInfo name="RFC" value="4181"/>
 <seriesInfo name="DOI" value="10.17487/RFC4181"/>
 </reference>
+++++
 
-    </references>
-    
-    <references title="URL References">
+[bibliography]
+== URL References
+++++
 <reference anchor="idguidelines">
 	<front>
 		<title>http://www.ietf.org/ietf/1id-guidelines.txt</title>
@@ -583,16 +585,9 @@ This memo provides guidelines for authors and reviewers of IETF standards-track 
 		<date year=""></date>
 	</front>
 </reference>						
-     
-    </references>
 ++++
 
 [[appendix]]
-== Appendix A
-You can add appendices just as regular sections, the only
-difference is that they go under "back" element, and get letters 
-instead of numbers
-
 == Change Log
 Note to RFC Editor: if this document does not obsolete an existing RFC, 
 please remove this appendix before publication as an RFC.
