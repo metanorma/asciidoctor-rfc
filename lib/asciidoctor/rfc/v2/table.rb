@@ -23,6 +23,7 @@ module Asciidoctor
                         "all"
                       end
 
+        warn "asciidoctor: WARNING: grid=rows attribute is not supported on tables" if node.attr("grid") == "rows"
         texttable_attributes = {
           anchor: node.id,
           title: node.title,
