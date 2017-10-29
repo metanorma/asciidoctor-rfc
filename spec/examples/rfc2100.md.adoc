@@ -16,7 +16,7 @@ Jay R. Ashworth <jra@scfn.thpl.lib.fl.us>
 :code: FL 33709-4819
 :sym-refs: false
 :toc-include: false
-
+:smart-quotes: false
 
 == Introduction
 
@@ -34,7 +34,7 @@ And, for that matter, to David Addison, who hates iambic pentameter.
 == Poetry
 
 [verse]
-====
+____
     The Naming of Hosts is a difficult matter,
         It isn't just one of your holiday games;
     You may think at first I'm as mad as a hatter
@@ -76,7 +76,7 @@ And, for that matter, to David Addison, who hates iambic pentameter.
                 Deep and inscrutable,
                 singular
                 Name.
-====
+____
 
 == Credits
 

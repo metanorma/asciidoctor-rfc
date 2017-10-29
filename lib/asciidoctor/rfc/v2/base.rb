@@ -166,7 +166,7 @@ module Asciidoctor
 
         result << noko do |xml|
           xml.t **attr_code(t_attributes) do |xml_t|
-            xml_t << node.content.gsub("\n", "<br/>")
+            xml_t << node.content.gsub("\n", "<vspace/>")
           end
         end
 
