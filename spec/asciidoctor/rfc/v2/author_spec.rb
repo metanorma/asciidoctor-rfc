@@ -31,7 +31,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <email>john.doe@email.com</email>
          </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -73,7 +73,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <email>joanna.munez@email.com</email>
          </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -129,7 +129,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <uri>http://example.com</uri>
          </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -183,7 +183,7 @@ describe Asciidoctor::RFC::V2::Converter do
              <uri>http://example.com?x&amp;y</uri>
            </address>
          </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -269,7 +269,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <uri>http://ibm.com</uri>
          </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -325,7 +325,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <uri>http://example.com</uri>
          </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -380,7 +380,7 @@ describe Asciidoctor::RFC::V2::Converter do
            <uri>http://example.com</uri>
          </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -432,7 +432,7 @@ describe Asciidoctor::RFC::V2::Converter do
           <uri>http://example.com</uri>
         </address>
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>

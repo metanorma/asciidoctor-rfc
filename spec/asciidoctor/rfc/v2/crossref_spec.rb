@@ -19,7 +19,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       <t><eref target="http://example.com/"></eref>
@@ -57,7 +57,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="crossreference" title="Section 1">
       </section>
@@ -112,7 +112,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       </section>
@@ -186,7 +186,7 @@ describe Asciidoctor::RFC::V2::Converter do
        <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
          <t>See <xref target="crossreference">Section 1.3 of [crossreference]</xref>

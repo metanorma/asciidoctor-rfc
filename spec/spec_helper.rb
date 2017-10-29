@@ -113,7 +113,8 @@ RSpec.configure do |config|
   # NOTE: we're working with timestamped documents. If we don't freeze time
   #   we'll have a bad time matching the headers.
   config.around(:example) do |example|
-    Timecop.freeze Time.at(0).utc
+    # we won't use time=0, since we want to confirm meaningful time value
+    Timecop.freeze Time.at(946702800).utc
     example.run
     Timecop.return
   end

@@ -18,7 +18,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <workgroup>first_workgroup</workgroup><workgroup>second_workgroup</workgroup>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
@@ -47,7 +47,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <workgroup>first_workgroup &amp; second_workgroup</workgroup>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     

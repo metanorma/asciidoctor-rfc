@@ -16,7 +16,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IRTF">
       <front>
       <title>Document title</title>
@@ -24,7 +24,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="bcp" value="internet-draft-this-is-an-internet-draft-00"/>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 
@@ -53,7 +53,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IRTF">
       <front>
       <title>Document title</title>
@@ -61,7 +61,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="fyi" value="1111"/>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 
@@ -90,7 +90,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IRTF">
       <front>
       <title>Document title</title>
@@ -98,7 +98,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="fyi" value="1111"/>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 
@@ -127,7 +127,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IRTF">
       <front>
       <title>Document title</title>
@@ -135,7 +135,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <seriesInfo name="" status="historic" value="1111"/>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
        <section anchor="_section_1" numbered="false">
 

@@ -18,7 +18,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       <t>This <spanx style="strong">MUST NOT</spanx> stand</t>
@@ -46,7 +46,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       <t><spanx style="emph">Text</spanx> <spanx style="strong">Text</spanx> <spanx style="verb">Text</spanx> &#8220;Text&#8221; &#8216;Text&#8217; ^Superscript^ _Subscript_</t>
@@ -75,7 +75,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       <t>"Text" 'Text'</t>
@@ -104,7 +104,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       <t>sqrt(4) = 2</t>
@@ -132,7 +132,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
          <t>Hello Ren&#233;! Hello &#1042;&#1083;&#1072;&#1076;&#1080;&#1084;&#1080;&#1088;!</t>
@@ -162,7 +162,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
          <t>Hello &lt;&#160;(&amp;lt;)</t>

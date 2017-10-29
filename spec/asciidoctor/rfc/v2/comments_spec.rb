@@ -24,7 +24,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section1" title="Section1">
       <t>Text</t>
@@ -56,7 +56,7 @@ describe Asciidoctor::RFC::V2::Converter do
      
          <author fullname="Author"/>
      
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
      
      
       </front><middle>
@@ -90,7 +90,7 @@ describe Asciidoctor::RFC::V2::Converter do
      
          <author fullname="Author"/>
      
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
      
      
       </front><middle>
@@ -152,7 +152,7 @@ describe Asciidoctor::RFC::V2::Converter do
      
          <author fullname="Author"/>
      
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
      
      
       </front><middle>
@@ -220,7 +220,7 @@ describe Asciidoctor::RFC::V2::Converter do
      
          <author fullname="Author"/>
      
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
      
      
       </front><middle>
@@ -271,7 +271,7 @@ describe Asciidoctor::RFC::V2::Converter do
      
          <author fullname="Author"/>
      
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
      
      
       </front><middle>
@@ -303,7 +303,7 @@ describe Asciidoctor::RFC::V2::Converter do
      
          <author fullname="Author"/>
      
-         <date day="1" month="January" year="1970"/>
+         <date day="1" month="January" year="2000"/>
     
       </front><middle>
       <section anchor="_section_1" title="Section 1"><t><cref>This is an initial note</cref></t>

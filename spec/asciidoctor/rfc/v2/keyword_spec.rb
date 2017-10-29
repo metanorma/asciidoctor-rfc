@@ -18,7 +18,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <keyword>first_keyword</keyword><keyword>second_keyword</keyword>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
@@ -48,7 +48,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <keyword>first_keyword &amp; second_keyword</keyword>
       </front><middle>
       <section anchor="_section_1" title="Section 1">

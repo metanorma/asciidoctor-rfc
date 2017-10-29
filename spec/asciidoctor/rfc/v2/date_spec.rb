@@ -34,7 +34,7 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       Author
-      :date: 1970-01-01T00:00:00Z
+      :date: 2000-01-01T05:00:00Z
       
       == Section 1
       text
@@ -47,7 +47,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">     
          <t>text</t>
@@ -63,7 +63,7 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :revdate: 2070-01-01T00:00:00Z
-      :date: 1970-01-01T00:00:00Z
+      :date: 2000-01-01T05:00:00Z
       
       == Section 1
       text

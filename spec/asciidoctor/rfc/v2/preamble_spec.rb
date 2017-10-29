@@ -17,7 +17,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_lorem" title="Lorem">
       <t>Ipsum.</t>
@@ -48,7 +48,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <abstract>
       <t>Preamble content.</t>
       <t>More Preamble content.</t>
@@ -85,7 +85,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <note title="Title of Note">
       <t>This is another note.</t>
       </note>
@@ -122,7 +122,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <front>
       <title>Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <note title="NOTE">
       <t>This is a note.</t>
       </note>

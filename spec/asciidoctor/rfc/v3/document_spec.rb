@@ -13,12 +13,12 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z" version="3" submissionType="IETF">
+      <rfc prepTime="2000-01-01T05:00:00Z" version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -53,13 +53,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" prepTime="1970-01-01T00:00:00Z"
+      <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IRTF" indexInclude="true" iprExtract="ipr_extract_value" sortRefs="true" symRefs="false" tocInclude="false" tocDepth="2">
       <front>
       <title abbrev="abbrev">Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="ipr_extract_value" numbered="false">
       <name>Section 1</name>
@@ -85,13 +85,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>

@@ -12,13 +12,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_lorem" numbered="false">
       <name>Lorem</name>
@@ -44,13 +44,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <abstract>
       <t>Preamble content.</t>
       <t>More Preamble content.</t>
@@ -84,13 +84,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title>Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       <note>
       <t>
       This is a note.

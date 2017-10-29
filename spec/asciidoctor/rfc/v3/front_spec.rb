@@ -17,7 +17,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>

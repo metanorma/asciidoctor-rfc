@@ -13,13 +13,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -42,13 +42,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -72,13 +72,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -101,13 +101,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -136,7 +136,7 @@ describe Asciidoctor::RFC::V3::Converter do
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
       <t>"Text" 'Text'</t>
@@ -159,13 +159,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc prepTime="1970-01-01T00:00:00Z"
+      <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
       <front>
       <title abbrev="abbrev_value">Document title</title>
       <author fullname="Author">
       </author>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
@@ -195,11 +195,11 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <rfc submissionType="IETF" prepTime="2000-01-01T05:00:00Z" version="3">
       <front>
          <title>Document title</title>
          <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
         <name>Section 1</name>
@@ -238,11 +238,11 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <rfc submissionType="IETF" prepTime="2000-01-01T05:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
          <name>Section 1</name>
@@ -267,11 +267,11 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <rfc submissionType="IETF" prepTime="2000-01-01T05:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
          <name>Section 1</name>
@@ -298,11 +298,11 @@ describe Asciidoctor::RFC::V3::Converter do
       <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
-      <rfc submissionType="IETF" prepTime="1970-01-01T00:00:00Z" version="3">
+      <rfc submissionType="IETF" prepTime="2000-01-01T05:00:00Z" version="3">
       <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
-      <date day="1" month="January" year="1970"/>
+      <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" numbered="false">
          <name>Section 1</name>
