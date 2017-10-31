@@ -26,7 +26,7 @@ module Asciidoctor
 
           target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
           reftarget = target
-          reftarget = "#{target}##{node.attributes["fragment"]}" unless node.attributes["path"].nil?
+          reftarget = "#{target}##{node.attributes['fragment']}" unless node.attributes["path"].nil?
 
           xref_contents = case matched[:format]
                           when "of"
@@ -45,7 +45,7 @@ module Asciidoctor
           end
 
           xref_attributes = {
-            target: reftarget
+            target: reftarget,
           }.reject { |_, value| value.nil? }
 
         else

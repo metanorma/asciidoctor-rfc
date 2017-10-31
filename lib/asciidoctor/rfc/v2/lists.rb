@@ -8,15 +8,14 @@ module Asciidoctor
         noko { |xml| wrap_list :ulist_naked, node, xml }
       end
 
-      OLIST_TYPES =
-        Hash.new("numbers").merge(
-          arabic:     "numbers",
-          # decimal:    "1", # not supported
-          loweralpha: "letters",
-          # lowergreek: "lower-greek", # not supported
-          lowerroman: "format %i.",
-          upperalpha: "format %C.",
-          upperroman: "format %I.",
+      OLIST_TYPES = Hash.new("numbers").merge(
+        arabic:     "numbers",
+        # decimal:    "1", # not supported
+        loweralpha: "letters",
+        # lowergreek: "lower-greek", # not supported
+        lowerroman: "format %i.",
+        upperalpha: "format %C.",
+        upperroman: "format %I.",
       ).freeze
 
       # Syntax:
@@ -73,11 +72,11 @@ module Asciidoctor
       def olist_naked(node, xml)
         style = OLIST_TYPES[node.style.to_sym]
         style = "empty" if node.attr("style") == "empty"
-        style = "format #{node.attr("format")}" unless node.attr("format").nil?
+        style = "format #{node.attr('format')}" unless node.attr("format").nil?
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
           counter: node.attr("counter"),
-          style: style
+          style: style,
         }
 
         xml.list **attr_code(list_attributes) do |xml_list|
@@ -99,7 +98,7 @@ module Asciidoctor
         style = "empty" if node.attr("style") == "empty"
         list_attributes = {
           hangIndent: node.attr("hang-indent"),
-          style: style
+          style: style,
         }
 
         xml.list **attr_code(list_attributes) do |xml_list|
@@ -107,7 +106,7 @@ module Asciidoctor
             # all but last term have empty dd
             terms.each_with_index do |term, idx|
               t_attributes = {
-                hangText: term.text
+                hangText: term.text,
               }
 
               if idx < terms.size - 1
@@ -116,9 +115,7 @@ module Asciidoctor
                 xml_list.t **attr_code(t_attributes) do |xml_t|
                   if !dd.nil?
                     if dd.blocks?
-                      if dd.text?
-                        xml_t << dd.text
-                      end
+                      xml_t << dd.text if dd.text?
                       # v2 does not support multi paragraph list items;
                       # vspace is used to emulate them
                       xml_t << para_to_vspace(dd.content)

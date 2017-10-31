@@ -64,7 +64,7 @@ module Asciidoctor
           fullname: node.attr("author#{suffix}") || node.attr("fullname#{suffix}"),
           surname: node.attr("lastname#{suffix}"),
           initials: node.attr("forename_initials#{suffix}"),
-          role: role
+          role: role,
         }
 
         xml.author **attr_code(author_attributes) do |xml_sub|
@@ -77,7 +77,7 @@ module Asciidoctor
         revdate.gsub!(/T.*$/, "")
         if revdate.length == 4
           date_attributes = {
-            year: revdate
+            year: revdate,
           }
         elsif revdate =~ /^\d\d\d\d-?\d\d$/
           matched = /^(?<year>\d\d\d\d)-(?<month>\d\d)$/.match revdate
@@ -115,7 +115,6 @@ module Asciidoctor
           end
         end
       end
-
     end
   end
 end

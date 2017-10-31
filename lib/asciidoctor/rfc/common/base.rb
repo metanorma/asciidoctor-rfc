@@ -150,46 +150,46 @@ module Asciidoctor
         else
           result << paragraph(node)
         end
-      result
-    end
-
-    def dash(camel_cased_word)
-      camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
-    end
-
-    # if node contains blocks, flatten them into a single line
-    def flatten(node)
-      result = []
-      result << node.text if node.respond_to?(:text)
-      if node.blocks?
-        node.blocks.each { |b| result << flatten(b) }
-      else
-        result << node.content
+        result
       end
-      result.reject(&:empty?)
-    end
 
-    # if node contains blocks, flatten them into a single line; and extract only raw text
-    def flatten_rawtext(node)
-      result = []
-      if node.blocks?
-        node.blocks.each { |b| result << flatten_rawtext(b) }
-      elsif node.respond_to?(:lines)
-        node.lines.each do |x|
-          result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+      def dash(camel_cased_word)
+        camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
+      end
+
+      # if node contains blocks, flatten them into a single line
+      def flatten(node)
+        result = []
+        result << node.text if node.respond_to?(:text)
+        if node.blocks?
+          node.blocks.each { |b| result << flatten(b) }
+        else
+          result << node.content
         end
-      elsif node.respond_to?(:text)
-        result << node.text.gsub(/<[^>]*>/,"")
-      else
-        result << node.content.gsub(/<[^>]*>/,"")
+        result.reject(&:empty?)
       end
-      result.reject(&:empty?)
-    end
 
-    def noko(&block)
-      #fragment = ::Nokogiri::XML::DocumentFragment.parse("")
-      #fragment.doc.create_internal_subset("xml", nil, "xhtml.dtd")
-      head = <<HERE
+      # if node contains blocks, flatten them into a single line; and extract only raw text
+      def flatten_rawtext(node)
+        result = []
+        if node.blocks?
+          node.blocks.each { |b| result << flatten_rawtext(b) }
+        elsif node.respond_to?(:lines)
+          node.lines.each do |x|
+            result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+          end
+        elsif node.respond_to?(:text)
+          result << node.text.gsub(/<[^>]*>/, "")
+        else
+          result << node.content.gsub(/<[^>]*>/, "")
+        end
+        result.reject(&:empty?)
+      end
+
+      def noko(&block)
+        # fragment = ::Nokogiri::XML::DocumentFragment.parse("")
+        # fragment.doc.create_internal_subset("xml", nil, "xhtml.dtd")
+        head = <<HERE
         <!DOCTYPE html SYSTEM
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -201,18 +201,18 @@ module Asciidoctor
         </body>
         </html>
 HERE
-      doc = ::Nokogiri::XML.parse(head)
-      fragment = doc.fragment("")
-      ::Nokogiri::XML::Builder.with fragment, &block
-      fragment.to_xml(:encoding => "US-ASCII").lines.map { |l| l.gsub(/\s*\n/, "") }
-    end
+        doc = ::Nokogiri::XML.parse(head)
+        fragment = doc.fragment("")
+        ::Nokogiri::XML::Builder.with fragment, &block
+        fragment.to_xml(encoding: "US-ASCII").lines.map { |l| l.gsub(/\s*\n/, "") }
+      end
 
-    def attr_code(attributes)
-      attributes = attributes.reject { |_, val| val.nil? }.map
-      return attributes.map do |k, v|
-        [k, ((v.is_a? String) ? HTMLEntities.new.decode(v) : v)]
-      end.to_h
+      def attr_code(attributes)
+        attributes = attributes.reject { |_, val| val.nil? }.map
+        attributes.map do |k, v|
+          [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
+        end.to_h
+      end
     end
   end
-end
 end

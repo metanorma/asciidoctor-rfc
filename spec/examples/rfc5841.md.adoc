@@ -59,25 +59,27 @@ header, so as to express more complex moods than those defined here
 
 .TCP Header Format
 ====
+[align=center]
 ....
-         Kind     Length     Meaning
-         ----     --------   -------
-          25      Variable   Packet Mood
+    Kind     Length     Meaning
+    ----     --------   -------
+     25      Variable   Packet Mood
 ....
 ====
 
 In more detail:
 
+[align=left]
 ....
-           +--------+--------+--------+--------+
-           |00011001|00000100|00111010|00101001|
-           +--------+--------+--------+--------+
-            Kind=25  Length=4 ASCII :  ASCII )
+       +--------+--------+--------+--------+
+       |00011001|00000100|00111010|00101001|
+       +--------+--------+--------+--------+
+        Kind=25  Length=4 ASCII :  ASCII )
 
-           +--------+--------+--------+--------+--------+
-           |00011001|00000101|00111110|00111010|01000000|
-           +--------+--------+--------+--------+--------+
-            Kind=25  Length=5 ASCII >  ACSII :  ASCII @
+       +--------+--------+--------+--------+--------+
+       |00011001|00000101|00111110|00111010|01000000|
+       +--------+--------+--------+--------+--------+
+        Kind=25  Length=5 ASCII >  ACSII :  ASCII @
 ....
 
 [[simple-emotional-representation]]
@@ -94,39 +96,39 @@ To this end, it is proposed that simple emotions be used convey mood
 as follows.
 
 ....
-      ASCII                Mood
-      =====                ====
-      :)                   Happy
-      :(                   Sad
-      :D                   Amused
-      %(                   Confused
-      :o                   Bored
-      :O                   Surprised
-      :P                   Silly
-      :@                   Frustrated
-      >:@                  Angry
-      :|                   Apathetic
-      ;)                   Sneaky
-      >:)                  Evil
+  ASCII                Mood
+  =====                ====
+  :)                   Happy
+  :(                   Sad
+  :D                   Amused
+  %(                   Confused
+  :o                   Bored
+  :O                   Surprised
+  :P                   Silly
+  :@                   Frustrated
+  >:@                  Angry
+  :|                   Apathetic
+  ;)                   Sneaky
+  >:)                  Evil
 ....
 
 Proposed ASCII character encoding
 
 ....
-      Binary          Dec  Hex     Character
-      ========        ===  ===     =========
-      010 0101        37   25      %
-      010 1000        40   28      (
-      010 1001        41   29      )
-      011 1010        58   3A      :
-      011 1011        59   3B      ;
-      011 1110        62   3E      >
-      100 0000        64   40      @
-      100 0100        68   44      D
-      100 1111        79   4F      O
-      101 0000        80   50      P
-      110 1111        111  6F      o
-      111 1100        124  7C      |
+  Binary          Dec  Hex     Character
+  ========        ===  ===     =========
+  010 0101        37   25      %
+  010 1000        40   28      (
+  010 1001        41   29      )
+  011 1010        58   3A      :
+  011 1011        59   3B      ;
+  011 1110        62   3E      >
+  100 0000        64   40      @
+  100 0100        68   44      D
+  100 1111        79   4F      O
+  101 0000        80   50      P
+  110 1111        111  6F      o
+  111 1100        124  7C      |
 ....
 
 For the purposes of this RFC, 7-bit ASCII encoding is sufficient for
@@ -190,11 +192,11 @@ Any packet that is carrying a text joke **SHOULD** be marked as 'amused'.
 Example:
 
 ....
-      1: Knock Knock
-      2: Who's there?
-      1: Impatient chicken
-      2: Impatient chi...
-      1: BAWK!!!!
+  1: Knock Knock
+  2: Who's there?
+  1: Impatient chicken
+  2: Impatient chi...
+  1: BAWK!!!!
 ....
 
 If such a joke is in the packet payload then, honestly, how can you

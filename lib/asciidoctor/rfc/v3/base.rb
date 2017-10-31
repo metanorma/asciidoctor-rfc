@@ -91,14 +91,14 @@ module Asciidoctor
         # their defaults in xml2rfc v1.32)
         rfc_pis = {
           # give errors regarding ID-nits and DTD validation
-          strict: 'yes',
+          strict: "yes",
 
           # TOC control
           # generate a ToC
-          toc: node.attr('toc-include') == 'false' ? 'no' : 'yes',
+          toc: node.attr("toc-include") == "false" ? "no" : "yes",
 
           # the number of levels of subsections in ToC. default: 3
-          tocdepth: node.attr('toc-depth') || '4',
+          tocdepth: node.attr("toc-depth") || "4",
 
           # References control
 
@@ -112,18 +112,17 @@ module Asciidoctor
           # (using these PIs as follows is recommended by the RFC Editor)
 
           # do not start each main section on a new page
-          compact: 'yes',
+          compact: "yes",
 
           # keep one blank line between list items
-          subcompact: 'no'
+          subcompact: "no",
         }
 
-        doc.create_internal_subset('rfc', nil, 'rfc2629.dtd')
+        doc.create_internal_subset("rfc", nil, "rfc2629.dtd")
         rfc_pis.each_pair do |k, v|
           pi = Nokogiri::XML::ProcessingInstruction.new(doc,
-            'rfc',
-            "#{k}=\"#{v}\"",
-          )
+                                                        "rfc",
+                                                        "#{k}=\"#{v}\"")
           doc.root.add_previous_sibling(pi)
         end
 
@@ -170,17 +169,9 @@ module Asciidoctor
             end
           when :monospaced then xml.tt node.text
           when :double
-            if $smart_quotes
-              xml << "“#{node.text}”"
-            else
-              xml << "\"#{node.text}\""
-            end
+            xml << ($smart_quotes ? "“#{node.text}”" : "\"#{node.text}\"")
           when :single
-            if $smart_quotes
-              xml << "‘#{node.text}’"
-            else
-              xml << "'#{node.text}'"
-            end
+            xml << ($smart_quotes ? "‘#{node.text}’" : "'#{node.text}'")
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
           else
@@ -261,7 +252,7 @@ module Asciidoctor
               result << reflist(b)
             elsif b.context == :ulist
               b.items.each do |i|
-                result1 = i.text # we only process the item for its displayreferences
+                i.text # we only process the item for its displayreferences
               end
             end
           end
@@ -347,12 +338,12 @@ module Asciidoctor
         unless $smart_quotes
           xmldoc.traverse do |node|
             if node.text?
-              node.content = node.content.gsub(/\u2019/, "'")
+              node.content = node.content.tr("\u2019", "'")
               node.content = node.content.gsub(/\&#8217;/, "'")
               node.content = node.content.gsub(/\&#x2019;/, "'")
             elsif node.element?
               node.attributes.each do |k, v|
-                node.set_attribute(k, v.content.gsub(/\u2019/, "'"))
+                node.set_attribute(k, v.content.tr("\u2019", "'"))
                 node.set_attribute(k, v.content.gsub(/\&#8217;/, "'"))
                 node.set_attribute(k, v.content.gsub(/\&#x2019;/, "'"))
               end
@@ -360,7 +351,7 @@ module Asciidoctor
           end
         end
 
-        xmldoc.to_xml(:encoding => "US-ASCII")
+        xmldoc.to_xml(encoding: "US-ASCII")
       end
     end
   end
