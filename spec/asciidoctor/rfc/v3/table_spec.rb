@@ -4,7 +4,7 @@ describe Asciidoctor::RFC::V3::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [[id]]
       .Table Title
@@ -22,7 +22,7 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
-      <section anchor="_section_1" numbered="false">    
+      <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
       <table anchor="id">
       <name>Table Title</name>
@@ -76,7 +76,7 @@ describe Asciidoctor::RFC::V3::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [[id]]
       .Table Title
@@ -94,7 +94,7 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
-      <section anchor="_section_1" numbered="false">    
+      <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
       <table anchor="id">
       <name>Table Title</name>
@@ -148,7 +148,7 @@ describe Asciidoctor::RFC::V3::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       .Table Title
       |===
@@ -163,7 +163,7 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
-      <section anchor="_section_1" numbered="false">    
+      <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
       <table>
          <name>Table Title</name>
@@ -208,15 +208,15 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       :docName:
       Author
-    
+
       == Section 1
       [cols="2"]
       .Table Title
       |===
       |head | head
 
-      h|header cell 
-      a| 
+      h|header cell
+      a|
       * List 1
       * List 2
       | | body cell<<x>>
@@ -227,7 +227,7 @@ describe Asciidoctor::RFC::V3::Converter do
       |foot | foot
       |===
     INPUT
-      <section anchor="_section_1" numbered="false">    
+      <section anchor="_section_1" numbered="false">
       <name>Section 1</name>
       <table>
          <name>Table Title</name>

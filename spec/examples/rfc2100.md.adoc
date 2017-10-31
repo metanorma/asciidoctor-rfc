@@ -9,15 +9,16 @@ Jay R. Ashworth <jra@scfn.thpl.lib.fl.us>
 :workgroup: Network Working Group
 :revdate: 1997-04-01T00:00:00Z
 :forename_initials: J. R.
-:organization: Ashworth & Associates\ Advanced Technology Consulting
-:phone: +1 813 790 759
-:street: 10 Moulton Street
+:organization_abbrev: Ashworth & Associates
+:organization: Advanced Technology Consulting
+:phone: +1 813 790 7592
 :city: St. Petersburg
 :code: FL 33709-4819
 :sym-refs: false
 :toc-include: false
 :smart-quotes: false
 
+[[introduction]]
 == Introduction
 
 This RFC is a commentary on the difficulty of deciding upon an
@@ -31,6 +32,7 @@ Except to TS Eliot.
 
 And, for that matter, to David Addison, who hates iambic pentameter.
 
+[[poetry]]
 == Poetry
 
 [verse]
@@ -78,6 +80,7 @@ ____
                 Name.
 ____
 
+[[credits]]
 == Credits
 
 Thanks to Don Libes, Mark Lottor, and a host of twisted
@@ -88,6 +91,7 @@ attention to the necessity, and of course, to Thomas Stearns Eliot,
 for making this all necessary.
 <<libes,>> <<lottor,>> <<wong,>> <<ts,>>
 
+[[security-considerations]]
 == Security Considerations
 
 Security issues are not discussed in this memo.
@@ -114,18 +118,18 @@ Particularly the cardiac security of certain famous poets.
  </front>
  </reference>
 
-<reference anchor='wong' target='http://www.seas.upenn.edu/~mengwong/coolhosts.html'>
- <front>
- <title>Cool Hostnames</title>
-  <author initials='M.' surname='Wong' fullname='M. Wong'></author>
-  <date/>
- </front>
- </reference>
-
 <reference anchor='ts' target=''>
  <front>
  <title>Old Possum's Book of Practical Cats</title>
   <author initials='TS' surname='Stearns' fullname='TS. Stearns'></author>
+  <date/>
+ </front>
+ </reference>
+
+<reference anchor='wong' target='http://www.seas.upenn.edu/~mengwong/coolhosts.html'>
+ <front>
+ <title>Cool Hostnames</title>
+  <author initials='M.' surname='Wong' fullname='M. Wong'></author>
   <date/>
  </front>
  </reference>

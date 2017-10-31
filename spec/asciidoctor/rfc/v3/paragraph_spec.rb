@@ -44,7 +44,7 @@ describe Asciidoctor::RFC::V3::Converter do
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
          <date day="1" month="January" year="2000"/>
-     
+
        </front><middle>
       <section anchor="_dante_s_revenge" numbered="false">
         <name>Dante's Revenge</name>

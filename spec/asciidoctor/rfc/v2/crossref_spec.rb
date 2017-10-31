@@ -12,7 +12,7 @@ describe Asciidoctor::RFC::V2::Converter do
       http://example.com/[linktext]
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -50,7 +50,7 @@ describe Asciidoctor::RFC::V2::Converter do
       See <<crossreference,format=counter: text>>
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -105,7 +105,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ++++
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -180,7 +180,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ++++
     INPUT
        <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
        <rfc submissionType="IETF">
        <front>
@@ -190,9 +190,9 @@ describe Asciidoctor::RFC::V2::Converter do
       </front><middle>
       <section anchor="_section_1" title="Section 1">
          <t>See <xref target="crossreference">Section 1.3 of [crossreference]</xref>
-       <xref target="crossreference">[crossreference], Section 1.4</xref>
+       <xref target="crossreference">[crossreference], Section 1.4: text</xref>
        <xref target="crossreference#fragment1">[crossreference] (Section 2.5.3)</xref>
-       <xref target="crossreference#fragment2">6.2a</xref></t>
+       <xref target="crossreference#fragment2">6.2a: text</xref></t>
        </section>
        </middle><back>
        <references title="References">

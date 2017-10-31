@@ -17,7 +17,7 @@ describe Asciidoctor::RFC::V2::Converter do
       The fog comes
       on little cat feet.
     INPUT
-      <t anchor="verse-id">The fog comes<br/>
+      <t anchor="verse-id">The fog comes<vspace/>
       on little cat feet.</t>
     OUTPUT
   end

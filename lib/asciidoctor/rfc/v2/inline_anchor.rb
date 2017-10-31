@@ -20,11 +20,10 @@ module Asciidoctor
 
       def inline_anchor_xref(node)
         if node.text =~ /^\S+ (of|comma|parens|bare)\b/
-          # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref: 
+          # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref:
           # render equivalent in v2
           matched = /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text>.*)$/.match node.text
 
-          relref_contents = matched[:text]
           target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
           reftarget = target
           reftarget = "#{target}##{node.attributes["fragment"]}" unless node.attributes["path"].nil?
@@ -41,6 +40,9 @@ module Asciidoctor
                           else
                             "Section #{matched[:section]} of #{target}"
                           end
+          unless matched[:text].empty?
+            xref_contents = "#{xref_contents}: #{matched[:text]}"
+          end
 
           xref_attributes = {
             target: reftarget

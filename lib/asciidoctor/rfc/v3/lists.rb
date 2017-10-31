@@ -71,7 +71,7 @@ module Asciidoctor
                   xml_li.t do |t|
                     t << item.text
                   end
-                  xml_li << item.content 
+                  xml_li << item.content
                 else
                   xml_li << item.text
                 end
@@ -129,7 +129,7 @@ module Asciidoctor
                   xml_li.t do |t|
                     t << item.text
                   end
-                  xml_li << item.content 
+                  xml_li << item.content
                 else
                   xml_li << item.text
                 end
@@ -163,8 +163,8 @@ module Asciidoctor
 
           xml.dl **attr_code(dl_attributes) do |xml_dl|
             node.items.each do |terms, dd|
-              terms.each_with_index do |dt, idx| 
-                xml_dl.dt dt.text 
+              terms.each_with_index do |dt, idx|
+                xml_dl.dt dt.text
                 if idx < terms.size - 1
                   xml_dl.dd
                 end

@@ -1,6 +1,6 @@
 = Scenic Routing for IPv6
 Maximilian Wilhelm <max@rfc2324.org>
-:doctype: rfc
+:doctype: internet-draft
 :abbrev: Scenic Routing for IPv6
 :status: info
 :name: rfc-7511
@@ -12,10 +12,9 @@ Maximilian Wilhelm <max@rfc2324.org>
 :phone: +49 176 62 05 94 27
 :city: Paderborn, NRW
 :country: Germany
+:smart-quotes: false
 
 [abstract]
-== Abstract
-
 This document specifies a new routing scheme for the current version
 of the Internet Protocol version 6 (IPv6) in the spirit of "Green
 IT", whereby packets will be routed to get as much fresh-air time as
@@ -56,8 +55,8 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this
 document are to be interpreted as described in RFC 2119 <<RFC2119>>.
 
-Additionally, the key words "**MIGHT**", "**COULD**", "**MAY WISH TO**", "**WOULD
-PROBABLY**", "**SHOULD CONSIDER**", and "**MUST (BUT WE KNOW YOU WON'T)**" in
+Additionally, the key words "**MIGHT**", "**COULD**", "**MAY WISH TO**", 
+"**WOULD PROBABLY**", "**SHOULD CONSIDER**", and "**MUST (BUT WE KNOW YOU WON'T)**" in
 this document are to interpreted as described in RFC 6919 <<RFC6919>>.
 
 ==  Scenic Routing
@@ -71,8 +70,8 @@ The Scenic Routing Option (SRO) is placed in the IPv6 Hop-by-Hop
 Options Header that must be examined by every node along a packet's
 delivery path <<RFC2460>>.
 
-The SRO can be included in any IPv6 datagram, but multiple SROs **MUST
-NOT** be present in the same IPv6 datagram.  The SRO has no alignment
+The SRO can be included in any IPv6 datagram, but multiple SROs 
+**MUST NOT** be present in the same IPv6 datagram.  The SRO has no alignment
 requirement.
 
 If the SRO is set for a packet, every node en route from the packet
@@ -95,11 +94,14 @@ specification in <<RFC2460,4.2 of>>.
 ....
 ====
 
-Option Type:: {blank}
+Option Type:: 
 +
+--
+{blank}
+
 8-bit identifier of the type of option.  The option identifier
 0x0A (On Air) is proposed for Scenic Routing.
-+
+
 [#fig-option-type]
 .Scenic Routing Option Type
 ====
@@ -109,23 +111,31 @@ Option Type:: {blank}
     0A           00   0   01010     Scenic Routing
 ....
 ====
-+
+
 The highest-order two bits are set to 00 so any node not
     implementing Scenic Routing will skip over this option and
     continue processing the header.  The third-highest-order bit
     indicates that the SRO does not change en route to the packet's
     final destination.
+--
 
 Option Length:: {blank}
 +
+--
+{blank}
+
 8-bit unsigned integer.  The length of the option in octets
     (excluding the Option Type and Option Length fields).  The value
     **MUST** be greater than 0.
+--
 
 SRO Param::
 +
+--
+{blank}
+
 8-bit identifier indicating Scenic Routing parameters encoded as a bit string.
-+
+
 [#fig-bit-string-layout]
 .SRO Param Bit String Layout
 ====
@@ -135,40 +145,41 @@ SRO Param::
     +-+-+-+-+-+-+-+-+
 ....
 ====
-+
+
 The highest-order two bits (SR) define the urgency of Scenic
     Routing:
-+
+
 [empty]
 * 00 - Scenic Routing **MUST NOT** be used for this packet.
 * 01 - Scenic Routing **MIGHT** be used for this packet.
 * 10 - Scenic Routing **SHOULD** be used for this packet.
 * 11 - Scenic Routing **MUST** be used for this packet.
-+
+
 The following BIT (A) defines if Avian IP Carriers should be used:
-+
+
 [empty]
 * 0 - Don't use Avian IP Carrier links (maybe the packet is
       afraid of pigeons).
 * 1 - Avian IP Carrier links may be used.
-+
+
 The following BIT (W) defines if wireless links should be used:
-+
+
 [empty]
 * 0 - Don't use wireless links (maybe the packet is afraid of
       radiation).
 * 1 - Wireless links may be used.
-+
+
 The following two bits (AA) define the affinity for link types:
-+
+
 [empty]
 * 00 - No affinity.
 * 01 - Avian IP Carriers **SHOULD** be preferred.
 * 10 - Wireless links **SHOULD** be preferred.
 * 11 - RESERVED
-+
+
 The lowest-order two bits (XY) are currently unused and reserved
     for future use.
+--
 
 == Implications
 
@@ -365,9 +376,8 @@ The key words "MUST (BUT WE KNOW YOU WON\'T)", "SHOULD CONSIDER", "REALLY SHOULD
 ++++
 
 [bibliography]
-++++
 == Informative References
-
+++++
 <reference anchor="RFC0791" target="https://www.rfc-editor.org/info/rfc791">
 <front>
 <title>Internet Protocol</title>

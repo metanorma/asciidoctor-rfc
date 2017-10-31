@@ -6,12 +6,12 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       Author
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -21,9 +21,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-     
+
          <t>text</t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -53,7 +53,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc ipr="full3978" obsoletes="1, 2" updates="10, 11" category="info" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" number="1111" seriesNo="12" xml:lang="en">
       <front>
@@ -98,7 +98,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc ipr="full3978" obsoletes="1, 2" updates="10, 11" category="info" consensus="no" submissionType="IRTF" iprExtract="ipr_extract_value" docName="draft-03-draft" seriesNo="12" xml:lang="en">
       <front>
@@ -135,7 +135,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Lipsum.
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
@@ -144,15 +144,15 @@ describe Asciidoctor::RFC::V2::Converter do
          <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-     
+
          <t>Text</t>
-     
+
       </section>
       </middle><back>
       <section anchor="_appendix" title="Appendix">
-     
+
          <t>Lipsum.</t>
-     
+
       </section>
       </back>
       </rfc>

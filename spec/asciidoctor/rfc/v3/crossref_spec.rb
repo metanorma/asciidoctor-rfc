@@ -12,7 +12,7 @@ describe Asciidoctor::RFC::V3::Converter do
       http://example.com/[linktext]
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -51,7 +51,7 @@ describe Asciidoctor::RFC::V3::Converter do
       See <<crossreference,format=counter: text>>
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -125,7 +125,7 @@ describe Asciidoctor::RFC::V3::Converter do
       ++++
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -218,15 +218,15 @@ describe Asciidoctor::RFC::V3::Converter do
       </reference>
       ++++
     INPUT
-     <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <?xml version="1.0" encoding="US-ASCII"?>
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
        <rfc submissionType="IETF" prepTime="2000-01-01T05:00:00Z" version="3">
        <front>
          <title abbrev="abbrev_value">Document title</title>
          <author fullname="Author"/>
          <date day="1" month="January" year="2000"/>
-     
+
        </front><middle>
        <section anchor="_section_1" numbered="false">
          <name>Section 1</name>

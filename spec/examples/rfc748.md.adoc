@@ -1,6 +1,6 @@
 = TELNET RANDOMLY-LOSE Option
 M. Crispin
-:doctype: rfc
+:doctype: internet-draft
 :abbrev: TELNET RANDOMLY-LOSE Option
 :status: info
 :name: rfc-748
@@ -10,6 +10,7 @@ M. Crispin
 :revdate: 1978-04-01T00:00:00Z
 :forename_initials: M.
 :organization: SU-AI
+:smart-quotes: false
 
 == Command name and code
 
@@ -19,15 +20,23 @@ M. Crispin
 
 == Command meanings
 
-IAC WILL RANDOMLY-LOSE::  The sender of this command REQUESTS permission to, or confirms
+IAC WILL RANDOMLY-LOSE::  
++
+The sender of this command REQUESTS permission to, or confirms
 that it will, randomly lose.
 
-IAC WON'T RANDOMLY-LOSE::   The sender of this command REFUSES to randomly lose.
+IAC WON'T RANDOMLY-LOSE::   
++
+The sender of this command REFUSES to randomly lose.
 
-IAC DO RANDOMLY-LOSE::  The sender of this command REQUESTS that the receiver, or grants
+IAC DO RANDOMLY-LOSE::  
++
+The sender of this command REQUESTS that the receiver, or grants
 the receiver permission to, randomly lose.
 
-IAC DON'T RANDOMLY-LOSE:: The command sender DEMANDS that the receiver not randomly lose.
+IAC DON'T RANDOMLY-LOSE:: 
++
+The command sender DEMANDS that the receiver not randomly lose.
 
 == Default
 

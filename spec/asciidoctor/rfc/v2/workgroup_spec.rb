@@ -6,12 +6,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :workgroup: first_workgroup, second_workgroup
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -21,7 +21,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <date day="1" month="January" year="2000"/>
       <workgroup>first_workgroup</workgroup><workgroup>second_workgroup</workgroup>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -35,12 +35,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :workgroup: first_workgroup & second_workgroup
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -50,7 +50,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <date day="1" month="January" year="2000"/>
       <workgroup>first_workgroup &amp; second_workgroup</workgroup>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>

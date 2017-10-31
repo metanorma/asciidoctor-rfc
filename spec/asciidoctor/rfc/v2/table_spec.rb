@@ -4,7 +4,7 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [[id]]
       [suppress-title=false,align=left,grid=cols]
@@ -46,7 +46,7 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [[id]]
       [suppress-title=false,align=left,grid=cols]
@@ -88,7 +88,7 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [[id]]
       [suppress-title=false,align=left,grid=cols]
@@ -136,7 +136,7 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       .Table Title
       |===
@@ -175,15 +175,15 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [cols="2"]
       .Table Title
       |===
       |head | head
 
-      h|header cell 
-      a| 
+      h|header cell
+      a|
       * List 1
       * List 2
       | | body cell<<x>>
@@ -219,12 +219,12 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [cols="1,2,5"]
       |===
       |a |b |c
-      
+
       |a |b |c
       |===
     INPUT
@@ -244,12 +244,12 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [cols="10%,20%,70%"]
       |===
       |a |b |c
-      
+
       |a |b |c
       |===
     INPUT
@@ -269,12 +269,12 @@ describe Asciidoctor::RFC::V2::Converter do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
-    
+
       == Section 1
       [cols="1,1,1"]
       |===
       |a |b |c
-      
+
       |a |b |c
       |===
     INPUT
@@ -290,6 +290,4 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
-
-
 end

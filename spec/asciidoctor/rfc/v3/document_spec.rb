@@ -11,7 +11,7 @@ describe Asciidoctor::RFC::V3::Converter do
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z" version="3" submissionType="IETF">
       <front>
@@ -51,7 +51,7 @@ describe Asciidoctor::RFC::V3::Converter do
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc ipr="ipr_value" obsoletes="1, 2" updates="10, 11" prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IRTF" indexInclude="true" iprExtract="ipr_extract_value" sortRefs="true" symRefs="false" tocInclude="false" tocDepth="2">
@@ -83,7 +83,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Lipsum.
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">

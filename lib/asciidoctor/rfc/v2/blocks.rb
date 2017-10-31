@@ -92,7 +92,7 @@ module Asciidoctor
           }
 
           # remove all formatting: cref content is pure text
-          cref_contents = node.blocks? ? flatten_rawtext(node) : flatten_rawtext(node)
+          cref_contents = flatten_rawtext(node)
           cref_contents = [cref_contents].flatten.join("\n")
           warn <<~WARNING_MESSAGE if node.blocks?
             asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}
@@ -143,7 +143,7 @@ module Asciidoctor
               else
                 # we want to see the para text, not its <t> container
                 if seen_artwork
-                  xml_figure.postamble do |postamble| 
+                  xml_figure.postamble do |postamble|
                     postamble << b.content
                   end
                 else

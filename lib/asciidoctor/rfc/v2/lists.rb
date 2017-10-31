@@ -110,14 +110,14 @@ module Asciidoctor
                 hangText: term.text
               }
 
-              if idx < terms.size - 1 
+              if idx < terms.size - 1
                 xml_list.t **attr_code(t_attributes)
               else
                 xml_list.t **attr_code(t_attributes) do |xml_t|
                   if !dd.nil?
                     if dd.blocks?
                       if dd.text?
-                        xml_t << dd.text 
+                        xml_t << dd.text
                       end
                       # v2 does not support multi paragraph list items;
                       # vspace is used to emulate them

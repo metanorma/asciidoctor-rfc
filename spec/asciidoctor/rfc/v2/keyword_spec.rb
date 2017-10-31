@@ -6,12 +6,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :keyword: first_keyword, second_keyword
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -22,9 +22,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <keyword>first_keyword</keyword><keyword>second_keyword</keyword>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-     
+
          <t>text</t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -36,12 +36,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :docName:
       Author
       :keyword: first_keyword & second_keyword
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -52,9 +52,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <keyword>first_keyword &amp; second_keyword</keyword>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-     
+
          <t>text</t>
-     
+
       </section>
       </middle>
       </rfc>

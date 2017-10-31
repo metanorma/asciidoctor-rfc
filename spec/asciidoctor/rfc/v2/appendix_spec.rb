@@ -14,7 +14,7 @@ describe Asciidoctor::RFC::V2::Converter do
       text
    INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
       submissionType="IETF">
@@ -71,12 +71,12 @@ describe Asciidoctor::RFC::V2::Converter do
         </front>
       </reference>
       ++++
-      
+
       == Appendix
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
       submissionType="IETF">

@@ -10,12 +10,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :area: horticulture
       :workgroup: IETF
       :keyword: widgets
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF" docName="rfc-1111">
@@ -28,9 +28,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <keyword>widgets</keyword>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-     
+
          <t>text</t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -46,12 +46,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :area: horticulture
       :workgroup: IETF
       :keyword: widgets
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF" docName="rfc-1111">
@@ -64,9 +64,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <keyword>widgets</keyword>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-     
+
          <t>text</t>
-     
+
       </section>
       </middle>
       </rfc>

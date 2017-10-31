@@ -749,6 +749,12 @@ _Italic_ <2>
 <7> v3 only: `<bcp14>MUST NOT</bcp14>`. Not supported in v2; rendered as `<spanx style="strong">MUST NOT</spanx>`.
 <8> v3: if document flag `:no-rfc-bold-bcp14:` is present, then `<strong>MUST NOT</strong>`, else (by default) any BCP14/RFC2119 phrase in boldface and capitals is assumed to be intended to be tagged in `<bcp14>`. v2: `<spanx style="strong">MUST NOT</spanx>`.
 
+NOTE: The delimiters must occur within the one line; the following is invalid in Asciidoctor:
+[source,asciidoc]
+--
+*WOULD
+PROBABLY*
+--
 
 === Paragraphs
 

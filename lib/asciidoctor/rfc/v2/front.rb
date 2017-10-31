@@ -63,7 +63,6 @@ module Asciidoctor
           xml_address.email { |e| e << email } unless email.nil?
           xml_address.uri { |u| u << uri } unless uri.nil?
         end
-
       end
     end
   end

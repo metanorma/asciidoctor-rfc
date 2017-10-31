@@ -11,7 +11,7 @@ describe Asciidoctor::RFC::V2::Converter do
       This [bcp14]#must not# stand
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -39,7 +39,7 @@ describe Asciidoctor::RFC::V2::Converter do
       _Text_ *Text* `Text` "`Text`" '`Text`' ^Superscript^ ~Subscript~
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -68,7 +68,7 @@ describe Asciidoctor::RFC::V2::Converter do
       "`Text`" '`Text`'
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -97,7 +97,7 @@ describe Asciidoctor::RFC::V2::Converter do
       stem:[sqrt(4) = 2]
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -125,7 +125,7 @@ describe Asciidoctor::RFC::V2::Converter do
 
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -155,7 +155,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Hello &lt;&nbsp;(&amp;lt;)
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">

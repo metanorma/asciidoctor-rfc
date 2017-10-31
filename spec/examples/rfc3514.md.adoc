@@ -1,6 +1,6 @@
 = The Security Flag in the IPv4 Header
 Steven M. Bellovin <bellovin@acm.org>
-:doctype: rfc
+:doctype: internet-draft
 :abbrev: The Security Flag in the IPv4 Header
 :status: info
 :name: rfc-3514
@@ -14,16 +14,16 @@ Steven M. Bellovin <bellovin@acm.org>
 :street: 180 Park Avenue
 :city: Florham Park
 :code: NJ 07932
+:smart-quotes: false
 
 [abstract]
-== Abstract
-
 Firewalls, packet filters, intrusion detection systems, and the like
 often have difficulty distinguishing between packets that have
 malicious intent and those that are merely unusual.  We define a
 security flag in the IPv4 header as a means of distinguishing the two
 cases.
 
+[[introduction]]
 == Introduction
 
 Firewalls <<CBR03>>, packet filters, intrusion detection systems, and
@@ -34,12 +34,14 @@ we define a security flag, known as the "evil" bit, in the IPv4
 <<RFC0791>> header.  Benign packets have this bit set to 0; those that
 are used for an attack will have the bit set to 1.
 
+[[terminology]]
 === Terminology
 
 The keywords **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**,
 **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL**, when they appear in this
 document, are to be interpreted as described in <<RFC2119>>.
 
+[[syntax]]
 == Syntax
 
 The high-order bit of the IP fragment offset field is the only unused
@@ -49,24 +51,29 @@ is not left to IANA.
 The bit field is laid out as follows:
 
 ....
-         0
-        +-+
-        |E|
-        +-+
+     0
+    +-+
+    |E|
+    +-+
 ....
 
 Currently-assigned values are defined as follows:
 
-0x0:: If the bit is set to 0, the packet has no evil intent.  Hosts,
+0x0:: 
++
+If the bit is set to 0, the packet has no evil intent.  Hosts,
     network elements, etc., **SHOULD** assume that the packet is
     harmless, and **SHOULD NOT** take any defensive measures.  (We note
     that this part of the spec is already implemented by many common
     desktop operating systems.)
 
-0x1:: If the bit is set to 1, the packet has evil intent.  Secure
+0x1:: 
++
+If the bit is set to 1, the packet has evil intent.  Secure
     systems **SHOULD** try to defend themselves against such packets.
     Insecure systems **MAY** chose to crash, be penetrated, etc.
 
+[[setting-the-evil-bit]]
 == Setting the Evil Bit
 
 There are a number of ways in which the evil bit may be set.  Attack
@@ -107,6 +114,7 @@ project, the evil bit **MUST NOT** be set.  If the scanning per se is
 innocent, but the ultimate intent is evil and the destination site
 has such an intrusion detection system, the evil bit **SHOULD** be set.
 
+[[processing-of-the-evil-bit]]
 == Processing of the Evil Bit
 
 Devices such as firewalls **MUST** drop all inbound packets that have the
@@ -135,7 +143,8 @@ As outlined earlier, host processing of evil packets is operating-
 system dependent; however, all hosts **MUST** react appropriately
 according to their nature.
 
-# Related Work
+[[related-work]]
+== Related Work
 
 Although this document only defines the IPv4 evil bit, there are
 complementary mechanisms for other forms of evil.  We sketch some of
@@ -161,12 +170,14 @@ mischief.  Other MIME types can be embedded inside of evil sections;
 this permit easy encoding of word processing documents with macro
 viruses, etc.
 
+[[iana-considerations]]
 == IANA Considerations
 
 This document defines the behavior of security elements for the 0x0
 and 0x1 values of this bit.  Behavior for other values of the bit may
 be defined only by IETF consensus <<RFC2434>>.
 
+[[security-considerations]]
 == Security Considerations
 
 Correct functioning of security mechanisms depend critically on the

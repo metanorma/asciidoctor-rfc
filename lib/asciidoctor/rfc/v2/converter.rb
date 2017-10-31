@@ -40,7 +40,7 @@ module Asciidoctor
 
       def initialize(backend, opts)
         super
-        basebackend 'html'
+        basebackend "html"
         outfilesuffix ".xml"
       end
 
@@ -58,7 +58,6 @@ module Asciidoctor
       alias_method :inline_image, :skip
 
       alias_method :stem, :literal
-      alias_method :open, :paragraph
       alias_method :quote, :paragraph
     end
   end

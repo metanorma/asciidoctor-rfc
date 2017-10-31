@@ -10,7 +10,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z" version="3" submissionType="IETF">
       <front>
@@ -41,7 +41,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z" version="3" submissionType="IETF">
       <front>
@@ -90,7 +90,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -140,12 +140,12 @@ describe Asciidoctor::RFC::V3::Converter do
       :region: NSW & ACT
       :country: Australia & New Zealand
       :code: 3333 & 3334
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
        <rfc submissionType="IETF" prepTime="2000-01-01T05:00:00Z" version="3">
       <front>
@@ -214,7 +214,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -286,7 +286,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -343,7 +343,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -396,7 +396,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -448,7 +448,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">
@@ -505,7 +505,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc prepTime="2000-01-01T05:00:00Z"
                 version="3" submissionType="IETF">

@@ -1,6 +1,6 @@
 = TCP Option to Denote Packet Mood
-Richard Hay <rhay@google.com>, Warren Turkal <turkal@google.com>
-:doctype: rfc
+Richard Hay <rhay@google.com>; Warren Turkal <turkal@google.com>
+:doctype: internet-draft
 :abbrev: TCP Option to Denote Packet Mood
 :status: info
 :name: rfc-5841
@@ -13,7 +13,7 @@ Richard Hay <rhay@google.com>, Warren Turkal <turkal@google.com>
 :street: 1600 Amphitheatre Pkwy
 :city: Mountain View
 :code: CA 94043
-:toc-include: no
+:toc-include: false
 :forename_initials_2: W.
 :organization_2: Google
 :street_2: 1600 Amphitheatre Pkwy
@@ -21,8 +21,6 @@ Richard Hay <rhay@google.com>, Warren Turkal <turkal@google.com>
 :code_2: CA 94043
 
 [abstract]
-== Abstract
-
 This document proposes a new TCP option to denote packet mood.
 
 == Introduction
@@ -95,41 +93,41 @@ humans.
 To this end, it is proposed that simple emotions be used convey mood
 as follows.
 
-|===
-|ASCII                | Mood
-
-|      :)             |      Happy
-|      :(             |      Sad
-|      :D             |      Amused
-|      %(             |      Confused
-|      :o             |      Bored
-|      :O             |      Surprised
-|      :P             |      Silly
-|      :@             |      Frustrated
-|      >:@            |      Angry
-|      :|             |      Apathetic
-|      ;)             |      Sneaky
-|      >:)            |      Evil
-|===
+....
+      ASCII                Mood
+      =====                ====
+      :)                   Happy
+      :(                   Sad
+      :D                   Amused
+      %(                   Confused
+      :o                   Bored
+      :O                   Surprised
+      :P                   Silly
+      :@                   Frustrated
+      >:@                  Angry
+      :|                   Apathetic
+      ;)                   Sneaky
+      >:)                  Evil
+....
 
 Proposed ASCII character encoding
 
-|===
-| Binary          | Dec  | Hex     | Character
-
-|      010 0101   |     37  | 25   |   %
-|      010 1000   |     40  | 28   |   (
-|      010 1001   |     41  | 29   |   )
-|      011 1010   |     58  | 3A   |   :
-|      011 1011   |     59  | 3B   |   ;
-|      011 1110   |     62  | 3E   |   >
-|      100 0000   |     64  | 40   |   @
-|      100 0100   |     68  | 44   |   D
-|      100 1111   |     79  | 4F   |   O
-|      101 0000   |     80  | 50   |   P
-|      110 1111   |     111 | 6F   |   o
-|      111 1100   |     124 | 7C   |   \|
-|===
+....
+      Binary          Dec  Hex     Character
+      ========        ===  ===     =========
+      010 0101        37   25      %
+      010 1000        40   28      (
+      010 1001        41   29      )
+      011 1010        58   3A      :
+      011 1011        59   3B      ;
+      011 1110        62   3E      >
+      100 0000        64   40      @
+      100 0100        68   44      D
+      100 1111        79   4F      O
+      101 0000        80   50      P
+      110 1111        111  6F      o
+      111 1100        124  7C      |
+....
 
 For the purposes of this RFC, 7-bit ASCII encoding is sufficient for
 representing emoticons.  The ASCII characters will be sent in 8-bit

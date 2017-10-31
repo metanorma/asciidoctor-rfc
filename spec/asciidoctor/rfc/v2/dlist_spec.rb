@@ -82,7 +82,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
-  
+
   it "uses vspace to break up multi paragraph list items" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title

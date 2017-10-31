@@ -17,7 +17,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ////
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -47,21 +47,21 @@ describe Asciidoctor::RFC::V2::Converter do
       NOTE: This is a note
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
-     
+
          <title abbrev="abbrev_value">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="2000"/>
-     
-     
+
+
       </front><middle>
       <section anchor="_section1" title="Section1"><t>Text<cref>This is a note</cref></t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -81,21 +81,21 @@ describe Asciidoctor::RFC::V2::Converter do
       WARNING: This is a note
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
-     
+
          <title abbrev="abbrev_value">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="2000"/>
-     
-     
+
+
       </front><middle>
       <section anchor="_section1" title="Section1"><t>Text<cref>This is a note</cref></t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -143,21 +143,21 @@ describe Asciidoctor::RFC::V2::Converter do
       ++++
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
-     
+
          <title abbrev="abbrev_value">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="2000"/>
-     
-     
+
+
       </front><middle>
       <section anchor="sect1" title="Section1"><t>Text<cref>Text _Text_ *Text* `Text` ~Text~ ^Text^ http://example.com/[linktext] &lt;&lt;ref&gt;&gt;</cref></t>
-     
+
       </section>
       </middle><back>
       <references title="References">
@@ -211,33 +211,33 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
-     
+
          <title abbrev="abbrev_value">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="2000"/>
-     
-     
+
+
       </front><middle>
       <section anchor="_section1" title="Section1"><t>Text<cref>While werewolves are hardy community members, keep in mind the following dietary concerns:
-     
-     
-     
+
+
+
       They are allergic to cinnamon.
-     
-     
-     
+
+
+
       More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
-     
-     
-     
+
+
+
       Celery makes them sad.</cref></t>
-     
+
       </section>
       </middle>
       </rfc>
@@ -262,28 +262,28 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
-     
+
          <title abbrev="abbrev_value">Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="2000"/>
-     
-     
+
+
       </front><middle>
       <section anchor="_section1" title="Section1"><t>Text<cref anchor="id" source="GBS">Any admonition inside the body of the text is a comment.</cref></t>
-     
+
       </section>
       </middle>
       </rfc>
     OUTPUT
   end
-  
-    it "has a comment at the start of a section" do
+
+  it "has a comment at the start of a section" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
@@ -294,20 +294,20 @@ describe Asciidoctor::RFC::V2::Converter do
       Text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc submissionType="IETF">
       <front>
-     
+
          <title>Document title</title>
-     
+
          <author fullname="Author"/>
-     
+
          <date day="1" month="January" year="2000"/>
-    
+
       </front><middle>
       <section anchor="_section_1" title="Section 1"><t><cref>This is an initial note</cref></t>
-     
+
       <t>Text</t></section>
       </middle>
       </rfc>

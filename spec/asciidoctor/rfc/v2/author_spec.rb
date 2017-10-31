@@ -5,12 +5,12 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       John Doe Horton <john.doe@email.com>
-         
+
       == Section 1
       text
  INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
        <?rfc strict="yes"?>
        <?rfc toc="yes"?>
@@ -33,7 +33,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -46,12 +46,12 @@ describe Asciidoctor::RFC::V2::Converter do
       = Document title
       :docName:
       John Doe Horton <john.doe@email.com>; Joanna Diva Munez <joanna.munez@email.com>
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -75,7 +75,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -102,12 +102,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -131,7 +131,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -156,12 +156,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :region: NSW & ACT
       :country: Australia & New Zealand
       :code: 3333 & 3334
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -185,7 +185,7 @@ describe Asciidoctor::RFC::V2::Converter do
          </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -226,12 +226,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :region_2: VIC
       :country_2: UK
       :code_2: 44444
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -271,7 +271,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -297,12 +297,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -327,7 +327,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -353,12 +353,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                 submissionType="IETF">
@@ -382,7 +382,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>
@@ -405,12 +405,12 @@ describe Asciidoctor::RFC::V2::Converter do
       :region: NSW
       :country: Australia
       :code: 3333
-      
+
       == Section 1
       text
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -434,7 +434,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </author>
       <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_section_1" title="Section 1">     
+      <section anchor="_section_1" title="Section 1">
          <t>text</t>
       </section>
       </middle>

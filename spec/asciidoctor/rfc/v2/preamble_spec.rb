@@ -10,7 +10,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Ipsum.
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -41,7 +41,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Ipsum.
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -78,7 +78,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Ipsum.
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -97,7 +97,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </rfc>
     OUTPUT
   end
-  
+
   it "supplies default titles for notes" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -115,7 +115,7 @@ describe Asciidoctor::RFC::V2::Converter do
       Ipsum.
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">

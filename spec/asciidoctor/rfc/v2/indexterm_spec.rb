@@ -13,7 +13,7 @@ describe Asciidoctor::RFC::V2::Converter do
       this one is not (((indexterm, index-subterm))).
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
@@ -45,7 +45,7 @@ describe Asciidoctor::RFC::V2::Converter do
       this one with a tertiary term is not (((indexterm, index-subterm, index-subsubterm))).
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc
                submissionType="IETF">
