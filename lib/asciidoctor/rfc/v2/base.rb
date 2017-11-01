@@ -1,3 +1,4 @@
+require "pp"
 module Asciidoctor
   module RFC::V2
     module Base
@@ -164,7 +165,7 @@ module Asciidoctor
 
         result << noko do |xml|
           xml.t **attr_code(t_attributes) do |xml_t|
-            xml_t << node.content.gsub("\n", "<vspace/>\n")
+            xml_t << node.content.gsub("\n\n", "<vspace blankLines=\"1\"/>").gsub("\n", "<vspace/>\n")
           end
         end
 
@@ -336,9 +337,12 @@ module Asciidoctor
         xmldoc = Nokogiri::XML("<fragment>#{doc}</fragment>")
         paras = xmldoc.xpath("/fragment/t")
         paras.each do |para|
-          vspace = Nokogiri::XML::Element.new("vspace", xmldoc.document)
-          vspace["blankLines"] = "1"
-          para.before(vspace)
+          # we do not insert vspace if the para contains a list: space will go there anyway
+          unless para.element_children.size == 1 && para.element_children[0].name == "list"
+            vspace = Nokogiri::XML::Element.new("vspace", xmldoc.document)
+            vspace["blankLines"] = "1"
+            para.before(vspace)
+          end
           para.replace(para.children)
         end
         xmldoc.root.children.to_xml(encoding: "US-ASCII")

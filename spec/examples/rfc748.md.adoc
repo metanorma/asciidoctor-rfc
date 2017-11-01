@@ -14,36 +14,37 @@ M. Crispin
 
 == Command name and code
 
+[align=center]
 ....
     RANDOMLY-LOSE    256
 ....
 
 == Command meanings
 
-IAC WILL RANDOMLY-LOSE::  
+IAC WILL RANDOMLY-LOSE: ::  
 +
 The sender of this command REQUESTS permission to, or confirms
 that it will, randomly lose.
 
-IAC WON'T RANDOMLY-LOSE::   
+IAC WON'T RANDOMLY-LOSE: ::   
 +
 The sender of this command REFUSES to randomly lose.
 
-IAC DO RANDOMLY-LOSE::  
+IAC DO RANDOMLY-LOSE: ::  
 +
 The sender of this command REQUESTS that the receiver, or grants
 the receiver permission to, randomly lose.
 
-IAC DON'T RANDOMLY-LOSE:: 
+IAC DON'T RANDOMLY-LOSE: :: 
 +
 The command sender DEMANDS that the receiver not randomly lose.
 
 == Default
 
 ....
-        WON'T RANDOMLY-LOSE
+    WON'T RANDOMLY-LOSE
 
-        DON'T RANDOMLY-LOSE
+    DON'T RANDOMLY-LOSE
 ....
 
 i.e., random lossage will not happen.

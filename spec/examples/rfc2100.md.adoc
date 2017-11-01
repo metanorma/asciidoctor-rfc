@@ -1,6 +1,6 @@
 = The Naming of Hosts
 Jay R. Ashworth <jra@scfn.thpl.lib.fl.us>
-:doctype: rfc
+:doctype: internet-draft
 :abbrev: The Naming of Hosts
 :status: info
 :name: rfc-2100
@@ -89,7 +89,6 @@ this memo, to Andrew Lloyd-Webber, Cameron Mackintosh, and a cast of
 thousands (particularly including Terrance Mann) who drew my
 attention to the necessity, and of course, to Thomas Stearns Eliot,
 for making this all necessary.
-<<libes,>> <<lottor,>> <<wong,>> <<ts,>>
 
 [[security-considerations]]
 == Security Considerations
@@ -99,7 +98,7 @@ Security issues are not discussed in this memo.
 Particularly the cardiac security of certain famous poets.
 
 [bibliography]
-== References
+== Informative References
 ++++
 <reference anchor='libes' target=''>
  <front>

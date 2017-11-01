@@ -82,7 +82,9 @@ specification in <<RFC2460,4.2 of>>.
 
 [#fig-scenic-routing-option-layout]
 .Scenic Routing Option Layout
+[align=center]
 ====
+[align=center]
 ....
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -97,18 +99,18 @@ specification in <<RFC2460,4.2 of>>.
 Option Type:: 
 +
 --
-{blank}
-
 8-bit identifier of the type of option.  The option identifier
 0x0A (On Air) is proposed for Scenic Routing.
 
 [#fig-option-type]
 .Scenic Routing Option Type
+[align=center]
 ====
+[align=center]
 ....
-    HEX         act  chg  rest
-    ---         ---  ---  -----
-    0A           00   0   01010     Scenic Routing
+HEX         act  chg  rest
+---         ---  ---  -----
+0A           00   0   01010     Scenic Routing
 ....
 ====
 
@@ -119,11 +121,9 @@ The highest-order two bits are set to 00 so any node not
     final destination.
 --
 
-Option Length:: {blank}
+Option Length:: 
 +
 --
-{blank}
-
 8-bit unsigned integer.  The length of the option in octets
     (excluding the Option Type and Option Length fields).  The value
     **MUST** be greater than 0.
@@ -132,17 +132,17 @@ Option Length:: {blank}
 SRO Param::
 +
 --
-{blank}
-
 8-bit identifier indicating Scenic Routing parameters encoded as a bit string.
 
 [#fig-bit-string-layout]
 .SRO Param Bit String Layout
+[align=center]
 ====
+[align=center]
 ....
-    +-+-+-+-+-+-+-+-+
-    | SR A W AA X Y |
-    +-+-+-+-+-+-+-+-+
++-+-+-+-+-+-+-+-+
+| SR A W AA X Y |
++-+-+-+-+-+-+-+-+
 ....
 ====
 
@@ -192,7 +192,7 @@ Backbone operators who desire to be fully compliant with Scenic
 Routing **MAY WISH TO** -- well, they **SHOULD** -- have separate MPLS paths
 ready that provide the most fresh-air time for a given path and are
 to be used when Scenic Routing is requested by a packet.  If such a
-path exists, the path MUST be used in favor of any other path, even
+path exists, the path **MUST** be used in favor of any other path, even
 if another path is considered cheaper according to the path costs
 used regularly, without taking Scenic Routing into account.
 
@@ -204,7 +204,7 @@ Scenic Routing for any packets sent back to the originating host for
 the current connection.
 
 If Scenic Routing is requested for connections of local origin, the
-host MUST obey the request and route the packet(s) over a wireless
+host **MUST** obey the request and route the packet(s) over a wireless
 link or use Avian IP Carriers (if available and as requested within
 the SRO Params).
 

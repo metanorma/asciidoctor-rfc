@@ -155,7 +155,7 @@ Applications can take advantage of the defined moods by expressing
 them in the packets.  This can be done in the SYN packet sent from
 the client.  All packets in the session can be then tagged with the
 mood set in the SYN packet, but this would have a per-packet
-performance cost (see <<performance-considerations,Performance Considerations>>).
+performance cost (see <<performance-considerations>> "Performance Considerations").
 
 Each application **MUST** define the preconditions for marking packets as
 happy, sad, bored, confused, angry, apathetic, and so on.  This is a

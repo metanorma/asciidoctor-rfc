@@ -59,7 +59,7 @@ The bit field is laid out as follows:
 
 Currently-assigned values are defined as follows:
 
-0x0:: 
+0x0: :: 
 +
 If the bit is set to 0, the packet has no evil intent.  Hosts,
     network elements, etc., **SHOULD** assume that the packet is
@@ -67,7 +67,7 @@ If the bit is set to 0, the packet has no evil intent.  Hosts,
     that this part of the spec is already implemented by many common
     desktop operating systems.)
 
-0x1:: 
+0x1: :: 
 +
 If the bit is set to 1, the packet has evil intent.  Secure
     systems **SHOULD** try to defend themselves against such packets.
