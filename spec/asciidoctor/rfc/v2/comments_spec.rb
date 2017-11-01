@@ -156,7 +156,7 @@ describe Asciidoctor::RFC::V2::Converter do
 
 
       </front><middle>
-      <section anchor="sect1" title="Section1"><t>Text<cref>Text _Text_ *Text* `Text` ~Text~ ^Text^ http://example.com/[linktext] &lt;&lt;ref&gt;&gt;</cref></t>
+      <section anchor="sect1" title="Section1"><t>Text<cref>Text _Text_ *Text* `Text` ~Text~ ^Text^ http://example.com/[linktext] </cref></t>
 
       </section>
       </middle><back>

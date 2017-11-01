@@ -106,7 +106,7 @@ module Asciidoctor
             # all but last term have empty dd
             terms.each_with_index do |term, idx|
               t_attributes = {
-                hangText: term.text,
+                hangText: flatten_rawtext(term.text).join(' '),
               }
 
               if idx < terms.size - 1

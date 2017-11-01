@@ -1,6 +1,6 @@
 require "spec_helper"
 describe Asciidoctor::RFC::V2::Converter do
-  it "renders a description list" do
+  it "renders a definition list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
@@ -22,7 +22,7 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
-  it "renders an inline description list" do
+  it "renders an inline definition list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
@@ -63,7 +63,25 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
-  it "renders a description list with empty style" do
+  it "ignores formatting on definition list terms" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      `A` _2_:: B
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+         <t>
+         <list style="hanging">
+           <t hangText="A 2"><vspace blankLines="1"/>B</t>
+         </list>
+       </t>
+      </section>
+    OUTPUT
+  end
+
+  it "renders a definition list with empty style" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
@@ -85,7 +103,7 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
-  it "renders hybrid description list" do
+  it "renders hybrid definition list" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
@@ -124,7 +142,7 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
-  it "renders a description list with definitions on the next line" do
+  it "renders a definition list with definitions on the next line" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author

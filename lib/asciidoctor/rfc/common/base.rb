@@ -172,16 +172,21 @@ module Asciidoctor
       # if node contains blocks, flatten them into a single line; and extract only raw text
       def flatten_rawtext(node)
         result = []
-        if node.blocks?
+        if node.respond_to?(:blocks) && node.blocks?
           node.blocks.each { |b| result << flatten_rawtext(b) }
         elsif node.respond_to?(:lines)
           node.lines.each do |x|
-            result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+            if node.respond_to?(:context) && (node.context == :literal || node.context == :listing)
+              result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+            else
+              # strip not only HTML tags <tag>, but also Asciidoc crossreferences <<xref>>
+              result << x.gsub(/<[^>]*>+/, "")
+            end
           end
         elsif node.respond_to?(:text)
-          result << node.text.gsub(/<[^>]*>/, "")
+          result << node.text.gsub(/<[^>]*>+/, "")
         else
-          result << node.content.gsub(/<[^>]*>/, "")
+          result << node.content.gsub(/<[^>]*>+/, "")
         end
         result.reject(&:empty?)
       end
