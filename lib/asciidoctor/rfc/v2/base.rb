@@ -46,11 +46,16 @@ module Asciidoctor
           "true" => "yes",
         }[node.attr("consensus")] || node.attr("consensus")
 
+        category = node.attr("status")
+        category = "info" if category == "informational"
+        category = "std" if category == "standard"
+        category = "exp" if category == "experimental"
+
         rfc_attributes = {
           ipr:            node.attr("ipr"),
           obsoletes:      node.attr("obsoletes"),
           updates:        node.attr("updates"),
-          category:       node.attr("status"),
+          category:       category,
           consensus:      consensus_value,
           submissionType: node.attr("submission-type") || "IETF",
           iprExtract:     node.attr("ipr-extract"),

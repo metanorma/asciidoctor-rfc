@@ -318,6 +318,9 @@ When `doctype` is set to:
 
 Set the `status` attribute to set the current status of this document.
 
+The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, 
+`full-standard` (v3 only), `historic` (v2 only).  
+
 * In v3, this sets the first `front/seriesInfo` element with `@status` as one
   of: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
 * In v2, this sets the `rfc@category` value as one of `std`, `info`, `exp`, `bcp`, `historic`.
@@ -484,6 +487,9 @@ These will be mapped as follows:
 
 |===
 
+If any author names deviate from that pattern, e.g. with an honorific like Dr.,
+they will not be recognised correctly by the Asciidoc API; use the `fullname`
+document attribute instead.
 
 ==== Author Attributes
 
