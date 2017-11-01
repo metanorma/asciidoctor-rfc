@@ -8,7 +8,7 @@ module Asciidoctor
           schemadoc = relaxng()
           schema = Nokogiri::XML::RelaxNG(schemadoc)
           schema.validate(Nokogiri::XML(doc)).each do |error|
-            puts "RELAXNG Validation: #{error.message}"
+            $stderr.puts "V3 RELAXNG Validation: #{error.message}"
           end
         end
 
