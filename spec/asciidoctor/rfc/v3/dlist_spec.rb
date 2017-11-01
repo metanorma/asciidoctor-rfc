@@ -96,6 +96,25 @@ describe Asciidoctor::RFC::V3::Converter do
       </dl>
     OUTPUT
   end
+  it "renders a description list with definitions on the next line" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      A:: 
+      +
+      B
+    INPUT
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <dl>
+         <dt>A</dt>
+         <dd><t>B</t></dd>
+       </dl>
+      </section>
+    OUTPUT
+  end
   it "permits multi paragraph list items" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title

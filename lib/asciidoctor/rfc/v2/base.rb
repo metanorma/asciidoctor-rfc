@@ -35,6 +35,7 @@ module Asciidoctor
         $seen_back_matter = false
         $seen_abstract = false
         $smart_quotes = (node.attr("smart-quotes") != "false")
+        $inline_definition_lists = (node.attr("inline-definition-lists") == "true")
 
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
@@ -330,12 +331,13 @@ module Asciidoctor
         doc
       end
 
-      # replace any <t>text</t> instances with <vspace/>text
+      # replace any <t>text</t> instances with <vspace blankLines="1"/>text
       def para_to_vspace(doc)
         xmldoc = Nokogiri::XML("<fragment>#{doc}</fragment>")
         paras = xmldoc.xpath("/fragment/t")
         paras.each do |para|
           vspace = Nokogiri::XML::Element.new("vspace", xmldoc.document)
+          vspace["blankLines"] = "1"
           para.before(vspace)
           para.replace(para.children)
         end

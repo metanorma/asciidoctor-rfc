@@ -213,6 +213,14 @@ Permit smart quotes, when they are specified explicitly in Asciidoc (as `"`...`"
 When disabled, smart quotes are rendered as straight quotes, and Asciidoc's default conversion
 of straight apostrophes to smart is undone.
 
+|`:inline-definition-list:`
+|Optional. Default value `false`. Allowed values: `true`, `false`.
+Only applies to v2. By default, `<vspace blankLines="1">` is inserted after
+the definition in a v2 definition list, to satisfy the requirement from `idnits` validation
+that definition terms be separated by a carriage return from the definition. That is, by
+default inline definition lists are rendered as paragraphing definition lists. If the option is
+on, the additional `vspace` element is not added, and inline definition lists are left as is..
+
 |===
 
 
@@ -915,6 +923,10 @@ A:: B <3>
 
 NOTE: Asciidoctor does not permit anchors on either definition list terms,
 or definition list definitions: the anchors in the following are ignored.
+
+NOTE: In RFC XML v2, `idnits` considers inline definition lists invalid; the gem
+renders them as paragraphed definition lists. The gem option `:inline-definition-lists`
+disables this behaviour.
 
 [source,asciidoc]
 --
