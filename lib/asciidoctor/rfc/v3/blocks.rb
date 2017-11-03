@@ -40,6 +40,31 @@ module Asciidoctor
         end
       end
 
+      # stem is treated as literal, but with center alignment
+      def stem(node)
+        artwork_attributes = {
+          anchor: node.id,
+          align: node.attr("align") || "center",
+          type: "ascii-art",
+          name: node.title,
+          alt: node.attr("alt"),
+        }
+
+        # NOTE: html escaping is performed by Nokogiri
+        artwork_content = node.lines.join("\n")
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
+            end
+          else
+            xml.artwork artwork_content, **attr_code(artwork_attributes)
+          end
+        end
+      end
+
+
       # Syntax:
       #   [[id]]
       #   [quote, attribution, citation info] # citation info limited to URL

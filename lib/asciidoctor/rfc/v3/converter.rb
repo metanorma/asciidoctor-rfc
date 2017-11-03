@@ -56,8 +56,6 @@ module Asciidoctor
       alias_method :inline_menu, :skip
       alias_method :inline_image, :skip
 
-      alias_method :stem, :literal
-
       alias_method :inline_callout, :content
     end
   end

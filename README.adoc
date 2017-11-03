@@ -753,6 +753,7 @@ _Italic_ <2>
 ^superscript^ <6>
 [bcp14]#MUST NOT# <7>
 *MUST NOT* <8>
+stem:[sqrt(4) = 2]
 --
 <1> That is, "+ " at the end of a line. v3: `<br/>`; v2: `<vspace/>`.
 <2> v3: `<em>Italic</em>`; v2: `<spanx style="emph">Italic</spanx>`
@@ -762,6 +763,7 @@ _Italic_ <2>
 <6> v3 only: `<sup>superscript</sup>`. Not supported in v2; rendered as `\^superscript^`
 <7> v3 only: `<bcp14>MUST NOT</bcp14>`. Not supported in v2; rendered as `<spanx style="strong">MUST NOT</spanx>`.
 <8> v3: if document flag `:no-rfc-bold-bcp14:` is present, then `<strong>MUST NOT</strong>`, else (by default) any BCP14/RFC2119 phrase in boldface and capitals is assumed to be intended to be tagged in `<bcp14>`. v2: `<spanx style="strong">MUST NOT</spanx>`.
+<9> Stem expressions are treated identically to monospace expressions; they are not currently rendered as MathML or any other notation.
 
 NOTE: The delimiters must occur within the one line; the following is invalid in Asciidoctor:
 [source,asciidoc]
@@ -873,6 +875,21 @@ Postamble text <11>
 <10> `figure/artwork@src`, `figure/artwork@alt`, `figure/artwork@width` (deprecated in v3), `figure/artwork@height` (deprecated in v3)
 <11> v2 only: `figure/postamble` (only available in v2)
 
+=== Mathematical examples
+
+[source,asciidoc]
+--
+:stem:
+
+[stem]
+++++
+sqrt(4) = 2
+++++
+--
+
+Mathematical examples are treated identically to literals, and are rendered as `artwork` in both v2 and v3;
+however their default alignment is set as `center`. As with inline stem expressions, they are treated identically 
+to monospace expressions; they are not currently rendered as MathML or any other notation.
 
 === Unordered and Ordered Lists
 
