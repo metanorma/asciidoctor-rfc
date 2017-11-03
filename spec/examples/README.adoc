@@ -1,0 +1,102 @@
+= Examples
+The examples in this directory are found RFC XML documents in various markup schemes
+(RFC XML source, MMark Markdown, Krmdown Markdown), with Asciidoc equivalents which
+we have supplied. The RFC XML derived from these sources is compared with the RFC
+XML derived from Asciidoc during Rspec: for v2 RFC XML, this is done using xml2rfc,
+and comparing the resulting txt files.
+
+Examples are taken from the following sources:
+
+== RFC XML v1
+https://tools.ietf.org/tools/templates/ 
+
+* `davies-template-bare-06.xml.orig`
+* `mib-doc-template-xml-06.xml.orig`
+
+The equivalent asciidoc is
+
+* `davies-template-bare-06.adoc`
+* `mib-doc-template-xml-06.adoc`
+
+As these are document templates in v1, they are not good exemplars of RFC XML usage.
+
+The following discrepancies should be noted between xml2rfc output from the XML source,
+and xml2rfc output from XML generated from our asciidoc should be noted:
+
+`davies-template-bare-06.adoc`::
++
+--
+* Asciidoc does not support table preambles and postambles; the table preamble and postamble
+text is unindented in the output, and the postamble follows the table caption.
+
+* RFC XML does not require `vspace` between a definition list term and its definition.
+This gem inserts a `vspace`, to comply with `idnits` requirements.
+--
+
+`mib-doc-template-xml-06.adoc`::
++
+--
+* The asciidoc automatically tages hyperlinks; this is reflected in the RFC XML
+output as `eref`, and in the xml2rfc output as angle brackets.
+--
+
+== MMark
+https://github.com/miekg/mmark/tree/master/rfc
+
+The RFC XML v2 documents (`*.md.2.xml`) and RFC XML v3 documents (`*.md.3.xml`)
+have been generated from the MMark source (`*.md`) using the current version of MMark:
+
+* `rfc1149.md`
+* `rfc2100.md`
+* `rfc3514.md`
+* `rfc5841.md`
+* `rfc748.md`
+* `rfc7511.md`
+
+The equivalent asciidoc is
+
+* `rfc1149.adoc`
+* `rfc2100.adoc`
+* `rfc3514.adoc`
+* `rfc5841.adoc`
+* `rfc748.adoc`
+* `rfc7511.adoc`
+
+The following discrepancies should be noted between xml2rfc output from the XML source,
+and xml2rfc output from XML generated from our asciidoc should be noted:
+
+`rfc1149.md`:: No discrepancy
+
+`rfc2100.md`:: 
++
+--
+* The MMark has tagged the doggerel in this RFC as `artwork`. We have chosen to use Asciidoc 
+`verse`, which in RFC XML 2 preserves linebreaks, but not the indentation of even-numbered
+verses, or of the concluding stanza.
+* The MMark forces `sym-refs` for this RFC, so references are given with numbers (e.g. `[1]`).
+RFC XML v2 does not specify `sym-refs` as an attribute in its XML (as opposed to an XML 
+directive); accordingly the asciidoc does not specify it.
+--
+
+`rfc3514.adoc`::
++
+--
+* The MMark has specifed no blank lines between definition list terms and definitions. In order to
+satisfy idnits, this gem consistently inserts one blank line between definition list terms 
+and definitions (`<vspace blankLines="1"/>`).
+--
+
+`rfc5841.md`:: No discrepancy
+`rfc748.md`:: No discrepancy
+
+`rfc7511.md`:: 
++
+--
+* The MMark has specified an external reference to a specific section by giving the section
+number in text: `Section 4.2 of RFC 2460 [@!RFC2460]`, rendered as
+`Section 4.2 of RFC 2460 <xref target="RFC2460"/>`. The asciidoc takes advantage of
+the `relref` construction of external section references, even though `relref` is a v3
+RFC XML feature: `<<RFC2460,4.2 of>>`, which is rendered in v2 RFC XML as
+`<xref target="RFC2460">Section 4.2 of [RFC2460]</xref>`.
+--
+
