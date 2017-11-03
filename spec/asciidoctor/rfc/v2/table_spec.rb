@@ -152,7 +152,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |===
     INPUT
       <section anchor="_section_1" title="Section 1">
-      <texttable title="Table Title" suppress-title="false" style="all">
+      <texttable title="Table Title" suppress-title="false" style="full">
          <ttcol align="left">head</ttcol>
          <ttcol align="left">head</ttcol>
          <c>header cell</c>
@@ -195,7 +195,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |===
     INPUT
       <section anchor="_section_1" title="Section 1">
-      <texttable title="Table Title" suppress-title="false" style="all">
+      <texttable title="Table Title" suppress-title="false" style="full">
          <ttcol align="left">head</ttcol>
          <ttcol align="left">head</ttcol>
          <c>header cell</c>
@@ -229,7 +229,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |===
     INPUT
       <section anchor="_section_1" title="Section 1">
-      <texttable suppress-title="false" style="all">
+      <texttable suppress-title="false" style="full">
          <ttcol align="left" width="12.5%">a</ttcol>
          <ttcol align="left" width="25%">b</ttcol>
          <ttcol align="left" width="62.5%">c</ttcol>
@@ -254,7 +254,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |===
     INPUT
       <section anchor="_section_1" title="Section 1">
-      <texttable suppress-title="false" style="all">
+      <texttable suppress-title="false" style="full">
          <ttcol align="left" width="10%">a</ttcol>
          <ttcol align="left" width="20%">b</ttcol>
          <ttcol align="left" width="70%">c</ttcol>
@@ -279,7 +279,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |===
     INPUT
       <section anchor="_section_1" title="Section 1">
-      <texttable suppress-title="false" style="all">
+      <texttable suppress-title="false" style="full">
          <ttcol align="left">a</ttcol>
          <ttcol align="left">b</ttcol>
          <ttcol align="left">c</ttcol>

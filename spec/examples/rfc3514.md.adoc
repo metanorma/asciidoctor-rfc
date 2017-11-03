@@ -15,6 +15,7 @@ Steven M. Bellovin <bellovin@acm.org>
 :city: Florham Park
 :code: NJ 07932
 :smart-quotes: false
+:inline-definition-lists: true
 
 [abstract]
 Firewalls, packet filters, intrusion detection systems, and the like

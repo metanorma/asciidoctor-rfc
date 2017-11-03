@@ -20,7 +20,7 @@ module Asciidoctor
                       when "none"
                         "none"
                       else
-                        "all"
+                        "full"
                       end
 
         warn "asciidoctor: WARNING: grid=rows attribute is not supported on tables" if node.attr("grid") == "rows"

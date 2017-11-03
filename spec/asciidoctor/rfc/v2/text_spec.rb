@@ -1,10 +1,15 @@
 require "spec_helper"
 
 def text_compare(old_xml, new_xml)
-  File.write("#{old_xml}.1", norm(File.read(old_xml)))
-  File.write("#{new_xml}.1", norm(File.read(new_xml)))
+  File.write("#{old_xml}.1", norm(File.read(old_xml, encoding: "utf-8")))
+  File.write("#{new_xml}.1", norm(File.read(new_xml, encoding: "utf-8")))
   system("xml2rfc #{old_xml}.1 -o #{old_xml}.txt")
   system("xml2rfc #{new_xml}.1 -o #{new_xml}.txt")
+end
+
+def text_compare1(old_xml, new_xml)
+  system("xml2rfc #{old_xml} -o #{old_xml}.txt")
+  system("xml2rfc #{new_xml} -o #{new_xml}.txt")
 end
 
 def norm(text)
@@ -57,5 +62,23 @@ describe Asciidoctor::RFC::V2::Converter do
     system("bin/asciidoctor-rfc2 spec/examples/rfc7511.md.adoc")
     text_compare("spec/examples/rfc7511.md.2.xml", "spec/examples/rfc7511.md.xml")
     expect(norm(File.read("spec/examples/rfc7511.md.2.xml.txt"))).to be_equivalent_to norm(File.read("spec/examples/rfc7511.md.xml.txt"))
+  end
+  it "processes draft-ietf-core-block-xx from Kramdown with equivalent text" do
+    # leaving out step of running ./kramdown
+    system("bin/asciidoctor-rfc2 spec/examples/draft-ietf-core-block-xx.mkd.adoc")
+    text_compare("spec/examples/draft-ietf-core-block-xx.xml.orig", "spec/examples/draft-ietf-core-block-xx.mkd.xml")
+    expect(norm(File.read("spec/examples/draft-ietf-core-block-xx.xml.orig.txt"))).to be_equivalent_to norm(File.read("spec/examples/draft-ietf-core-block-xx.mkd.xml.txt"))
+  end
+  it "processes skel from Kramdown with equivalent text" do
+    # leaving out step of running ./kramdown
+    system("bin/asciidoctor-rfc2 spec/examples/skel.mkd.adoc")
+    text_compare1("spec/examples/skel.xml.orig", "spec/examples/skel.mkd.xml")
+    expect(File.read("spec/examples/skel.xml.orig.txt")).to be_equivalent_to File.read("spec/examples/skel.mkd.xml.txt")
+  end
+  it "processes stupid-s from Kramdown with equivalent text" do
+    # leaving out step of running ./kramdown
+    system("bin/asciidoctor-rfc2 spec/examples/stupid-s.mkd.adoc")
+    text_compare("spec/examples/stupid-s.xml.orig", "spec/examples/stupid-s.mkd.xml")
+    expect(File.read("spec/examples/stupid-s.xml.orig.txt")).to be_equivalent_to File.read("spec/examples/stupid-s.mkd.xml.txt")
   end
 end

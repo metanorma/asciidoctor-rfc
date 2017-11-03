@@ -62,7 +62,7 @@ David Waitzman <dwaitzman@BBN.COM>
 :abbrev: IP Datagrams on Avian Carriers
 :obsoletes: 10, 120
 :updates: 2010, 2120
-:status: info
+:status: informational
 :name: internet-draft-avian-transmission-00
 :ipr: trust200902
 :area: Internet
@@ -213,7 +213,7 @@ Permit smart quotes, when they are specified explicitly in Asciidoc (as `"`...`"
 When disabled, smart quotes are rendered as straight quotes, and Asciidoc's default conversion
 of straight apostrophes to smart is undone.
 
-|`:inline-definition-list:`
+|`:inline-definition-lists:`
 |Optional. Default value `false`. Allowed values: `true`, `false`.
 Only applies to v2. By default, `<vspace blankLines="1">` is inserted after
 the definition in a v2 definition list, to satisfy the requirement from `idnits` validation

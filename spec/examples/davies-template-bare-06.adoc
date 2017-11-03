@@ -18,6 +18,7 @@ Elwyn Davies <elwynd@dial.pipex.com>
 :area: General
 :workgroup: Internet Engineering Task Force
 :keyword: template
+:inline-definition-lists: true
 
 [abstract]
 Insert an abstract: MANDATORY. This template is for creating an

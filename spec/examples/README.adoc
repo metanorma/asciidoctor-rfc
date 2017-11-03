@@ -28,9 +28,6 @@ and xml2rfc output from XML generated from our asciidoc should be noted:
 --
 * Asciidoc does not support table preambles and postambles; the table preamble and postamble
 text is unindented in the output, and the postamble follows the table caption.
-
-* RFC XML does not require `vspace` between a definition list term and its definition.
-This gem inserts a `vspace`, to comply with `idnits` requirements.
 --
 
 `mib-doc-template-xml-06.adoc`::
@@ -81,8 +78,8 @@ directive); accordingly the asciidoc does not specify it.
 `rfc3514.adoc`::
 +
 --
-* The MMark has specifed no blank lines between definition list terms and definitions. In order to
-satisfy idnits, this gem consistently inserts one blank line between definition list terms 
+* The MMark separates definition list terms from definitions, with a line break (`<vspace/>`). 
+This gem consistently inserts one blank line between definition list terms 
 and definitions (`<vspace blankLines="1"/>`).
 --
 

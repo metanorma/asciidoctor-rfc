@@ -4,7 +4,7 @@ David Waitzman <dwaitzman@BBN.COM>; Nick Nicholas <opoudjis@gmail.com>
 :abbrev: IP Datagrams on Avian Carriers
 :obsoletes: 10, 120
 :updates: 2010, 2120
-:status: info
+:status: informational
 :name: rfc-1149
 :ipr: trust200902
 :area: Internet
