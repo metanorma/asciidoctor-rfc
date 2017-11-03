@@ -42,7 +42,7 @@ describe Asciidoctor::RFC::V3::Converter do
       ++++
     INPUT
       <figure>
-      <artwork type="ascii-art">
+      <artwork type="ascii-art" align="center">
       sqrt(4) = 2
       </artwork>
       </figure>
