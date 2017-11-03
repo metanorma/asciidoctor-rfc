@@ -52,12 +52,12 @@ have been generated from the MMark source (`*.md`) using the current version of 
 
 The equivalent asciidoc is
 
-* `rfc1149.adoc`
-* `rfc2100.adoc`
-* `rfc3514.adoc`
-* `rfc5841.adoc`
-* `rfc748.adoc`
-* `rfc7511.adoc`
+* `rfc1149.md.adoc`
+* `rfc2100.md.adoc`
+* `rfc3514.md.adoc`
+* `rfc5841.md.adoc`
+* `rfc748.md.adoc`
+* `rfc7511.md.adoc`
 
 The following discrepancies should be noted between xml2rfc output from the XML source,
 and xml2rfc output from XML generated from our asciidoc should be noted:
@@ -97,3 +97,18 @@ RFC XML feature: `<<RFC2460,4.2 of>>`, which is rendered in v2 RFC XML as
 `<xref target="RFC2460">Section 4.2 of [RFC2460]</xref>`.
 --
 
+== Kramdown
+https://github.com/cabo/kramdown-rfc2629/tree/master/examples
+
+The RFC XML v2 documents (`*.mkd.xml`) 
+have been generated from the Kramdown source (`*.mkd`) using the current version of Kramdown:
+
+* `draft-ietf-core-block-xx.mkd`
+* `skel.mkd`
+* `stupid-s.mkd`
+
+The equivalent asciidoc is
+
+* `draft-ietf-core-block-xx.mkd.adoc`
+* `skel.mkd.adoc`
+* `stupid-s.mkd.adoc`
