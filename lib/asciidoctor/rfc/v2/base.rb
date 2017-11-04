@@ -274,9 +274,10 @@ module Asciidoctor
         xmldoc = Nokogiri::XML(doc) do |config|
           config.noent
         end
-        crefs = xmldoc.xpath("//cref")
+
         # any crefs that are direct children of section should become children of the preceding
         # paragraph, if it exists; otherwise, they need to be wrapped in a paragraph
+        crefs = xmldoc.xpath("//cref")
         crefs.each do |cref|
           if cref.parent.name == "section"
             prev = cref.previous_element
@@ -289,6 +290,10 @@ module Asciidoctor
             end
           end
         end
+
+        xmldoc.root = merge_vspace(xmldoc.root)
+
+        # smart quotes: handle smart apostrophe
         unless $smart_quotes
           xmldoc.traverse do |node|
             if node.text?
@@ -305,6 +310,48 @@ module Asciidoctor
           end
         end
         xmldoc.to_xml(encoding: "US-ASCII")
+      end
+
+      def merge_vspace(node)
+        nodes = []
+        newnodes = []
+        node.children.each do |element|
+          nodes << element
+        end
+
+        counter = 0
+        while counter < nodes.size do
+          if nodes[counter].name == "vspace"
+            blankLines = 0
+            while counter < nodes.size && nodes[counter].name == "vspace" do
+                if nodes[counter][:blankLines].nil?
+                  blankLines += 1
+                else
+                  blankLines +=  nodes[counter][:blankLines].to_i + 1
+                end
+                if counter+1 < nodes.size && nodes[counter+1].text?
+                  if nodes[counter+1].text =~ /^\s+$/
+                    counter += 1
+                  end
+                end
+                counter += 1
+            end
+            counter -= 1 if counter == nodes.size
+            newnodes << noko do |xml|
+              xml.vspace **attr_code(blankLines: (blankLines - 1)) 
+            end.join
+          else
+            newnodes << merge_vspace(nodes[counter])
+            nodes[counter].remove
+            counter += 1
+          end
+
+          node.children.remove
+          newnodes.each do |item|
+            node.add_child(item)
+          end
+        end
+        node
       end
 
       def set_pis(node, doc)

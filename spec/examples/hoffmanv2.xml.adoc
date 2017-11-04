@@ -38,6 +38,7 @@ determine whether or not they are interested in reading further.
 .Disclaimer
 This isn't a real RFC, just an example.
 
+[#intro]
 == Introduction
 
 This is the first paragraph of the introduction to this document.
@@ -46,9 +47,7 @@ real Internet Draft.
 
 Something to note about this paragraph is that it has a pointer to
 <<protocol>>, and one to <<haiku>>, both of which appear later in the
-document.
-
-(((Introduction, verbiage)))
+document. (((Introduction, verbiage)))
 
 === Terminology
 
@@ -65,7 +64,8 @@ incorporated is.  Note that the inclusion of RFC 2119 was done at the
 top of the XML, while the information for RFC 6949 is done directly
 in the references section.
 
-The http://www.ietf.org[IETF web site] IETF web site is _quite_ *nice*, `isn't it`?  Unlike other web sites, it doesn't use
+The http://www.ietf.org[IETF web site] is _quite_ *nice*, `isn't it`?  Unlike other web sites, it doesn't use
+ +
  +
  +
 gratuitous vertical space.
@@ -115,9 +115,9 @@ ampersand (&) and less than (<) characters in the example text.
 [type=haiku]
 ====
 ....
-     The ampersand (&) and
-     less than (<) are two characters
-     that need escaping.
+      The ampersand (&) and
+      less than (<) are two characters
+      that need escaping.
 ....
 ====
 
@@ -125,7 +125,7 @@ Here are two short figures with no titles and with odd alignment.
 
 [align=center]
 ....
-This might appear in the center.
+   This might appear in the center.
 ....
 
 [align=right]
@@ -139,6 +139,11 @@ Here is a figure that is actually pulled from somewhere else.
 ====
 Remember to check whether that file still exists.
 ====
+
+[source,src=http://www.example.com/~employees/chrissmith/artwork.txt]
+----
+----
+
 == Tables
 
 The following is a table example.
@@ -146,7 +151,7 @@ The following is a table example.
 These are sometimes called "inert" gasses.
 
 .The Noble Gases
-[grid=cols]
+[grid=cols,cols="<25,^50,^25"]
 |===
 | Name    |  Symbol  | Atomic Number 
 
@@ -164,6 +169,7 @@ The following is a right-aligned table with "full" (but not "all")
 lines between cells.
 
 [align=right,grid=cols]
+[cols="<,>"]
 |===
 | Time      | Mood 
 

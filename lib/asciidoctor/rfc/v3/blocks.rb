@@ -1,3 +1,4 @@
+require "HTMLEntities"
 module Asciidoctor
   module RFC::V3
     module Blocks
@@ -129,7 +130,7 @@ module Asciidoctor
           result << noko do |xml|
             xml.note **attr_code(note_attributes) do |xml_note|
               xml_note.name node.title unless node.title.nil?
-              xml_note << [paragraph1(node)].flatten.join("\n")
+              xml_note << HTMLEntities.new.decode([paragraph1(node)].flatten.join("\n"))
             end
           end
         else
