@@ -1,0 +1,241 @@
+= An Example of Using XML for an Internet Draft
+Chris Smith <chrissmith@example.com>; Kim Jones <jk@lmn.op>
+:doctype: internet-draft
+:status: standard
+:name: draft-example-of-xml-00
+:ipr: trust200902
+:consensus: false
+:submision-type: IETF
+:updates: 1234, 5678
+:xml-lang: en
+:abbrev: XML Example
+:forename_initials: C.
+:organization: ExampleCorp
+:organization_abbrev: EC
+:street: 123 Exemplar Way
+:city: Anytown
+:region: California
+:code: 95060
+:country: US
+:phone: +1 123-456-7890
+:fax: +1 123-456-7890
+:email: chrissmith@example.com
+:uri: http://www.example.com/corporate/
+:forename_initials_2: K.
+:revdate: 2014-09
+:area: General
+:workgroup: Imaginary WG
+:keyword: XML, Imagination
+:inline-definition-lists: true
+:toc-include: false
+
+[abstract]
+This is an example of an abstract.  It is a short paragraph that
+gives an overview of the document in order to help the reader
+determine whether or not they are interested in reading further.
+
+[NOTE]
+.Disclaimer
+This isn't a real RFC, just an example.
+
+== Introduction
+
+This is the first paragraph of the introduction to this document.
+This introduction is probably much shorter than it would be for a
+real Internet Draft.
+
+Something to note about this paragraph is that it has a pointer to
+<<protocol>>, and one to <<haiku>>, both of which appear later in the
+document.
+
+(((Introduction, verbiage)))
+
+=== Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in <<RFC2119>>.
+
+[#protocol]
+== The Protocol Being Described
+
+This is a reference to <<RFC6949>>.  Actually, the reference itself is
+not all that interesting, but the way that the reference is
+incorporated is.  Note that the inclusion of RFC 2119 was done at the
+top of the XML, while the information for RFC 6949 is done directly
+in the references section.
+
+The http://www.ietf.org[IETF web site] IETF web site is _quite_ *nice*, `isn't it`?  Unlike other web sites, it doesn't use
+ +
+ +
+gratuitous vertical space.
+
+== Basic Lists
+
+Bulleted lists are good for items that are not ordered:
+
+* This is the first item.
+* This is the second item.  Here comes a sub-list:
+**  This is the first sub-item.
+**  This is the second sub-item
++
+and some more detail on the second sub-item.
+
++
+* This is the item after the sub-list.
+
+
+Numbered lists are good for items that are ordered:
+
+.  This is the first item.
+.  This is the second item.  Here comes a sub-list, but with letters:
+[upperalpha]
+.. This is the first sub-item.
+.. This is the second sub-item
+.  This is the item after the sub-list.
+
+And an example of hanging indent.
+
+[hang-indent=15]
+Trees:: These are bigger plants
+Lichen:: These are smaller plants
+
+And the always-interesting "format" for lists.
+
+[format=--%d--]
+.  An element that gets a funny bullet.
+
+==  Figures
+
+The following is a figure with a caption.  Also, it uses the
+ampersand (&) and less than (<) characters in the example text.
+
+[#haiku]
+.This could be haiku
+[type=haiku]
+====
+....
+     The ampersand (&) and
+     less than (<) are two characters
+     that need escaping.
+....
+====
+
+Here are two short figures with no titles and with odd alignment.
+
+[align=center]
+....
+This might appear in the center.
+....
+
+[align=right]
+....
+This might appear right-aligned.
+....
+
+Here is a figure that is actually pulled from somewhere else.
+[#rememberme]
+[NOTE,source=CS]
+====
+Remember to check whether that file still exists.
+====
+== Tables
+
+The following is a table example.
+
+These are sometimes called "inert" gasses.
+
+.The Noble Gases
+[grid=cols]
+|===
+| Name    |  Symbol  | Atomic Number 
+
+| Helium  |  He |       2       
+| Neon    |  Ne |       10      
+| Argon   |  Ar |       18      
+| Krypton |  Kr |       36      
+| Xenon   |  Xe |       54      
+| Radon   |  Rn |       86      
+|===
+
+Source: Chemistry 101
+
+The following is a right-aligned table with "full" (but not "all")
+lines between cells.
+
+[align=right,grid=cols]
+|===
+| Time      | Mood 
+
+| Morning   | Happy! 
+| Afternoon | Happy! 
+| Evening   | Somber 
+|===
+
+[#IANA]
+==  IANA Considerations
+
+None.
+
+[#Security]
+== Security Considerations
+
+There are no security considerations for an imaginary Internet Draft.
+
+[#Acknowledgements]
+==  Acknowledgements
+
+Some of the things included in this draft came from Elwyn Davies'
+templates.
+
+[bibliography]
+==  Normative References
+++++
+<reference  anchor="RFC2119" target='https://www.rfc-editor.org/info/rfc2119'>
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author initials='S.' surname='Bradner' fullname='S. Bradner'><organization /></author>
+<date year='1997' month='March' />
+<abstract><t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized. This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract>
+</front>
+<seriesInfo name='BCP' value='14'/>
+<seriesInfo name='RFC' value='2119'/>
+<seriesInfo name='DOI' value='10.17487/RFC2119'/>
+</reference>
+++++
+
+[bibliography]
+==  Informative References
+++++
+   <reference anchor="RFC6949">
+   <front>
+   <title>RFC Series Format Requirements and Future Development</title>
+   <author initials="H." surname="Flanagan" fullname="H. Flanagan">
+   <organization/></author>
+   <author initials="N." surname="Brownlee" fullname="N. Brownlee">
+   <organization/></author>
+   <date year="2013" month="May"/>
+   </front>
+   <seriesInfo name="RFC" value="6949"/>
+   <annotation>This is a primary reference work.</annotation>
+   </reference>
+
+   <reference anchor="RED"
+   target="http://www.aciri.org/floyd/papers/early.pdf">
+   <front>
+   <title>Random Early Detection (RED) gateways for Congestion
+   Avoidance</title>
+   <author fullname="Sally Floyd" initials="S" surname="Floyd">
+   <organization>LBL</organization>
+   </author>
+   <author fullname="Van Jacobson" initials="V" surname="Jacobson">
+   <organization>LBL</organization>
+   </author>
+   <date month="August" year="1993"/>
+   </front>
+   <seriesInfo name="IEEE/ACM Transactions on Networking"
+   value="1(4) 397--413"/>
+   <format target="http://www.aciri.org/floyd/papers/early.pdf"
+   octets="318703" type="PDF"/>
+   </reference>
+++++

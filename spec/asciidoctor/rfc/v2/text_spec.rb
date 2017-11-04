@@ -81,4 +81,9 @@ describe Asciidoctor::RFC::V2::Converter do
     text_compare("spec/examples/stupid-s.xml.orig", "spec/examples/stupid-s.mkd.xml")
     expect(File.read("spec/examples/stupid-s.xml.orig.txt")).to be_equivalent_to File.read("spec/examples/stupid-s.mkd.xml.txt")
   end
+  it "processes Hoffman RFC XML v2 example with equivalent text" do
+    system("bin/asciidoctor-rfc2 spec/examples/hoffmanv2.xml.adoc")
+    text_compare("spec/examples/hoffmanv2.xml.orig", "spec/examples/hoffmanv2.xml.xml")
+    expect(norm(File.read("spec/examples/hoffmanv2.xml.orig.txt"))).to be_equivalent_to norm(File.read("spec/examples/hoffmanv2.xml.xml.txt"))
+  end
 end
