@@ -37,6 +37,8 @@ describe Asciidoctor::RFC::V2::Converter do
 
       [bibliography]
       == References
+      
+      === Normative References
       ++++
       <reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>
         <front>
@@ -66,7 +68,7 @@ describe Asciidoctor::RFC::V2::Converter do
       <section anchor="_text" title="Text">
       <t>Text</t>
       </section>
-      <references title="References">
+      <references title="Normative References">
       <reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>
          <front>
            <title>ISO/IEC FDIS 10118-3 -- Information technology -- Security techniques -- Hash-functions -- Part 3: Dedicated hash-functions</title>

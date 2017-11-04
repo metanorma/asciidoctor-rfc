@@ -112,3 +112,34 @@ The equivalent asciidoc is
 * `draft-ietf-core-block-xx.mkd.adoc`
 * `skel.mkd.adoc`
 * `stupid-s.mkd.adoc`
+
+The following discrepancies should be noted between xml2rfc output from the XML source,
+and xml2rfc output from XML generated from our asciidoc should be noted:
+
+`draft-ietf-core-block-xx.mkd`::
++
+--
+* The Kramdown document references itself through an entity. The Asciidoc uses a
+cross-reference, which takes up one more space for the same reference text.
+* Asciidoc requires an extra space for a definition list term ending in a colon,
+since the term delimiter itself involves colons:
+`SZX: :: `
+* Note that `**` needs to be escape in Asciidoc as `\\**`, in order not to be misinterpreted
+as formatting. On occasionl, the escaping is ignored, and the exponentiation operator
+has had to be entered as `&#42;&#42;`.
+--
+
+`skel.mkd`::
++
+--
+* Kramdown inserts a leading zero in day numbers; our gem does not.
+--
+
+`stupid-s.mkd`::
++
+--
+* Kramdown inserts a leading zero in day numbers; our gem does not.
+* The asciidoc automatically tages hyperlinks; this is reflected in the RFC XML
+output as `eref`, and in the xml2rfc output as angle brackets.
+--
+

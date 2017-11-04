@@ -86,16 +86,12 @@ module Asciidoctor
           end
         end
         # NOTE technically node.text should be node.reftext, but subs have already been applied to text
-        %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
+        # %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
+        nil
       end
 
       def inline_anchor_ref(node)
-        # If this is within referencegroup, output as bibanchor anyway
-        if $processing_reflist
-          %(<bibanchor="#{node.id}">) # will convert to anchor attribute upstream
-        else
           warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
-        end
       end
     end
   end

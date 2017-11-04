@@ -178,12 +178,17 @@ module Asciidoctor
       #   Content
       #
       #   [bibliography]
-      #   == Normative|Informative References
-      #   * [[[ref1]]] Ref [must provide references as list]
-      #   * [[[ref2]]] Ref
+      #   == References
+      #
+      #   [bibliography]
+      #   === Normative|Informative References
+      #   ++++
+      #   RFC XML references
+      #   ++++
       def section(node)
         result = []
-        if node.attr("style") == "bibliography"
+        if node.attr("style") == "bibliography" || 
+            node.parent.context == :section && node.parent.attr("style") == "bibliography"
           $xreftext = {}
           $processing_reflist = true
 
@@ -191,11 +196,25 @@ module Asciidoctor
             title: node.title,
           }
 
+          node.blocks.each do |block|
+            if block.context == :section
+              result << node.content
+            elsif block.context == :pass
+              # we are assuming a single contiguous :pass block of XML
+              result << noko do |xml|
+                xml.references **attr_code(references_attributes) do |xml_references|
+                  xml_references << reflist(block).join
+                end
+              end
+            end
+          end
+=begin
           result << noko do |xml|
             xml.references **attr_code(references_attributes) do |xml_references|
               node.blocks.each { |b| xml_references << reflist(b).join }
             end
           end
+=end
 
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false

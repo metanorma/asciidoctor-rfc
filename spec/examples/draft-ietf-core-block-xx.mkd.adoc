@@ -287,7 +287,7 @@ M: :: More Flag (not last block). For descriptive usage, this flag, if
 SZX: :: Block Size. The block size is a three-bit unsigned integer indicating the size of a block to
   the power of two. Thus block size = 2\\**(SZX + 4).  The allowed
   values of SZX are 0 to 6, i.e., the minimum block size is 2&#42;&#42;(0+4) = 16
-  and the maximum is 2\\**(6+4) = 1024.
+  and the maximum is 2&#42;&#42;(6+4) = 1024.
   The value 7 for SZX (which would indicate a block size of 2048) is
   reserved, i.e. **MUST NOT** be sent and **MUST** lead to a 4.00 Bad Request
   response code upon reception in a request.
@@ -928,28 +928,27 @@ HTTP has been in use by the World-Wide Web global information initiative since 1
 <seriesInfo name="DOI" value="10.17487/RFC2616"/>
 </reference>
 
-<reference anchor="I-D.ietf-core-coap" target="https://tools.ietf.org/html/draft-ietf-core-coap-18">
+<reference anchor="I-D.ietf-core-coap">
 <front>
 <title>Constrained Application Protocol (CoAP)</title>
-<author initials="Z." surname="Shelby" fullname="Z. Shelby">
+<author initials="Z" surname="Shelby" fullname="Zach Shelby">
 <organization/>
 </author>
-<author initials="K." surname="Hartke" fullname="K. Hartke">
+<author initials="K" surname="Hartke" fullname="Klaus Hartke">
 <organization/>
 </author>
-<author initials="C." surname="Bormann" fullname="C. Bormann">
+<author initials="C" surname="Bormann" fullname="Carsten Bormann">
 <organization/>
 </author>
-<date year="2013" month="June"/>
+<date month="June" day="28" year="2013"/>
 <abstract>
 <t>
-The Constrained Application Protocol (CoAP) is a specialized web transfer protocol for use with constrained nodes and constrained (e.g., low-power, lossy) networks. The nodes often have 8-bit microcontrollers with small amounts of ROM and RAM, while constrained networks such as IPv6 over Low-Power Wireless Personal Area Networks (6LoWPANs) often have high packet error rates and a typical throughput of 10s of kbit/s. The protocol is designed for machine- to-machine (M2M) applications such as smart energy and building automation.
-</t>
-<t>
-CoAP provides a request/response interaction model between application endpoints, supports built-in discovery of services and resources, and includes key concepts of the Web such as URIs and Internet media types. CoAP is designed to easily interface with HTTP for integration with the Web while meeting specialized requirements such as multicast support, very low overhead, and simplicity for constrained environments.
+The Constrained Application Protocol (CoAP) is a specialized web transfer protocol for use with constrained nodes and constrained (e.g., low-power, lossy) networks. The nodes often have 8-bit microcontrollers with small amounts of ROM and RAM, while constrained networks such as 6LoWPAN often have high packet error rates and a typical throughput of 10s of kbit/s. The protocol is designed for machine-to-machine (M2M) applications such as smart energy and building automation. CoAP provides a request/response interaction model between application endpoints, supports built-in discovery of services and resources, and includes key concepts of the Web such as URIs and Internet media types. CoAP is designed to easily interface with HTTP for integration with the Web while meeting specialized requirements such as multicast support, very low overhead and simplicity for constrained environments.
 </t>
 </abstract>
 </front>
+<seriesInfo name="Internet-Draft" value="draft-ietf-core-coap-18"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-core-coap-18.txt"/>
 </reference>
 
 <reference anchor="RFCXXXX" target="https://www.rfc-editor.org/info/rfc7959">

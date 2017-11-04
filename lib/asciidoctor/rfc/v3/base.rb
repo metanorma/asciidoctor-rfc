@@ -33,6 +33,7 @@ module Asciidoctor
         # If this is present, then BCP14 keywords in boldface are not assumed to be <bcp14> tags. By default they are.
         $bcp_bold = !(node.attr? "no-rfc-bold-bcp14")
         $smart_quotes = (node.attr("smart-quotes") != "false")
+        $xreftext = {}
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -227,20 +228,20 @@ module Asciidoctor
       #   * [[[ref2]]] Ref
       def section(node)
         result = []
-        if node.attr("style") == "bibliography"
-          $xreftext = {}
+        if node.attr("style") == "bibliography" ||
+            node.parent.context == :section && node.parent.attr("style") == "bibliography"
           $processing_reflist = true
 
-          # references_attributes = {
-          #   anchor: node.id,
-          # }.reject { |_, value| value.nil? }
-
-          # result << noko do |xml|
-          #   xml.references **references_attributes do |references_xml|
-          #     references_xml.name node.title unless node.title.nil?
-          #     node.blocks.each { |b| references_xml << reflist(b).join }
-          #   end
-          # end
+          references_attributes = {
+            anchor: node.id,
+          }
+=begin
+          result << noko do |xml|
+            xml.references **attr_code(references_attributes) do |references_xml|
+              references_xml.name node.title unless node.title.nil?
+              node.blocks.each { |b| references_xml << reflist(b).join }
+            end
+          end
 
           anchor_attribute = node.id.nil? ? nil : " anchor=\"#{node.id}\""
           result << "<references#{anchor_attribute}>"
@@ -250,6 +251,8 @@ module Asciidoctor
           node.blocks.each do |b|
             if b.context == :pass
               result << reflist(b)
+            elsif b.context == :section
+              result << node.content
             elsif b.context == :ulist
               b.items.each do |i|
                 i.text # we only process the item for its displayreferences
@@ -257,9 +260,27 @@ module Asciidoctor
             end
           end
           result << "</references>"
+=end
+          node.blocks.each do |block|
+            if block.context == :section
+              result << section(block)
+            elsif block.context == :pass
+              # we are assuming a single contiguous :pass block of XML
+              result << noko do |xml|
+                xml.references **attr_code(references_attributes) do |xml_references|
+                  xml_references.name node.title unless node.title.nil?
+                  xml_references << reflist(block).join
+                end
+              end
+            elsif block.context == :ulist
+              block.items.each do |i|
+                i.text # we only process the item for its displayreferences
+              end
+            end
+          end
 
-          unless $xreftext.empty?
-            result.unshift($xreftext.keys.map { |k| %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
+          unless $xreftext.empty? || $seen_back_matter
+            result = result.unshift($xreftext.keys.map { |k| %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
           end
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false

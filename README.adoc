@@ -103,7 +103,7 @@ paradoxically, generally increases with increased carrier age.  A
 typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
 
 [bibliography]
-== References
+== Normative References
 ++++
 <reference anchor='RFC7253' target='https://tools.ietf.org/html/rfc7253'>
   <front>
@@ -1007,6 +1007,9 @@ precede the block of references, with alternative text. This will not be rendere
 to populate `displayreference` elements, mapping the reference anchors to display text. For example,
 a list entry `[[[ref1,alt1]]]` means that any instances of the anchor `ref1` should be displayed as `alt1`,
 and is rendered as `<displayreference target="ref1" to="alt1"/>`.
+
+RFC requires two separate bibliographies, one for normative and one for informative references;
+either can be omitted.
 
 [source,asciidoc]
 --
