@@ -19,6 +19,32 @@ describe Asciidoctor::RFC::V3::Converter do
     OUTPUT
   end
 
+  it "renders a listing block within an example" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      [#id]
+      ====
+      [[literal-id]]
+      .filename.rb
+      [source,ruby]
+      ----
+      def listing(node)
+        result = []
+        result << "<figure>" if node.parent.context != :example
+      end
+      ----
+      ====
+    INPUT
+      <figure anchor="id">
+      <sourcecode anchor="literal-id" name="filename.rb" type="ruby">
+      def listing(node)
+        result = []
+        result &lt;&lt; "&lt;figure&gt;" if node.parent.context != :example
+      end
+      </sourcecode>
+      </figure>
+    OUTPUT
+  end
+
   it "renders a listing block without source attribute" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[literal-id]]

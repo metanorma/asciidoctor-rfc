@@ -75,7 +75,7 @@ module Asciidoctor
 
       def date1(revdate, xml)
         revdate.gsub!(/T.*$/, "")
-        if revdate.length == 4
+        if revdate.length == 4 && revdate =~ /^\d\d\d\d$/
           date_attributes = {
             year: revdate,
           }

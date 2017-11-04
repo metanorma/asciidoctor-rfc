@@ -48,4 +48,23 @@ describe Asciidoctor::RFC::V3::Converter do
       </figure>
     OUTPUT
   end
+  it "renders stem as a literal within an example" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      :stem:
+      
+      [#id]
+      ====
+      [stem]
+      ++++
+      sqrt(4) = 2
+      ++++
+      ====
+    INPUT
+      <figure anchor="id">
+      <artwork type="ascii-art" align="center">
+      sqrt(4) = 2
+      </artwork>
+      </figure>
+    OUTPUT
+  end
 end

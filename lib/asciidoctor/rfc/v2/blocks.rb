@@ -162,7 +162,7 @@ module Asciidoctor
           xml.figure **attr_code(figure_attributes) do |xml_figure|
             node.blocks.each do |b|
               case b.context
-              when :listing, :image, :literal
+              when :listing, :image, :literal, :stem
                 xml_figure << send(b.context, b).join("\n")
                 seen_artwork = true
               else

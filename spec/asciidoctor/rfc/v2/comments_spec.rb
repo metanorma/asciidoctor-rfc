@@ -208,6 +208,10 @@ describe Asciidoctor::RFC::V2::Converter do
       . They are allergic to *cinnamon*.
       . More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
       . Celery makes them sad.
+      
+      ....
+      <tagging>
+      ....
       ====
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
@@ -236,8 +240,8 @@ describe Asciidoctor::RFC::V2::Converter do
 
 
 
-      Celery makes them sad.</cref></t>
-
+      Celery makes them sad.
+      &lt;tagging&gt;</cref></t>
       </section>
       </middle>
       </rfc>

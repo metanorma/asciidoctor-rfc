@@ -62,6 +62,39 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
+  it "renders verse in preamble as abstract" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+      :docName:
+
+      [verse]
+      More Preamble content.
+
+      == Lorem
+      Ipsum.
+    INPUT
+      <?xml version="1.0" encoding="US-ASCII"?>
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title>Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="2000"/>
+      <abstract>
+      <t>More Preamble content.</t>
+      </abstract>
+      </front><middle>
+      <section anchor="_lorem" title="Lorem">
+      <t>Ipsum.</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+
   it "renders admonitions in preamble as notes" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -86,6 +119,45 @@ describe Asciidoctor::RFC::V2::Converter do
       <title>Document title</title>
       <author fullname="Author"/>
       <date day="1" month="January" year="2000"/>
+      <note title="Title of Note">
+      <t>This is another note.</t>
+      </note>
+      </front><middle>
+      <section anchor="_lorem" title="Lorem">
+      <t>Ipsum.</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+
+  it "renders admonitions in preamble as notes, following an abstract" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+      :docName:
+      
+      Abstract
+
+      [NOTE]
+      .Title of Note
+      ====
+      This is another note.
+      ====
+
+      == Lorem
+      Ipsum.
+    INPUT
+      <?xml version="1.0" encoding="US-ASCII"?>
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title>Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="2000"/>
+      <abstract><t>Abstract</t></abstract>
       <note title="Title of Note">
       <t>This is another note.</t>
       </note>

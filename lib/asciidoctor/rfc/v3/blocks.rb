@@ -174,7 +174,7 @@ module Asciidoctor
       #   ====
       def example(node)
         node.blocks.each do |b|
-          unless %i{listing image literal}.include? b.context
+          unless %i{listing image literal stem}.include? b.context
             warn "asciidoctor: WARNING: examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.lines}"
           end
         end

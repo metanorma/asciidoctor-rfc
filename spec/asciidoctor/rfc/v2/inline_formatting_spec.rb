@@ -174,4 +174,16 @@ describe Asciidoctor::RFC::V2::Converter do
       </rfc>
     OUTPUT
   end
+  it "renders line break" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      == Section 1
+      Hello +
+      This is a line break
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+         <t>Hello<vspace/>
+       This is a line break</t>
+      </section>
+    OUTPUT
+  end
 end

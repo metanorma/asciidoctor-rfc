@@ -290,4 +290,104 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
+  it "renders table with grid=all" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [grid=all]
+      |===
+      |a |b |c
+
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="all">
+         <ttcol align="left">a</ttcol>
+         <ttcol align="left">b</ttcol>
+         <ttcol align="left">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+  it "renders table with grid=rows" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [grid=rows]
+      |===
+      |a |b |c
+
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="none">
+         <ttcol align="left">a</ttcol>
+         <ttcol align="left">b</ttcol>
+         <ttcol align="left">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+  it "renders table with grid=cols" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [grid=cols]
+      |===
+      |a |b |c
+
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="full">
+         <ttcol align="left">a</ttcol>
+         <ttcol align="left">b</ttcol>
+         <ttcol align="left">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+  it "renders table with grid=none" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [grid=none]
+      |===
+      |a |b |c
+
+      |a |b |c
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable suppress-title="false" style="none">
+         <ttcol align="left">a</ttcol>
+         <ttcol align="left">b</ttcol>
+         <ttcol align="left">c</ttcol>
+         <c>a</c>
+         <c>b</c>
+         <c>c</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
 end

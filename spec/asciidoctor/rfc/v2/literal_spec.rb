@@ -1,6 +1,6 @@
 require "spec_helper"
 describe Asciidoctor::RFC::V2::Converter do
-  it "renders a listing" do
+  it "renders a literal" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[literal-id]]
       .filename
@@ -44,6 +44,26 @@ describe Asciidoctor::RFC::V2::Converter do
       ++++
     INPUT
       <figure>
+      <artwork align="center">
+      sqrt(4) = 2
+      </artwork>
+      </figure>
+    OUTPUT
+  end
+  
+  it "renders stem as a literal within an example" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      :stem:
+      
+      [#id]
+      ====
+      [stem]
+      ++++
+      sqrt(4) = 2
+      ++++
+      ====
+    INPUT
+      <figure anchor="id">
       <artwork align="center">
       sqrt(4) = 2
       </artwork>

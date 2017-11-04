@@ -153,9 +153,9 @@ module Asciidoctor
         result
       end
 
-      def dash(camel_cased_word)
-        camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
-      end
+      #def dash(camel_cased_word)
+      #  camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
+      #end
 
       # if node contains blocks, flatten them into a single line
       def flatten(node)

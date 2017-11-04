@@ -184,4 +184,23 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
+  it "renders definition lists with more definition terms than definitions" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      Notes1::
+      Notes2:: Definition 
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+         <t>
+         <list style="hanging">
+           <t hangText="Notes1"/>
+           <t hangText="Notes2"><vspace blankLines="1"/>Definition</t>
+         </list>
+       </t>
+      </section>
+    OUTPUT
+  end
 end

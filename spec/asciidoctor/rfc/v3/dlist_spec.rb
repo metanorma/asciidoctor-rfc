@@ -115,7 +115,7 @@ describe Asciidoctor::RFC::V3::Converter do
       </section>
     OUTPUT
   end
-  it "permits multi paragraph list items" do
+  it "permits multi paragraph definition list items through list continuation" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
@@ -133,6 +133,89 @@ describe Asciidoctor::RFC::V3::Converter do
          <dt>Notes</dt>
          <dd><t>Note 1.</t><t>Note 2.</t>
        <t>Note 3.</t></dd>
+       </dl>
+      </section>
+    OUTPUT
+  end
+  it "permits multi paragraph definition list items through open blocks" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      Notes::  Note 1.
+      +
+      --
+      Note 2.
+      
+      Note 3.
+      --
+    INPUT
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <dl>
+         <dt>Notes</dt>
+         <dd><t>Note 1.</t><t>Note 2.</t>
+       <t>Note 3.</t></dd>
+       </dl>
+      </section>
+    OUTPUT
+  end
+  it "permits definition list items with a single open block" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      Notes::  Note 1.
+      +
+      --
+      Note 2.
+      --
+    INPUT
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <dl>
+         <dt>Notes</dt>
+         <dd><t>Note 1.</t><t>Note 2.</t>
+       </dd>
+       </dl>
+      </section>
+    OUTPUT
+  end
+  it "renders definition lists without definitions" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      Notes::  
+    INPUT
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <dl>
+         <dt>Notes</dt>
+         <dd/>
+       </dl>
+      </section>
+    OUTPUT
+  end
+  it "renders definition lists with more definition terms than definitions" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      Notes1::
+      Notes2:: Definition 
+    INPUT
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <dl>
+         <dt>Notes1</dt>
+         <dd/>
+         <dt>Notes2</dt>
+         <dd>Definition</dd>
        </dl>
       </section>
     OUTPUT

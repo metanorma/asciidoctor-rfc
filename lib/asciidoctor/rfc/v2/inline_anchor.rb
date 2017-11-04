@@ -37,8 +37,6 @@ module Asciidoctor
                             "[#{target}] (Section #{matched[:section]})"
                           when "bare"
                             matched[:section]
-                          else
-                            "Section #{matched[:section]} of #{target}"
                           end
           unless matched[:text].empty?
             xref_contents = "#{xref_contents}: #{matched[:text]}"

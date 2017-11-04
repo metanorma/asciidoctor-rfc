@@ -12,6 +12,24 @@ describe Asciidoctor::RFC::V3::Converter do
       </figure>
     OUTPUT
   end
+  it "renders an image within an example" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      [[id1]]
+      .Example Title
+      [align=right,alt=Example]
+      ====
+      [[id]]
+      .Image Title
+      [align=center,alt=alt_text]
+      image::http:://www.example/org/filename.jpg[]
+      ====
+    INPUT
+      <figure anchor="id1">
+         <name>Example Title</name>
+         <artwork align="center" alt="alt_text" anchor="id" name="Image Title" src="http:://www.example/org/filename.jpg" type="binary-art"/>
+      </figure>
+    OUTPUT
+  end
   it "renders an image with macro attributes" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
       [[id]]

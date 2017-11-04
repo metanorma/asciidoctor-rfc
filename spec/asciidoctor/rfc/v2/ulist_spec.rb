@@ -93,4 +93,44 @@ describe Asciidoctor::RFC::V2::Converter do
       </t>
     OUTPUT
   end
+
+  it "renders a nested list containing a literal" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      [[id]]
+      * First
+      * Second
+      +
+      ....
+      <entry>
+      ....
+    INPUT
+      <t>
+         <list style="symbols">
+           <t>First</t>
+           <t>Second<figure>
+         <artwork>&lt;entry&gt;</artwork>
+       </figure></t>
+         </list>
+      </t>
+    OUTPUT
+  end
+  
+  it "renders a nested list containing a comment" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      [[id]]
+      * First
+      * Second
+      +
+      NOTE: Note
+    INPUT
+      <t>
+         <list style="symbols">
+           <t>First</t>
+           <t>Second<vspace blankLines="1"/>
+           <cref>Note</cref>
+           </t>
+         </list>
+      </t>
+    OUTPUT
+  end
 end
