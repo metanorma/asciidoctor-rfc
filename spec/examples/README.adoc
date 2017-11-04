@@ -37,6 +37,26 @@ text is unindented in the output, and the postamble follows the table caption.
 output as `eref`, and in the xml2rfc output as angle brackets.
 --
 
+== RFC XML v2
+https://www.ietf.org/archive/id/draft-hoffman-rfcexamples-04.txt
+
+* `hoffmanv2.xml.orig`
+
+The equivalent asciidoc is
+
+* `hoffmanv2.xml.adoc`
+
+The following discrepancies should be noted between xml2rfc output from the XML source,
+and xml2rfc output from XML generated from our asciidoc should be noted:
+
+`hoffmanv2.xml.adoc`::
++
+--
+* The source xml has set the `subcompact` document directive; the directive cannot be set
+from Asciidoc.
+* Table preambles and postambles are not supported in Asciidoc.
+--
+
 == MMark
 https://github.com/miekg/mmark/tree/master/rfc
 
