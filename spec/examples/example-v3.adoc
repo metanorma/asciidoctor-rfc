@@ -140,7 +140,7 @@ measures [bcp14]#MUST# be taken (such as data encryption) when avian carriers
 are used in a tactical environment.<<RFC7253>>, <<ISO.IEC.10118-3>>
 
 [bibliography]
-== References
+== Normative  References
 * [[[RFC7253,1]]]
 * [[[ISO.IEC.10118-3,2]]]
 ++++
@@ -167,7 +167,11 @@ are used in a tactical environment.<<RFC7253>>, <<ISO.IEC.10118-3>>
     <date day='15' month='September' year='2017'/>
   </front>
 </reference>
+++++
 
+[bibliography]
+== Informative References
+++++
 <reference anchor='RFC7253' target='https://tools.ietf.org/html/rfc7253'>
   <front>
     <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>

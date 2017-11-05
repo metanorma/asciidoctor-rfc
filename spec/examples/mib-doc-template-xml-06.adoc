@@ -20,6 +20,11 @@ Editor name <Editor email>
 :workgroup: Internet Engineering Task Force
 :keyword: Network Management,Management Information Base,MIB,SMIv2
 :smart-quotes: false
+:compact: yes
+:subcompact: no
+:rfcedstyle: yes
+:comments: yes
+:inline: yes
 
 [abstract]
 
@@ -343,7 +348,6 @@ Option #3:
 This memo includes no request to IANA.
 
 == Contributors
-NOTE: [TEMPLATE TODO] This optional section can be used to mention contributors to your internet draft.
 
 [bibliography]
 == Normative References

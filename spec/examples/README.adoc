@@ -90,9 +90,6 @@ and xml2rfc output from XML generated from our asciidoc should be noted:
 * The MMark has tagged the doggerel in this RFC as `artwork`. We have chosen to use Asciidoc 
 `verse`, which in RFC XML 2 preserves linebreaks, but not the indentation of even-numbered
 verses, or of the concluding stanza.
-* The MMark forces `sym-refs` for this RFC, so references are given with numbers (e.g. `[1]`).
-RFC XML v2 does not specify `sym-refs` as an attribute in its XML (as opposed to an XML 
-directive); accordingly the asciidoc does not specify it.
 --
 
 `rfc3514.adoc`::

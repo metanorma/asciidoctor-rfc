@@ -9,8 +9,8 @@ Carsten Bormann <cabo@tzi.org>; Zach Shelby <zach@sensinode.com>
 :keyword: Internet-Draft
 :status: standard
 :toc-include: true
-:sort-refs: true
-:sym-refs: true
+:sort-refs: yes
+:sym-refs: yes
 :forename_initials: C.
 :organization: Universitaet Bremen TZI
 :street: Postfach 330440
@@ -289,7 +289,7 @@ SZX: :: Block Size. The block size is a three-bit unsigned integer indicating th
   values of SZX are 0 to 6, i.e., the minimum block size is 2&#42;&#42;(0+4) = 16
   and the maximum is 2&#42;&#42;(6+4) = 1024.
   The value 7 for SZX (which would indicate a block size of 2048) is
-  reserved, i.e. **MUST NOT** be sent and **MUST** lead to a 4.00 Bad Request
+  reserved, i.e. [bcp14]#MUST NOT# be sent and [bcp14]#MUST# lead to a 4.00 Bad Request
   response code upon reception in a request.
 
 The Block options are used in one of three roles:

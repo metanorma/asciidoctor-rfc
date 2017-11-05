@@ -148,7 +148,7 @@ module Asciidoctor
             result << send(b.context, b)
           end
         else
-          result << paragraph(node)
+          result = paragraph(node)
         end
         result
       end
@@ -156,6 +156,68 @@ module Asciidoctor
       #def dash(camel_cased_word)
       #  camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
       #end
+
+      def common_rfc_pis(node)
+        # Below are generally applicable Processing Instructions (PIs)
+        # that most I-Ds might want to use, common to v2 and v3.
+        # These are set only if explicitly specified, with the exception
+        # of compact and subcompact
+        rfc_pis = {
+            artworkdelimiter: node.attr("artworkdelimiter"),
+            artworklines: node.attr("artworklines"),
+            authorship: node.attr("authorship"),
+            autobreaks: node.attr("autobreaks"),
+            background: node.attr("background"),
+            colonspace: node.attr("colonspace"),
+            comments: node.attr("comments"),
+            docmapping: node.attr("docmapping"),
+            editing: node.attr("editing"),
+            emoticonic: node.attr("emoticonic"),
+            footer: node.attr("footer"),
+            header: node.attr("header"),
+            inline: node.attr("inline"),
+            iprnotified: node.attr("iprnotified"),
+            linkmailto: node.attr("linkmailto"),
+            linefile: node.attr("linefile"),
+            notedraftinprogress: node.attr("notedraftinprogress"),
+            private: node.attr("private"),
+            refparent: node.attr("refparent"),
+            rfcedstyle: node.attr("rfcedstyle"),
+            slides: node.attr("slides"),
+            "text-list-symbols": node.attr("text-list-symbols"),
+            tocappendix: node.attr("tocappendix"),
+            tocindent: node.attr("tocindent"),
+            tocnarrow: node.attr("tocnarrow"),
+            tocompact: node.attr("tocompact"),
+            topblock: node.attr("topblock"),
+            useobject: node.attr("useobject"),
+
+          # give errors regarding ID-nits and DTD validation
+            strict: node.attr("strict") || "yes",
+
+          # Vertical whitespace control
+          # (using these PIs as follows is recommended by the RFC Editor)
+          
+          # do not start each main section on a new page
+            compact: node.attr("compact") || "yes",
+          # keep one blank line between list items
+            subcompact: node.attr("subcompact") || "no",
+
+          # TOC control
+          # generate a ToC
+          toc: node.attr("toc-include") == "false" ? "no" : "yes",
+
+          # the number of levels of subsections in ToC. default: 3
+          tocdepth: node.attr("toc-depth") || "4",
+
+          # use anchors rather than numbers for references
+          symrefs: node.attr("sym-refs") || "yes",
+          # sort references
+          sortrefs: node.attr("sort-refs") || "yes",
+        }
+
+        attr_code(rfc_pis)
+      end
 
       # if node contains blocks, flatten them into a single line
       def flatten(node)

@@ -9,9 +9,9 @@ Klaus Hartke <hartke@tzi.org>; Carsten Bormann <cabo@tzi.org>
 :area: General
 :workgroup: XMPP Working Group
 :keyword: Internet-Draft
-:toc-include: true
-:sort-refs: true
-:sym-refs: true
+:toc-include: yes
+:sort-refs: yes
+:sym-refs: yes
 :forename_initials: K.
 :organization: Universität Bremen TZI
 :forename_initials_2: C.

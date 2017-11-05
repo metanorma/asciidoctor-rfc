@@ -330,7 +330,7 @@ module Asciidoctor
                   blankLines +=  nodes[counter][:blankLines].to_i + 1
                 end
                 if counter+1 < nodes.size && nodes[counter+1].text?
-                  if nodes[counter+1].text =~ /^\s+$/
+                  if nodes[counter+1].text =~ /\A[\n ]+\Z/m
                     counter += 1
                   end
                 end
@@ -358,34 +358,7 @@ module Asciidoctor
         # Below are generally applicable Processing Instructions (PIs)
         # that most I-Ds might want to use. (Here they are set differently than
         # their defaults in xml2rfc v1.32)
-        rfc_pis = {
-          # give errors regarding ID-nits and DTD validation
-          strict: "yes",
-
-          # TOC control
-          # generate a ToC
-          toc: node.attr("toc-include") == "false" ? "no" : "yes",
-
-          # the number of levels of subsections in ToC. default: 3
-          tocdepth: node.attr("toc-depth") || "4",
-
-          # References control
-
-          # use symbolic references tags, i.e, [RFC2119] instead of [1]
-          symrefs: "yes",
-
-          # sort the reference entries alphabetically
-          sortrefs: "yes",
-
-          # Vertical whitespace control
-          # (using these PIs as follows is recommended by the RFC Editor)
-
-          # do not start each main section on a new page
-          compact: "yes",
-
-          # keep one blank line between list items
-          subcompact: "no",
-        }
+        rfc_pis = common_rfc_pis(node)
 
         doc.create_internal_subset("rfc", nil, "rfc2629.dtd")
         rfc_pis.each_pair do |k, v|

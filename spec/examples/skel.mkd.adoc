@@ -4,9 +4,9 @@ Carsten Bormann <cabo@tzi.org>
 :abbrev: mfld
 :name: draft-mfld-00
 :status: informational
-:toc-include: true
-:sort-refs: true
-:sym-refs: true
+:toc-include: yes
+:sort-refs: yes
+:sym-refs: yes
 :forename_initials: C.
 :organization: Universität Bremen TZI
 :street: Postfach 330440
@@ -16,6 +16,7 @@ Carsten Bormann <cabo@tzi.org>
 :phone: +49-421-218-63921
 :email: cabo@tzi.org
 :revdate: 2017-11-03
+:comments: yes
 
 [abstract]
 insert abstract here
