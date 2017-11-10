@@ -197,7 +197,7 @@ module Asciidoctor
 
           # Vertical whitespace control
           # (using these PIs as follows is recommended by the RFC Editor)
-          
+
           # do not start each main section on a new page
             compact: node.attr("compact") || "yes",
           # keep one blank line between list items

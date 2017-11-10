@@ -1,4 +1,3 @@
-require "pp"
 module Asciidoctor
   module RFC::V2
     module Base
@@ -187,7 +186,7 @@ module Asciidoctor
       #   ++++
       def section(node)
         result = []
-        if node.attr("style") == "bibliography" || 
+        if node.attr("style") == "bibliography" ||
             node.parent.context == :section && node.parent.attr("style") == "bibliography"
           $xreftext = {}
           $processing_reflist = true
@@ -338,7 +337,7 @@ module Asciidoctor
             end
             counter -= 1 if counter == nodes.size
             newnodes << noko do |xml|
-              xml.vspace **attr_code(blankLines: (blankLines - 1)) 
+              xml.vspace **attr_code(blankLines: (blankLines - 1))
             end.join
           else
             newnodes << merge_vspace(nodes[counter])

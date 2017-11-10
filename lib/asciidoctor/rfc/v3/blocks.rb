@@ -1,4 +1,5 @@
-require "HTMLEntities"
+require "htmlentities"
+
 module Asciidoctor
   module RFC::V3
     module Blocks

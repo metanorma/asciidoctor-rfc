@@ -10,8 +10,22 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "todo: AsciiDoctorRFC summary."
+  spec.summary       = 'asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc.'
   spec.description   = <<~DESCRIPTION
+asciidoctor-rfc lets you write Internet-Drafts and RFCs in a native
+"asciidoctor" syntax.
+
+RFC XML ("xml2rfc" Vocabulary XML, RFC7322) is the XML-based language used for
+writing Internet-Drafts and RFCs, but not everyone likes hand-crafting XML,
+especially when the focus should be on the content.
+
+Specifically, the gem provides two things. First, an "asciidoctor" like syntax
+that lets you utilize close to all features of native RFC XML, and maps most
+asciidoctor textual syntax (like tables) into RFC XML features. Then, RFC XML
+v3 (RFC 7991) and v2 (RFC 7749) backends that lets you render your AsciiDoc
+into, you guessed it, RFC XML v3 and v2.
+
+This gem is in active development.
   DESCRIPTION
 
   spec.homepage      = "https://github.com/riboseinc/asciidoctor-rfc"
