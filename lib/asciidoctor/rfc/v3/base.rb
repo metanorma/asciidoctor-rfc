@@ -138,12 +138,16 @@ module Asciidoctor
         end.join
       end
 
+      BCP_KEYWORDS = [
+        'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT',
+        'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', 'OPTIONAL'
+      ]
       def inline_quoted(node)
         noko do |xml|
           case node.type
           when :emphasis then xml.em node.text
           when :strong
-            if $bcp_bold && node.text =~ /^(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)$/
+            if $bcp_bold && BCP_KEYWORDS.exist?(node.text)
               xml.bcp14 node.text
             else
               xml.strong node.text
