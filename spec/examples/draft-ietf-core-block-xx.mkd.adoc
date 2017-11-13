@@ -30,6 +30,7 @@ Carsten Bormann <cabo@tzi.org>; Zach Shelby <zach@sensinode.com>
 :phone_2: +358407796297
 :email_2: zach@sensinode.com
 :inline-definition-lists: true
+:rfc2629xslt: true
 
 [abstract]
 CoAP is a RESTful transfer protocol for constrained nodes and networks.
@@ -285,7 +286,7 @@ M: :: More Flag (not last block). For descriptive usage, this flag, if
   below.)
 
 SZX: :: Block Size. The block size is a three-bit unsigned integer indicating the size of a block to
-  the power of two. Thus block size = 2\\**(SZX + 4).  The allowed
+  the power of two. Thus block size = 2&#42;&#42;(SZX + 4).  The allowed
   values of SZX are 0 to 6, i.e., the minimum block size is 2&#42;&#42;(0+4) = 16
   and the maximum is 2&#42;&#42;(6+4) = 1024.
   The value 7 for SZX (which would indicate a block size of 2048) is

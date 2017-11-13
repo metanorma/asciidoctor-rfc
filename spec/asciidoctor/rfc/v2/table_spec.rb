@@ -390,4 +390,44 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
+  it "renders a table with no header row" do
+    # this is incorrect RFC XML
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [[id]]
+      [suppress-title=false,align=left,grid=cols]
+      .Table Title
+      |===
+
+      h|header cell | body cell
+      | | body cell
+      ^|centre aligned cell | cell
+      <|left aligned cell | cell
+      >|right aligned cell | cell
+
+      |foot | foot
+      |===
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+      <texttable anchor="id" title="Table Title" suppress-title="false" align="left" style="full">
+      <c>header cell</c>
+      <c>body cell</c>
+      <c></c>
+      <c>body cell</c>
+      <c>centre aligned cell</c>
+      <c>cell</c>
+      <c>left aligned cell</c>
+      <c>cell</c>
+      <c>right aligned cell</c>
+      <c>cell</c>
+      <c>foot</c>
+      <c>foot</c>
+      </texttable>
+      </section>
+    OUTPUT
+  end
+
 end

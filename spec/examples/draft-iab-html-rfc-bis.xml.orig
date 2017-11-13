@@ -1,0 +1,1999 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
+<?rfc toc="yes"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY W3C.REC-html5-20141028 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml4/reference.W3C.REC-html5-20141028.xml">
+
+<!ENTITY RFC2397 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2397.xml">
+<!ENTITY RFC3629 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml">
+<!ENTITY RFC5646 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5646.xml">
+<!ENTITY RFC6949 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6949.xml">
+<!ENTITY RFC7322 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7322.xml">
+
+]>
+
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc sortrefs="yes"?>
+<?rfc symrefs="yes"?>
+ <?rfc compact="yes"?>
+ <?rfc subcompact="no"?>
+
+<rfc submissionType="IAB" consensus="yes" ipr="trust200902" number="7992" category="info">
+  <front>
+
+
+    <title abbrev="HTML for RFCs">HTML Format for RFCs</title>
+    <author initials="J." surname="Hildebrand" fullname="Joe Hildebrand" role="editor">
+      <organization>Mozilla</organization>
+      <address>
+        <email>joe-ietf@cursive.net</email>
+      </address>
+    </author>
+    <author initials="P." surname="Hoffman" fullname="Paul Hoffman">
+      <organization>ICANN</organization>
+      <address>
+        <email>paul.hoffman@icann.org</email>
+      </address>
+    </author>
+    <date month="December" year="2016"/>
+
+    <keyword>html</keyword>
+    <keyword>css</keyword>
+    <keyword>rfc</keyword>
+
+
+
+    <abstract>
+      <t>In order to meet the evolving needs of the Internet community, the
+        canonical format for RFCs is changing from a plain-text, ASCII-only format to an
+        XML format that will, in turn, be rendered into several
+        publication formats. This document defines the HTML format that will
+        be rendered for an RFC or Internet-Draft.</t>
+    </abstract>
+  </front>
+  <middle>
+
+    <section anchor="introduction" title="Introduction">
+      <t>As described in <xref target="RFC7990"/>, the RFC
+        Series is changing. One of those changes includes the RFC Editor
+        publishing a non-canonical HTML version of RFCs.</t>
+      <t>This document describes the HTML format that will be used as one of the
+        publication formats for the RFC Series. It defines a strict subset of
+        HTML appropriate for RFC Series documents.  The visual layout of the
+        document will be defined through a cascading style sheet (CSS)
+        <xref target="W3C.REC-CSS2-20110607"/>.  The CSS will be included in the
+        HTML file but will be described in <xref target="RFC7993"/>.</t>
+      <t>The details (particularly any vocabularies) described in this document
+        are expected to change based on experience gained in implementing the
+        the new publication toolsets. Revised documents will be published
+        capturing those changes as the toolsets are completed. Other implementers
+        must not expect those changes to remain backwards compatible with the
+        details described in this document.</t>
+    </section>
+    <section anchor="requirements-for-html" title="Requirements for the HTML Format">
+      <t>This section lists the design requirements used to create the HTML
+        format described in this document.  These requirements build on those
+        found in <xref target="RFC6949"/>. Many of these requirements are
+        naturally fulfilled by using the output of the preparation tool
+        <xref target="RFC7998"/>.</t>
+      <t>
+      <list style="symbols">
+      <t>The HTML has to render correctly on a list of browser versions that
+        the RFC Editor will keep up to date outside of this document.</t>
+      <t>The format will consist of a subset of HTML deemed to be widely
+        implemented   by common browsers at the time the specification is
+        created, likely to continue to be widely implemented, and unlikely to
+        cause security issues.  This will maximize the chances that future HTML
+        renderers (such as new web browsers) will continue to produce readable
+        text from the HTML format without the format needing to be changed
+        frequently.</t>
+      <t>These requirements are expected to change in the future to reflect the
+        expectation that HTML rendering will be required for current versions of
+        browsers and platforms, while ideally continuing to render correctly on
+        recent versions of those browsers.</t>
+      <t>The HTML documents from the RFC Editor or Internet-Drafts directory
+        may be re-rendered from the canonical XML format in
+        the future to ensure the ongoing readability of the documents.  The
+        intent is that any re-rendering would be due to exceptional
+        circumstances rather than for minor annoyances.</t>
+      <t>The HTML must display adequately in at least one text-based browser.
+        Some consumers of the RFC Series can only access the documents on
+        text-based terminals.</t>
+      <t>The HTML document will be self-contained, without requiring external
+        files for images, CSS, JavaScript, or the like.  This will allow
+        the HTML file to be moved over various non-HTTP transports (such as
+        email, FTP, and rsync) without breakage.</t>
+      <t>JavaScript will be supported on a limited basis.  It will not be
+        permitted to overwrite or change any text present in the rendered HTML.
+        It may, on a limited basis, add additional text that provides
+        post-publication metadata or pointers if warranted.  All such text will
+        be clearly marked as additional.</t>
+      <t>The HTML document will allow easy local override of the default CSS
+        formatting.  This will allow users who have a different visual style
+        that they prefer to make RFCs display with that style without having to
+        alter the contents of the HTML document.  This might also be valuable
+        for allowing people with specific accessibility needs to use a
+        customized CSS.</t>
+      <t>HTML tags in documents will rarely have attributes whose only purpose
+        is to affect the rendered styling, and those will only be used if it
+        would not be possible to specify that styling in a CSS.  No such attributes are known at this time.</t>
+      <t>Both user-defined and auto-generated anchors must be supported and
+        linkable, with user-defined anchors appearing in an "id" attribute.
+        Auto-generated anchors will be generated for every heading, paragraph,
+        and so on, not just those that do not have user-defined anchors.
+        User-defined anchors may, and auto-generated anchors will, appear next to
+        paragraphs, figures, tables, blockquotes, and section titles.</t>
+      <t>All sections, subsections, figures, and paragraphs should have stable
+        numbered link anchors.  Additionally, anchors expressed in the source
+        XML should be exposed as anchors in the HTML output as well.</t>
+      <t>The HTML must make it easy to separate sections along with all of their
+        subsections into separate files.  This will make creating EPUB
+        documents easier in the future.</t>
+      <t>The HTML produced for Internet-Drafts will differ from that produced
+        by the RFC Editor due to differences in the output from the prep tool.</t>
+      <t>The abstract must be marked up or tagged in a way that popular search
+        engines will extract it as a summary.</t>
+      </list>
+      </t>
+      <section anchor="accessibility" title="Requirements for Accessibility">
+        <t>
+        <list style="symbols">
+        <t>Normative information must be easily accessible to the following
+          consumers:
+          <list>
+            <t>People with impaired vision, including those that use large fonts
+              and those that use screen readers</t>
+            <t>People with difficulty distinguishing between colors</t>
+            <t>People who use devices with small screens, such as cell phones</t>
+          </list>
+        </t>
+        <t>Specific instances where goals for accessibility are important in the
+          design choices of the format have been called out in the text.</t>
+        <t>Note: designing for these consumers does not preclude the use of
+          features they cannot use, but it does require that key semantic data not
+          be lost when read using the tools and settings that are required by a given
+          constituency.</t>
+        </list>
+      </t>
+      </section>
+    </section>
+    <section anchor="html5" title="HTML Version">
+      <t>The RFC Editor will periodically determine which version of the
+        HTML specification will be referenced for tools generating the
+        format defined in this document.  The starting version will be that
+        defined in <xref target="W3C.REC-html5-20141028"/>, commonly known as
+        "HTML5".  Although the HTML specification mandates several of the syntax
+        and structure rules described in this document, they are called out here
+        for emphasis.</t>
+    </section>
+    <section anchor="syntax" title="HTML Syntax">
+      <t>The processor emitting HTML from the XML source will follow these
+        rules:</t>
+      <t>
+        <list style="symbols">
+          <t>The HTML output is encoded as UTF-8, as specified in
+            <xref target="RFC3629"/>.</t>
+          <t>The document is valid HTML.</t>
+
+          <t>Double quotes (U+0022 QUOTATION MARK: ") are used to quote attribute
+            values unless the HTML specification forbids quoting a particular
+            attribute.</t>
+          <t>Each logical line is terminated solely with a \n (U+000A: LINE
+            FEED), otherwise known as "Unix-style" line endings.</t>
+          <t>Code points below (U+0020: SPACE) or character entity references
+            that generate them (e.g. &amp;#9;), other than (U+000A: LINE FEED)
+            may not be used.  Note: this rule explicitly forbids \t (U+0009:
+            CHARACTER TABULATION), \f (U+000C: FORM FEED), and \r (U+000D:
+            CARRIAGE RETURN) from appearing in the HTML output.</t>
+          <t>Comments in the source XML, if any, will not be copied into
+            the HTML.</t>
+          <t>The HTML output will be pretty-printed, using whatever
+            consistent rules are deemed best by the developers of the HTML
+            production tools.</t>
+        </list>
+      </t>
+      <t>Note: none of these rules affect the rendered output of the HTML, but they 
+        are intended to increase the chance that text comparison tools
+        (e.g., "diff") that operate on the HTML output are easier to write.</t>
+    </section>
+    <section anchor="common" title="Common Items">
+      <t>This section lists items that are common across multiple parts of the HTML
+        document.</t>
+      <section anchor='ids' title='IDs'>
+        <t>HTML elements that are generated from XML elements that include
+          an "anchor" attribute will use the value of the "anchor" attribute
+          as the value of the "id" attribute of the corresponding HTML element.
+          The prep tool produces XML with "anchor" attributes in all elements that need them.
+          Some HTML constructs (such as
+          &lt;section&gt;) will use
+          multiple instances of these identifiers.</t>
+      </section>
+      <section anchor='pilcrows' title='Pilcrows'>
+        <t>Each paragraph, artwork, or sourcecode segment outside of a
+          &lt;figure&gt; or &lt;table&gt; element will be appended with a
+          space and a "pilcrow" (U+00B6: PILCROW SIGN), otherwise known as a
+          "paragraph sign".  For the purposes of clarity in ASCII renderings
+          of this document, in this document pilcrows are rendered as
+          "&amp;para;".  The pilcrow will be linked to the "id" attribute on the
+          XML entity to which it is associated using an &lt;a&gt; element of
+          class "pilcrow".  For example:</t>
+        <figure>
+          <artwork><![CDATA[
+<p id="s-1.1-1">
+  Some paragraph text. <a class="pilcrow" href="#s-1.1-1">&para;</a>
+</p>]]></artwork>
+        </figure>
+        <t>The pilcrow will normally be invisible unless the element it is
+          attached to is moused over.  The pilcrow will be surrounded by a
+          link that points to the element it is attached to.</t>
+        <t>Pilcrows are never included inside a &lt;table&gt; or
+          &lt;figure&gt; element, since the figure number or table number
+          serves as an adequate link target.</t>
+        <t>Elements that might otherwise contain a pilcrow do not get marked
+          with a pilcrow if they contain one or more child elements that are
+          marked with a pilcrow. For example:</t>
+        <figure>
+          <artwork><![CDATA[
+<blockquote id="s-1.2-1">
+  <p id="s-1.2-2">Four score and seven years ago our fathers brought
+    forth on this continent, a new nation, conceived in Liberty, and
+    dedicated to the proposition that all men are created equal.
+    <a href="#s-1.2-2" class="pilcrow">&para;</a></p>
+  <!-- NO pilcrow here -->
+</blockquote>]]></artwork>
+        </figure>
+      </section>
+    </section>
+    <section anchor="front-matter" title="Front Matter">
+      <t>The front matter of the HTML format contains processing information,
+        metadata of various types, and styling information that applies to the
+        document as a whole.  This section describes HTML that is not
+        necessarily a direct transform from the XML format.  For more details
+        on each of the tags that generate content in this section,
+        see <xref target="elements"/>.</t>
+      <section anchor="doctype" title="DOCTYPE">
+        <t>The DOCTYPE of the document is "html", which declares that the
+          document is compliant with HTML5.  The document will start with
+          exactly this string:</t>
+        <figure>
+          <artwork><![CDATA[
+<!DOCTYPE html>]]></artwork>
+        </figure>
+      </section>
+
+
+      <section anchor="root-element" title="Root Element">
+        <t>The root element of the document is &lt;html&gt;.  This element
+          includes a &quot;lang&quot; attribute, whose value is a language tag, as discussed in <xref target="RFC5646"/>,
+          that describes the natural language of the document.  The
+          language tag to be included is "en".  The class of the &lt;html&gt;
+          element will be copied verbatim from the XML &lt;rfc&gt; element's
+          &lt;front&gt; element's &lt;seriesInfo&gt; element's "name"
+          attributes (separated by spaces; see Section 2.47.3 of <xref
+	  target="RFC7991" />), allowing CSS to style RFCs and
+          Internet-Drafts differently from one another (if needed):
+</t>
+
+        <figure>
+          <artwork><![CDATA[
+<html lang="en" class="RFC">]]></artwork>
+        </figure>
+      </section>
+      <section anchor="head-element" title="&lt;head&gt; Element">
+        <t>The root &lt;html&gt; will contain a &lt;head&gt; element that
+          contains the following elements, as needed.</t>
+        <section anchor="charset-declaration" title="Charset Declaration">
+          <t>In order to be correctly processed by browsers that load the HTML
+            using a mechanism that does not provide a valid content-type
+            or charset (such as from a local file system using a "file:" URL),
+            the HTML &lt;head&gt; element contains a &lt;meta&gt; element,
+            whose &quot;charset&quot; attribute value is "utf-8":</t>
+
+
+          <figure>
+            <artwork><![CDATA[
+<meta charset="utf-8">]]></artwork>
+          </figure>
+        </section>
+        <section anchor="head-title" title="Document Title">
+          <t>The contents of the &lt;title&gt; element from the XML source
+            will be placed inside an HTML &lt;title&gt; element in the
+            header.</t>
+        </section>
+        <section anchor="meta" title="Document Metadata">
+          <t>The following &lt;meta&gt; elements will be included:
+            <list style="symbols">
+              <t>author - one each for the each of the "fullname"s and "asciiFullname"s of
+                all of the &lt;author&gt;s from the &lt;front&gt; of the XML
+                source</t>
+              <t>description - the &lt;abstract&gt; from the XML source</t>
+              <t>generator - the name and version number of the software used
+                to create the HTML</t>
+              <t>keywords - comma-separated &lt;keyword&gt;s from the XML
+                source</t>
+            </list>
+            For example:
+          </t>
+          <figure>
+            <artwork><![CDATA[
+<meta name="author" content="Joe Hildebrand">
+<meta name="author" content="JOE HILDEBRAND">
+<meta name="author" content="Heather Flanagan">
+<meta name="description" content="This document defines...">
+<meta name="generator" content="xmljade v0.2.4">
+<meta name="keywords" content="html,css,rfc">]]></artwork>
+          </figure>
+          <t>Note: the HTML &lt;meta&gt; tag does not contain a closing
+            slash.</t>
+        </section>
+        <section anchor="xmlsource" title="Link to XML Source">
+          <t>The &lt;head&gt; element contains a &lt;link&gt; tag, with "rel"
+            attribute of "alternate", "type" attribute of "application/rfc+xml",
+            and "href" attribute pointing to the prepared XML source that was
+            used to generate this document.</t>
+          <figure>
+            <artwork><![CDATA[
+<link rel="alternate" type="application/rfc+xml" href="source.xml">]]></artwork>
+          </figure>
+        </section>
+        <section anchor="license" title="Link to License">
+          <t>The &lt;head&gt; element contains a &lt;link&gt; tag, with "rel"
+            attribute of "license" and "href" attribute pointing to the an
+            appropriate copyright license for the document.</t>
+          <figure>
+            <artwork><![CDATA[
+<link rel="license" 
+   href="https://trustee.ietf.org/trust-legal-provisions.html">]]></artwork>
+
+          </figure>
+        </section>
+        <section anchor="style" title="Style">
+          <t>The &lt;head&gt; element contains an embedded CSS in a
+            &lt;style&gt; element.  The styles in the style sheet are to be set
+            consistently between documents by the RFC Editor, according to the
+            best practices of the day.</t>
+          <t>To ensure consistent formatting, individual style attributes should
+            not be used in the main portion of the document.</t>
+          <t>Different readers of a specification will desire different
+            formatting when reading the HTML versions of RFCs.  To facilitate
+            this, the &lt;head&gt; element also includes a &lt;link&gt; to a
+            style sheet in the same directory as the HTML file, named
+            "rfc-local.css". Any formatting in the linked style sheet will
+            override the formatting in the included style sheet. For example:</t>
+         <figure>
+          <artwork><![CDATA[
+<style>
+  body {}
+  ...
+</style>
+<link rel="stylesheet" type="text/css" href="rfc-local.css">]]></artwork>
+          </figure>
+        </section>
+        <section anchor="links" title="Links">
+          <t>Each &lt;link&gt; element from the XML source is copied into
+            the HTML header.  Note: the HTML &lt;link&gt; element does not
+            include a closing slash.</t>
+        </section>
+      </section>
+
+      <section anchor='page-headers-footers' title="Page Headers and Footers">
+        <t>In order to simplify printing by HTML renderers that implement
+          <xref target='W3C.WD-css3-page-20130314'/>, a hidden HTML
+          &lt;table&gt; tag of class "ears" is added at the beginning of the HTML &lt;body&gt;
+          tag, containing HTML &lt;thead&gt; and &lt;tfoot&gt; tags, each of
+          which contains an HTML &lt;tr&gt; tag, which contains three HTML
+          &lt;td&gt; tags with class "left", "center", and "right",
+          respectively.</t>
+        <t>The &lt;thead&gt; corresponds to the top of the page, the
+          &lt;tfoot&gt; to the bottom.  The string "[Page]" can be used
+          as a placeholder for the page number.  In practice, this must
+          always be in the &lt;tfoot&gt;'s right &lt;td&gt;, and no control
+          of the formatting of the page number is implied.</t>
+        <figure>
+         <artwork><![CDATA[
+<table class="ears">
+  <thead>
+    <tr>
+      <td class="left">Internet-Draft</td>
+      <td class="center">HTML RFC</td>
+      <td class="right">March 2016</td>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td class="left">Hildebrand</td>
+      <td class="center">Expires September 2, 2016</td>
+      <td class="right">[Page]</td>
+    </tr>
+  </tfoot>
+</table>]]></artwork>
+        </figure>
+      </section>
+      <section anchor="document-information" title="Document Information">
+
+        <t>Information about the document as a whole will appear as the first child of the
+          HTML &lt;body&gt; element, embedded in an HTML &lt;dl&gt; element
+          with id="identifiers".  The defined terms in the definition list
+          are "Workgroup:", "Series:", "Status:", "Published:", and "Author:"
+          or "Authors:" (as appropriate). For example:</t>
+
+        <figure>
+          <artwork><![CDATA[
+<dl id="identifiers">
+  <dt>Workgroup:</dt>
+    <dd class="workgroup">rfc-interest</dd>
+  <dt>Series:</dt>
+    <dd class="series">Internet-Draft</dd>
+  <dt>Status:</dt>
+    <dd class="status">Informational</dd>
+  <dt>Published:</dt>
+    <dd><time datetime="2014-10-25"
+              class="published">2014-10-25</time></dd>
+  <dt>Authors:</dt>
+    <dd class="authors">
+      <div class="author">
+        <span class="initial">J.</span>
+        <span class="surname">Hildebrand</span>
+        (<span class="organization">Cisco Systems, Inc.</span>)
+        <span class="editor">Ed.</span> 
+      </div>
+      <div class="author">
+        <span class="initial">H.</span>
+        <span class="surname">Flanagan</span>
+        (<span class="organization">RFC Editor</span>)
+      </div>
+    </dd>
+</dl>]]></artwork>
+        </figure>
+      </section>
+
+      <section anchor='table-of-contents' title='Table of Contents'>
+        <t>The table of contents will follow the boilerplate if the XML's &lt;rfc&gt;
+        element's &quot;tocInclude&quot; attribute has the value "true".  An HTML &lt;h2&gt;
+        heading containing the text "Table of Contents" will be followed by a
+        &lt;nav&gt; element that contains a &lt;ul&gt; element for each depth
+        of the section hierarchy.  Each section will be represented by a
+        &lt;li&gt; element containing links by the section number (from the "pn"
+        attribute) and by the name (from the "slugifiedName" attribute of the
+        &lt;name&gt; child element).  Each &lt;nav&gt;, &lt;ul&gt;, and
+        &lt;li&gt; element will have the class "toc".</t>
+        <t>For example:</t>
+        <figure>
+          <artwork><![CDATA[
+<h2 id="toc">Table of Contents</h2>
+<nav class="toc">
+  <ul class="toc">
+    <li class="toc">
+      <a href="s-1">1</a>. <a href="n-introduction">Introduction</a>
+    </li>
+    <ul class="toc">
+      <li class="toc">
+        <a href="s-1.1">1.1</a>. <a href="n-sub-intro">Sub Intro</a>
+      </li>
+...]]></artwork>
+        </figure>
+      </section>
+    </section>
+    <section anchor='middle' title='Main Body'>
+      <t>The main body of the HTML document is processed according to the rules in
+        <xref target='elements'/>.</t>
+    </section>
+    <section anchor='back-matter' title='Back Matter'>
+
+      <t>The back matter of the HTML document includes an index (if generated),
+        information about the authors, and further information about the
+        document itself.</t>
+      <section anchor='index' title='Index'>
+        <t>The index will be produced as dictated by the RFC Editor's Style
+	Guide <xref target="RFC-STYLE" /> if and only if the XML document's &lt;rfc&gt; 
+          element has an &quot;indexInclude&quot; attribute with the value "true" and there
+          is one or more &lt;iref&gt; elements in the document.
+</t>
+        <section anchor='index-index' title='Index Contents'>
+          <t>The index section will start with an &lt;h2&gt; heading containing
+            the text "Index", followed by links to each of the lettered
+            portions of the index.  Links are not generated for letters that
+            do not occur as the first letter of an index item.</t>
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+<h2>Index</h2>
+<div class="index">
+  <div class="indexIndex">
+    <a href="#rfc.index.C">C</a>
+    <a href="#rfc.index.P">P</a>
+  </div>
+  ...]]></artwork>
+          </figure>
+        </section>
+        <section anchor='index-letters' title='Index Letters'>
+          <t>The index letter is followed by a &lt;ul&gt; tag that contains an
+            &lt;li&gt; tag for each first letter represented in the index. This
+            &lt;li&gt; tag has the class "indexChar" and contains an &lt;a&gt;
+            tag with the id pointed to by the index letter as well as an
+            &quot;href&quot; attribute to itself.  The &lt;li&gt; tag also includes a &lt;ul&gt; tag
+            that will contain the index items.</t>
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+<ul>
+  <li class="indexChar">
+    <a href="#rfc.index.C" id="rfc.index.C">C</a>
+    <ul>
+      <!-- items go here -->
+    </ul>
+  </li>
+  ...]]></artwork>
+          </figure>
+        </section>
+        <section anchor='index-items' title='Index Items'>
+          <t>Each index item can have multiple &lt;iref&gt; elements to point to, all
+          with the same item attribute.  Each index item is represented by an
+          &lt;li&gt; tag of class "indexItem" containing a &lt;span&gt; of class
+          "irefItem" for the item text and one of class "irefRefs" for the generated
+          references (if there is at least one reference to the item not having
+          a subitem).  Each generated reference contains an &lt;a&gt; tag
+          containing the section number where the &lt;iref&gt; is found, with
+          an "href" attribute pointing to the "irefid" attribute of the &lt;iref&gt; element from the XML document. If the primary
+          attribute of the &lt;iref&gt; element has the value "true", the &lt;a&gt; element in the HTML document
+          will have the class "indexPrimary". Commas may be used to separate the
+          generated references.</t>
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+<li class="indexItem">
+  <span class="irefItem">Bullets</span>
+  <span class="irefRefs">
+    <a class="indexPrimary" href="#s-Bullets-1">2</a>,
+    <a href="#s-Bullets-2">2</a>
+  </span>
+  <!-- subitems go here -->
+</li>
+...]]></artwork>
+          </figure>
+        </section>
+        <section anchor='index-subitems' title='Index Subitems'>
+          <t>If an index item has at least one subitem, the &lt;li&gt; of
+            that item will contain a &lt;ul&gt;, with one &lt;li&gt; for each
+            subitem, of class "indexSubItem".  The format for each subitem is 
+            similar to that used for items, except the class of the first &lt;span&gt;
+            tag is "irefSubItem".</t>
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+<ul>
+  <li class="indexSubItem">
+    <span class="irefSubItem">Ordered</span>
+    <span class="irefRefs">
+      <a href="#s-Bullets-Ordered-1">2</a>
+    </span>
+  </li>
+</ul>
+...]]></artwork>
+          </figure>
+        </section>
+      </section>
+      <section anchor='authors-addresses' title="Authors' Addresses Section">
+        <t>At the end of the document, author information will be included
+          inside an HTML &lt;section&gt; element whose &quot;id&quot; attribute is
+          "author-addresses".  The class names of the constituent HTML tags
+          have been chosen to match the class names in <xref target="HCARD"/>.</t>
+        <t>The information for each author will be separated by an HTML
+          &lt;hr&gt; element with class "addr".</t>
+        <figure>
+          <artwork><![CDATA[
+<section id="author-addresses">
+  <h2>
+    <a class="selfRef" href="#author-addresses">
+      Authors' Addresses
+    </a>
+  </h2>
+  <address class="vcard">
+    <div class="nameRole"><span class="fn">Joe Hildebrand</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">Cisco Systems, Inc.</div>
+  </address>
+  <hr class="addr">
+  <address class="vcard">
+    <div class="nameRole"><span class="fn">Heather Flanagan</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">RFC Series Editor</div>
+  </address>
+</section>]]></artwork>
+        </figure>
+      </section>
+      <section anchor="docInfo" title="Document Information">
+        <t>A few bits of metadata about the document that are less
+          important to most readers are included after the author information.
+          These are gathered together into a &lt;div&gt; of class
+          "docInfo".</t>
+
+        <t>The finalized time is copied from the &lt;rfc&gt; element's
+          &quot;prepTime&quot; attribute.  The rendered time is the time that this
+          HTML was generated.</t>
+        <t>For example:</t>
+        <figure>
+          <artwork><![CDATA[
+<div class="docInfo">
+  <span class="finalized">
+    Finalized: <time
+    datetime="2015-04-29T18:59:08Z">2015-04-29T18:59:08Z</time>
+  </span>
+  <span class="rendered">
+    Rendered: <time
+    datetime="2015-04-29T18:59:10Z">2015-04-29T18:59:10Z</time>
+  </span>
+</div>]]></artwork>
+        </figure>
+      </section>
+    </section>
+    <section title="Elements" anchor="elements">
+      <t>This section describes how each of the XML elements from
+        <xref target='RFC7991'/> is rendered to HTML.
+        Many of the descriptions have examples to clarify how elements will be rendered.</t>
+      <section title="&lt;abstract&gt;" anchor="element.abstract">
+
+        <t>The abstract is rendered in a similar fashion to a &lt;section&gt; with anchor="abstract" and
+        &lt;name&gt;Abstract&lt;/name&gt;, but without a section number.</t>
+        <figure>
+          <artwork><![CDATA[
+<section id="abstract">
+  <h2><a href="#abstract" class="selfRef">Abstract</a></h2>
+  <p id="s-abstract-1">This document defines...
+    <a href="#s-abstract-1" class="pilcrow">&para;</a>
+  </p>
+</section>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;address&gt;" anchor="element.address">
+        <t>This element is used in the Authors' Addresses section.
+          It is rendered
+          as an HTML &lt;address&gt; tag of class "vcard".  If none of the
+          descendant XML elements has an "ascii" attribute, the &lt;address&gt;
+          HTML tag includes the HTML rendering of each of the descendant
+          XML elements.  Otherwise, the &lt;address&gt; HTML tag includes
+          an HTML &lt;div&gt; tag of class "ascii" (containing the HTML
+          rendering of the ASCII variants of each of the descendant XML
+          elements), an HTML &lt;div&gt; tag of class "alternative-contact",
+          (containing the text "Alternate contact information:"), and
+          an HTML &lt;div&gt; tag of class "non-ascii" (containing the HTML
+          rendering of the non-ASCII variants of each of the descendant XML
+          elements).
+        </t>
+        <t>Note: the following example shows some ASCII equivalents that are
+          the same as their nominal equivalents for clarity; normally, the ASCII
+          equivalents would not be included for these cases.</t>
+        <figure>
+          <artwork><![CDATA[
+<address class="vcard">
+  <div class="ascii">
+    <div class="nameRole"><span class="fn">Joe Hildebrand</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">Cisco Systems, Inc.</div>
+  </div>
+  <div class="alternative-contact">
+    Alternate contact information:
+  </div>
+  <div class="non-ascii">
+    <div class="nameRole"><span class="fn">Joe Hildebrand</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">Cisco Systems, Inc.</div>
+  </div>
+</address>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;annotation&gt;" anchor="element.annotation">
+        <t>This element is rendered as the text ", " (a comma and a space)
+          followed by a &lt;span&gt; of class "annotation" at the end
+          of a &lt;reference&gt; element, the &lt;span&gt;
+          containing appropriately transformed elements from the children of
+          the &lt;annotation&gt; tag.</t>
+        <figure>
+          <artwork><![CDATA[
+ <span class="annotation">Some <em>thing</em>.</span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;area&gt;" anchor="element.area">
+        <t>Not currently rendered to HTML.</t>
+      </section>
+      <section title="&lt;artwork&gt;" anchor="element.artwork">
+        <t>Artwork can consist of either inline text or SVG.  If the artwork is
+          not inside a &lt;figure&gt; element, a
+          <xref target='pilcrows'>pilcrow</xref> is included.  Inside a
+          &lt;figure&gt; element, the figure title serves the purpose of the
+          pilcrow. If the "align" attribute has the value "right", the CSS class
+          "alignRight" will be added. If the "align" attribute has the value
+          "center", the CSS class "alignCenter" will be added.</t>
+        <section title="Text Artwork" anchor="element.artwork-text">
+          <t>Text artwork is rendered inside an HTML &lt;pre&gt; element, which
+            is contained by a &lt;div&gt; element for consistency with SVG
+            artwork.  Note that CDATA blocks are not a part of HTML,
+            so angle brackets and ampersands (i.e., &lt;, &gt;, and &amp;) must be escaped as &amp;lt;, &amp;gt;,
+            and &amp;amp;, respectively.</t>
+          <t>The &lt;div&gt; element will have CSS classes of "artwork",
+            "art-text", and "art-" prepended to the value of the &lt;artwork&gt;
+            element's "type" attribute, if it exists.</t>
+          <figure>
+            <artwork><![CDATA[
+<div class="artwork art-text art-ascii-art"  id="s-1-2">
+  <pre>
+ ______________
+&lt; hello, world &gt;
+ --------------
+  \   ^__^
+   \  (oo)\_______
+      (__)\       )\/\
+          ||----w |
+          ||     ||
+  </pre>
+  <a class="pilcrow" href="#s-1-2">&para;</a>
+</div>]]></artwork>
+          </figure>
+        </section>
+        <section title="SVG Artwork" anchor="element.artwork-svg">
+          <t>SVG artwork will be included inline.  The SVG is wrapped in a
+            &lt;div&gt; element with CSS classes "artwork" and "art-svg".</t>
+          <t>If the SVG &quot;artwork&quot; element is a child of &lt;figure&gt; and the
+            artwork is specified as align="right", an
+            empty HTML &lt;span&gt; element is added directly after the
+            &lt;svg&gt; element, in order to get right alignment to work correctly
+            in HTML rendering engines that do not support the flex-box
+            model.</t>
+          <t>Note: the &quot;alt&quot; attribute of &lt;artwork&gt; is not currently used
+            for SVG; instead, the &lt;title&gt; and &lt;desc&gt; tags are used
+            in the SVG.</t>
+          <figure>
+            <artwork><![CDATA[
+<div class="artwork art-svg" id="s-2-17">
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+    <desc>Alt text here</desc>
+    <circle
+      cx="50" cy="50" r="40"
+      stroke="green" stroke-width="4" fill="yellow" />
+  </svg>
+  <a href="#s-2-17" class="pilcrow">&para;</a>
+</div>]]></artwork>
+          </figure>
+        </section>
+        <section title="Other Artwork" anchor="element">
+          <t>Other artwork will have a &quot;src&quot; attribute that uses the "data" URI scheme
+            defined in <xref target="RFC2397"/>.  Such artwork is rendered in an
+            HTML &lt;img&gt; element.  Note: the HTML &lt;img&gt; element does
+            not have a closing slash.</t>
+          <t>Note: such images are not yet allowed in RFCs
+            even though the format supports them.  A limited set of "data:" mediatypes for artwork may be allowed in the
+            future.</t>
+          <figure>
+            <artwork><![CDATA[
+<div class="artwork art-logo" id="s-2-58">
+  <img alt="IETF logo"
+       src="data:image/gif;charset=utf-8;base64,...">
+  <a class="pilcrow" href="#s-2-58">&para;</a>
+</div>]]></artwork>
+          </figure>
+        </section>
+      </section>
+      <section title="&lt;aside&gt;" anchor="element.aside">
+        <t>This element is rendered as an HTML &lt;aside&gt; element, with
+           all child content appropriately transformed.</t>
+        <figure>
+          <artwork><![CDATA[
+<aside id="s-2.1-2">
+  <p id="s-2.1-2.1">
+    A little more than kin, and less than kind.
+    <a class="pilcrow" href="#s-2.1-2.1">&para;</a>
+  </p>
+</aside>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;author&gt;" anchor="element.author">
+        <t>The &lt;author&gt; element is used in several places in the output.
+           Different rendering is used for each.</t>
+        <section title="Authors in Document Information">
+          <t>As seen in the <xref target='document-information' format='title'/>
+            at the beginning of the HTML, each document author is rendered
+            as an HTML &lt;div&gt; tag of class "author".</t>
+
+          <t>Inside the &lt;div class="author"&gt; HTML tag, the author's
+            initials and surname (or the fullname, if it exists and the others
+            do not) will be rendered in an HTML &lt;div&gt;
+            tag of class "author-name". If the &lt;author&gt;
+            contains "asciiInitials" and "asciiSurname" attributes, or contains
+            as "asciiFullname" attribute, the author's name is rendered twice,
+            with the first being the non-ASCII version, wrapped in an HTML
+            &lt;span&gt; tag of class "non-ascii", followed by the ASCII
+            version wrapped in an HTML &lt;span&gt; tag of class "ascii",
+            wrapped in parentheses.  If the &lt;author&gt; has a "role"
+            attribute of "editor", the &lt;div class="author-name"&gt; will
+            also contain the text ", " (comma, space), followed by an HTML
+            &lt;span&gt; tag of class "editor", which contains the text "Ed.".</t>
+          <t>If the &lt;author&gt; element contains an
+            <xref target='element.organization' format='title'/>
+            element, it is also rendered inside the &lt;div class="author"&gt;
+            HTML tag. </t>
+          <figure>
+            <artwork><![CDATA[
+<div class="author">
+  <div class="author-name">
+    H. Flanagan,
+    <span class="editor">Ed.</span></div>
+  <div class="org">Test Org</div>
+</div>
+<div class="author">
+  <div class="author-name">
+    <span class="non-ascii">Hildebrand</span>
+    (<span class="ascii">HILDEBRAND</span>)
+  </div>
+  <div class="org">
+    <span class="non-ascii">Test Org</span>
+    (<span class="ascii">TEST ORG</span>)
+  </div>
+</div>]]></artwork>
+            </figure>
+        </section>
+        <section title="Authors of This Document">
+          <t>As seen in the Authors' Addresses section,
+            at the end of the HTML, each document author is rendered into an
+            HTML &lt;address&gt; element with the CSS class "vcard".</t>
+          <t>The HTML &lt;address&gt; element will contain an HTML &lt;div&gt;
+            with CSS class "nameRole".  That div will contain an HTML &lt;span&gt;
+            element with CSS class "fn" containing the value of the "fullname"
+            attribute of the &lt;author&gt; XML element and an HTML &lt;span&gt;
+            element with CSS class "role" containing the value of the "role"
+            attribute of the &lt;author&gt; XML element (if there is a role).
+            Parentheses will surround the &lt;span class="role"&gt;, if it
+            exists.</t>
+          <figure>
+              <artwork><![CDATA[
+<address class="vcard">
+  <div class="nameRole">
+    <span class="fn">Joe Hildebrand</span>
+    (<span class="role">editor</span>)
+  </div>
+  ...]]></artwork>
+          </figure>
+          <t>After the name, the
+            <xref target='element.organization' format='title'/> and
+            <xref target='element.address' format='title'/> child elements of
+            the author are rendered inside the HTML &lt;address&gt; tag.</t>
+          <t>When the &lt;author&gt; element, or any of its descendant elements,
+            has any attribute that starts with "ascii", all of the author
+            information is displayed twice.  The first version is wrapped in
+            an HTML &lt;div&gt; tag with class "ascii"; this version prefers
+            the ASCII version of information, such as "asciiFullname", but falls
+            back on the non-ASCII version if the ASCII version doesn't exist.
+            The second version is wrapped in an HTML &lt;div&gt; tag with class
+            "non-ascii"; this version prefers the non-ASCII version of
+            information, such as "fullname", but falls back on the ASCII
+            version if the non-ASCII version does not exist.  Between these
+            two HTML &lt;div&gt;s, a third &lt;div&gt; is inserted, with class
+            "alternative-contact", containing the text "Alternate contact
+            information:".</t>
+          <figure>
+              <artwork><![CDATA[
+<address class="vcard">
+  <div class="ascii">
+    <div class="nameRole">
+      <span class="fn">The ASCII name</span>
+    </div>
+  </div>
+  <div class="alternative-contact">
+    Alternate contact information:
+  </div>
+  <div class="non-ascii">
+    <div class="nameRole">
+      <span class="fn">The non-ASCII name</span>
+      (<span class="role">editor</span>)
+    </div>
+  </div>
+</address>
+]]></artwork>
+          </figure>
+        </section>
+        <section title="Authors of References">
+          <t>In the output generated from a reference element, author tags are
+            rendered inside an HTML &lt;span&gt; element with CSS class
+            "refAuthor".  See Section 4.8.6.2 of <xref target='RFC7322'/> for
+	    guidance on how author names are to appear.
+</t>
+          <figure>
+              <artwork><![CDATA[
+<span class="refAuthor">Flanagan, H.</span> and
+<span class="refAuthor">N. Brownlee</span>]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+      <section title="&lt;back&gt;" anchor="element.back">
+        <t>If there is exactly one
+          <xref target='element.references' format='title'/> child, render
+          that child in a similar way to a <xref target='element.section' format='title'/>.
+          If there are more than one
+          <xref target='element.references' format='title'/> children, render
+          as a <xref target='element.section' format='title'/> whose name is
+          "References", containing a <xref target='element.section' format='title'/>
+          for each <xref target='element.references' format='title'/> child.</t>
+        <t>After any <xref target='element.references' format='title'/> sections,
+          render each <xref target='element.section' format='title'/> child of
+	  <xref target='element.back' format='title'/>
+          as an appendix.</t>
+          <figure>
+              <artwork><![CDATA[
+<section id="n-references">
+  <h2 id="s-2">
+    <a class="selfRef" href="#s-2">2.</a>
+    <a class="selfRef" href="#n-references">References</a>
+  </h2>
+  <section id="n-normative">
+    <h3 id="s-2.1">
+      <a class="selfRef" href="#s-2.1">2.1.</a>
+      <a class="selfRef" href="#n-normative">Normative</a>
+    </h3>
+    <dl class="reference"></dl>
+  </section>
+  <section id="n-informational">
+    <h3 id="s-2.2">
+      <a class="selfRef" href="#s-2.2">2.2.</a>
+      <a class="selfRef" href="#n-informational">Informational</a>
+    </h3>
+    <dl class="reference"></dl>
+  </section>
+</section>
+<section id="n-unimportant">
+  <h2 id="s-A">
+    <a class="selfRef" href="#s-A">Appendix A.</a>
+    <a class="selfRef" href="#n-unimportant">Unimportant</a>
+  </h2>
+</section>]]></artwork>
+          </figure>
+      </section>
+      <section title="&lt;bcp14&gt;" anchor="element.bcp14">
+        <t>This element marks up words like MUST and SHOULD <xref target="BCP14" /> with an HTML
+          &lt;span&gt; element with the CSS class "bcp14".</t>
+        <figure>
+          <artwork><![CDATA[
+You <span class="bcp14">MUST</span> be joking.]]></artwork>
+        </figure>
+
+      </section>
+      <section title="&lt;blockquote&gt;" anchor="element.blockquote">
+        <t>This element renders in a way similar to the HTML &lt;blockquote&gt;
+          element.  If there is a "cite" attribute, it is  copied
+          to the HTML "cite" attribute.  If there is a "quoteFrom" attribute,
+          it is placed inside a &lt;cite&gt; element at the end of the quote,
+          with an &lt;a&gt; element surrounding it (if there is a "cite"
+          attribute), linking to the cited URL.</t>
+        <t>If the &lt;blockquote&gt; does not contain another element that gets a
+          <xref target='pilcrows'>pilcrow</xref>, a pilcrow is added.</t>
+        <t>Note that the "&amp;mdash;" at the beginning of the &lt;cite&gt; element
+          should be a proper emdash, which is difficult to show in the
+          display of the current format.</t>
+        <figure>
+          <artwork><![CDATA[
+<blockquote id="s-1.2-1"
+  cite="http://...">
+  <p id="s-1.2-2">Four score and seven years ago our fathers
+    brought forth on this continent, a new nation, conceived
+    in Liberty, and dedicated to the proposition that all men
+    are created equal.
+    <a href="#s-1.2-2" class="pilcrow">&para;</a>
+  </p>
+  <cite>&mdash; <a href="http://...">Abraham Lincoln</a></cite>
+</blockquote>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;boilerplate&gt;" anchor="element.boilerplate">
+        <t>The Status of This Memo and the Copyright statement, together
+	commonly referred to as the document boilerplate, appear after the
+	Abstract. The children of the input &lt;boilerplate&gt; element
+          are treated in a similar fashion to unnumbered sections.
+</t>
+        <figure>
+          <artwork><![CDATA[
+<section id="status-of-this-memo">
+  <h2 id="s-boilerplate-1">
+    <a href="#status-of-this-memo" class="selfRef">
+      Status of this Memo</a>
+  </h2>
+  <p id="s-boilerplate-1-1">This Internet-Draft is submitted in full
+    conformance with the provisions of BCP 78 and BCP 79.
+    <a href="#s-boilerplate-1-1" class="pilcrow">&para;</a>
+  </p>
+...]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;br&gt;" anchor="element.br">
+        <t>This element is directly rendered as its HTML counterpart.  Note:
+          in HTML, &lt;br&gt; does not have a closing slash.</t>
+      </section>
+      <section title="&lt;city&gt;" anchor="element.city">
+        <t>This element is rendered as a &lt;span&gt; element with CSS
+          class "locality".</t>
+        <figure>
+          <artwork><![CDATA[
+<span class="locality">Guilford</span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;code&gt;" anchor="element.code">
+        <t>This element is rendered as a &lt;span&gt; element with CSS
+          class "postal-code".</t>
+        <figure>
+          <artwork><![CDATA[
+<span class="postal-code">GU16 7HF<span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;country&gt;" anchor="element.country">
+        <t>This element is rendered as a &lt;div&gt; element with CSS
+          class "country-name".</t>
+        <figure>
+          <artwork><![CDATA[
+<div class="country-name">England</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;cref&gt;" anchor="element.cref">
+        <t>This element is rendered as a &lt;span&gt; element with CSS
+          class "cref".  Any anchor is copied to the &quot;id&quot; attribute.  If there is
+          a source given, it is contained inside the &quot;cref&quot; &lt;span&gt; element with another
+          &lt;span&gt; element of class "crefSource".</t>
+        <figure>
+          <artwork><![CDATA[
+<span class="cref" id="crefAnchor">Just a brief comment
+about something that we need to remember later.
+<span class="crefSource">--life</span></span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;date&gt;" anchor="element.date">
+
+
+        <t>This element is rendered as the HTML &lt;time&gt; element.  If the
+          "year", "month", or "day" attribute is included on the XML element,
+          an appropriate "datetime" element will be generated in HTML.</t>
+        <t>If this date is a child of the document's &lt;front&gt; element, it
+          gets the CSS class "published".</t>
+        <t>If this date is inside a &lt;reference&gt; element, it gets the
+          CSS class "refDate".</t>
+        <figure>
+          <artwork><![CDATA[
+<time datetime="2014-10" class="published">October 2014</time>]]></artwork>
+        </figure>
+      </section>
+
+      <section title="&lt;dd&gt;" anchor="element.dd">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;displayreference&gt;" anchor="element.displayreference">
+        <t>This element does not affect the HTML output, but it is used in the generation of the 
+          <xref target='element.reference' format='title'/>,
+          <xref target='element.referencegroup' format='title'/>,
+          <xref target='element.relref' format='title'/>, and
+          <xref target='element.xref' format='title'/> elements.</t>
+      </section>
+      <section title="&lt;dl&gt;" anchor="element.dl">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+        <t>If the hanging attribute is "false", add the "dlParallel" class, else
+          add the "dlHanging" class.</t>
+        <t>If the spacing attribute is "compact", add the "dlCompact" class.</t>
+      </section>
+      <section title="&lt;dt&gt;" anchor="element.dt">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;em&gt;" anchor="element.em">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;email&gt;" anchor="element.email">
+
+        <t>This element is
+          rendered as an HTML &lt;div&gt; containing the string "Email:" and
+          an HTML &lt;a&gt; element with the "href" attribute set to the
+          equivalent "mailto:" URI, a CSS class of "email", and the contents set
+          to the email address.  If this is the version of the address with
+          ASCII, the "ascii" attribute is preferred to the element text.</t>
+        <figure>
+          <artwork><![CDATA[
+<div>
+  <span>Email:</span>
+  <a class="email" href="mailto:joe@example.com">joe@example.com</a>
+</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;eref&gt;" anchor="element.eref">
+        <t>This element is rendered as an HTML &lt;a&gt; element, with the "href"
+          attribute set to the value of the "target" attribute and the CSS
+          class of "eref".</t>
+        <figure>
+          <artwork><![CDATA[
+<a href="https://..." class="eref">the text</a>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;figure&gt;" anchor="element.figure">
+        <t>This element renders as the HTML &lt;figure&gt; element, containing
+          the artwork or sourcecode indicated and an HTML &lt;figcaption&gt;
+          element.  The &lt;figcaption&gt; element will contain an &lt;a&gt; element
+          around the figure number.  It will also
+          contain another &lt;a&gt; element with CSS class "selfRef" around the
+          figure name, if a name was given.</t>
+        <figure>
+          <artwork><![CDATA[
+<figure id="f-1">
+  ...
+  <figcaption>
+    <a href="#f-1">Figure 1.</a>
+    <a href="#n-it-figures" id="n-it-figures" class="selfRef">
+      It figures
+    </a>
+  </figcaption>
+</figure>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;front&gt;" anchor="element.front">
+        <t>See <xref target='document-information'>"Document Information"</xref> for information on this element.</t>
+      </section>
+      <section title="&lt;iref&gt;" anchor="element.iref">
+        <t>This element is rendered as an empty &lt;&gt; tag of class &quot;iref&quot;, with
+          an &quot;id&quot; attribute consisting of the &lt;iref&gt; element's &quot;irefid&quot; attribute:</t>
+        <figure>
+          <artwork><![CDATA[
+<span class="iref" id="s-Paragraphs-first-1"/>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;keyword&gt;" anchor="element.keyword">
+        <t>Each &lt;keyword&gt; element renders its text into the &lt;meta&gt;
+          keywords in the document's header, separated by commas.</t>
+        <figure>
+          <artwork><![CDATA[
+<meta name="keywords" content="html,css,rfc">]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;li&gt;" anchor="element.li">
+        <t>This element is rendered as its HTML counterpart.  However, if there
+          is no contained element that has a
+          <xref target='pilcrows'>pilcrow</xref> attached, a pilcrow
+          is added.</t>
+        <figure>
+          <artwork><![CDATA[
+<li id="s-2-7">Item <a href="#s-2-7" class="pilcrow">&para;</a></li>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;link&gt;" anchor="element.link">
+        <t>This element is rendered as its HTML counterpart, in the HTML
+          header.</t>
+      </section>
+      <section title="&lt;middle&gt;" anchor="element.middle">
+        <t>This element does not add any direct output to HTML.</t>
+      </section>
+      <section title="&lt;name&gt;" anchor="element.name">
+        <t>This element is never rendered directly; it is only rendered when
+          considering a parent element, such as
+          <xref target="element.figure" format="title"/>,
+          <xref target="element.references" format="title"/>,
+          <xref target="element.section" format="title"/>, or
+          <xref target="element.table" format="title"/>.</t>
+      </section>
+      <section title="&lt;note&gt;" anchor="element.note">
+        <t>This element is rendered like a 
+          <xref target='element.section' format='title'/> element, but without
+          a section number and with the CSS class of "note".  If the
+          "removeInRFC" attribute is set to "yes", the generated &lt;div&gt; element
+          will also include the CSS class "rfcEditorRemove".</t>
+
+        <figure>
+          <artwork><![CDATA[
+<section id="s-note-1" class="note rfcEditorRemove">
+  <h2>
+    <a href="#n-editorial-note" class="selfRef">Editorial Note</a>
+  </h2>
+  <p id="s-note-1-1">
+    Discussion of this draft takes place...
+    <a href="#s-note-1-1" class="pilcrow">&para;</a>
+  </p>
+</section>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;ol&gt;" anchor="element.ol">
+        <t>The output created from an &lt;ol&gt; element depends upon the &quot;style&quot;
+          attribute.</t>
+        <t>If the &quot;spacing&quot; attribute has the value "compact", a CSS class of
+          "olCompact" will be added.</t>
+        <t>The group attribute is not copied; the input XML should have start
+          values added by a prep tool for all grouped &lt;ol&gt; elements.</t>
+        <section title="Percent Styles" anchor="ol-percent-styles">
+          <t>If the style attribute includes the character "%", the output is
+            a &lt;dl&gt; tag with the class "olPercent".  Each contained &lt;li&gt; element
+            is emitted as a &lt;dt&gt;/&lt;dd&gt; pair, with the generated
+            label in the &lt;dt&gt; and the contents of the &lt;li&gt; in the
+            &lt;dd&gt;.</t>
+          <figure>
+            <artwork><![CDATA[
+<dl class="olPercent">
+  <dt>Requirement xviii:</dt>
+  <dd>Wheels on a big rig</dd>
+</dl>
+]]></artwork>
+          </figure>
+        </section>
+        <section title="Standard Styles" anchor="ol-standard-styles">
+          <t>For all other styles, an &lt;ol&gt; tag is emitted, with any
+            &quot;style&quot; attribute turned into the equivalent HTML attribute.</t>
+          <figure>
+            <artwork><![CDATA[
+<ol class="compact" type="I" start="18">
+  <li>Wheels on a big rig</li>
+</ol>
+]]></artwork>
+          </figure>
+        </section>
+      </section>
+      <section title="&lt;organization&gt;" anchor="element.organization">
+        <t>This element is
+          rendered as an HTML &lt;div&gt; tag with CSS class "org".</t>
+        <t>If the element contains the "ascii" attribute, the organization name
+          is rendered twice: once with the non-ASCII version wrapped in an
+          HTML &lt;span&gt; tag of class "non-ascii" and then as the ASCII version
+          wrapped in an HTML &lt;span&gt; tag of class "ascii" wrapped in
+          parentheses.</t>
+        <figure>
+          <artwork><![CDATA[
+<div class="org">
+  <span class="non-ascii">Test Org</span>
+  (<span class="ascii">TEST ORG</span>)
+</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;phone&gt;" anchor="element.phone">
+
+
+        <t>This element is
+          rendered as an HTML &lt;div&gt; tag containing the string "Phone:"  (wrapped
+          in a span), an HTML &lt;a&gt; tag with CSS class "tel" containing the
+          phone number (and an href with a corresponding "tel:" URI), and an
+          HTML &lt;span&gt; with CSS class "type" containing the string
+          "VOICE".</t>
+        <figure>
+          <artwork><![CDATA[
+<div>
+  <span>Phone:</span>
+  <a class="tel" href="tel:+1-720-555-1212">+1-720-555-1212</a>
+  <span class="type">VOICE</span>
+</div>
+]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;postal&gt;" anchor="element.postal">
+        <t>This element renders as an HTML &lt;div&gt; with CSS class
+          "adr", unless it contains one or more &lt;postalLine&gt; child
+          elements; in which case, it renders as an HTML &lt;pre&gt; element with CSS
+          class "label".</t>
+        <t>When there is no &lt;postalLine&gt; child, the following child
+          elements are rendered into the HTML:
+          <list style='symbols'>
+            <t>Each &lt;street&gt; is rendered</t>
+            <t>A &lt;div&gt; that includes:
+              <list style='symbols'>
+                <t>The rendering of all &lt;city&gt; elements</t>
+                <t>A comma and a space: ", "</t>
+                <t>The rendering of all &lt;region&gt; elements</t>
+                <t>Whitespace</t>
+                <t>The rendering of all &lt;code&gt; elements</t>
+              </list>
+            </t>
+            <t>The rendering of all &lt;country&gt; elements</t>
+          </list>
+        </t>
+        <figure>
+          <artwork><![CDATA[
+<div class="adr">
+  <div class="street-address">1 Main Street</div>
+  <div class="street-address">Suite 1</div>
+  <div>
+    <span class="city">Denver</span>,
+    <span class="region">CO</span>
+    <span class="postal-code">80212</span>
+  </div>
+  <div class="country-name">United States of America</div>
+</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;postalLine&gt;" anchor="element.postalLine">
+        <t>This element renders as the text contained by the element, followed
+          by a newline.  However, the last &lt;postalLine&gt; in a given
+          &lt;postal&gt; element should not be followed by a newline.  For example:</t>
+        <figure>
+          <artwork><![CDATA[
+<postal>
+  <postalLine>In care of:</postalLine>
+  <postalLine>Computer Sciences Division</postalLine>
+</postal>]]></artwork>
+        </figure>
+        <t>Would be rendered as:</t>
+        <figure>
+          <artwork><![CDATA[
+<pre class="label">In care of:
+Computer Sciences Division</pre>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;refcontent&gt;" anchor="element.refcontent">
+        <t>This element renders as an HTML &lt;span&gt; with CSS class
+          "refContent".</t>
+
+        <figure>
+          <artwork><![CDATA[
+<span class="refContent">Self-published pamphlet</span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;reference&gt;" anchor="element.reference">
+        <t>If the parent of this element is not a &lt;referencegroup&gt;, this
+          element will render as a &lt;dt&gt; &lt;dd&gt; pair with the
+          defined term being the reference "anchor" attribute surrounded by
+          square brackets and the definition including the correct set of
+          bibliographic information as specified by <xref target="RFC7322"/>.
+          The &lt;dt&gt; element will have an "id" attribute of the reference
+          anchor.</t>
+        <figure>
+          <artwork><![CDATA[
+<dl class="reference">
+  <dt id="RFC5646">[RFC5646]</dt>
+  <dd>
+    <span class="refAuthor">Phillips, A.</span>
+    <span>and</span>
+    <span class="refAuthor">M. Davis</span>
+    <span class="refTitle">"Tags for Identifying Languages"</span>,
+    ...
+  </dd>
+</dl>]]></artwork>
+        </figure>
+
+
+        <t>If the child of a &lt;referencegroup&gt;, this
+          element renders as a &lt;div&gt; of class "refInstance" whose
+          "id" attribute is the value of the &lt;source&gt; element's "anchor"
+          attribute.</t>
+        <figure>
+          <artwork><![CDATA[
+<div class="refInstance" id="RFC5730">
+  ...
+</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;referencegroup&gt;" anchor="element.referencegroup">
+        <t>A &lt;referencegroup&gt; is translated into a &lt;dt&gt; &lt;dd&gt;
+          pair, with the defined term being the referencegroup "anchor"
+          attribute surrounded by square brackets, and the definition containing
+          the translated output of all of the child &lt;reference&gt;
+          elements.</t>
+        <figure>
+          <artwork><![CDATA[
+<dt id="STD69">[STD69]</dt>
+<dd>
+  <div class="refInstance" id="RFC5730">
+    <span class="refAuthor">Hollenbeck, S.</span>
+    ...
+  </div>
+  <div class="refInstance" id="RFC5731">
+    <span class="refAuthor">Hollenbeck, S.</span>
+    ...
+  </div>
+  ...
+</dd>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;references&gt;" anchor="element.references">
+        <t>If there is at exactly one &lt;references&gt; element, a
+          section is added to the document, continuing with the next
+          section number after the last top-level &lt;section&gt; in
+          &lt;middle&gt;.  The &lt;name&gt; element of the &lt;references&gt;
+          element is used as the section name.
+        </t>
+        <figure>
+          <artwork><![CDATA[
+<section id="n-my-references">
+  <h2 id="s-3">
+    <a href="#s-3" class="selfRef">3.</a>
+    <a href="#n-my-references class="selfRef">My References</a>
+  </h2>
+  ...
+</section>]]></artwork>
+        </figure>
+        <t>If there is more than one &lt;references&gt; element, an HTML
+          &lt;section&gt; element  is created to contain a subsection for
+          each of the &lt;references&gt;.  The section number will be the next
+          section number after the last top-level &lt;section&gt; in
+          &lt;middle&gt;. The name of this section will
+          be "References", and its "id" attribute will be "n-references".</t>
+        <figure>
+          <artwork><![CDATA[
+<section id="n-references">
+  <h2 id="s-3">
+    <a href="#s-3" class="selfRef">3.</a>
+    <a href="#n-references" class="selfRef">References</a>
+  </h2>
+  <section id="n-informative-references">
+    <h3 id="s-3.1">
+      <a href="#s-3.1" class="selfRef">3.1.</a>
+      <a href="#n-informative-references" class="selfRef">
+        Informative References</a></h3>
+    <dl class="reference">...
+    </dl>
+  </section>
+  ...
+</section>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;region&gt;" anchor="element.region">
+        <t>This element is rendered as a &lt;span&gt; tag with CSS
+          class "region".</t>
+
+        <figure>
+          <artwork><![CDATA[
+<span class="region">Colorado</span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;relref&gt;" anchor="element.relref">
+
+        <t>This element is rendered as an HTML &lt;a&gt; tag with CSS class
+          "relref" and "href" attribute of the "derivedLink" attribute of the
+          element. Different values of the "displayFormat" attribute cause
+          the text inside that HTML &lt;a&gt; tag to change and cause extra
+          text to be generated.  Some values of the "displayFormat"
+          attribute also cause another HTML &lt;a&gt; tag to be rendered
+          with CSS class "xref" and an "href" of "#" and the "target" attribute
+          (modified by any applicable &lt;displayreference&gt; XML element)
+          and text inside of the "target" attribute
+          (modified by any applicable &lt;displayreference&gt; XML element).
+          When used, this &lt;a class='xref'&gt; HTML tag is always surrounded
+          by square brackets, for example, "[&lt;a class='xref' href='#foo'&gt;foo&lt;/a&gt;]".</t>
+
+        <section title="displayFormat='of'" anchor="element.relref.df-of">
+          <t>The output is an &lt;a class='relref'&gt; HTML tag, with
+            contents of "Section " and the value of the "section" attribute.
+            This is followed by the word "of" (surrounded by whitespace). This
+            is followed by the &lt;a class='xref'&gt; HTML tag (surrounded by
+            square brackets).</t>
+          <t>For example, with an input of:</t>
+          <t>
+<figure>
+  <artwork>
+See &lt;relref section="2.3" target="RFC9999" displayFormat="of"
+derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"/&gt;
+for an overview.</artwork></figure>
+          </t>
+          <t>The HTML generated will be:</t>
+          <t>
+<figure>
+  <artwork>
+See &lt;a class="relref"
+href="http://www.rfc-editor.org/info/rfc9999#s-2.3"&gt;Section
+2.3&lt;/a&gt; of [&lt;a class="xref" href="#RFC9999"&gt;RFC9999&lt;/a&gt;]
+for an overview.</artwork></figure>
+          </t>
+        </section>
+        <section title="displayFormat='comma'" anchor="element.relref.df-comma">
+          <t>The output is an &lt;a class='xref'&gt; HTML tag (wrapped by
+            square brackets), followed by a comma (","), followed by
+            whitespace, followed by an &lt;a class='relref'&gt; HTML tag, with
+            contents of "Section " and the value of the "section"
+            attribute.</t>
+          <t>For example, with an input of:</t>
+          <t>
+<figure>
+  <artwork>
+See &lt;relref section="2.3" target="RFC9999" displayFormat="comma"
+derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"/&gt;,
+for an overview.</artwork></figure>
+          </t>
+          <t>The HTML generated will be:</t>
+          <t>
+<figure>
+  <artwork><![CDATA[
+See [<a class="xref" href="#RFC9999">RFC9999</a>], <a class="relref"
+href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section 2.3</a>,
+for an overview.]]></artwork></figure>
+          </t>
+        </section>
+        <section title="displayFormat='parens'" anchor="element.relref.df-parens">
+          <t>The output is an &lt;a&gt; element with "href" attribute whose value
+            is the value of the "target" attribute prepended by "#", and whose
+            content is the value of the "target" attribute; the entire element
+            is wrapped in square brackets.  This is followed by  whitespace.
+            This is followed by an &lt;a&gt; element whose "href" attribute is
+            the value of the "derivedLink" attribute and whose content is the
+            value of the "derivedRemoteContent" attribute; the entire element is
+            wrapped in  parentheses.</t>
+          <t>For example, if Section 2.3 of RFC 9999 has the title "Protocol
+            Overview", for an input of:</t>
+          <t>
+<figure>
+  <artwork>
+See &lt;relref section="2.3" target="RFC9999" displayFormat="parens"
+derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"
+derivedRemoteContent="Section 2.3"/&gt; for an overview.</artwork></figure>
+          </t>
+          <t>The HTML generated will be:</t>
+          <t>
+<figure>
+  <artwork><![CDATA[
+See [<a class="relref" href="#RFC9999">RFC9999</a>]
+(<a class="relref"
+href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section
+2.3</a>) for an overview.]]></artwork></figure>
+          </t>
+        </section>
+        <section title="displayFormat='bare'" anchor="element.relref.df-bare">
+          <t>The output is an &lt;a&gt; element whose "href" attribute is
+            the value of the "derivedLink" attribute and whose content is the
+            value of the "derivedRemoteContent" attribute.</t>
+          <t>For this input:</t>
+          <t>
+<figure>
+  <artwork>
+See &lt;relref section="2.3" target="RFC9999" displayFormat="bare"
+derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"
+derivedRemoteContent="Section 2.3"/&gt; and ...</artwork></figure>
+          </t>
+          <t>The HTML generated will be:</t>
+          <t>
+<figure>
+  <artwork><![CDATA[
+See <a class="relref"
+href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section
+2.3</a> and ...]]></artwork></figure>
+          </t>
+        </section>
+      </section>
+      <section title="&lt;rfc&gt;" anchor="element.rfc">
+        <t>Various attributes of this element are represented in different parts of the HTML
+          document.</t>
+      </section>
+      <section title="&lt;section&gt;" anchor="element.section">
+        <t>This element is rendered as an HTML &lt;section&gt; element,
+          containing an appropriate level HTML heading element
+          (&lt;h2&gt;-&lt;h6&gt;).  That heading element contains an &lt;a&gt;
+          element around the part number (pn), if applicable (for instance,
+          &lt;abstract&gt; does not get a section number).  Another &lt;a&gt;
+          element is included with the section's name.</t>
+        <figure>
+          <artwork><![CDATA[
+<section id="intro">
+  <h2 id="s-1">
+    <a href="#s-1" class="selfRef">1.</a>
+    <a href="#intro" class="selfRef">Introduction</a>
+  </h2>
+  <p id="s-1-1">Paragraph <a href="#s-1-1" class="pilcrow">&para;</a>
+  </p>
+</section>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;seriesInfo&gt;" anchor="element.seriesInfo">
+        <t>This element is rendered in an HTML &lt;span&gt; element with CSS
+          name "seriesInfo".</t>
+        <figure>
+          <artwork><![CDATA[
+<span class="seriesInfo">RFC 5646</span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;sourcecode&gt;" anchor="element.sourcecode">
+        <t>This element is rendered in an HTML &lt;pre&gt; element with a CSS class of
+          "sourcecode".  Note that CDATA blocks do not work consistently in
+          HTML, so all &lt;, &gt;, and &amp; must be escaped as &amp;lt;,
+          &amp;gt;, and &amp;amp;, respectively.  If the input XML has a "type"
+          attribute, another CSS class of "lang-" and the type is added.</t>
+        <t>If the sourcecode is not inside a &lt;figure&gt; element, a
+          <xref target='pilcrows'>pilcrow</xref> is included.  Inside a
+          &lt;figure&gt; element, the figure title serves the purpose of the
+          pilcrow.</t>
+        <figure>
+          <artwork><![CDATA[
+<pre class="sourcecode lang-c">
+#include &lt;stdio.h&gt;
+int main(void)
+{
+    printf(&quot;hello, world\n&quot;);
+    return 0;
+}
+</pre>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;street&gt;" anchor="element.street">
+        <t>This element renders as an HTML &lt;div&gt; element with CSS class
+          "street-address".</t>
+        <figure>
+          <artwork><![CDATA[
+<div class="street-address">1899 Wynkoop St, Suite 600</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;strong&gt;" anchor="element.strong">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;sub&gt;" anchor="element.sub">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;sup&gt;" anchor="element.sup">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;t&gt;" anchor="element.t">
+        <t>This element is rendered as an HTML &lt;p&gt; element.  A
+          <xref target='pilcrows'>pilcrow</xref> is included.</t>
+        <figure>
+          <artwork><![CDATA[
+<p id="s-1-1">A paragraph.
+  <a href="#s-1-1" class="pilcrow">&para;</a></p>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;table&gt;" anchor="element.table">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;tbody&gt;" anchor="element.tbody">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;td&gt;" anchor="element.td">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;tfoot&gt;" anchor="element.tfoot">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;th&gt;" anchor="element.th">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;thead&gt;" anchor="element.thead">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;title&gt;" anchor="element.title">
+        <t>The title of the document appears in a &lt;title&gt; element in the
+           &lt;head&gt; element, as described in <xref target="head-title"/>.</t>
+        <t>The title also appears in an &lt;h1&gt; element and follows directly
+           after the Document Information.  The &lt;h1&gt; element has an &quot;id&quot;
+           attribute with value "title".</t>
+        <figure>
+          <artwork><![CDATA[
+<h1 id="title">HyperText Markup Language Request For
+    Comments Format</h1>]]></artwork>
+        </figure>
+
+<!--FYI - title update requires update to example title above.
+-->
+        <t>Inside a reference, the title is rendered as an HTML &lt;span&gt;
+          tag with CSS class "refTitle".  The text is surrounded by quotes
+          inside the &lt;span&gt;.</t>
+        <figure>
+          <artwork><![CDATA[
+<span class="refTitle">"Tags for Identifying Languages"</span>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;tr&gt;" anchor="element.tr">
+        <t>This element is directly rendered as its HTML counterpart.</t>
+      </section>
+      <section title="&lt;tt&gt;" anchor="element.tt">
+        <t>This element is rendered as an HTML &lt;code&gt; element.</t>
+      </section>
+      <section title="&lt;ul&gt;" anchor="element.ul">
+      <t>This element is directly rendered as its HTML counterpart. If the
+        "spacing" attribute has the value "compact", a CSS class of "ulCompact"
+        will be added. If the "empty" attribute has the value "true", a CSS
+        class of "ulEmpty" will be added.</t>
+      </section>
+      <section title="&lt;uri&gt;" anchor="element.uri">
+
+
+        <t>This element is
+          rendered as an HTML &lt;div&gt; containing the string "URI:" and
+          an HTML &lt;a&gt; element with the "href" attribute set to the
+          linked URI, CSS class of "url" (note that the value is "url", not "uri" as one might expect), and the contents
+          set to the linked URI.</t>
+
+        <figure>
+          <artwork><![CDATA[
+<div>URI:
+  <a href="http://www.example.com"
+     class="url">http://www.example.com</a>
+</div>]]></artwork>
+        </figure>
+      </section>
+      <section title="&lt;workgroup&gt;" anchor="element.workgroup">
+        <t>This element does not add any direct output to HTML.</t>
+      </section>
+      <section title="&lt;xref&gt;" anchor="element.xref">
+        <t>This element is rendered as an HTML &lt;a&gt; element containing an
+          appropriate local link as the "href" attribute.  The value of the
+          "href" attribute is taken from the "target" attribute,
+          prepended by "#".  The &lt;a&gt; element generated will have
+          class "xref".  The contents of the &lt;a&gt; element are
+          the value of the "derivedContent" attribute. If the "format"
+          attribute has the value "default", and the "target" attribute points
+          to a &lt;reference&gt; or &lt;referencegroup&gt; element, then
+          the generated &lt;a&gt; element is surrounded by square brackets
+          in the output.</t>
+        <figure>
+          <artwork><![CDATA[
+<a class="xref" href="#target">Table 2</a>]]></artwork>
+        </figure>
+        <t>or</t>
+        <figure>
+          <artwork><![CDATA[
+[<a class="xref" href="#RFC1234">RFC1234</a>]]]></artwork>
+        </figure>
+      </section>
+      <!--
+        Moved to the end so I can stop wondering why there are
+        more sections in this doc than v3.
+      -->
+      <section title="&lt;svg xmlns='http://www.w3.org/2000/svg'&gt;" anchor="element.svg">
+        <t>This element is rendered as part of the &lt;artwork&gt; element.
+          The "xmlns='http://www.w3.org/2000/svg'" namespace declaration should
+          be included, and the SVG should be serialized as well-formed XML,
+          even for tags that would otherwise not need closing in HTML5.</t>
+      </section>
+
+    </section>
+
+    <section anchor="security-considerations" title="Security Considerations">
+      <t>Since RFCs are sometimes exchanged outside the normal Web sandboxing mechanism
+        (such as using the "rsync" program to a mirror site) then loaded from a local file, more care must be taken
+        with the HTML than is ordinary on the web. </t>
+    </section>
+
+  </middle>
+  <back>
+    <references title="Normative References">
+&RFC2397;
+&RFC3629;
+&RFC5646;
+&RFC7322;
+
+
+
+<reference  anchor='BCP14' target='http://www.rfc-editor.org/info/bcp14'>
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author initials='S.' surname='Bradner' fullname='S. Bradner'><organization /></author>
+<date year='1997' month='March' />
+<abstract><t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized. This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract>
+</front>
+<seriesInfo name='BCP' value='14'/>
+<seriesInfo name='RFC' value='2119'/>
+</reference>
+
+
+<!--&I-D.iab-rfc-css; Companion Document-->
+
+
+<reference anchor='RFC7993' target='http://www.rfc-editor.org/info/rfc7993'>
+<front>
+<title>Cascading Style Sheets (CSS) Requirements for RFCs</title>
+
+<author initials='H' surname='Flanagan' fullname='Heather Flanagan'>
+    <organization />
+</author>
+
+<date month='December' year='2016' />
+
+<abstract><t>The HTML format for RFCs, described in [I-D.iab-html-rfc] assigns style guidance to an RFC Editor-defined Cascading Style Sheet (CSS). The embedded, default CSS as included by the RFC Editor is expected to take into account accessibility needs and be built along a responsive design model.  This document describes the requirements for the default CSS used by the RFC Editor.  The class names are based on the classes defined in draft-iab-html-rfc.  Discussion of this draft takes place on the rfc-interest mailing list (rfc-interest@rfc-editor.org), which has its home page at https://www.rfc-editor.org/mailman/listinfo/rfc-interest.</t></abstract>
+
+</front>
+
+<seriesInfo name='RFC' value='7993' />
+<seriesInfo name="DOI" value="10.17487/RFC7993"/>
+
+</reference>
+
+
+<!--&I-D.iab-xml2rfc; Companion Document-->
+
+<reference anchor='RFC7991' target='http://www.rfc-editor.org/info/rfc7991'>
+<front>
+<title>The "xml2rfc" Version 3 Vocabulary</title>
+
+<author initials='P' surname='Hoffman' fullname='Paul E. Hoffman'>
+    <organization />
+</author>
+
+<date month='December' year='2016' />
+
+</front>
+
+<seriesInfo name='RFC' value='7991' />
+<seriesInfo name="DOI" value="10.17487/RFC7991"/>
+
+</reference>
+
+
+<!--&W3C.REC-html5-20141028; -->
+
+<reference anchor='W3C.REC-html5-20141028'
+           target='http://www.w3.org/TR/2014/REC-html5-20141028'>
+<front>
+<title>HTML5</title>
+
+<author initials='I.' surname='Hickson' fullname='Ian Hickson'>
+    <organization />
+</author>
+
+<author initials='R.' surname='Berjon' fullname='Robin Berjon'>
+    <organization />
+</author>
+
+<author initials='S.' surname='Faulkner' fullname='Steve Faulkner'>
+    <organization />
+</author>
+
+<author initials='T.' surname='Leithead' fullname='Travis Leithead'>
+    <organization />
+</author>
+
+<author initials='E.' surname='Navara' fullname='Erika Doyle Navara'>
+    <organization />
+</author>
+
+<author initials='T.' surname='O&amp;#039;Connor' fullname='Theresa O&amp;#039;Connor'>
+    <organization />
+</author>
+
+<author initials='S.' surname='Pfeiffer' fullname='Silvia Pfeiffer'>
+    <organization />
+</author>
+
+<date month='October' day='28' year='2014' />
+</front>
+
+<seriesInfo name='World Wide Web Consortium Recommendation' value='REC-html5-20141028' />
+<format type='HTML' target='http://www.w3.org/TR/2014/REC-html5-20141028' />
+</reference>
+
+
+      <reference anchor="W3C.REC-CSS2-20110607" target="http://www.w3.org/TR/2011/REC-CSS2-20110607">
+        <front>
+          <title>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</title>
+          <author initials="B." surname="Bos" fullname="Bert Bos">
+            <organization/>
+          </author>
+          <author initials="T." surname="Celik" fullname="Tantek Celik">
+            <organization/>
+          </author>
+          <author initials="I." surname="Hickson" fullname="Ian Hickson">
+            <organization/>
+          </author>
+          <author initials="H." surname="Lie" fullname="Hakon Wium Lie">
+            <organization/>
+          </author>
+          <date month="June" day="7" year="2011"/>
+        </front>
+        <seriesInfo name="World Wide Web Consortium Recommendation" value="REC-CSS2-20110607"/>
+        <format type="HTML" target="http://www.w3.org/TR/2011/REC-CSS2-20110607"/>
+      </reference>
+    </references>
+
+    <references title="Informative References">
+
+<reference anchor="RFC-STYLE"
+	   target="https://www.rfc-editor.org/styleguide/">
+  <front>
+    <title>Style Guide</title>
+    <author >
+      <organization>RFC Editor</organization>
+    </author>
+    <date/>
+  </front>
+</reference>
+
+
+      <reference anchor="W3C.WD-css3-page-20130314" target="http://www.w3.org/TR/2013/WD-css3-page-20130314">
+        <front>
+          <title>CSS Paged Media Module Level 3</title>
+          <author initials="M." surname="Grant" fullname="Melinda Grant">
+            <organization/>
+          </author>
+          <author initials="E." surname="Etemad" fullname="Elika Etemad">
+            <organization/>
+          </author>
+          <author initials="H." surname="Lie" fullname="Hakon Wium Lie">
+            <organization/>
+          </author>
+          <author initials="S." surname="Sapin" fullname="Simon Sapin">
+            <organization/>
+          </author>
+          <date month="March" day="14" year="2013"/>
+        </front>
+        <seriesInfo name="World Wide Web Consortium WD" value="WD-css3-page-20130314"/>
+        <format type="HTML" target="http://www.w3.org/TR/2013/WD-css3-page-20130314"/>
+      </reference>
+
+    <reference anchor="HCARD" target="http://microformats.org/wiki/hcard">
+      <front>
+        <title>hCard 1.0</title>
+        <author initials="T." surname = "Celik" fullname="Tantek Celik"/>
+        <date year="2015"/>
+      </front>
+    </reference>
+&RFC6949;
+<!--&I-D.iab-rfcv3-preptool; Companion Doc-->
+
+
+
+<reference anchor='RFC7998' target='http://www.rfc-editor.org/info/rfc7998'>
+<front>
+<title>"xml2rfc" Version 3 Preparation Tool Description</title>
+
+<author initials='P' surname='Hoffman' fullname='Paul E. Hoffman'>
+    <organization />
+</author>
+
+<author initials='J' surname='Hildebrand' fullname='Joe Hildebrand'>
+    <organization />
+</author>
+
+<date month='December' year='2016' />
+
+<abstract><t>This document describes some aspects of the "prep tool" that is expected to be created when the new RFC v3 specification is deployed.</t></abstract>
+
+</front>
+
+<seriesInfo name='RFC' value='7998' />
+<seriesInfo name="DOI" value="10.17487/RFC7998"/>
+
+</reference>
+
+
+<!--&I-D.iab-rfc-framework; Companion doc-->
+
+
+
+<reference anchor='RFC7990' target='http://www.rfc-editor.org/info/rfc7990'>
+<front>
+<title>RFC Format Framework</title>
+
+<author initials='H' surname='Flanagan' fullname='Heather Flanagan'>
+    <organization />
+</author>
+
+<date month='December'  year='2016' />
+
+<abstract><t>The canonical format for the RFC Series has been plain-text, ASCII-encoded for several decades.  After extensive community discussion and debate, the RFC Editor will be transitioning to XML as the canonical format using the XML2RFC version 3 vocabulary.  Different publication formats will be rendered from that base document.  These changes are intended to increase the usability of the RFC Series by offering documents that match the needs of a wider variety of stakeholders.  With these changes, however, comes an increase in complexity for authors, consumers, and the publisher of RFCs.  This document serves as the framework that describes the problems being solved and summarizes the many documents that capture the specific requirements for each aspect of the change in format.</t></abstract>
+
+</front>
+
+<seriesInfo name='RFC' value='7990' />
+<seriesInfo name="DOI" value="10.17487/RFC7990"/>
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-iab-rfc-framework-06.txt' />
+</reference>
+
+
+    </references>
+
+
+  <section title="IAB Members at the Time of Approval" numbered="no">
+
+  <t>The IAB members at the time this memo was approved were (in alphabetical order):                                                       
+
+<?rfc subcompact="yes" ?>
+<list>
+ <t>Jari Arkko</t>
+ <t>Ralph Droms</t>
+ <t>Ted Hardie</t>
+ <t>Joe Hildebrand</t>
+ <t>Russ Housley</t>
+<t>Lee Howard</t>
+ <t>Erik Nordmark</t>
+ <t>Robert Sparks</t>
+ <t>Andrew Sullivan</t>
+ <t>Dave Thaler</t>
+<t>Martin Thomson</t>
+ <t>Brian Trammell</t>
+ <t>Suzanne Woolf</t>
+</list>
+<?rfc subcompact="no" ?>
+  </t>
+  </section>
+
+ <section anchor="appendix-a-acknowledgments" title="Acknowledgments" numbered="no">
+      <t>Heather Flanangan was an early coauthor of this document and helped its formation.
+        The authors gratefully acknowledge the contributions of: Patrick Linskey and the
+        members of the RFC Format Design Team (Nevil Brownlee (ISE), Tony Hansen,
+        Ted Lemon, Julian Reschke, Adam Roach, Alice Russo, Robert Sparks
+	(Tools Team liaison), and
+        Dave Thaler).
+</t>
+    </section>
+
+
+  </back>
+</rfc>

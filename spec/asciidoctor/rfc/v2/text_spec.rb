@@ -86,4 +86,14 @@ describe Asciidoctor::RFC::V2::Converter do
     text_compare("spec/examples/hoffmanv2.xml.orig", "spec/examples/hoffmanv2.xml.xml")
     expect(norm(File.read("spec/examples/hoffmanv2.xml.orig.txt"))).to be_equivalent_to norm(File.read("spec/examples/hoffmanv2.xml.xml.txt"))
   end
+  it "processes draft-iab-rfc-framework-bis RFC XML v2 example with equivalent text" do
+    system("bin/asciidoctor-rfc2 spec/examples/draft-iab-rfc-framework-bis.xml.adoc")
+    text_compare("spec/examples/draft-iab-rfc-framework-bis.xml.orig", "spec/examples/draft-iab-rfc-framework-bis.xml.xml")
+    expect(norm(File.read("spec/examples/draft-iab-rfc-framework-bis.xml.orig.txt"))).to be_equivalent_to norm(File.read("spec/examples/draft-iab-rfc-framework-bis.xml.xml.txt"))
+  end
+  it "processes draft-iab-html-rfc-bis RFC XML v2 example with equivalent text" do
+    system("bin/asciidoctor-rfc2 spec/examples/draft-iab-html-rfc-bis.xml.adoc")
+    text_compare("spec/examples/draft-iab-html-rfc-bis.xml.orig", "spec/examples/draft-iab-html-rfc-bis.xml.xml")
+    expect(norm(File.read("spec/examples/draft-iab-html-rfc-bis.xml.orig.txt"))).to be_equivalent_to norm(File.read("spec/examples/draft-iab-html-rfc-bis.xml.xml.txt"))
+  end
 end

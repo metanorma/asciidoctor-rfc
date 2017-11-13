@@ -21,6 +21,7 @@ Elwyn Davies <elwynd@dial.pipex.com>
 :inline-definition-lists: true
 :compact: yes
 :subcompact: no
+:rfc2629xslt: true
 
 [abstract]
 Insert an abstract: MANDATORY. This template is for creating an

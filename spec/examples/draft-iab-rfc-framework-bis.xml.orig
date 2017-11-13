@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
+
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY RFC5741 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5741.xml">
+<!ENTITY RFC6949 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6949.xml">
+<!ENTITY RFC4845 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4845.xml">
+<!ENTITY RFC6635 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6635.xml">
+<!ENTITY RFC7322 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7322.xml">
+<!ENTITY I-D.iab-xml2rfc SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-xml2rfc.xml">
+<!ENTITY RFC7749 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7749.xml">
+<!ENTITY I-D.iab-svg-rfc SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-svg-rfc.xml">
+<!ENTITY I-D.iab-rfc-use-of-pdf SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-rfc-use-of-pdf.xml">
+<!ENTITY I-D.iab-html-rfc SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-html-rfc.xml">
+<!ENTITY I-D.iab-rfc-plaintext SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-rfc-plaintext.xml">
+<!ENTITY I-D.iab-rfc-nonascii SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-rfc-nonascii.xml">
+<!ENTITY I-D.iab-rfc-css SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.iab-rfc-css.xml">
+
+]>
+
+<rfc ipr="trust200902" docName="draft-iab-rfc-framework-06" category="info">
+
+<?rfc toc="yes"?> 
+
+  <front>
+    <title abbrev="RFC Format Framework">RFC Format Framework</title>
+
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization>RFC Editor</organization>
+      <address>
+        <email>rse@rfc-editor.org</email>
+        <uri>http://orcid.org/0000-0002-2647-2220</uri>
+      </address>
+    </author>
+
+    <date year="2016" month="June" day="23"/>
+    
+    <area>General</area>
+
+    <workgroup>Internet Architecture Board</workgroup>
+
+    <abstract>
+
+
+<t>The canonical format for the RFC Series has been plain-text, ASCII-encoded for several decades.  After extensive community discussion and debate, the RFC Editor will be transitioning to XML as the canonical format using the XML2RFC version 3 vocabulary. Different publication formats will be rendered from that base document.  These changes are intended to increase the usability of the RFC Series by offering documents that match the needs of a wider variety of stakeholders.  With these changes, however, comes an increase in complexity for authors, consumers, and the publisher of RFCs.  This document serves as the framework that describes the problems being solved and summarizes the many documents that capture the specific requirements for each aspect of the change in format.</t>
+
+    </abstract>
+
+<note title="Editorial Note (To be removed by RFC Editor)">
+<t>Discussion of this draft takes place on the rfc-interest mailing list (rfc-interest@rfc-editor.org), which has its home page at https://www.rfc-editor.org/mailman/listinfo/rfc-interest.</t>
+</note>
+
+
+
+
+  </front>
+
+  <middle>
+
+
+<section anchor="introduction" title="Introduction">
+
+<t>"RFC Series Format Requirements and Future Development" discussed the need for additional features within RFCs such as non-ASCII characters to respect author names, more advanced artwork than ASCII art, and documents that could display properly on a wide variety of devices <xref target="RFC6949"/>.  Based on the discussions with the IETF community as well as other communities of interest, the RFC Series Editor decided to explore a change to the format of the Series <xref target="XML-ANNOUNCE"/>.  This document serves as the framework that describes the problems being solved and summarizes the documents created to-date that capture the specific requirements for each aspect of the change in format.  </t>
+
+<t>Key changes to the publication of RFCs are highlighted, and a transition plan that will take the Series from a plain-text, ASCII-only format to the new formats is described on the rfc-interest mailing list <xref target="RFC-INTEREST"/>.</t>
+
+<t>This document is concerned with the production of RFCs, focusing on the published formats. It does not address any changes to the processes each stream uses to develop and review their submissions (specifically, how Internet-Drafts will be developed).  While I-Ds have a similar set of issues and concerns, directly addressing those issues for I-Ds will be discussed within each document stream.</t>
+
+<t>The details described in this document are expected to change based on experience gained in implementing the RFC Production Center's toolset. Revised documents will be published capturing those changes as the toolset is completed. Other implementers must not expect those changes to remain backwards-compatible with the details described this document.</t>
+
+
+</section>
+<section anchor="problem-statement" title="Problem Statement">
+
+<t>There are nearly three billion people connected to the Internet, and individuals from 45 countries or more regularly attending IETF meetings over the last five years <xref target="ISTATS"/>.  The Internet is now global, and while the world has changed from when the first RFCs were published, the Series remains critical to defining protocols, standards, best practices, and more for this global network that continues to grow.  In order to make RFCs easily viewable to the largest number of people possible, across a wide array of devices, and to respect the diversity of authors and reference materials while still recognizing the archival aspects of the Series, it is time to update the tightly prescribed format of the RFC Series.</t>
+
+<t>All changes to the format of the RFC Series must consider the requirements of a wide set of communities, over an extended length of time.  For example, existing authors and implementers, lawyers that argue Intellectual Property Rights (IPR), educators, managers, and policy-makers that need to know what to list in potential RFPs for their organizations, all have preferences and requirements for their specific needs.  The immediate needs of today's communities must be balanced with the needs for long-term archival storage.  </t>
+
+</section>
+<section anchor="terminology" title="Terminology">
+
+<t>The following terminology is used as described in RFC 6949:</t>
+
+<t><list style='empty'>
+  <t>ASCII: Coded Character Set - 7-bit American Standard Code for Information Interchange, ANSI X3.4-1986</t>
+</list></t>
+
+<t><list style='empty'>
+  <t>Canonical format: the authorized, recognized, accepted, and archived version of the document</t>
+</list></t>
+
+<t><list style='empty'>
+  <t>Metadata: information associated with a document so as to provide, for example, definitions of its structure, or of elements within the document such as its topic or author</t>
+</list></t>
+
+<t><list style='empty'>
+  <t>Publication format: display and distribution format as it may be read or printed after the publication process has completed</t>
+</list></t>
+
+<t><list style='empty'>
+  <t>Reflowable text: text that automatically wraps to the next line in a document as the user moves the margins of the text, either by resizing the window or changing the font size</t>
+</list></t>
+
+<t><list style='empty'>
+  <t>Revisable format: the format that will provide the information for conversion into a Publication format; it is used or created by the RFC Editor</t>
+</list></t>
+
+<t><list style='empty'>
+  <t>Submission format: the format submitted to the RFC Editor for editorial revision and publication</t>
+</list></t>
+
+</section>
+<section anchor="overview-of-the-decision-making-process" title="Overview of the Decision Making Process">
+
+<t>Requirements, use cases, concerns, and suggestions were collected from the communities of interest at every stage of the RFC format update project.  Input was received through the rfc-interest mailing list, as well as in several face-to-face sessions at IETF meetings.  Regular conversations were held with the IETF, IRTF, IAB, and IAOC chairs, and the Independent Stream Editor, to discuss high-level stream requirements.  Updates regarding the status of the project were provided to the IETF community during the IETF Technical Plenary as well as Format BoFs or IAB sessions at IETF 84, IETF 85, IETF 88, IETF 89, and IETF 90 <xref target="IETF84"/> <xref target="IETF85"/> <xref target="IETF88"/> <xref target="IETF89"/> <xref target="IETF90"/>. </t>
+
+<t>The first document published, RFC 6949, provided the first solid documentation on what the requirements were for the Series and in effect was the output from the first year of discussion on the topic of RFC format.  That RFC, as with all of the RFCs that informed the format update work, was published as an IAB stream document, thus following the process described in RFC 4845, "Process for Publication of IAB RFCs" <xref target="RFC4845"/>.  </t>
+
+<t>After the high-level requirements were published, the RFC Series Editor (RSE) brought together an RFC Format Design Team to start working out the necessary details to develop the code needed to create new and changed formats. The design team discussed moving away from the existing xml2rfc vocabulary, but with such a strong existing support base within the community and no clear value with other XML vocabularies or schemas, the decision was made to work with the XML2RFC version 2 (xml2rfc v2)  model and use it as the base for the new format world <xref target="RFC7749"/>. Part of this discussion included a decision to stop using an XML document type definition (DTD) in favor of a Regular Language for XML Next General (Relax NG) model using a defined vocabulary. While the bi-weekly calls for this team were limited to Design Team members, review of the decisions as documented in the drafts produced by this team were done publicly through requests for feedback on the rfc-interest mailing list.  Several of the drafts produced by the Design Team, including the xml2rfc v2 and v3 drafts and the SVG profile drafts, were sent through an early GenART review before starting the process to be accepted as an IAB stream draft <xref target="GEN-ART"/> <xref target="I-D.iab-xml2rfc"/>. </t>
+
+<t>While the IETF community provided the majority of input on the process, additional outreach opportunities were sought to gain input from an even broader audience.  Informal discussions were held with participants at several International Association of Scientific, Technical, and Medical Publisher events, and presentations made at technical conferences such as the TERENA Networking Conference 2014 and NORDUnet 2014 <xref target="TNC2014"/> <xref target="NDN2014"/>.</t>
+
+<t>In order to respond to concerns regarding responses to subpoenas and to understand the requirements for lawyers, advice was requested from the IETF Trust legal team regarding what format or formats would be considered reasonable when responding to a subpoena request for an RFC.</t>
+
+<t>Given that several other standards development organizations (SDOs) do not offer plain-text documents, and in fact may offer more than one format for their standards, informal input was sought from them regarding their experience with supporting one or more non-plain-text formats for their standards.</t>
+
+<t>Finally, the entire process was reviewed regularly with the RFC Series Oversight Committee and regular updates provided to the IAB and IESG <xref target="RSOC"/>. They have offered support and input throughout the process.</t>
+
+<t>Where consensus was not reached during the process, the RSE made any necessary final decisions, as per the guidance in RFC 6635, "RFC Editor Model (Version 2)" <xref target="RFC6635"/>.</t>
+
+</section>
+<section anchor="key-changes" title="Key Changes">
+
+<t>At the highest level, the changes being made to the RFC Format involve breaking away from a pure-ASCII plain text and moving to canonical format that includes all the information required for rendering a document into a wide variety of publication formats.  The RFC Editor will become responsible for more than just the plain-text file and the PDF-from-text format created at time of publication; they will be creating several different formats in order to meet the diverse requirements of the community.</t>
+
+<t>The final XML file produced by the RFC Editor will be considered the canonical format for RFCs; it is the lowest common denominator that holds all the information intended for an RFC.  PDF/A-3 will be the publication format offered in response to subpoenas for RFCs published through this new process, and will be developed with an eye towards long-term archival storage.  HTML will be the focus of providing the most flexible set of features for an RFC, including JavaScript to provide pointers to errata and other metadata.  Plain-text will continue to be offered in order to support existing tool chains where practicable and the individuals who prefer to read RFCs in this format.</t>
+
+
+</section>
+
+<section anchor="canonical-format-documents" title="Canonical Format Documents">
+<section anchor="xml" title="XML for RFCs">
+
+<t>Key points regarding the XML format:</t>
+
+<t><list style='symbols'>
+  <t>The canonical format for RFCs is XML using the XML2RFC version 3 (xml2rfc v3) vocabulary.  This file must contain all information necessary to render a variety of formats; any question about what was intended in the publication will be answered from this format.</t>
+  <t>Authors may submit drafts in xml2rfc v2 vocabulary, but the final publication will convert that to xml2rfc v3 vocabulary.</t>
+  <t>SVG is supported and will be embedded in the final XML file.</t>
+  <t>There will be automatically generated identifiers for sections, paragraphs, figures, and tables in the final XML file.</t>
+  <t>The XML file will not contain any xml2rfc v3 vocabulary elements or attributes that have been marked deprecated. </t>
+  <t>A Document Type Definition (DTD) will no longer be used. The grammar will be defined using RelaxNG.</t>
+  <t>The final XML file will contain, verbatim, the appropriate boilerplate as applicable at time of publication specified by RFC 5741 or its successors <xref target="RFC5741"/>.</t>
+  <t>The final XML will be self-contained with all the information known at publication time. For instance, all features that reference externally-defined input will be expanded. This includes all uses of xinclude, src attributes (such as in &lt;artwork&gt; or &lt;sourcecode&gt; elements), include-like processing instructions, and externally defined entities.</t>
+  <t>The final XML will not contain comments or processing instructions.</t>
+  <t>The final XML will not contain src attributes for &lt;artwork&gt; or 
+&lt;sourcecode&gt; elements.</t>
+</list></t>
+
+<t><xref target="RFC7749"/> describes the xml2rfc v2 vocabulary.  While in wide use today, this vocabulary previously had not been formally documented.  In order to understand what needed to change in the vocabulary to allow for a more simple experience and additional features for authors, the current vocabulary needed to be fully described.  This document will be obsoleted by the RFC published from draft-iab-xml2rfc.</t>
+
+<t><xref target="I-D.iab-xml2rfc"/> Describes the xml2rfc v3 vocabulary.  The design goals in this vocabulary were to make the vocabulary more intuitive for authors, and to expand the features to support the changes being made in the publication process.  This draft, when published, will obsolete the RFC 7749.</t>
+
+</section>
+</section>
+<section anchor="publication-format-documents" title="Publication Format Documents">
+
+<section anchor="html" title="HTML">
+<t><xref target="I-D.iab-html-rfc"/> - Describes the semantic HTML that will be produced by the RFC Editor from the xml2rfc v3 files.</t>
+
+<t>Key points regarding the HTML output:</t>
+
+<t><list style='symbols'>
+  <t>The HTML will be rendered from the XML file; it will not be derived from the plain-text publication format.</t>
+  <t>The body of the document will use a subset of HTML. The documents will include CSS for default visual presentation; it can be overwritten by a local CSS file.</t> 
+  <t>SVG is supported and will be included in the HTML file.</t>
+  <t>Text will be reflowable.</t>
+  <t>JavaScript will be supported on a limited basis.  It will not be permitted to overwrite or change any text present in the rendered html.  It may, on a limited basis, add additional text that provides post-publication metadata or pointers if warranted.  All such text will be clearly marked as additional.</t>
+</list></t>
+
+
+</section>
+<section anchor="pdf" title="PDF">
+<t><xref target="I-D.iab-rfc-use-of-pdf"/> - Describes the tags and profiles that will be used to create the new PDF format, including both the internal structure and the visible layout of the file.  A review of the different versions of PDF is offered, with a recommendation of what PDF standard should apply to RFCs.</t>
+
+<t>Key points regarding the PDF output:</t>
+
+<t><list style='symbols'>
+  <t>The PDF file will be rendered from the XML file; it will not be derived from the plain-text publication format.</t>
+  <t>The PDF publication format will conform to the PDF/A-3 standard and will embed the canonical XML source.</t>
+  <t>The PDF will look more like the HTML publication format than the plain-text publication format.</t>
+  <t>The PDF will include a rich set of tags and metadata within the document</t>
+  <t>SVG is supported and will be included in the PDF file.</t>
+</list></t>
+
+</section>
+<section anchor="plain-text" title="Plain Text">
+<t><xref target="I-D.iab-rfc-plaintext"/> - Describes the details of the plain text format, focusing in particular on what is changing from the existing plain-text output.</t>
+
+<t>Key points regarding the plain-text output:</t>
+
+<t><list style='symbols'>
+  <t>The plain-text document will no longer be the canonical version of an RFC.
+  </t>
+  <t>The plain-text format will be UTF-8 encoded; non-ASCII characters will be allowed.</t>
+  <t>A Byte Order Mark (BOM) will be added at the start of each file.</t>
+  <t>Widow and orphan control for the plain-text publication format will not have priority for the developers creating the rendering code <xref target="TYPOGRAPHY"/>.</t>
+  <t>Authors may choose to have pointers to line art in other publication formats in place of ASCII art in the .txt file.</t>
+  <t>Both a paginated and an unpaginated plain-text file will be created.</t>
+  <t>Running headers and footers will not be used.</t>
+</list></t>
+
+</section>
+<section anchor="potential-future-publication-formats" title="Potential Future Publication Formats">
+
+<section anchor="epub" title="EPUB">
+<t>This format is intended for use by ebook readers and will be available for RFCs after the requirements have been defined.  No draft is currently available.</t>
+
+</section>
+</section>
+</section>
+<section anchor="figures-and-artwork" title="Figures and Artwork">
+
+<section anchor="svg" title="SVG">
+<t><xref target="I-D.iab-svg-rfc"/> Describes the profile for SVG line art.  SVG is an XML-based vocabulary for creating line drawings; SVG information will be embedded within the canonical XML at time of publication.</t>
+
+</section>
+</section>
+<section anchor="content-and-page-layout" title="Content and Page Layout">
+
+<section anchor="non-ascii-characters" title="Non-ASCII Characters">
+<t>There are security and readability implications to moving outside the ASCII range of characters.  <xref target="I-D.iab-rfc-nonascii"/> focuses on exactly where and how non-ASCII characters may be used in an RFC, with an eye towards keeping the documents as secure and readable as possible given the information that needs to be expressed.</t>
+
+</section>
+<section anchor="style-guide" title="Style Guide">
+<t>The RFC Style Guide <xref target="RFC7322"/> was revised to remove as much page formatting information as possible, focusing instead on grammar, structure, and content of RFCs.  Some of the changes recommended, however, informed the XML v3 vocabulary.</t>
+
+</section>
+<section anchor="css-requirements" title="CSS Requirements">
+<t><xref target="I-D.iab-rfc-css"/> describe how the CSS classes mentioned in the HTML format draft, "HyperText Markup Language Request for Comments Format", should be used to create an accessible and responsive design for the HTML format.</t>
+
+</section>
+</section>
+<section anchor="transition-plan" title="Transition Plan">
+
+<section anchor="tooldev-phase" title="Statement of Work and RFP for Tool Development">
+<t>Existing tools for the creation of RFCs will need to be updated, and new tools created, to implement the updated format.  As the requirements gathering effort, described in the various documents described earlier int this draft, finishes the bulk of the work, the Tools Development Team of the IETF will work with the RSE to develop Statements of Work (SoWs).  Those SoWs will first be reviewed within the Tools Development Team, the Tools Management Committee, and go out for a public comment period.  After public review, the SoWs will be attached to a Request for Proposal (RFP) and posted as per the IASA bid process <xref target="IASA-RFP"/>.</t>
+
+<t>Once bids have been received, reviewed, and awarded, coding will begin.</t>
+
+</section>
+<section anchor="testing-phase" title="Testing and Transition">
+
+<t>During the I-D review and approval process, authors and stream-approving bodies will select drafts to run through the proposed new publication process.  While the final RFCs published during this time will continue as plain-text and immutable once published, the feedback process is necessary to bootstrap initial testing.  These early tests will target finding issues with the proposed xml2rfc v3 vocabulary that result in poorly formed publication formats as well as issues that prevent proper review of submitted drafts.</t>
+
+<t>Feedback will result in regular iteration of the basic code and XML vocabulary.  In order to limit the amount of time the RFC Production Center (RPC) spends on testing and QA, their priority will be to edit and publish documents; therefore, community assistance will be necessary to help move this stage along.  A mailing list and experimental source directory on the RFC Editor website will be created for community members willing to assist in the detailed review of the XML and publication formats.  Editorial checks of the publication formats by the community are out of scope; the focus will be the QA of each available output, checking for inconsistencies across formats.</t>
+
+<t>The purpose of testing phase is to work with the community to identify and fix bugs in the process and the code, before producing canonical, immutable XML, and to collect additional feedback on the usability of the new publication formats.</t>
+
+<t>Any modifications to the draft review process, up to and including AUTH48, will happen with the community and the stream approving bodies as we learn more about the features and outputs of the new publication tools. Defining those processes is out of scope for this document.</t>
+
+<t>Success will be measured by the closure of all bugs which had been identified by the RPC and the Tools Development team as fatal and consensus on the readiness of the XML vocabulary and final XML files for publication.  The actual rendering engine can go through further review and iteration, as the publication formats may be republished as needed.</t>
+
+<t>Authors are not required to submit their approved drafts in an XML format, though they are strongly encouraged to do so; plain-text will also remain an option for the foreseeable future.  However, documents submitted as plain-text cannot include such features as SVG artwork. The RPC will generate an XML file if necessary for basic processing and subsequent rendering into the approved output formats.</t>
+
+<t>A known risk at this point of the transition is the difficulty in quantifying the resources required from the RPC.  This phase will require more work on the part of the RPC to support both old and new publication processes for at least six months.  There is potential for confusion as consumers of RFCs find some documents published at this time with a full set of outputs, while other documents only have plain text.  There may be a delay in publication as new bugs are found that must be fixed before the files can be converted into the canonical format and associated publication formats.</t>
+
+<t>Final success of the transition will be measured by the closure of all bugs which had been identified by the RPC and the Tools Development team as major or critical.  There must also be rough consensus from the community regarding the utility of the new formats.</t>
+
+</section>
+<section anchor="completion" title="Completion">
+<t>Authors may submit XML (preferred) or plain text.  The XML drafts submitted for publication will be converted to canonical XML format and published with all available publication formats.  All authors will be expected to review the final documents as consistent with the evolving procedures for reviewing drafts.</t>
+
+<t>Success for this phase will be measured by a solid understanding by the RSE and the IAOC of the necessary costs and resources required for long-term support of the new format model.</t>
+
+</section>
+</section>
+<section anchor="iana-considerations" title="IANA Considerations">
+
+<t>This document has no actions for IANA.</t>
+
+</section>
+<section anchor="security-considerations" title="Security Considerations">
+
+<t>Changing the format for RFCs involves modifying a great number of components to publication.  Understanding those changes and the implications for the entire tool chain is critical so as to avoid unintended bugs that would allow unintended changes to text.  Unintended changes to text could in turn corrupt a standard, practice or critical piece of information about a protocol.</t>
+
+</section>
+<section anchor="acknowledgements" title="Acknowledgements">
+<t>With many thanks to the RFC Format Design Team for their efforts in making this transition successful: Nevil Brownlee (ISE), Tony Hansen, Joe Hildebrand, Paul Hoffman, Ted Lemon, Julian Reschke, Adam Roach, Alice Russo, Robert Sparks (Tools Team liaison), and Dave Thaler.</t>
+
+</section>
+
+<section anchor="changelog" title="Appendix - Change log">
+<t>To be removed by RFC Editor</t>
+<section anchor="change06" title="draft-iab-rfc-framework-05 to -06">
+<t>xml2rfcv2: minor clarifications</t>
+</section>
+<section anchor="change05" title="draft-iab-rfc-framework-04 to -05">
+<t>Introduction: minor clarifications</t>
+<t>Updated references</t>
+</section>
+<section anchor="change04" title="draft-iab-rfc-framework-03 to -04">
+<t>Introduction: editorial changes</t>
+<t>Clarified that submitted plain text will be converted to XML by the RPC; the XML will be used to render all output formats. </t>
+</section>
+<section anchor="change03" title="draft-iab-rfc-framework-02 to -03">
+<t>HTML output: clarified expectations around use of JavaScript.
+</t>
+</section>
+<section anchor="change02" title="draft-iab-rfc-framework-01 to -02">
+<t>Introduction: Removed some unnecessary history.
+</t>
+</section>
+<section anchor="change01" title="draft-iab-rfc-framework-00 to -01">
+<t>Decision Making Process: noted taht other XML schemas and vocabularies were considered by the design team</t>
+<t>XML for RFCs: "boilerplate at time of publication"</t>
+<t>HTML: clarified that JavaScript should not impact readability of the document as it looked at time of publication</t>
+</section>
+</section>
+
+  </middle>
+
+  <back>
+
+    <references title='Normative References'>
+
+&RFC6949;
+&RFC7749;
+&I-D.iab-xml2rfc;
+&I-D.iab-svg-rfc;
+&I-D.iab-html-rfc;
+&I-D.iab-rfc-use-of-pdf;
+&I-D.iab-rfc-plaintext;
+&I-D.iab-rfc-nonascii;
+&I-D.iab-rfc-css;
+
+    </references>
+
+    <references title='Informative References'>
+
+&RFC4845;
+&RFC5741;
+&RFC6635;
+&RFC7322;
+<reference anchor="GEN-ART" target="http://www.ietf.org/iesg/directorate/gen-art.html">
+  <front>
+    <title>General Area Review Team (Gen-ART)</title>
+    <author>
+      <organization>IETF</organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="IASA-RFP" target="http://iaoc.ietf.org/rfps-rfis.html">
+  <front>
+    <title>RFPs and RFIs</title>
+    <author>
+      <organization>IETF Administrative Support Activity</organization>
+    </author>
+    <date year="n.d." />
+  </front>
+</reference>
+<reference anchor="IETF84" target="http://www.ietf.org/proceedings/84/rfcform.html">
+  <front>
+    <title>IETF 84 Proceedings: RFC Format (rfcform)</title>
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="IETF85" target="http://www.ietf.org/proceedings/85/rfcform.html">
+  <front>
+    <title>IETF 85 Proceedings: RFC Format (rfcform)</title>
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="IETF88" target="http://www.ietf.org/proceedings/88/rfcform.html">
+  <front>
+    <title>IETF 88 Proceedings: RFC Format (rfcform)</title>
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="IETF89" target="http://www.ietf.org/proceedings/89/rfcform.html">
+  <front>
+    <title>IETF 89 Proceedings: RFC Format (rfcform)</title>
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="IETF90" target="http://www.ietf.org/proceedings/90/rfcform.html">
+  <front>
+    <title>IETF 90 Proceedings: RFC Format (rfcform)</title>
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="ISTATS" target="http://www.internetlivestats.com/internet-users/">
+  <front>
+    <title>Internet Live Stats</title>
+    <author >
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="NDN2014" target="https://events.nordu.net/display/NORDU2014/BoF%27s+and+side+meetings">
+  <front>
+    <title>28th NORDUnet Conference 2014</title>
+    <author>
+      <organization></organization>
+    </author>
+    <date year="2014"/>
+  </front>
+</reference>
+<reference anchor="RFC-INTEREST" target="https://www.rfc-editor.org/mailman/listinfo/rfc-interest">
+  <front>
+    <title>rfc-interest -- A list for discussion of the RFC series and RFC Editor functions.</title>
+    <author >
+      <organization>RFC Editor</organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="RSOC" target="http://www.iab.org/activities/programs/rfc-editor-program/">
+  <front>
+    <title>RFC Editor Program: The RSOC</title>
+    <author >
+      <organization>IAB</organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="TNC2014" target="https://tnc2014.terena.org/core/presentation/84">
+  <front>
+    <title>IETF Update - 'What's Hot?' - RFC Update</title>
+    <author initials="H." surname="Flanagan" fullname="Heather Flanagan">
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="TYPOGRAPHY" target="http://practicaltypography.com/widow-and-orphan-control.html">
+  <front>
+    <title>Butterick's Practical Typography</title>
+    <author initials="M." surname="Butterick" fullname="Matthew Butterick"/>
+    <date year="n.d."/>
+  </front>
+</reference>
+<reference anchor="XML-ANNOUNCE" target="http://www.rfc-editor.org/pipermail/rfc-interest/2013-May/005584.html">
+  <front>
+    <title>Subject: [rfc-i] Direction of the RFC Format Development effort</title>
+    <author >
+      <organization></organization>
+    </author>
+    <date year="n.d."/>
+  </front>
+</reference>
+
+
+    </references>
+
+
+
+  </back>
+</rfc>

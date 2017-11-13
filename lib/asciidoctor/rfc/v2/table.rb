@@ -10,6 +10,7 @@ module Asciidoctor
       #   |===
       def table(node)
         has_body = false
+        has_head = false
         style_value = case node.attr "grid"
                       when "all"
                         "all"
@@ -23,7 +24,7 @@ module Asciidoctor
                         "full"
                       end
 
-        warn "asciidoctor: WARNING: grid=rows attribute is not supported on tables" if node.attr("grid") == "rows"
+        warn "asciidoctor: WARNING (#{node.lineno}): grid=rows attribute is not supported on tables" if node.attr("grid") == "rows"
         texttable_attributes = {
           anchor: node.id,
           title: node.title,
@@ -36,8 +37,10 @@ module Asciidoctor
           xml.texttable **attr_code(texttable_attributes) do |xml_texttable|
             [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
               has_body = true if tblsec == :body
+              has_head = true if tblsec == :head
             end
-            warn "asciidoctor: WARNING: tables must have at least one body row" unless has_body
+            warn "asciidoctor: WARNING (#{node.lineno}): tables must have at least one body row" unless has_body
+            warn "asciidoctor: WARNING (#{node.lineno}): tables must have at least one head row" unless has_head
 
             # preamble, postamble elements not supported
             table_head node, xml_texttable
@@ -50,13 +53,13 @@ module Asciidoctor
 
       def table_head(node, xml)
         [:head].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
-          warn "asciidoctor: WARNING: RFC XML v2 tables only support a single header row" if node.rows[tblsec].size > 1
+          warn "asciidoctor: WARNING (#{node.lineno}): RFC XML v2 tables only support a single header row" if node.rows[tblsec].size > 1
           widths = table_widths(node)
           node.rows[tblsec].each do |row|
             rowlength = 0
             row.each_with_index do |cell, i|
-              warn "asciidoctor: WARNING: RFC XML v2 tables do not support colspan attribute" unless cell.colspan.nil?
-              warn "asciidoctor: WARNING: RFC XML v2 tables do not support rowspan attribute" unless cell.rowspan.nil?
+              warn "asciidoctor: WARNING (#{node.lineno}): RFC XML v2 tables do not support colspan attribute" unless cell.colspan.nil?
+              warn "asciidoctor: WARNING (#{node.lineno}): RFC XML v2 tables do not support rowspan attribute" unless cell.rowspan.nil?
               width = if node.option?("autowidth") || i >= widths[:percentage].size || !widths[:named]
                         nil
                       else
@@ -74,7 +77,7 @@ module Asciidoctor
                 # NOT cell.content: v2 does not permit blocks in cells
               end
             end
-            warn "asciidoctor: WARNING: header row of table is longer than 72 ascii characters" if rowlength > 72
+            warn "asciidoctor: WARNING (#{node.lineno}): header row of table is longer than 72 ascii characters" if rowlength > 72
           end
         end
       end
@@ -103,7 +106,7 @@ module Asciidoctor
                 # NOT cell.content: v2 does not permit blocks in cells
               end
             end
-            warn "asciidoctor: WARNING: row #{i} of table is longer than 72 ascii characters" if rowlength > 72
+            warn "asciidoctor: WARNING (#{node.lineno}): row #{i} of table is longer than 72 ascii characters" if rowlength > 72
           end
         end
       end

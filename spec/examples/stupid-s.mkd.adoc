@@ -22,7 +22,7 @@ Klaus Hartke <hartke@tzi.org>; Carsten Bormann <cabo@tzi.org>
 :country_2: Germany
 :phone_2: +49-421-218-63921
 :fax_2: +49-421-218-7000
-
+:rfc2629xslt: true
 
 [abstract]
 NAT (Network Address Translator) Traversal may require TURN

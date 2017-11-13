@@ -28,6 +28,10 @@ Chris Smith <chrissmith@example.com>; Kim Jones <jk@lmn.op>
 :keyword: XML, Imagination
 :inline-definition-lists: true
 :toc-include: false
+:compact: yes
+:subcompact: yes
+:strict: yes
+:rfc2629xslt: true
 
 [abstract]
 This is an example of an abstract.  It is a short paragraph that

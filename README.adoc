@@ -375,6 +375,9 @@ specified for this gem as document options.
 
 Exceptionally, `compact`, `toc-include`, `sym-refs`, `sort-refs` and `strict` are is set by default to `yes`, `subcompact` to `no`, and `toc-depth` to 4.
 
+The additional document option `rfc2629xslt` (default value: false) injects into the document header the processing
+instruction `<?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>`, which impacts on the output of xml2rfc.
+
 === Document Name / Number (Mandatory)
 
 The `name` attribute sets the document's name. This should be a number if

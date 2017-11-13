@@ -122,7 +122,7 @@ module Asciidoctor
           cref_contents = flatten_rawtext(node)
           cref_contents = [cref_contents].flatten.join("\n")
           warn <<~WARNING_MESSAGE if node.blocks?
-            asciidoctor: WARNING: comment can not contain blocks of text in XML RFC:\n #{node.content}
+            asciidoctor: WARNING (#{node.lineno}): comment can not contain blocks of text in XML RFC:\n #{node.content}
           WARNING_MESSAGE
 
           result << noko do |xml|

@@ -38,7 +38,10 @@ output as `eref`, and in the xml2rfc output as angle brackets.
 --
 
 == RFC XML v2
-https://www.ietf.org/archive/id/draft-hoffman-rfcexamples-04.txt
+* https://www.ietf.org/archive/id/draft-hoffman-rfcexamples-04.txt
+* https://github.com/rfc-format:
+** https://github.com/rfc-format/draft-iab-rfc-framework-bis
+** https://github.com/rfc-format/draft-iab-html-rfc-bis
 
 * `hoffmanv2.xml.orig`
 
@@ -52,8 +55,6 @@ and xml2rfc output from XML generated from our asciidoc should be noted:
 `hoffmanv2.xml.adoc`::
 +
 --
-* The source xml has set the `subcompact` document directive; the directive cannot be set
-from Asciidoc.
 * Table preambles and postambles are not supported in Asciidoc.
 --
 

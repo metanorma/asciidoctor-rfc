@@ -20,7 +20,11 @@ module Asciidoctor
       end
 
       def skip(node, name = nil)
-        warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
+        if node.respond_to?(:lineno) 
+            warn %(asciidoctor: WARNING (#{node.lineno}): converter missing for #{name || node.node_name} node in RFC backend)
+        else 
+          warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
+        end
         nil
       end
 
@@ -134,7 +138,7 @@ module Asciidoctor
             result << ref
           end
         else
-          warn %(asciidoctor: WARNING: references are not raw XML: #{node.context})
+          warn %(asciidoctor: WARNING (#{node.lineno}): references are not raw XML: #{node.context})
         end
         result
       end
@@ -163,45 +167,45 @@ module Asciidoctor
         # These are set only if explicitly specified, with the exception
         # of compact and subcompact
         rfc_pis = {
-            artworkdelimiter: node.attr("artworkdelimiter"),
-            artworklines: node.attr("artworklines"),
-            authorship: node.attr("authorship"),
-            autobreaks: node.attr("autobreaks"),
-            background: node.attr("background"),
-            colonspace: node.attr("colonspace"),
-            comments: node.attr("comments"),
-            docmapping: node.attr("docmapping"),
-            editing: node.attr("editing"),
-            emoticonic: node.attr("emoticonic"),
-            footer: node.attr("footer"),
-            header: node.attr("header"),
-            inline: node.attr("inline"),
-            iprnotified: node.attr("iprnotified"),
-            linkmailto: node.attr("linkmailto"),
-            linefile: node.attr("linefile"),
-            notedraftinprogress: node.attr("notedraftinprogress"),
-            private: node.attr("private"),
-            refparent: node.attr("refparent"),
-            rfcedstyle: node.attr("rfcedstyle"),
-            slides: node.attr("slides"),
-            "text-list-symbols": node.attr("text-list-symbols"),
-            tocappendix: node.attr("tocappendix"),
-            tocindent: node.attr("tocindent"),
-            tocnarrow: node.attr("tocnarrow"),
-            tocompact: node.attr("tocompact"),
-            topblock: node.attr("topblock"),
-            useobject: node.attr("useobject"),
+          artworkdelimiter: node.attr("artworkdelimiter"),
+          artworklines: node.attr("artworklines"),
+          authorship: node.attr("authorship"),
+          autobreaks: node.attr("autobreaks"),
+          background: node.attr("background"),
+          colonspace: node.attr("colonspace"),
+          comments: node.attr("comments"),
+          docmapping: node.attr("docmapping"),
+          editing: node.attr("editing"),
+          emoticonic: node.attr("emoticonic"),
+          footer: node.attr("footer"),
+          header: node.attr("header"),
+          inline: node.attr("inline"),
+          iprnotified: node.attr("iprnotified"),
+          linkmailto: node.attr("linkmailto"),
+          linefile: node.attr("linefile"),
+          notedraftinprogress: node.attr("notedraftinprogress"),
+          private: node.attr("private"),
+          refparent: node.attr("refparent"),
+          rfcedstyle: node.attr("rfcedstyle"),
+          slides: node.attr("slides"),
+          "text-list-symbols": node.attr("text-list-symbols"),
+          tocappendix: node.attr("tocappendix"),
+          tocindent: node.attr("tocindent"),
+          tocnarrow: node.attr("tocnarrow"),
+          tocompact: node.attr("tocompact"),
+          topblock: node.attr("topblock"),
+          useobject: node.attr("useobject"),
 
           # give errors regarding ID-nits and DTD validation
-            strict: node.attr("strict") || "yes",
+          strict: node.attr("strict") || "yes",
 
           # Vertical whitespace control
           # (using these PIs as follows is recommended by the RFC Editor)
-          
+
           # do not start each main section on a new page
-            compact: node.attr("compact") || "yes",
+          compact: node.attr("compact") || "yes",
           # keep one blank line between list items
-            subcompact: node.attr("subcompact") || "no",
+          subcompact: node.attr("subcompact") || "no",
 
           # TOC control
           # generate a ToC

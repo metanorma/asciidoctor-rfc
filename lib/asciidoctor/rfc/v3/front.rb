@@ -37,7 +37,7 @@ module Asciidoctor
         intendedstatus = node.attr("intended-series")
         if !is_rfc && !intendedstatus.nil?
           unless intendedstatus =~ /^(standard|full-standard|bcp|fyi|informational|experimental|historic)$/
-            warn %(asciidoctor: WARNING: disallowed value for intended-series: #{intendedstatus})
+            warn %(asciidoctor: WARNING: disallowed value for intended-series in document header: #{intendedstatus})
           end
           seriesInfo_attributes = {
             name: "",
@@ -53,9 +53,9 @@ module Asciidoctor
           if m.nil?
             rfcstatus = "exp" if rfcstatus == "experimental"
             rfcstatus = "info" if rfcstatus == "informational"
-            warn %(asciidoctor: WARNING: disallowed value for intended-series with no series number: #{rfcstatus}) unless rfcstatus =~ /^(info|exp|historic)$/
+            warn %(asciidoctor: WARNING: disallowed value for intended-series in document header with no series number: #{rfcstatus}) unless rfcstatus =~ /^(info|exp|historic)$/
           else
-            warn %(asciidoctor: WARNING: disallowed value for intended-series with series number: #{m[1]}) unless m[1] =~ /^(standard|full-standard|bcp)$/
+            warn %(asciidoctor: WARNING: disallowed value for intended-series in document header with series number: #{m[1]}) unless m[1] =~ /^(standard|full-standard|bcp)$/
           end
           seriesInfo_attributes = {
             name: "",
