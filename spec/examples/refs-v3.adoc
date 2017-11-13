@@ -4,26 +4,31 @@ Simon Perreault <simon.perreault@viagenie.ca>
 :bibliography-passthrough: citations
 :bibliography-prepend-empty: false
 :bibliography-hyperlinks: false
-:bibliography-style: rfc-v2
+:bibliography-style: rfc-v3
 :doctype: rfc
-:obsoletes: 2425, 2426, 4770
-:updates: 2739
-:name: rfc-6350
-:revdate: 20110831
-:submission-type: IETF
-:status: full-standard
-:intended-series: full-standard 6350
-:fullname: Simon Perreault
-:lastname: Perreault
-:organization: Viagenie
-:email: simon.perreault@viagenie.ca
-:street: 2875 Laurier, suite D2-630
-:region: Quebec, QC  
-:code: G1V 2M2
-:country: Canada
-:phone: +1 418 656 9254
-:uri: http://www.viagenie.ca
-:link: urn:issn:2070-1721 item
+:abbrev: IP Datagrams on Avian Carriers
+:obsoletes: 10, 120
+:updates: 2010, 2120
+:name: rfc-1149
+:status: full-standard 1149
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:keyword: this, that
+:revdate: 1990-04-01T00:00:00Z
+:organization: BBN STC
+:phone: (617) 873-4323
+:uri: http://bbn.com
+:street: 10 Moulton Street
+:city: Cambridge
+:code: MA 02238
+:organization_2: BBN STC
+:phone_2: (617) 873-4323
+:street_2: 10 Moulton Street
+:city_2: Cambridge
+:code_2: MA 02238
+:uri_2: http://opoudjis.net
+:link: http://example1.com,http://example2.com author
 
 
 The authors would like to thank Tim Howes, Mark Smith, and Frank
