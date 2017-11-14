@@ -1,0 +1,52 @@
+= vCard Format Specification
+Simon Perreault <simon.perreault@viagenie.ca>
+:bibliography-database: refs-v2-database.xml
+:bibliography-passthrough: citations
+:bibliography-prepend-empty: false
+:bibliography-hyperlinks: false
+:bibliography-style: rfc-v3
+:doctype: rfc
+:abbrev: IP Datagrams on Avian Carriers
+:obsoletes: 10, 120
+:updates: 2010, 2120
+:name: rfc-1149
+:status: full-standard 1149
+:ipr: trust200902
+:area: Internet
+:workgroup: Network Working Group
+:keyword: this, that
+:revdate: 1990-04-01T00:00:00Z
+:organization: BBN STC
+:phone: (617) 873-4323
+:uri: http://bbn.com
+:street: 10 Moulton Street
+:city: Cambridge
+:code: MA 02238
+:organization_2: BBN STC
+:phone_2: (617) 873-4323
+:street_2: 10 Moulton Street
+:city_2: Cambridge
+:code_2: MA 02238
+:uri_2: http://opoudjis.net
+:link: http://example1.com,http://example2.com author
+
+
+The authors would like to thank Tim Howes, Mark Smith, and Frank
+Dawson, the original authors of cite:info[RFC2119] and cite:norm[RFC2629], Pete
+Resnick, who got this effort started and provided help along the way,
+as well as the following individuals who have participated in the
+drafting, review, and discussion of this memo:
+
+[bibliography]
+== Normative References
+
+++++
+bibliography::norm[]
+++++
+
+[bibliography]
+== Informative References
+
+++++
+bibliography::info[]
+++++

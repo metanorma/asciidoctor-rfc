@@ -1,3 +1,4 @@
+# coding: utf-8
 module Asciidoctor
   module RFC::V2
     module Base
@@ -72,6 +73,7 @@ module Asciidoctor
         result << noko { |xml| front node, xml }
         result.last.last.gsub! /<\/front>$/, "" # FIXME: this is a hack!
         result << "</front><middle1>"
+
 
         result << node.content if node.blocks?
         result << ($seen_back_matter ? "</back>" : "</middle>")
@@ -199,21 +201,24 @@ module Asciidoctor
             if block.context == :section
               result << node.content
             elsif block.context == :pass
-              # we are assuming a single contiguous :pass block of XML
+              # NOTE: references are assumed to be found in a single passthrough
+              #   block containing <reference> tags.
+              # TODO: deprecate reflist.
+
               result << noko do |xml|
-                xml.references **attr_code(references_attributes) do |xml_references|
-                  xml_references << reflist(block).join("\n")
+                # xml.references **attr_code(references_attributes) do |xml_references|
+                #  xml_references << reflist(block).join("\n")
+                xml.references **references_attributes do |xml_references|
+                  # NOTE: we're allowing the user to do more or less whathever
+                  #   in the passthrough since the xpath below just fishes out ALL
+                  #   <reference>s in an unrooted fragment, regardless of structure.
+                  Nokogiri::XML::DocumentFragment.
+                    parse(block.content).xpath('.//reference').
+                    each { |reference| xml_references << reference.to_xml }
                 end
               end
             end
           end
-=begin
-          result << noko do |xml|
-            xml.references **attr_code(references_attributes) do |xml_references|
-              node.blocks.each { |b| xml_references << reflist(b).join }
-            end
-          end
-=end
 
           result = result.unshift("</middle><back>") unless $seen_back_matter
           $processing_reflist = false

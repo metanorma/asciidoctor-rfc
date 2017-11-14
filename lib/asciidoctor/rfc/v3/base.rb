@@ -1,3 +1,4 @@
+# coding: utf-8
 module Asciidoctor
   module RFC::V3
     module Base
@@ -219,41 +220,22 @@ module Asciidoctor
           references_attributes = {
             anchor: node.id,
           }
-=begin
-          result << noko do |xml|
-            xml.references **attr_code(references_attributes) do |references_xml|
-              references_xml.name node.title unless node.title.nil?
-              node.blocks.each { |b| references_xml << reflist(b).join }
-            end
-          end
 
-          anchor_attribute = node.id.nil? ? nil : " anchor=\"#{node.id}\""
-          result << "<references#{anchor_attribute}>"
-          result << "<name>#{node.title}</name>" unless node.title.nil?
-          # require that references be a :pass xml block
-          # potentially with an initial block of display reference equivalences
-          node.blocks.each do |b|
-            if b.context == :pass
-              result << reflist(b)
-            elsif b.context == :section
-              result << node.content
-            elsif b.context == :ulist
-              b.items.each do |i|
-                i.text # we only process the item for its displayreferences
-              end
-            end
-          end
-          result << "</references>"
-=end
           node.blocks.each do |block|
             if block.context == :section
               result << section(block)
             elsif block.context == :pass
               # we are assuming a single contiguous :pass block of XML
               result << noko do |xml|
-                xml.references **attr_code(references_attributes) do |xml_references|
+                xml.references **references_attributes do |xml_references|
                   xml_references.name node.title unless node.title.nil?
-                  xml_references << reflist(block).join("\n")
+                  # xml_references << reflist(block).join("\n")
+                  # NOTE: we're allowing the user to do more or less whathever
+                  #   in the passthrough since the xpath below just fishes out ALL
+                  #   <reference>s in an unrooted fragment, regardless of structure.
+                  Nokogiri::XML::DocumentFragment.
+                    parse(block.content).xpath('.//reference').
+                    each { |reference| xml_references << reference.to_xml }
                 end
               end
             elsif block.context == :ulist
