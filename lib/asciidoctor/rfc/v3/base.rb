@@ -147,7 +147,7 @@ module Asciidoctor
           case node.type
           when :emphasis then xml.em node.text
           when :strong
-            if $bcp_bold && BCP_KEYWORDS.exist?(node.text)
+            if $bcp_bold && BCP_KEYWORDS.include?(node.text)
               xml.bcp14 node.text
             else
               xml.strong node.text
