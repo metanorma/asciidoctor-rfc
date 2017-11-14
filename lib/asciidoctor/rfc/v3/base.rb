@@ -30,7 +30,6 @@ module Asciidoctor
       #   == Appendix
       def document(node)
         $seen_back_matter = false
-        $seen_abstract = false
         # If this is present, then BCP14 keywords in boldface are not assumed to be <bcp14> tags. By default they are.
         $bcp_bold = !(node.attr? "no-rfc-bold-bcp14")
         $smart_quotes = (node.attr("smart-quotes") != "false")
@@ -177,11 +176,6 @@ module Asciidoctor
       #   Text
       def paragraph(node)
         result = []
-
-        if (node.parent.context == :preamble) && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
 
         t_attributes = {
           anchor: node.id,

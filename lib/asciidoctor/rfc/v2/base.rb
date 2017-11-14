@@ -34,7 +34,6 @@ module Asciidoctor
       #   == Appendix
       def document(node)
         $seen_back_matter = false
-        $seen_abstract = false
         $smart_quotes = (node.attr("smart-quotes") != "false")
         $inline_definition_lists = (node.attr("inline-definition-lists") == "true")
 
@@ -135,11 +134,6 @@ module Asciidoctor
       def paragraph(node)
         result = []
 
-        if (node.parent.context == :preamble) && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
-
         t_attributes = {
           anchor: node.id,
         }
@@ -154,11 +148,6 @@ module Asciidoctor
 
       def verse(node)
         result = []
-
-        if (node.parent.context == :preamble) && !$seen_abstract
-          $seen_abstract = true
-          result << "<abstract>"
-        end
 
         t_attributes = {
           anchor: node.id,

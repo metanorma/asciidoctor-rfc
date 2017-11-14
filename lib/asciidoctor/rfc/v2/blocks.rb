@@ -95,11 +95,6 @@ module Asciidoctor
       def admonition(node)
         result = []
         if node.parent.context == :preamble
-          if $seen_abstract
-            result << "</abstract>"
-            $seen_abstract = false
-          end
-
           note_attributes = {
             # default title provided: title is mandatory
             title: (node.title.nil? ? "NOTE" : node.title),

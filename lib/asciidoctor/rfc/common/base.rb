@@ -40,11 +40,25 @@ module Asciidoctor
       # @note (boilerplate is ignored)
       def preamble(node)
         result = []
-        $seen_abstract = false
-        result << node.content
-        if $seen_abstract
-          result << "</abstract>"
+
+        # NOTE: *list is V3, verse is V2, paragraph is both
+        abstractable_contexts = %i{paragraph dlist olist ulist verse}
+
+        abstract_blocks = node.blocks.take_while do |block|
+          abstractable_contexts.include? block.context
         end
+
+        remainder_blocks = node.blocks[abstract_blocks.length..-1]
+
+        result << noko do |xml|
+          if abstract_blocks.any?
+            xml.abstract do |xml_abstract|
+              xml_abstract << abstract_blocks.map(&:render).flatten.join
+            end
+          end
+          xml << remainder_blocks.map(&:render).flatten.join
+        end
+
         result << "</front><middle>"
         result
       end
