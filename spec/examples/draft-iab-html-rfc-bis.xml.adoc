@@ -15,6 +15,7 @@ Joe Hildebrand <joe-ietf@cursive.net>; Paul Hoffman <paul.hoffman@icann.org>
 :status: informational
 :abbrev: HTML for RFCs
 :forename_initials: J.
+:role: editor
 :organization: Mozilla
 :forename_initials_2: P.
 :organization_2: ICANN
@@ -204,7 +205,7 @@ class "pilcrow".  For example:
 
 ....
 <p id="s-1.1-1">
-Some paragraph text. <a class="pilcrow" href="#s-1.1-1">&para;</a>
+  Some paragraph text. <a class="pilcrow" href="#s-1.1-1">&para;</a>
 </p>
 ....
 
@@ -222,11 +223,11 @@ marked with a pilcrow. For example:
 
 ....
 <blockquote id="s-1.2-1">
-<p id="s-1.2-2">Four score and seven years ago our fathers brought
-forth on this continent, a new nation, conceived in Liberty, and
-dedicated to the proposition that all men are created equal.
-<a href="#s-1.2-2" class="pilcrow">&para;</a></p>
-<!-- NO pilcrow here -->
+  <p id="s-1.2-2">Four score and seven years ago our fathers brought
+    forth on this continent, a new nation, conceived in Liberty, and
+    dedicated to the proposition that all men are created equal.
+    <a href="#s-1.2-2" class="pilcrow">&para;</a></p>
+  <!-- NO pilcrow here -->
 </blockquote>
 ....
 
@@ -342,7 +343,7 @@ appropriate copyright license for the document.
 
 ....
 <link rel="license" 
-href="https://trustee.ietf.org/trust-legal-provisions.html">
+   href="https://trustee.ietf.org/trust-legal-provisions.html">
 ....
 
 [#style]
@@ -365,8 +366,8 @@ override the formatting in the included style sheet. For example:
 
 ....
 <style>
-body {}
-...
+  body {}
+  ...
 </style>
 <link rel="stylesheet" type="text/css" href="rfc-local.css">
 ....
@@ -397,20 +398,20 @@ of the formatting of the page number is implied.
 
 ....
 <table class="ears">
-<thead>
-<tr>
-<td class="left">Internet-Draft</td>
-<td class="center">HTML RFC</td>
-<td class="right">March 2016</td>
-</tr>
-</thead>
-<tfoot>
-<tr>
-<td class="left">Hildebrand</td>
-<td class="center">Expires September 2, 2016</td>
-<td class="right">[Page]</td>
-</tr>
-</tfoot>
+  <thead>
+    <tr>
+      <td class="left">Internet-Draft</td>
+      <td class="center">HTML RFC</td>
+      <td class="right">March 2016</td>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td class="left">Hildebrand</td>
+      <td class="center">Expires September 2, 2016</td>
+      <td class="right">[Page]</td>
+    </tr>
+  </tfoot>
 </table>
 ....
 
@@ -426,29 +427,29 @@ or "Authors:" (as appropriate). For example:
 
 ....
 <dl id="identifiers">
-<dt>Workgroup:</dt>
-<dd class="workgroup">rfc-interest</dd>
-<dt>Series:</dt>
-<dd class="series">Internet-Draft</dd>
-<dt>Status:</dt>
-<dd class="status">Informational</dd>
-<dt>Published:</dt>
-<dd><time datetime="2014-10-25"
-class="published">2014-10-25</time></dd>
-<dt>Authors:</dt>
-<dd class="authors">
-<div class="author">
-<span class="initial">J.</span>
-<span class="surname">Hildebrand</span>
-(<span class="organization">Cisco Systems, Inc.</span>)
-<span class="editor">Ed.</span> 
-</div>
-<div class="author">
-<span class="initial">H.</span>
-<span class="surname">Flanagan</span>
-(<span class="organization">RFC Editor</span>)
-</div>
-</dd>
+  <dt>Workgroup:</dt>
+    <dd class="workgroup">rfc-interest</dd>
+  <dt>Series:</dt>
+    <dd class="series">Internet-Draft</dd>
+  <dt>Status:</dt>
+    <dd class="status">Informational</dd>
+  <dt>Published:</dt>
+    <dd><time datetime="2014-10-25"
+              class="published">2014-10-25</time></dd>
+  <dt>Authors:</dt>
+    <dd class="authors">
+      <div class="author">
+        <span class="initial">J.</span>
+        <span class="surname">Hildebrand</span>
+        (<span class="organization">Cisco Systems, Inc.</span>)
+        <span class="editor">Ed.</span> 
+      </div>
+      <div class="author">
+        <span class="initial">H.</span>
+        <span class="surname">Flanagan</span>
+        (<span class="organization">RFC Editor</span>)
+      </div>
+    </dd>
 </dl>
 ....
 
@@ -470,14 +471,14 @@ For example:
 ....
 <h2 id="toc">Table of Contents</h2>
 <nav class="toc">
-<ul class="toc">
-<li class="toc">
-<a href="s-1">1</a>. <a href="n-introduction">Introduction</a>
-</li>
-<ul class="toc">
-<li class="toc">
-<a href="s-1.1">1.1</a>. <a href="n-sub-intro">Sub Intro</a>
-</li>
+  <ul class="toc">
+    <li class="toc">
+      <a href="s-1">1</a>. <a href="n-introduction">Introduction</a>
+    </li>
+    <ul class="toc">
+      <li class="toc">
+        <a href="s-1.1">1.1</a>. <a href="n-sub-intro">Sub Intro</a>
+      </li>
 ...
 ....
 
@@ -485,7 +486,7 @@ For example:
 == Main Body
 
 The main body of the HTML document is processed according to the rules in
-<xref target='elements'/>.
+<<elements>>.
 
 [#back-matter]
 == Back Matter
@@ -516,11 +517,11 @@ For example:
 ....
 <h2>Index</h2>
 <div class="index">
-<div class="indexIndex">
-<a href="#rfc.index.C">C</a>
-<a href="#rfc.index.P">P</a>
-</div>
-...
+  <div class="indexIndex">
+    <a href="#rfc.index.C">C</a>
+    <a href="#rfc.index.P">P</a>
+  </div>
+  ...
 ....
 
 [#index-letters]
@@ -537,13 +538,13 @@ For example:
 
 ....
 <ul>
-<li class="indexChar">
-<a href="#rfc.index.C" id="rfc.index.C">C</a>
-<ul>
-<!-- items go here -->
-</ul>
-</li>
-...
+  <li class="indexChar">
+    <a href="#rfc.index.C" id="rfc.index.C">C</a>
+    <ul>
+      <!-- items go here -->
+    </ul>
+  </li>
+  ...
 ....
 
 [#index-items]
@@ -565,12 +566,12 @@ For example:
 
 ....
 <li class="indexItem">
-<span class="irefItem">Bullets</span>
-<span class="irefRefs">
-<a class="indexPrimary" href="#s-Bullets-1">2</a>,
-<a href="#s-Bullets-2">2</a>
-</span>
-<!-- subitems go here -->
+  <span class="irefItem">Bullets</span>
+  <span class="irefRefs">
+    <a class="indexPrimary" href="#s-Bullets-1">2</a>,
+    <a href="#s-Bullets-2">2</a>
+  </span>
+  <!-- subitems go here -->
 </li>
 ...
 ....
@@ -588,12 +589,12 @@ For example:
 
 ....
 <ul>
-<li class="indexSubItem">
-<span class="irefSubItem">Ordered</span>
-<span class="irefRefs">
-<a href="#s-Bullets-Ordered-1">2</a>
-</span>
-</li>
+  <li class="indexSubItem">
+    <span class="irefSubItem">Ordered</span>
+    <span class="irefRefs">
+      <a href="#s-Bullets-Ordered-1">2</a>
+    </span>
+  </li>
 </ul>
 ...
 ....
@@ -611,22 +612,22 @@ The information for each author will be separated by an HTML
 
 ....
 <section id="author-addresses">
-<h2>
-<a class="selfRef" href="#author-addresses">
-Authors' Addresses
-</a>
-</h2>
-<address class="vcard">
-<div class="nameRole"><span class="fn">Joe Hildebrand</span>
-(<span class="role">editor</span>)</div>
-<div class="org">Cisco Systems, Inc.</div>
-</address>
-<hr class="addr">
-<address class="vcard">
-<div class="nameRole"><span class="fn">Heather Flanagan</span>
-(<span class="role">editor</span>)</div>
-<div class="org">RFC Series Editor</div>
-</address>
+  <h2>
+    <a class="selfRef" href="#author-addresses">
+      Authors' Addresses
+    </a>
+  </h2>
+  <address class="vcard">
+    <div class="nameRole"><span class="fn">Joe Hildebrand</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">Cisco Systems, Inc.</div>
+  </address>
+  <hr class="addr">
+  <address class="vcard">
+    <div class="nameRole"><span class="fn">Heather Flanagan</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">RFC Series Editor</div>
+  </address>
 </section>
 ....
 
@@ -647,14 +648,14 @@ For example:
 
 ....
 <div class="docInfo">
-<span class="finalized">
-Finalized: <time
-datetime="2015-04-29T18:59:08Z">2015-04-29T18:59:08Z</time>
-</span>
-<span class="rendered">
-Rendered: <time
-datetime="2015-04-29T18:59:10Z">2015-04-29T18:59:10Z</time>
-</span>
+  <span class="finalized">
+    Finalized: <time
+    datetime="2015-04-29T18:59:08Z">2015-04-29T18:59:08Z</time>
+  </span>
+  <span class="rendered">
+    Rendered: <time
+    datetime="2015-04-29T18:59:10Z">2015-04-29T18:59:10Z</time>
+  </span>
 </div>
 ....
 
@@ -665,7 +666,7 @@ This section describes how each of the XML elements from
 <<RFC7991>> is rendered to HTML.
 Many of the descriptions have examples to clarify how elements will be rendered.
 
-[#element.abstract]
+[#element-abstract]
 === &lt;abstract&gt;
 
 The abstract is rendered in a similar fashion to a &lt;section&gt; with anchor="abstract" and
@@ -673,15 +674,15 @@ The abstract is rendered in a similar fashion to a &lt;section&gt; with anchor="
 
 ....
 <section id="abstract">
-<h2><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="s-abstract-1">This document defines...
-<a href="#s-abstract-1" class="pilcrow">&para;</a>
-</p>
+  <h2><a href="#abstract" class="selfRef">Abstract</a></h2>
+  <p id="s-abstract-1">This document defines...
+    <a href="#s-abstract-1" class="pilcrow">&para;</a>
+  </p>
 </section>
 ....
 
 
-[#element.address]
+[#element-address]
 === &lt;address&gt;
 
 This element is used in the Authors' Addresses section.
@@ -705,40 +706,41 @@ equivalents would not be included for these cases.
 
 ....
 <address class="vcard">
-<div class="ascii">
-<div class="nameRole"><span class="fn">Joe Hildebrand</span>
-(<span class="role">editor</span>)</div>
-<div class="org">Cisco Systems, Inc.</div>
-</div>
-<div class="alternative-contact">
-Alternate contact information:
-</div>
-<div class="non-ascii">
-<div class="nameRole"><span class="fn">Joe Hildebrand</span>
-(<span class="role">editor</span>)</div>
-<div class="org">Cisco Systems, Inc.</div>
-</div>
+  <div class="ascii">
+    <div class="nameRole"><span class="fn">Joe Hildebrand</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">Cisco Systems, Inc.</div>
+  </div>
+  <div class="alternative-contact">
+    Alternate contact information:
+  </div>
+  <div class="non-ascii">
+    <div class="nameRole"><span class="fn">Joe Hildebrand</span>
+      (<span class="role">editor</span>)</div>
+    <div class="org">Cisco Systems, Inc.</div>
+  </div>
 </address>
 ....
 
-[#element.annotation]
+[#element-annotation]
 === &lt;annotation&gt;
 
 This element is rendered as the text ", " (a comma and a space)
 followed by a &lt;span&gt; of class "annotation" at the end
 of a &lt;reference&gt; element, the &lt;span&gt;
 containing appropriately transformed elements from the children of
+the &lt;annotation&gt; tag.
 
 ....
-<span class="annotation">Some <em>thing</em>.</span>
+ <span class="annotation">Some <em>thing</em>.</span>
 ....
 
-[#element.area]
+[#element-area]
 === &lt;area&gt;
 
 Not currently rendered to HTML.
 
-[#element.artwork]
+[#element-artwork]
 === &lt;artwork&gt;
 
 Artwork can consist of either inline text or SVG.  If the artwork is
@@ -749,7 +751,7 @@ pilcrow. If the "align" attribute has the value "right", the CSS class
 "alignRight" will be added. If the "align" attribute has the value
 "center", the CSS class "alignCenter" will be added.
 
-[#element.artwork-text]
+[#element-artwork-text]
 ==== Text Artwork
 
 Text artwork is rendered inside an HTML &lt;pre&gt; element, which
@@ -764,21 +766,21 @@ element's "type" attribute, if it exists.
 
 ....
 <div class="artwork art-text art-ascii-art"  id="s-1-2">
-<pre>
-______________
+  <pre>
+ ______________
 &lt; hello, world &gt;
---------------
-\   ^__^
-\  (oo)\_______
-(__)\       )\/\
-||----w |
-||     ||
-</pre>
-<a class="pilcrow" href="#s-1-2">&para;</a>
+ --------------
+  \   ^__^
+   \  (oo)\_______
+      (__)\       )\/\
+          ||----w |
+          ||     ||
+  </pre>
+  <a class="pilcrow" href="#s-1-2">&para;</a>
 </div>
 ....
 
-[#element.artwork-svg]
+[#element-artwork-svg]
 ==== SVG Artwork
 
 SVG artwork will be included inline.  The SVG is wrapped in a
@@ -797,13 +799,13 @@ in the SVG.
 
 ....
 <div class="artwork art-svg" id="s-2-17">
-<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-<desc>Alt text here</desc>
-<circle
-cx="50" cy="50" r="40"
-stroke="green" stroke-width="4" fill="yellow" />
-</svg>
-<a href="#s-2-17" class="pilcrow">&para;</a>
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+    <desc>Alt text here</desc>
+    <circle
+      cx="50" cy="50" r="40"
+      stroke="green" stroke-width="4" fill="yellow" />
+  </svg>
+  <a href="#s-2-17" class="pilcrow">&para;</a>
 </div>
 ....
 
@@ -821,13 +823,13 @@ future.
 
 ....
 <div class="artwork art-logo" id="s-2-58">
-<img alt="IETF logo"
-src="data:image/gif;charset=utf-8;base64,...">
-<a class="pilcrow" href="#s-2-58">&para;</a>
+  <img alt="IETF logo"
+       src="data:image/gif;charset=utf-8;base64,...">
+  <a class="pilcrow" href="#s-2-58">&para;</a>
 </div>
 ....
 
-[#element.aside]
+[#element-aside]
 === &lt;aside&gt;
 
 This element is rendered as an HTML &lt;aside&gt; element, with
@@ -835,14 +837,14 @@ all child content appropriately transformed.
 
 ....
 <aside id="s-2.1-2">
-<p id="s-2.1-2.1">
-A little more than kin, and less than kind.
-<a class="pilcrow" href="#s-2.1-2.1">&para;</a>
-</p>
+  <p id="s-2.1-2.1">
+    A little more than kin, and less than kind.
+    <a class="pilcrow" href="#s-2.1-2.1">&para;</a>
+  </p>
 </aside>
 ....
 
-[#element.author]
+[#element-author]
 === &lt;author&gt;
 
 The &lt;author&gt; element is used in several places in the output.
@@ -870,26 +872,26 @@ also contain the text ", " (comma, space), followed by an HTML
 &lt;span&gt; tag of class "editor", which contains the text "Ed.".
 
 If the &lt;author&gt; element contains an
-<<element.organization,format=title>>
+<<element-organization,format=title>>
 element, it is also rendered inside the &lt;div class="author"&gt;
 HTML tag. 
 
 ....
 <div class="author">
-<div class="author-name">
-H. Flanagan,
-<span class="editor">Ed.</span></div>
-<div class="org">Test Org</div>
+  <div class="author-name">
+    H. Flanagan,
+    <span class="editor">Ed.</span></div>
+  <div class="org">Test Org</div>
 </div>
 <div class="author">
-<div class="author-name">
-<span class="non-ascii">Hildebrand</span>
-(<span class="ascii">HILDEBRAND</span>)
-</div>
-<div class="org">
-<span class="non-ascii">Test Org</span>
-(<span class="ascii">TEST ORG</span>)
-</div>
+  <div class="author-name">
+    <span class="non-ascii">Hildebrand</span>
+    (<span class="ascii">HILDEBRAND</span>)
+  </div>
+  <div class="org">
+    <span class="non-ascii">Test Org</span>
+    (<span class="ascii">TEST ORG</span>)
+  </div>
 </div>
 ....
 
@@ -910,16 +912,16 @@ exists.
 
 ....
 <address class="vcard">
-<div class="nameRole">
-<span class="fn">Joe Hildebrand</span>
-(<span class="role">editor</span>)
-</div>
-...
+  <div class="nameRole">
+    <span class="fn">Joe Hildebrand</span>
+    (<span class="role">editor</span>)
+  </div>
+  ...
 ....
 
 After the name, the
-<<element.organization,format=title>> and
-<<element.address,format=title>> child elements of
+<<element-organization,format=title>> and
+<<element-address,format=title>> child elements of
 the author are rendered inside the HTML &lt;address&gt; tag.
 
 When the &lt;author&gt; element, or any of its descendant elements,
@@ -938,20 +940,20 @@ information:".
 
 ....
 <address class="vcard">
-<div class="ascii">
-<div class="nameRole">
-<span class="fn">The ASCII name</span>
-</div>
-</div>
-<div class="alternative-contact">
-Alternate contact information:
-</div>
-<div class="non-ascii">
-<div class="nameRole">
-<span class="fn">The non-ASCII name</span>
-(<span class="role">editor</span>)
-</div>
-</div>
+  <div class="ascii">
+    <div class="nameRole">
+      <span class="fn">The ASCII name</span>
+    </div>
+  </div>
+  <div class="alternative-contact">
+    Alternate contact information:
+  </div>
+  <div class="non-ascii">
+    <div class="nameRole">
+      <span class="fn">The non-ASCII name</span>
+      (<span class="role">editor</span>)
+    </div>
+  </div>
 </address>
 ....
 
@@ -959,7 +961,7 @@ Alternate contact information:
 
 In the output generated from a reference element, author tags are
 rendered inside an HTML &lt;span&gt; element with CSS class
-"refAuthor".  See Section 4.8.6.2 of <xref target='RFC7322'/> for
+"refAuthor".  See Section 4.8.6.2 of <<RFC7322>> for
 	    guidance on how author names are to appear.
 
 ....
@@ -967,56 +969,56 @@ rendered inside an HTML &lt;span&gt; element with CSS class
 <span class="refAuthor">N. Brownlee</span>
 ....
 
-[#element.back]
+[#element-back]
 === &lt;back&gt;
 
 If there is exactly one
-<<element.references,format=title>> child, render
-that child in a similar way to a <<element.section,format=title>>.
+<<element-references,format=title>> child, render
+that child in a similar way to a <<element-section,format=title>>.
 If there are more than one
-<<element.references,format=title>> children, render
-as a <<element.section,format=title>> whose name is
-"References", containing a <<element.section,format=title>>
-for each <<element.references,format=title>> child.
+<<element-references,format=title>> children, render
+as a <<element-section,format=title>> whose name is
+"References", containing a <<element-section,format=title>>
+for each <<element-references,format=title>> child.
 
-After any <<element.references,format=title>> sections,
-render each <<element.section,format=title>> child of
-	  <<element.back,format=title>>
+After any <<element-references,format=title>> sections,
+render each <<element-section,format=title>> child of
+	  <<element-back,format=title>>
 as an appendix.
 
 ....
 <section id="n-references">
-<h2 id="s-2">
-<a class="selfRef" href="#s-2">2.</a>
-<a class="selfRef" href="#n-references">References</a>
-</h2>
-<section id="n-normative">
-<h3 id="s-2.1">
-<a class="selfRef" href="#s-2.1">2.1.</a>
-<a class="selfRef" href="#n-normative">Normative</a>
-</h3>
-<dl class="reference"></dl>
-</section>
-<section id="n-informational">
-<h3 id="s-2.2">
-<a class="selfRef" href="#s-2.2">2.2.</a>
-<a class="selfRef" href="#n-informational">Informational</a>
-</h3>
-<dl class="reference"></dl>
-</section>
+  <h2 id="s-2">
+    <a class="selfRef" href="#s-2">2.</a>
+    <a class="selfRef" href="#n-references">References</a>
+  </h2>
+  <section id="n-normative">
+    <h3 id="s-2.1">
+      <a class="selfRef" href="#s-2.1">2.1.</a>
+      <a class="selfRef" href="#n-normative">Normative</a>
+    </h3>
+    <dl class="reference"></dl>
+  </section>
+  <section id="n-informational">
+    <h3 id="s-2.2">
+      <a class="selfRef" href="#s-2.2">2.2.</a>
+      <a class="selfRef" href="#n-informational">Informational</a>
+    </h3>
+    <dl class="reference"></dl>
+  </section>
 </section>
 <section id="n-unimportant">
-<h2 id="s-A">
-<a class="selfRef" href="#s-A">Appendix A.</a>
-<a class="selfRef" href="#n-unimportant">Unimportant</a>
-</h2>
+  <h2 id="s-A">
+    <a class="selfRef" href="#s-A">Appendix A.</a>
+    <a class="selfRef" href="#n-unimportant">Unimportant</a>
+  </h2>
 </section>
 ....
 
-[#element.bcp14]
+[#element-bcp14]
 === &lt;bcp14&gt;
 
-This element marks up words like MUST and SHOULD <xref target="BCP14" /> with an HTML
+This element marks up words like MUST and SHOULD <<BCP14>> with an HTML
 &lt;span&gt; element with the CSS class "bcp14".
 
 ....
@@ -1024,8 +1026,8 @@ You <span class="bcp14">MUST</span> be joking.
 ....
 
 
-[#element.boilerplate]
-=== &lt;boilerplate&gt;
+[#element-blockquote]
+=== &lt;blockquote&gt;
 
 This element renders in a way similar to the HTML &lt;blockquote&gt;
 element.  If there is a "cite" attribute, it is  copied
@@ -1043,18 +1045,18 @@ display of the current format.
 
 ....
 <blockquote id="s-1.2-1"
-cite="http://...">
-<p id="s-1.2-2">Four score and seven years ago our fathers
-brought forth on this continent, a new nation, conceived
-in Liberty, and dedicated to the proposition that all men
-are created equal.
-<a href="#s-1.2-2" class="pilcrow">&para;</a>
-</p>
-<cite>&mdash; <a href="http://...">Abraham Lincoln</a></cite>
+  cite="http://...">
+  <p id="s-1.2-2">Four score and seven years ago our fathers
+    brought forth on this continent, a new nation, conceived
+    in Liberty, and dedicated to the proposition that all men
+    are created equal.
+    <a href="#s-1.2-2" class="pilcrow">&para;</a>
+  </p>
+  <cite>&mdash; <a href="http://...">Abraham Lincoln</a></cite>
 </blockquote>
 ....
 
-[#element.boilerplate]
+[#element-boilerplate]
 === &lt;boilerplate&gt;
 
 The Status of This Memo and the Copyright statement, together
@@ -1064,24 +1066,24 @@ are treated in a similar fashion to unnumbered sections.
 
 ....
 <section id="status-of-this-memo">
-<h2 id="s-boilerplate-1">
-<a href="#status-of-this-memo" class="selfRef">
-Status of this Memo</a>
-</h2>
-<p id="s-boilerplate-1-1">This Internet-Draft is submitted in full
-conformance with the provisions of BCP 78 and BCP 79.
-<a href="#s-boilerplate-1-1" class="pilcrow">&para;</a>
-</p>
+  <h2 id="s-boilerplate-1">
+    <a href="#status-of-this-memo" class="selfRef">
+      Status of this Memo</a>
+  </h2>
+  <p id="s-boilerplate-1-1">This Internet-Draft is submitted in full
+    conformance with the provisions of BCP 78 and BCP 79.
+    <a href="#s-boilerplate-1-1" class="pilcrow">&para;</a>
+  </p>
 ...
 ....
 
-[#element.br]
+[#element-br]
 === &lt;br&gt;
 
 This element is directly rendered as its HTML counterpart.  Note:
 in HTML, &lt;br&gt; does not have a closing slash.
 
-[#element.city]
+[#element-city]
 === &lt;city&gt;
 
 This element is rendered as a &lt;span&gt; element with CSS
@@ -1091,7 +1093,7 @@ class "locality".
 <span class="locality">Guilford</span>
 ....
 
-[#element.code]
+[#element-code]
 === &lt;code&gt;
 
 This element is rendered as a &lt;span&gt; element with CSS
@@ -1101,7 +1103,7 @@ class "postal-code".
 <span class="postal-code">GU16 7HF<span>
 ....
 
-[#element.country]
+[#element-country]
 === &lt;country&gt;
 
 This element is rendered as a &lt;div&gt; element with CSS
@@ -1111,7 +1113,7 @@ class "country-name".
 <div class="country-name">England</div>
 ....
 
-[#element.cref]
+[#element-cref]
 === &lt;cref&gt;
 
 This element is rendered as a &lt;span&gt; element with CSS
@@ -1125,7 +1127,7 @@ about something that we need to remember later.
 <span class="crefSource">--life</span></span>
 ....
 
-[#element.date]
+[#element-date]
 === &lt;date&gt;
 
 
@@ -1144,21 +1146,21 @@ CSS class "refDate".
 <time datetime="2014-10" class="published">October 2014</time>
 ....
 
-[#element.dd]
+[#element-dd]
 === &lt;dd&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.displayreference]
+[#element-displayreference]
 === &lt;displayreference&gt;
 
 This element does not affect the HTML output, but it is used in the generation of the 
-<<element.reference,format=title>>,
-<<element.referencegroup,format=title>>,
-<<element.relref,format=title>>, and
-<<element.xref,format=title>> elements.
+<<element-reference,format=title>>,
+<<element-referencegroup,format=title>>,
+<<element-relref,format=title>>, and
+<<element-xref,format=title>> elements.
 
-[#element.dl]
+[#element-dl]
 === &lt;dl&gt;
 
 This element is directly rendered as its HTML counterpart.
@@ -1168,17 +1170,17 @@ add the "dlHanging" class.
 
 If the spacing attribute is "compact", add the "dlCompact" class.
 
-[#element.dt]
+[#element-dt]
 === &lt;dt&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.em]
+[#element-em]
 === &lt;em&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.email]
+[#element-email]
 === &lt;email&gt;
 
 
@@ -1191,12 +1193,12 @@ ASCII, the "ascii" attribute is preferred to the element text.
 
 ....
 <div>
-<span>Email:</span>
-<a class="email" href="mailto:joe@example.com">joe@example.com</a>
+  <span>Email:</span>
+  <a class="email" href="mailto:joe@example.com">joe@example.com</a>
 </div>
 ....
 
-[#element.eref]
+[#element-eref]
 === &lt;eref&gt;
 
 This element is rendered as an HTML &lt;a&gt; element, with the "href"
@@ -1207,7 +1209,7 @@ class of "eref".
 <a href="https://..." class="eref">the text</a>
 ....
 
-[#element.figure]
+[#element-figure]
 === &lt;figure&gt;
 
 This element renders as the HTML &lt;figure&gt; element, containing
@@ -1219,22 +1221,22 @@ figure name, if a name was given.
 
 ....
 <figure id="f-1">
-...
-<figcaption>
-<a href="#f-1">Figure 1.</a>
-<a href="#n-it-figures" id="n-it-figures" class="selfRef">
-It figures
-</a>
-</figcaption>
+  ...
+  <figcaption>
+    <a href="#f-1">Figure 1.</a>
+    <a href="#n-it-figures" id="n-it-figures" class="selfRef">
+      It figures
+    </a>
+  </figcaption>
 </figure>
 ....
 
-[#element.front]
+[#element-front]
 === &lt;front&gt;
 
-See <xref target='document-information'>"Document Information"</xref> for information on this element.
+See <<document-information,"Document Information">> for information on this element.
 
-[#element.iref]
+[#element-iref]
 === &lt;iref&gt;
 
 This element is rendered as an empty &lt;&gt; tag of class &quot;iref&quot;, with
@@ -1244,7 +1246,7 @@ an &quot;id&quot; attribute consisting of the &lt;iref&gt; element's &quot;irefi
 <span class="iref" id="s-Paragraphs-first-1"/>
 ....
 
-[#element.keyword]
+[#element-keyword]
 === &lt;keyword&gt;
 
 Each &lt;keyword&gt; element renders its text into the &lt;meta&gt;
@@ -1254,44 +1256,44 @@ keywords in the document's header, separated by commas.
 <meta name="keywords" content="html,css,rfc">
 ....
 
-[#element.li]
+[#element-li]
 === &lt;li&gt;
 
 This element is rendered as its HTML counterpart.  However, if there
 is no contained element that has a
-<xref target='pilcrows'>pilcrow</xref> attached, a pilcrow
+<<pilcrows,pilcrow>> attached, a pilcrow
 is added.
 
 ....
 <li id="s-2-7">Item <a href="#s-2-7" class="pilcrow">&para;</a></li>
 ....
 
-[#element.link]
+[#element-link]
 === &lt;link&gt;
 
 This element is rendered as its HTML counterpart, in the HTML
 header.
 
-[#element.middle]
+[#element-middle]
 === &lt;middle&gt;
 
 This element does not add any direct output to HTML.
 
-[#element.name]
+[#element-name]
 === &lt;name&gt;
 
 This element is never rendered directly; it is only rendered when
 considering a parent element, such as
-<<element.figure,format=title>>,
-<<element.references,format=title>>,
-<<element.section,format=title>>, or
-<<element.table,format=title>>.
+<<element-figure,format=title>>,
+<<element-references,format=title>>,
+<<element-section,format=title>>, or
+<<element-table,format=title>>.
 
-[#element.note]
+[#element-note]
 === &lt;note&gt;
 
 This element is rendered like a 
-<<element.section,format=title>> element, but without
+<<element-section,format=title>> element, but without
 a section number and with the CSS class of "note".  If the
 "removeInRFC" attribute is set to "yes", the generated &lt;div&gt; element
 will also include the CSS class "rfcEditorRemove".
@@ -1299,17 +1301,17 @@ will also include the CSS class "rfcEditorRemove".
 
 ....
 <section id="s-note-1" class="note rfcEditorRemove">
-<h2>
-<a href="#n-editorial-note" class="selfRef">Editorial Note</a>
-</h2>
-<p id="s-note-1-1">
-Discussion of this draft takes place...
-<a href="#s-note-1-1" class="pilcrow">&para;</a>
-</p>
+  <h2>
+    <a href="#n-editorial-note" class="selfRef">Editorial Note</a>
+  </h2>
+  <p id="s-note-1-1">
+    Discussion of this draft takes place...
+    <a href="#s-note-1-1" class="pilcrow">&para;</a>
+  </p>
 </section>
 ....
 
-[#element.ol]
+[#element-ol]
 === &lt;ol&gt;
 
 The output created from an &lt;ol&gt; element depends upon the &quot;style&quot;
@@ -1319,6 +1321,7 @@ If the &quot;spacing&quot; attribute has the value "compact", a CSS class of
 "olCompact" will be added.
 
 The group attribute is not copied; the input XML should have start
+values added by a prep tool for all grouped &lt;ol&gt; elements.
 
 [#ol-percent-styles]
 ==== Percent Styles
@@ -1331,8 +1334,8 @@ label in the &lt;dt&gt; and the contents of the &lt;li&gt; in the
 
 ....
 <dl class="olPercent">
-<dt>Requirement xviii:</dt>
-<dd>Wheels on a big rig</dd>
+  <dt>Requirement xviii:</dt>
+  <dd>Wheels on a big rig</dd>
 </dl>
 ....
 
@@ -1344,11 +1347,11 @@ For all other styles, an &lt;ol&gt; tag is emitted, with any
 
 ....
 <ol class="compact" type="I" start="18">
-<li>Wheels on a big rig</li>
+  <li>Wheels on a big rig</li>
 </ol>
 ....
 
-[#element.organization]
+[#element-organization]
 === &lt;organization&gt;
 
 This element is
@@ -1362,12 +1365,12 @@ parentheses.
 
 ....
 <div class="org">
-<span class="non-ascii">Test Org</span>
-(<span class="ascii">TEST ORG</span>)
+  <span class="non-ascii">Test Org</span>
+  (<span class="ascii">TEST ORG</span>)
 </div>
 ....
 
-[#element.phone]
+[#element-phone]
 === &lt;phone&gt;
 
 
@@ -1380,13 +1383,13 @@ HTML &lt;span&gt; with CSS class "type" containing the string
 
 ....
 <div>
-<span>Phone:</span>
-<a class="tel" href="tel:+1-720-555-1212">+1-720-555-1212</a>
-<span class="type">VOICE</span>
+  <span>Phone:</span>
+  <a class="tel" href="tel:+1-720-555-1212">+1-720-555-1212</a>
+  <span class="type">VOICE</span>
 </div>
 ....
 
-[#element.postal]
+[#element-postal]
 === &lt;postal&gt;
 
 This element renders as an HTML &lt;div&gt; with CSS class
@@ -1409,18 +1412,18 @@ elements are rendered into the HTML:
 
 ....
 <div class="adr">
-<div class="street-address">1 Main Street</div>
-<div class="street-address">Suite 1</div>
-<div>
-<span class="city">Denver</span>,
-<span class="region">CO</span>
-<span class="postal-code">80212</span>
-</div>
-<div class="country-name">United States of America</div>
+  <div class="street-address">1 Main Street</div>
+  <div class="street-address">Suite 1</div>
+  <div>
+    <span class="city">Denver</span>,
+    <span class="region">CO</span>
+    <span class="postal-code">80212</span>
+  </div>
+  <div class="country-name">United States of America</div>
 </div>
 ....
 
-[#element.postalLine]
+[#element-postalLine]
 === &lt;postalLine&gt;
 
 This element renders as the text contained by the element, followed
@@ -1429,8 +1432,8 @@ by a newline.  However, the last &lt;postalLine&gt; in a given
 
 ....
 <postal>
-<postalLine>In care of:</postalLine>
-<postalLine>Computer Sciences Division</postalLine>
+  <postalLine>In care of:</postalLine>
+  <postalLine>Computer Sciences Division</postalLine>
 </postal>
 ....
 
@@ -1441,7 +1444,7 @@ Would be rendered as:
 Computer Sciences Division</pre>
 ....
 
-[#element.refcontent]
+[#element-refcontent]
 === &lt;refcontent&gt;
 
 This element renders as an HTML &lt;span&gt; with CSS class
@@ -1452,7 +1455,7 @@ This element renders as an HTML &lt;span&gt; with CSS class
 <span class="refContent">Self-published pamphlet</span>
 ....
 
-[#element.reference]
+[#element-reference]
 === &lt;reference&gt;
 
 If the parent of this element is not a &lt;referencegroup&gt;, this
@@ -1465,14 +1468,14 @@ anchor.
 
 ....
 <dl class="reference">
-<dt id="RFC5646">[RFC5646]</dt>
-<dd>
-<span class="refAuthor">Phillips, A.</span>
-<span>and</span>
-<span class="refAuthor">M. Davis</span>
-<span class="refTitle">"Tags for Identifying Languages"</span>,
-...
-</dd>
+  <dt id="RFC5646">[RFC5646]</dt>
+  <dd>
+    <span class="refAuthor">Phillips, A.</span>
+    <span>and</span>
+    <span class="refAuthor">M. Davis</span>
+    <span class="refTitle">"Tags for Identifying Languages"</span>,
+    ...
+  </dd>
 </dl>
 ....
 
@@ -1489,7 +1492,7 @@ attribute.
 </div>
 ....
 
-[#element.referencegroup]
+[#element-referencegroup]
 === &lt;referencegroup&gt;
 
 A &lt;referencegroup&gt; is translated into a &lt;dt&gt; &lt;dd&gt;
@@ -1501,19 +1504,19 @@ elements.
 ....
 <dt id="STD69">[STD69]</dt>
 <dd>
-<div class="refInstance" id="RFC5730">
-<span class="refAuthor">Hollenbeck, S.</span>
-...
-</div>
-<div class="refInstance" id="RFC5731">
-<span class="refAuthor">Hollenbeck, S.</span>
-...
-</div>
-...
+  <div class="refInstance" id="RFC5730">
+    <span class="refAuthor">Hollenbeck, S.</span>
+    ...
+  </div>
+  <div class="refInstance" id="RFC5731">
+    <span class="refAuthor">Hollenbeck, S.</span>
+    ...
+  </div>
+  ...
 </dd>
 ....
 
-[#element.references]
+[#element-references]
 === &lt;references&gt;
 
 If there is at exactly one &lt;references&gt; element, a
@@ -1525,11 +1528,11 @@ element is used as the section name.
 
 ....
 <section id="n-my-references">
-<h2 id="s-3">
-<a href="#s-3" class="selfRef">3.</a>
-<a href="#n-my-references class="selfRef">My References</a>
-</h2>
-...
+  <h2 id="s-3">
+    <a href="#s-3" class="selfRef">3.</a>
+    <a href="#n-my-references class="selfRef">My References</a>
+  </h2>
+  ...
 </section>
 ....
 
@@ -1542,23 +1545,23 @@ be "References", and its "id" attribute will be "n-references".
 
 ....
 <section id="n-references">
-<h2 id="s-3">
-<a href="#s-3" class="selfRef">3.</a>
-<a href="#n-references" class="selfRef">References</a>
-</h2>
-<section id="n-informative-references">
-<h3 id="s-3.1">
-<a href="#s-3.1" class="selfRef">3.1.</a>
-<a href="#n-informative-references" class="selfRef">
-Informative References</a></h3>
-<dl class="reference">...
-</dl>
-</section>
-...
+  <h2 id="s-3">
+    <a href="#s-3" class="selfRef">3.</a>
+    <a href="#n-references" class="selfRef">References</a>
+  </h2>
+  <section id="n-informative-references">
+    <h3 id="s-3.1">
+      <a href="#s-3.1" class="selfRef">3.1.</a>
+      <a href="#n-informative-references" class="selfRef">
+        Informative References</a></h3>
+    <dl class="reference">...
+    </dl>
+  </section>
+  ...
 </section>
 ....
 
-[#element.region]
+[#element-region]
 === &lt;region&gt;
 
 This element is rendered as a &lt;span&gt; tag with CSS
@@ -1569,7 +1572,7 @@ class "region".
 <span class="region">Colorado</span>
 ....
 
-[#element.relref]
+[#element-relref]
 === &lt;relref&gt;
 
 
@@ -1586,7 +1589,7 @@ and text inside of the "target" attribute
 When used, this &lt;a class='xref'&gt; HTML tag is always surrounded
 by square brackets, for example, "[&lt;a class='xref' href='#foo'&gt;foo&lt;/a&gt;]".
 
-[#element.relref.df-of]
+[#element-relref-df-of]
 ==== displayFormat='of'
 
 The output is an &lt;a class='relref'&gt; HTML tag, with
@@ -1598,8 +1601,8 @@ square brackets).
 For example, with an input of:
 
 ....
-See &lt;relref section="2.3" target="RFC9999" displayFormat="of"
-derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"/&gt;
+See <relref section="2.3" target="RFC9999" displayFormat="of"
+derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"/>
 for an overview.
 ....
 
@@ -1607,13 +1610,13 @@ for an overview.
 The HTML generated will be:
 
 ....
-See &lt;a class="relref"
-href="http://www.rfc-editor.org/info/rfc9999#s-2.3"&gt;Section
-2.3&lt;/a&gt; of [&lt;a class="xref" href="#RFC9999"&gt;RFC9999&lt;/a&gt;]
-for an overview.<
+See <a class="relref"
+href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section
+2.3</a> of [<a class="xref" href="#RFC9999">RFC9999</a>]
+for an overview.
 ....
 
-[#element.relref.df-comma]
+[#element-relref-df-comma]
 ==== displayFormat='comma'
 
 The output is an &lt;a class='xref'&gt; HTML tag (wrapped by
@@ -1625,8 +1628,8 @@ attribute.
 For example, with an input of:
 
 ....
-See &lt;relref section="2.3" target="RFC9999" displayFormat="comma"
-derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"/&gt;,
+See <relref section="2.3" target="RFC9999" displayFormat="comma"
+derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"/>,
 for an overview.
 ....
 
@@ -1639,7 +1642,7 @@ href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section 2.3</a>,
 for an overview.
 ....
 
-[#element.relref.df-parens]
+[#element-relref-df-parens]
 ==== displayFormat='parens'
 
 The output is an &lt;a&gt; element with "href" attribute whose value
@@ -1655,9 +1658,9 @@ For example, if Section 2.3 of RFC 9999 has the title "Protocol
 Overview", for an input of:
 
 ....
-See &lt;relref section="2.3" target="RFC9999" displayFormat="parens"
+See <relref section="2.3" target="RFC9999" displayFormat="parens"
 derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"
-derivedRemoteContent="Section 2.3"/&gt; for an overview.
+derivedRemoteContent="Section 2.3"/> for an overview.
 ....
 
 
@@ -1670,7 +1673,7 @@ href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section
 2.3</a>) for an overview.
 ....
 
-[#element.relref.df-bare]
+[#element-relref-df-bare]
 ==== displayFormat='bare'
 
 The output is an &lt;a&gt; element whose "href" attribute is
@@ -1680,9 +1683,9 @@ value of the "derivedRemoteContent" attribute.
 For this input:
 
 ....
-See &lt;relref section="2.3" target="RFC9999" displayFormat="bare"
+See <relref section="2.3" target="RFC9999" displayFormat="bare"
 derivedLink="http://www.rfc-editor.org/info/rfc9999#s-2.3"
-derivedRemoteContent="Section 2.3"/&gt; and ...
+derivedRemoteContent="Section 2.3"/> and ...
 ....
 
 
@@ -1695,13 +1698,13 @@ href="http://www.rfc-editor.org/info/rfc9999#s-2.3">Section
 ....
 
 
-[#element.rfc]
+[#element-rfc]
 === &lt;rfc&gt;
 
 Various attributes of this element are represented in different parts of the HTML
 document.
 
-[#element.section]
+[#element-section]
 === &lt;section&gt;
 
 This element is rendered as an HTML &lt;section&gt; element,
@@ -1713,16 +1716,16 @@ element is included with the section's name.
 
 ....
 <section id="intro">
-<h2 id="s-1">
-<a href="#s-1" class="selfRef">1.</a>
-<a href="#intro" class="selfRef">Introduction</a>
-</h2>
-<p id="s-1-1">Paragraph <a href="#s-1-1" class="pilcrow">&para;</a>
-</p>
+  <h2 id="s-1">
+    <a href="#s-1" class="selfRef">1.</a>
+    <a href="#intro" class="selfRef">Introduction</a>
+  </h2>
+  <p id="s-1-1">Paragraph <a href="#s-1-1" class="pilcrow">&para;</a>
+  </p>
 </section>
 ....
 
-[#element.seriesInfo]
+[#element-seriesInfo]
 === &lt;seriesInfo&gt;
 
 This element is rendered in an HTML &lt;span&gt; element with CSS
@@ -1732,7 +1735,7 @@ name "seriesInfo".
 <span class="seriesInfo">RFC 5646</span>
 ....
 
-[#element.sourcecode]
+[#element-sourcecode]
 === &lt;sourcecode&gt;
 
 This element is rendered in an HTML &lt;pre&gt; element with a CSS class of
@@ -1751,13 +1754,13 @@ pilcrow.
 #include &lt;stdio.h&gt;
 int main(void)
 {
-printf(&quot;hello, world\n&quot;);
-return 0;
+    printf(&quot;hello, world\n&quot;);
+    return 0;
 }
 </pre>
 ....
 
-[#element.street]
+[#element-street]
 === &lt;street&gt;
 
 This element renders as an HTML &lt;div&gt; element with CSS class
@@ -1767,22 +1770,22 @@ This element renders as an HTML &lt;div&gt; element with CSS class
 <div class="street-address">1899 Wynkoop St, Suite 600</div>
 ....
 
-[#element.strong]
+[#element-strong]
 === &lt;strong&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.sub]
+[#element-sub]
 === &lt;sub&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.sup]
+[#element-sup]
 === &lt;sup&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.t]
+[#element-t]
 === &lt;t&gt;
 
 This element is rendered as an HTML &lt;p&gt; element.  A
@@ -1790,40 +1793,40 @@ This element is rendered as an HTML &lt;p&gt; element.  A
 
 ....
 <p id="s-1-1">A paragraph.
-<a href="#s-1-1" class="pilcrow">&para;</a></p>
+  <a href="#s-1-1" class="pilcrow">&para;</a></p>
 ....
 
-[#element.table]
+[#element-table]
 === &lt;table&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.tbody]
+[#element-tbody]
 === &lt;tbody&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.td]
+[#element-td]
 === &lt;td&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.tfoot]
+[#element-tfoot]
 === &lt;tfoot&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.th]
+[#element-th]
 === &lt;th&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.thead]
+[#element-thead]
 === &lt;thead&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.title]
+[#element-title]
 === &lt;title&gt;
 
 The title of the document appears in a &lt;title&gt; element in the
@@ -1835,11 +1838,9 @@ attribute with value "title".
 
 ....
 <h1 id="title">HyperText Markup Language Request For
-Comments Format</h1>
-....
+    Comments Format</h1>
 
-<!--FYI - title update requires update to example title above.
--->
+....
 
 Inside a reference, the title is rendered as an HTML &lt;span&gt;
 tag with CSS class "refTitle".  The text is surrounded by quotes
@@ -1849,17 +1850,17 @@ inside the &lt;span&gt;.
 <span class="refTitle">"Tags for Identifying Languages"</span>
 ....
 
-[#element.tr]
+[#element-tr]
 === &lt;tr&gt;
 
 This element is directly rendered as its HTML counterpart.
 
-[#element.tt]
+[#element-tt]
 === &lt;tt&gt;
 
 This element is rendered as an HTML &lt;code&gt; element.
 
-[#element.ul]
+[#element-ul]
 === &lt;ul&gt;
 
 This element is directly rendered as its HTML counterpart. If the
@@ -1867,7 +1868,7 @@ This element is directly rendered as its HTML counterpart. If the
 will be added. If the "empty" attribute has the value "true", a CSS
 class of "ulEmpty" will be added.
 
-[#element.uri]
+[#element-uri]
 === &lt;uri&gt;
 
 
@@ -1881,17 +1882,17 @@ set to the linked URI.
 
 ....
 <div>URI:
-<a href="http://www.example.com"
-class="url">http://www.example.com</a>
+  <a href="http://www.example.com"
+     class="url">http://www.example.com</a>
 </div>
 ....
 
-[#element.workgroup]
+[#element-workgroup]
 === &lt;workgroup&gt;
 
 This element does not add any direct output to HTML.
 
-[#element.xref]
+[#element-xref]
 === &lt;xref&gt;
 
 This element is rendered as an HTML &lt;a&gt; element containing an
@@ -1913,14 +1914,10 @@ or
 
 ....
 [<a class="xref" href="#RFC1234">RFC1234</a>]
+
 ....
 
-<!--
-Moved to the end so I can stop wondering why there are
-more sections in this doc than v3.
--->
-
-[#element.svg]
+[#element-svg]
 === &lt;svg xmlns='http://www.w3.org/2000/svg'&gt;
 
 This element is rendered as part of the &lt;artwork&gt; element.
@@ -2020,7 +2017,7 @@ This document describes the fundamental and unique style conventions and editori
 <author initials='S.' surname='Bradner' fullname='S. Bradner'><organization /></author>
 <date year='1997' month='March' />
 <abstract>
-<t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized. This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</abstract>
+<t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized. This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract>
 </front>
 <seriesInfo name='BCP' value='14'/>
 <seriesInfo name='RFC' value='2119'/>
@@ -2041,7 +2038,7 @@ This document describes the fundamental and unique style conventions and editori
 <date month='December' year='2016' />
 
 <abstract>
-<t>The HTML format for RFCs, described in [I-D.iab-html-rfc] assigns style guidance to an RFC Editor-defined Cascading Style Sheet (CSS). The embedded, default CSS as included by the RFC Editor is expected to take into account accessibility needs and be built along a responsive design model.  This document describes the requirements for the default CSS used by the RFC Editor.  The class names are based on the classes defined in draft-iab-html-rfc.  Discussion of this draft takes place on the rfc-interest mailing list (rfc-interest@rfc-editor.org), which has its home page at https://www.rfc-editor.org/mailman/listinfo/rfc-interest.</abstract>
+<t>The HTML format for RFCs, described in [I-D.iab-html-rfc] assigns style guidance to an RFC Editor-defined Cascading Style Sheet (CSS). The embedded, default CSS as included by the RFC Editor is expected to take into account accessibility needs and be built along a responsive design model.  This document describes the requirements for the default CSS used by the RFC Editor.  The class names are based on the classes defined in draft-iab-html-rfc.  Discussion of this draft takes place on the rfc-interest mailing list (rfc-interest@rfc-editor.org), which has its home page at https://www.rfc-editor.org/mailman/listinfo/rfc-interest.</t></abstract>
 
 </front>
 
@@ -2098,7 +2095,7 @@ target='http://www.w3.org/TR/2014/REC-html5-20141028'>
 <organization />
 </author>
 
-<author initials='T.' surname='O&amp;#039;Connor' fullname='Theresa O&amp;#039;Connor'>
+<author initials='T.' surname='O&#039;Connor' fullname='Theresa O&#039;Connor'>
 <organization />
 </author>
 
@@ -2223,7 +2220,7 @@ This document describes the current requirements and requests for enhancements f
 <date month='December' year='2016' />
 
 <abstract>
-<t>This document describes some aspects of the "prep tool" that is expected to be created when the new RFC v3 specification is deployed.</abstract>
+<t>This document describes some aspects of the "prep tool" that is expected to be created when the new RFC v3 specification is deployed.</t></abstract>
 
 </front>
 
@@ -2248,7 +2245,7 @@ This document describes the current requirements and requests for enhancements f
 <date month='December'  year='2016' />
 
 <abstract>
-<t>The canonical format for the RFC Series has been plain-text, ASCII-encoded for several decades.  After extensive community discussion and debate, the RFC Editor will be transitioning to XML as the canonical format using the XML2RFC version 3 vocabulary.  Different publication formats will be rendered from that base document.  These changes are intended to increase the usability of the RFC Series by offering documents that match the needs of a wider variety of stakeholders.  With these changes, however, comes an increase in complexity for authors, consumers, and the publisher of RFCs.  This document serves as the framework that describes the problems being solved and summarizes the many documents that capture the specific requirements for each aspect of the change in format.</abstract>
+<t>The canonical format for the RFC Series has been plain-text, ASCII-encoded for several decades.  After extensive community discussion and debate, the RFC Editor will be transitioning to XML as the canonical format using the XML2RFC version 3 vocabulary.  Different publication formats will be rendered from that base document.  These changes are intended to increase the usability of the RFC Series by offering documents that match the needs of a wider variety of stakeholders.  With these changes, however, comes an increase in complexity for authors, consumers, and the publisher of RFCs.  This document serves as the framework that describes the problems being solved and summarizes the many documents that capture the specific requirements for each aspect of the change in format.</t></abstract>
 
 </front>
 

@@ -202,7 +202,7 @@ module Asciidoctor
               # we are assuming a single contiguous :pass block of XML
               result << noko do |xml|
                 xml.references **attr_code(references_attributes) do |xml_references|
-                  xml_references << reflist(block).join
+                  xml_references << reflist(block).join("\n")
                 end
               end
             end

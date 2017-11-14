@@ -39,9 +39,10 @@ module Asciidoctor
         else
           xref_contents = node.text
 
-          matched = /^format=(?<format>counter|title|none|default):\s*(?<text>.*)$/.match xref_contents
+          matched = /^format=(?<format>counter|title|none|default)(?<text>:\s*.*)?$/.match xref_contents
 
-          xref_contents = matched[:text] if matched
+          xref_contents = matched.nil? ? xref_contents :
+            matched[:text].nil? ? '' : matched[:text].gsub(/^:\s*/, "")
 
           xref_attributes = {
             format: matched&.[](:format),

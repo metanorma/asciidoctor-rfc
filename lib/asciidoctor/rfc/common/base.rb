@@ -257,6 +257,7 @@ module Asciidoctor
         result.reject(&:empty?)
       end
 
+      # block for processing XML document fragments as XHTML, to allow for HTMLentities
       def noko(&block)
         # fragment = ::Nokogiri::XML::DocumentFragment.parse("")
         # fragment.doc.create_internal_subset("xml", nil, "xhtml.dtd")

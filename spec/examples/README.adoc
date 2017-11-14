@@ -58,6 +58,41 @@ and xml2rfc output from XML generated from our asciidoc should be noted:
 * Table preambles and postambles are not supported in Asciidoc.
 --
 
+`https://github.com/rfc-format/draft-iab-html-rfc-bis.xml.adoc`::
++
+--
+* Asciidoc does not permit anchors with dots (e.g. `element.postalLine`)
+* Original uses `section@numbered="no"`; that attribute is supported by xml2rfc v2,
+but not by RFC XML v2 itself.
+* Original applies subcompact processing instruction to a single list;
+restricted processing instructions are not supported by the gem.
+
+* Note that the references in XML need to be well-formed. In the absence of closing tags,
+the gem may switch tag case to lower case, assuming it is dealing with HTML; for example
+
+````
+<abstract>
+<t>This document describes some aspects of the "prep tool" that is expected to be created when the new RFC v3 specification is deployed.</abstract>
+
+</front>
+
+<seriesInfo name='RFC' value='7998' />
+````
+
+is output as
+
+````
+<abstract>
+<t>This document describes some aspects of the "prep tool" that is expected to be created when the new RFC v3 specification is deployed.</abstract>
+
+</front>
+
+<seriesinfo name='RFC' value='7998' />
+````
+
+where the absence of a closing `t` tag results in `seriesInfo` being lowercased as an HTML tag. (!)
+--
+
 == MMark
 https://github.com/miekg/mmark/tree/master/rfc
 
@@ -143,7 +178,7 @@ cross-reference, which takes up one more space for the same reference text.
 since the term delimiter itself involves colons:
 `SZX: :: `
 * Note that `**` needs to be escape in Asciidoc as `\\**`, in order not to be misinterpreted
-as formatting. On occasionl, the escaping is ignored, and the exponentiation operator
+as formatting. On occasion, the escaping is ignored, and the exponentiation operator
 has had to be entered as `&#42;&#42;`.
 --
 

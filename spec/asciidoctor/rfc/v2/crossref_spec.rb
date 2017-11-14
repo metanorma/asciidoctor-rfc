@@ -48,6 +48,9 @@ describe Asciidoctor::RFC::V2::Converter do
 
       == Section 4
       See <<crossreference,format=counter: text>>
+      
+      == Section 5
+      See <<crossreference,format=title>>
     INPUT
       <?xml version="1.0" encoding="US-ASCII"?>
       <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
@@ -69,6 +72,9 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
       <section anchor="_section_4" title="Section 4">
       <t>See <xref format="counter" target="crossreference">text</xref></t>
+      </section>
+      <section anchor="_section_5" title="Section 5">
+      <t>See <xref format="title" target="crossreference"/></t>
       </section>
       </middle>
       </rfc>

@@ -253,7 +253,7 @@ module Asciidoctor
               result << noko do |xml|
                 xml.references **attr_code(references_attributes) do |xml_references|
                   xml_references.name node.title unless node.title.nil?
-                  xml_references << reflist(block).join
+                  xml_references << reflist(block).join("\n")
                 end
               end
             elsif block.context == :ulist

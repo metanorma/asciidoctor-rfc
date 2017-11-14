@@ -48,8 +48,9 @@ module Asciidoctor
 
         else
 
-          matched = /^format=(?<format>counter|title|none|default):\s*(?<text>.*)$/.match node.text
-          xref_contents = matched.nil? ? node.text : matched[:text]
+          matched = /^format=(?<format>counter|title|none|default)(?<text>:\s*.*)?$/.match node.text
+          xref_contents = matched.nil? ? node.text : 
+            matched[:text].nil? ? '' : matched[:text].gsub(/^:\s*/, "")
           matched ||= {}
 
           xref_attributes = {
