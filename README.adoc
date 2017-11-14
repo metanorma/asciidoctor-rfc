@@ -1181,6 +1181,75 @@ These asciidoctor features are not supported in output of these formats:
 | Table: http://asciidoctor.org/docs/user-manual/#cols-format[Table columns: width] | Supported | Ignored
 |===
 
+== asciidoc-bibliography integration
+
+The https://github.com/riboseinc/asciidoctor-bibliography[asciidoc-bibliography] gem allows citations to be imported
+into asciidoc from BibTex or RFC XML files. The gem natively requires the user to provide the correct, presorted
+RFC XML references within asciidoc separately for normative and for informative references. Using the asciidoc-bibliography
+gem, the user can instead have a single file of RFC XML references, and indicate in place whether each reference
+is intended to be normative or informative, as is the case for MMark; the gem will then extract the correct RFC XML
+references from the references file, and insert them in order into the normative and informative references respectively.
+
+Integration with the asciidoc-bibliography gem proceeds as follows:
+
+. Create an RFC XML references file, consisting of a `<references>` element with individual `<reference>` elements inserted, 
+as would be done for the informative and normative references normally. The references file will contain all possible 
+references to be used
+in the file; the bibliography gem will select which references have actually been cited in the document. 
+.. Rather than hand crafting RFC XML references for RFC documents, you should download them from an authoritative
+source; e.g. http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml
+.. Unlike the case for RFC XML documents created manually, the references file does not recognise XML entities 
+and will not attempt to download them during processing. 
+Any references to http://xml.resource.org/public/rfc/bibxml/ will need to be downloaded and inserted into the references file.
+.. The RFC XML in the references file will need to be appropriate to the version of RFC XML used in the main document, as
+usual. Note that RFC XML v2 references are forward compatible with v3; v3 contains a couple of additional elements.
+. Add the following header attributes to the main document:
++
+--
+`:bibliography-database:` :: The name of the references file; this is expected to be in the same directory as
+the main document.
+`:bibliography-passthrough:` ::
+`:bibliography-prepend-empty:` ::
+`:bibliography-hyperlinks:` ::
+`:bibliography-style:` :: The style of reference used in the references file; the recognised styles are `rfc-v2` and
+`rfc-v3`, for RFC XML v2 and RFC XML v3 respectively.
+--
+
+. References to a normative reference are inserted with the macro `cite:norm[id]` instead of `<<id>>`, where `id` is
+the anchor of the reference.
+. References to an infomrative reference are inserted with the macro `cite:info[id]` instead of `<<id>>`, where `id` is
+the anchor of the reference.
+.. Arbitrary text associated with a crossreference is inserted with a `text` attribute, and fragment references are
+inserted with a `locator` attribute. Using `cite:norm`:
+*** NOTE: To be implemented next week
+*** `<<id,words>>` = `cite:norm[id, text="words"]`
+*** `<<id,format=counter: words>>` (processed as a formatted crossreference) = `cite:norm[id, text="format=counter: words"]`
+*** `<<id,2.4 comma: words>>` (processed as relref) = `cite:norm[id, text="2.4 comma: words"]`
+*** `<<id#section2_4,2.4 comma: words>>` (processed as relref with a cross-document internal reference) = `cite:norm[id, text="2.4 comma: words" location="section2_4"]`
+. Normative and Informative References are inserted in the document through a macro, which occurs where the RFC XML
+references would be inserted
++
+[source,asciidoc]
+--
+[bibliography]
+== Normative References
+
+++++
+bibliography::norm[]
+++++
+
+[bibliography]
+== Informative References
+
+++++
+bibliography::info[]
+++++
+--
+. In order to preprocess the macros, the asciidoctor-bibliography gem is passed as an `-r` argument to the
+asciidoctor-rfc invocation:
+** `bin/asciidoctor-rfc2 -r asciidoctor-bibliography spec/examples/refs-v2.adoc`
+** `bin/asciidoctor-rfc3 -r asciidoctor-bibliography spec/examples/refs-v3.adoc`
+
 
 == Examples
 
