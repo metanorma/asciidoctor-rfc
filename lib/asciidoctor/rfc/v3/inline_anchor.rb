@@ -20,7 +20,7 @@ module Asciidoctor
 
       def inline_anchor_xref(node)
         text = node.text
-        if text =~ /^\S+ (of|comma|parens|bare)\b/
+        if /^\S+ (of|comma|parens|bare)\b/.match(text)
           # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref
           matched = /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text>.*)$/.match node.text
 
@@ -34,6 +34,7 @@ module Asciidoctor
           }
 
           noko do |xml|
+            warn text
             xml.relref relref_contents, **attr_code(relref_attributes)
           end.join
         else

@@ -166,6 +166,16 @@ $ asciidoctor -b rfc2 -r 'asciidoctor/rfc' a.adoc  # RFC XML v2 output
 When the script completes, you should see the RFC XML file `draft-example-00.xml` in the
 same directory.
 
+You can clone the `rfc-in-asciidoc-template` github repository as a template, 
+and populate it for your Asciidoc RFCs and Internet drafts:
+
+[source,console]
+----
+$ git clone https://github.com/riboseinc/rfc-in-asciidoc-template.git
+----
+
+See the https://github.com/riboseinc/rfc-in-asciidoc-template[Readme] of that document for
+more information.
 
 == Syntax
 

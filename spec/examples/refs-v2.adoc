@@ -11,7 +11,7 @@ Simon Perreault <simon.perreault@viagenie.ca>
 :name: rfc-6350
 :revdate: 20110831
 :submission-type: IETF
-:status: full-standard
+:status: standard
 :intended-series: full-standard 6350
 :fullname: Simon Perreault
 :lastname: Perreault
@@ -25,7 +25,7 @@ Simon Perreault <simon.perreault@viagenie.ca>
 :uri: http://www.viagenie.ca
 :link: urn:issn:2070-1721 item
 
-
+== Introduction
 The authors would like to thank Tim Howes, Mark Smith, and Frank
 Dawson, the original authors of cite:info[RFC2119] and cite:norm[RFC2629], Pete
 Resnick, who got this effort started and provided help along the way,

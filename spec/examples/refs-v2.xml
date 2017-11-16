@@ -7,7 +7,7 @@
 <?rfc tocdepth="4"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc obsoletes="2425, 2426, 4770" updates="2739" category="full-standard" submissionType="IETF" number="rfc-6350">
+<rfc obsoletes="2425, 2426, 4770" updates="2739" category="std" submissionType="IETF" number="rfc-6350">
 <front>
   <title>vCard Format Specification</title>
   <author fullname="Simon Perreault" surname="Perreault">
@@ -26,14 +26,14 @@
   </author>
   <date day="31" month="August" year="2011"/>
 
-<abstract>
+  </front><middle>
+  <section anchor="_introduction" title="Introduction">
 <t>The authors would like to thank Tim Howes, Mark Smith, and Frank
 Dawson, the original authors of <xref target="RFC2119">[RFC2119]</xref> and <xref target="RFC2629">[RFC2629]</xref>, Pete
 Resnick, who got this effort started and provided help along the way,
 as well as the following individuals who have participated in the
 drafting, review, and discussion of this memo:</t>
-</abstract>
-</front><middle>
+</section>
 </middle><back>
 <references title="Normative References">
   <reference anchor="RFC2629" target="https://www.rfc-editor.org/info/rfc2629">
