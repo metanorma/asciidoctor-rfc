@@ -15,7 +15,7 @@ module Asciidoctor
                       when "all"
                         "all"
                       when "rows"
-                        "none" # not supported
+                        "headers"
                       when "cols"
                         "full"
                       when "none"

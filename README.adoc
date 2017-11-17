@@ -151,6 +151,9 @@ AsciiDoc document file as the first argument.
 ----
 $ ruby ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
 $ ruby ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
+----
+
+or alternate
 ## WIP: bundle exec asciidoctor -b asciidoctor-rfc3 draft-example-00.adoc # RFC XML v3 output
 ## WIP: bundle exec asciidoctor -b asciidoctor-rfc2 draft-example-00.adoc # RFC XML v2 output
 ----
@@ -1050,7 +1053,7 @@ internally treats them identically to unspecified column widths on a table.)
 [source,asciidoc]
 --
 [[id]] <1>
-[suppress-title=true|false,align=left|center|right,grid=all|cols|none] <2>
+[suppress-title=true|false,align=left|center|right,grid=all|cols|none|rows] <2>
 .Table Title <3>
 |===
 |[[id]] head | head <4>
@@ -1062,7 +1065,7 @@ h|header cell | body cell <5>
 |===
 --
 <1> v3: `table@anchor`; v2: `texttable@anchor`
-<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style` (attributes only available in v2). Mapping of Asciidoc grid attribute to RFC XML style attribute is: `all` > `all`, `cols` > `full`, `none` > `none`. The RFC XML `headers` attribute is not supported. The Asciidoc attribute `rows` is not supported.
+<2> v2: `texttable@suppress-title`, `texttable@align`, `texttable@style` (attributes only available in v2). Mapping of Asciidoc grid attribute to RFC XML style attribute is: `all` > `all`, `cols` > `full`, `none` > `none`, `rows` > `headers` (although the two are not strictly equivalent).
 <3> v3: `table/name`; v2: `texttable@title`
 <4> v3: `table/thead/tr/td`; v2: `texttable/ttcol@id` (attribute only available in v2), `texttable/ttcol`
 <5> v3: `table/tbody/tr/th`, `table/tbody/tr/td`; v2: `texttable/c`, `texttable/c`
@@ -1151,7 +1154,6 @@ asciidoctor commands:
 | `reference@target`               | N          | N
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
-| `table@style = headers`          | N/A        | N
 | `artwork@width`                  | Only on images | Only on images
 | `artwork@height`                 | Only on images | Only on images
 |===
@@ -1182,7 +1184,7 @@ These asciidoctor features are not supported in output of these formats:
 | Macro: http://asciidoctor.org/docs/user-manual/#ui-buttons[UI buttons] 2+| Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#footer-row[Distinction between table body and table footer] | No | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#header-row[Multiple table header rows] | No | Supported
-| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = rows] | No | Ignored
+| Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = rows] | Rendered as `headers` | Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: grid = cols\|none] | Supported | Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#table-borders[Table borders: frame] 2+| Ignored
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: rowspan] | Ignored | Supported
@@ -1218,9 +1220,12 @@ usual. Note that RFC XML v2 references are forward compatible with v3; v3 contai
 --
 `:bibliography-database:` :: The name of the references file; this is expected to be in the same directory as
 the main document.
-`:bibliography-passthrough:` ::
-`:bibliography-prepend-empty:` ::
-`:bibliography-hyperlinks:` ::
+`:bibliography-passthrough:` :: `citations`. This instructs the asciidoctor-bibliography gem to wrap the citations
+in an Asciidoctor passthrough block. If `true` is used, the references introduced through `cite` macros will also
+be treated as inline Asciidoctor passthrough text.
+TODO: May end up being `references` instead`
+`:bibliography-prepend-empty:` :: `true|false`. No current effect on file
+`:bibliography-hyperlinks:` :: `true|false` (default `true`): inserts bibliographic link around reference. Use `false`.
 `:bibliography-style:` :: The style of reference used in the references file; the recognised styles are `rfc-v2` and
 `rfc-v3`, for RFC XML v2 and RFC XML v3 respectively.
 --
@@ -1231,7 +1236,7 @@ the anchor of the reference.
 the anchor of the reference.
 .. Arbitrary text associated with a crossreference is inserted with a `text` attribute, and fragment references are
 inserted with a `locator` attribute. Using `cite:norm`:
-*** NOTE: To be implemented next week
+*** TODO: To be implemented next week
 *** `<<id,words>>` = `cite:norm[id, text="words"]`
 *** `<<id,format=counter: words>>` (processed as a formatted crossreference) = `cite:norm[id, text="format=counter: words"]`
 *** `<<id,2.4 comma: words>>` (processed as relref) = `cite:norm[id, text="2.4 comma: words"]`
@@ -1257,8 +1262,8 @@ bibliography::info[]
 --
 . In order to preprocess the macros, the asciidoctor-bibliography gem is passed as an `-r` argument to the
 asciidoctor-rfc invocation:
-** `bin/asciidoctor-rfc2 -r asciidoctor-bibliography spec/examples/refs-v2.adoc`
-** `bin/asciidoctor-rfc3 -r asciidoctor-bibliography spec/examples/refs-v3.adoc`
+** `asciidoctor -b rfc2 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc'  spec/examples/refs-v2.adoc`
+** `asciidoctor -b rfc3 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc'  spec/examples/refs-v3.adoc`
 
 
 == Examples
