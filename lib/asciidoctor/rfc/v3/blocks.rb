@@ -67,7 +67,6 @@ module Asciidoctor
         end
       end
 
-
       # Syntax:
       #   [[id]]
       #   [quote, attribution, citation info] # citation info limited to URL

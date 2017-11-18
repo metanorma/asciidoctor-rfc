@@ -73,7 +73,6 @@ module Asciidoctor
         result.last.last.gsub! /<\/front>$/, "" # FIXME: this is a hack!
         result << "</front><middle1>"
 
-
         result << node.content if node.blocks?
         result << ($seen_back_matter ? "</back>" : "</middle>")
         result << "</rfc>"
@@ -202,7 +201,7 @@ module Asciidoctor
                   #   in the passthrough since the xpath below just fishes out ALL
                   #   <reference>s in an unrooted fragment, regardless of structure.
                   Nokogiri::XML::DocumentFragment.
-                    parse(block.content).xpath('.//reference').
+                    parse(block.content).xpath(".//reference").
                     each { |reference| xml_references << reference.to_xml }
                 end
               end
@@ -317,17 +316,17 @@ module Asciidoctor
           if nodes[counter].name == "vspace"
             blankLines = 0
             while counter < nodes.size && nodes[counter].name == "vspace" do
-                if nodes[counter][:blankLines].nil?
-                  blankLines += 1
-                else
-                  blankLines +=  nodes[counter][:blankLines].to_i + 1
+              if nodes[counter][:blankLines].nil?
+                blankLines += 1
+              else
+                blankLines += nodes[counter][:blankLines].to_i + 1
+              end
+              if counter + 1 < nodes.size && nodes[counter + 1].text?
+                if nodes[counter + 1].text =~ /\A[\n ]+\Z/m
+                  counter += 1
                 end
-                if counter+1 < nodes.size && nodes[counter+1].text?
-                  if nodes[counter+1].text =~ /\A[\n ]+\Z/m
-                    counter += 1
-                  end
-                end
-                counter += 1
+              end
+              counter += 1
             end
             counter -= 1 if counter == nodes.size
             newnodes << noko do |xml|

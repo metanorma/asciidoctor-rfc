@@ -1,4 +1,5 @@
 # coding: utf-8
+
 module Asciidoctor
   module RFC::V3
     module Base
@@ -90,8 +91,8 @@ module Asciidoctor
         # Below are generally applicable Processing Instructions (PIs)
         # that most I-Ds might want to use. (Here they are set differently than
         # their defaults in xml2rfc v1.32)
-        
         if node.attr("rfc2629xslt") == "true"
+
           pi = Nokogiri::XML::ProcessingInstruction.new(doc, "xml-stylesheet",
                                                         'type="text/xsl" href="rfc2629.xslt"')
           doc.root.add_previous_sibling(pi)
@@ -139,9 +140,10 @@ module Asciidoctor
       end
 
       BCP_KEYWORDS = [
-        'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT',
-        'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', 'OPTIONAL'
-      ]
+        "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL"
+      ].freeze
+
       def inline_quoted(node)
         noko do |xml|
           case node.type
@@ -228,7 +230,7 @@ module Asciidoctor
                   #   in the passthrough since the xpath below just fishes out ALL
                   #   <reference>s in an unrooted fragment, regardless of structure.
                   Nokogiri::XML::DocumentFragment.
-                    parse(block.content).xpath('.//reference').
+                    parse(block.content).xpath(".//reference").
                     each { |reference| xml_references << reference.to_xml }
                 end
               end

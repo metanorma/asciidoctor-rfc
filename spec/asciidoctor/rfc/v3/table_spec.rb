@@ -7,6 +7,7 @@ describe Asciidoctor::RFC::V3::Converter do
 
       == Section 1
       [[id]]
+      [options="footer"]
       .Table Title
       |===
       |[[id]] head | head

@@ -106,7 +106,7 @@ module Asciidoctor
             # all but last term have empty dd
             terms.each_with_index do |term, idx|
               t_attributes = {
-                hangText: flatten_rawtext(term.text).join(' '),
+                hangText: flatten_rawtext(term.text).join(" "),
               }
 
               if idx < terms.size - 1
@@ -117,7 +117,7 @@ module Asciidoctor
                     if dd.text?
                       # This vspace element is extraneous to the RFC XML spec,
                       # but is required by IDNITS
-                      xml_t.vspace({blankLines: "1"}) unless $inline_definition_lists
+                      xml_t.vspace(blankLines: "1") unless $inline_definition_lists
                       xml_t << dd.text
                     end
                     if dd.blocks?

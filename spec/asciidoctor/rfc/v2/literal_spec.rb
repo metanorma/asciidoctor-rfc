@@ -50,11 +50,11 @@ describe Asciidoctor::RFC::V2::Converter do
       </figure>
     OUTPUT
   end
-  
+ 
   it "renders stem as a literal within an example" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       :stem:
-      
+     
       [#id]
       ====
       [stem]

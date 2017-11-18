@@ -329,7 +329,7 @@ describe Asciidoctor::RFC::V2::Converter do
       |===
     INPUT
       <section anchor="_section_1" title="Section 1">
-      <texttable suppress-title="false" style="none">
+      <texttable suppress-title="false" style="headers">
          <ttcol align="left">a</ttcol>
          <ttcol align="left">b</ttcol>
          <ttcol align="left">c</ttcol>

@@ -11,7 +11,7 @@ describe Asciidoctor::RFC::V3::Converter do
 
       [bibliography]
       == References
-      
+     
       === Normative References
       ++++
       <reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>
@@ -86,7 +86,7 @@ describe Asciidoctor::RFC::V3::Converter do
       == References
       * [[[xxx,1]]]
       * [[[gof,2]]]
-      
+     
       === Normative References
       ++++
       <reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>
@@ -128,7 +128,7 @@ describe Asciidoctor::RFC::V3::Converter do
          <title>Document title</title>
          <author fullname="Author"/>
          <date day="1" month="January" year="2000"/>
-     
+    
        </front><middle>
        <section anchor="_text" numbered="false">
          <name>Text</name>

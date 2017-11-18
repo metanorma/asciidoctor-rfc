@@ -1,6 +1,6 @@
 require "spec_helper"
 
-def remove_prepTime(xml) 
+def remove_prepTime(xml)
   xml.gsub(/ prepTime="[^"]+"/, "").gsub(/ prepTime='[^']+'/, "")
 end
 

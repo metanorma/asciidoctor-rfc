@@ -20,7 +20,7 @@ module Asciidoctor
 
       def inline_anchor_xref(node)
         text = node.text
-        if /^\S+ (of|comma|parens|bare)\b/.match(text)
+        if text =~ /^\S+ (of|comma|parens|bare)\b/
           # <<crossreference#fragment,section (of|comma|parens|bare): text>> = relref
           matched = /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text>.*)$/.match node.text
 
@@ -42,8 +42,11 @@ module Asciidoctor
 
           matched = /^format=(?<format>counter|title|none|default)(?<text>:\s*.*)?$/.match xref_contents
 
-          xref_contents = matched.nil? ? xref_contents :
-            matched[:text].nil? ? '' : matched[:text].gsub(/^:\s*/, "")
+          xref_contents = if matched.nil?
+                            xref_contents
+                          else
+                            matched[:text].nil? ? "" : matched[:text].gsub(/^:\s*/, "")
+                          end
 
           xref_attributes = {
             format: matched&.[](:format),
@@ -81,7 +84,7 @@ module Asciidoctor
       end
 
       def inline_anchor_ref(node)
-          warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
+        warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
       end
     end
   end

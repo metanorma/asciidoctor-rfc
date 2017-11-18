@@ -68,7 +68,6 @@ module Asciidoctor
         ret
       end
 
-
       # Syntax:
       #   = Title
       #   Author

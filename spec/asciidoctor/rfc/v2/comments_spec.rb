@@ -208,7 +208,7 @@ describe Asciidoctor::RFC::V2::Converter do
       . They are allergic to *cinnamon*.
       . More than two glasses of orange juice in 24 hours makes them howl in harmony with alarms and sirens.
       . Celery makes them sad.
-      
+     
       ....
       <tagging>
       ....

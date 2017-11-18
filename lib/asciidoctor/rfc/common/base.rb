@@ -20,9 +20,9 @@ module Asciidoctor
       end
 
       def skip(node, name = nil)
-        if node.respond_to?(:lineno) 
-            warn %(asciidoctor: WARNING (#{node.lineno}): converter missing for #{name || node.node_name} node in RFC backend)
-        else 
+        if node.respond_to?(:lineno)
+          warn %(asciidoctor: WARNING (#{node.lineno}): converter missing for #{name || node.node_name} node in RFC backend)
+        else
           warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
         end
         nil
@@ -171,9 +171,9 @@ module Asciidoctor
         result
       end
 
-      #def dash(camel_cased_word)
+      # def dash(camel_cased_word)
       #  camel_cased_word.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
-      #end
+      # end
 
       def common_rfc_pis(node)
         # Below are generally applicable Processing Instructions (PIs)
@@ -256,12 +256,12 @@ module Asciidoctor
           node.blocks.each { |b| result << flatten_rawtext(b) }
         elsif node.respond_to?(:lines)
           node.lines.each do |x|
-            if node.respond_to?(:context) && (node.context == :literal || node.context == :listing)
-              result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
-            else
-              # strip not only HTML tags <tag>, but also Asciidoc crossreferences <<xref>>
-              result << x.gsub(/<[^>]*>+/, "")
-            end
+            result << if node.respond_to?(:context) && (node.context == :literal || node.context == :listing)
+                        x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+                      else
+                        # strip not only HTML tags <tag>, but also Asciidoc crossreferences <<xref>>
+                        x.gsub(/<[^>]*>+/, "")
+                      end
           end
         elsif node.respond_to?(:text)
           result << node.text.gsub(/<[^>]*>+/, "")

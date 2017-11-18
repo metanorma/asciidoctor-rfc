@@ -49,8 +49,11 @@ module Asciidoctor
         else
 
           matched = /^format=(?<format>counter|title|none|default)(?<text>:\s*.*)?$/.match node.text
-          xref_contents = matched.nil? ? node.text : 
-            matched[:text].nil? ? '' : matched[:text].gsub(/^:\s*/, "")
+          xref_contents = if matched.nil?
+                            node.text
+                          else
+                            matched[:text].nil? ? "" : matched[:text].gsub(/^:\s*/, "")
+                          end
           matched ||= {}
 
           xref_attributes = {
@@ -90,7 +93,7 @@ module Asciidoctor
       end
 
       def inline_anchor_ref(node)
-          warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
+        warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
       end
     end
   end
