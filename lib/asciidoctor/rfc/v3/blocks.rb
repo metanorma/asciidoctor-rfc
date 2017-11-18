@@ -1,4 +1,5 @@
 require "htmlentities"
+require "uri"
 
 module Asciidoctor
   module RFC::V3
@@ -157,8 +158,11 @@ module Asciidoctor
       #   Sidebar
       #   ****
       def sidebar(node)
+        aside_attributes = {
+          anchor: node.id,
+        }
         noko do |xml|
-          xml.aside anchor: node.id do |xml_aside|
+          xml.aside **attr_code(aside_attributes) do |xml_aside|
             xml_aside << node.content
           end
         end

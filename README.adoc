@@ -252,7 +252,7 @@ Only applies to v2. By default, `<vspace blankLines="1">` is inserted after
 the definition in a v2 definition list, to satisfy the requirement from `idnits` validation
 that definition terms be separated by a carriage return from the definition. That is, by
 default inline definition lists are rendered as paragraphing definition lists. If the option is
-on, the additional `vspace` element is not added, and inline definition lists are left as is..
+on, the additional `vspace` element is not added, and inline definition lists are left as is.
 
 |===
 
@@ -378,7 +378,7 @@ specified for this gem as document options.
 |text-list-symbols |	modify the list of symbols used (when generated text) for list type="symbols". For example, specifying "abcde" will cause "a" to be used for 1st level, "b" for the 2nd level, etc, cycling back to the first character "a" at the 6th level. Specifying "o*" will cause the characters "o" and "*" to be alternated for each successive level.
 |toc-include |	(`toc`) generate a table-of-contents
 |tocappendix |	control whether the word "Appendix" appears in the table-of-content
-|tocdepth |	if toc is "yes", then this determines the depth of the table-of-contents
+|toc-depth |	if toc is "yes", then this determines the depth of the table-of-contents
 |tocindent |	if toc is "yes", then setting this to "yes" will indent subsections in the table-of-contents
 |tocnarrow |	affects horizontal spacing in the table-of-content
 |tocompact |	if toc is "yes", then setting this to "no" will make it a little less compact
