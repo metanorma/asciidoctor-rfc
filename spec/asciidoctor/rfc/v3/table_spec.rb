@@ -19,6 +19,7 @@ describe Asciidoctor::RFC::V3::Converter do
       ^|centre aligned cell | cell
       <|left aligned cell | cell
       >|right aligned cell | cell
+
       |foot | foot
       |===
     INPUT
@@ -63,11 +64,13 @@ describe Asciidoctor::RFC::V3::Converter do
       <td align="right">right aligned cell</td>
       <td align="left">cell</td>
       </tr>
+      </tbody>
+      <tfoot>
       <tr>
       <td align="left">foot</td>
       <td align="left">foot</td>
       </tr>
-      </tbody>
+      </tfoot>
       </table>
       </section>
     OUTPUT
