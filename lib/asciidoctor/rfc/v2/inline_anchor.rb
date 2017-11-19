@@ -28,18 +28,23 @@ module Asciidoctor
           reftarget = target
           reftarget = "#{target}##{node.attributes['fragment']}" unless node.attributes["path"].nil?
 
-          xref_contents = case matched[:format]
-                          when "of"
-                            "Section #{matched[:section]} of [#{target}]"
-                          when "comma"
-                            "[#{target}], Section #{matched[:section]}"
-                          when "parens"
-                            "[#{target}] (Section #{matched[:section]})"
-                          when "bare"
-                            matched[:section]
-                          end
+          xref_contents = ""
+          case matched[:format]
+          when "of"
+            prefix = "Section #{matched[:section]} of "
+          when "comma"
+            suffix = ", Section #{matched[:section]}"
+          when "parens"
+            suffix = " (Section #{matched[:section]})"
+          when "bare"
+            xref_contents = matched[:section]
+          end
           unless matched[:text].empty?
-            xref_contents = "#{xref_contents}: #{matched[:text]}"
+            xref_contents = if xref_contents.empty?
+                              "#{matched[:text]}"
+                            else
+                              "#{xref_contents}: #{matched[:text]}"
+                            end
           end
 
           xref_attributes = {
@@ -64,7 +69,9 @@ module Asciidoctor
         end
 
         noko do |xml|
+          xml << prefix unless prefix.nil? || prefix.empty?
           xml.xref xref_contents, **attr_code(xref_attributes)
+          xml << suffix unless suffix.nil? || suffix.empty?
         end.join
       end
 

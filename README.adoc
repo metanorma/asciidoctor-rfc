@@ -1145,6 +1145,7 @@ asciidoctor commands:
 
 |===
 | RFC XML element                  | RFC XML v3 | RFC XML v2
+
 | `front/boilerplate`              | Not added  | N/A
 | `iref@primary`                   | N          | N
 | `reference` (and all children) 2+| Supported only as pass-through or through asciidoc-bibliography gem
@@ -1160,6 +1161,7 @@ These asciidoctor features are not supported in output of these formats:
 
 |===
 | asciidoctor feature | RFC XML v2 | RFC XML v3
+
 | http://asciidoctor.org/docs/user-manual/#quote[Quote] | Rendered as normal paragraph | Supported
 | http://asciidoctor.org/docs/user-manual/#quote[Quote]: Non-URL Citations 2+| Ignored
 | http://asciidoctor.org/docs/user-manual/#verse[Verse] | Rendered as normal paragraph | Rendered as Quote

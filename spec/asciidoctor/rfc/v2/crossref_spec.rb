@@ -195,9 +195,9 @@ describe Asciidoctor::RFC::V2::Converter do
          <date day="1" month="January" year="2000"/>
       </front><middle>
       <section anchor="_section_1" title="Section 1">
-         <t>See <xref target="crossreference">Section 1.3 of [crossreference]</xref>
-       <xref target="crossreference">[crossreference], Section 1.4: text</xref>
-       <xref target="crossreference#fragment1">[crossreference] (Section 2.5.3)</xref>
+      <t>See Section 1.3 of <xref target="crossreference"/>
+       <xref target="crossreference">text</xref>, Section 1.4
+       <xref target="crossreference#fragment1"/> (Section 2.5.3)
        <xref target="crossreference#fragment2">6.2a: text</xref></t>
        </section>
        </middle><back>
