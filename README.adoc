@@ -144,7 +144,7 @@ typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
 == Usage
 
 Converting your AsciiDoc to RFC XML is a simple as running the appropriate
-`./bin/asciidoctor-rfc` script using Ruby, and passing our
+`./bin/asciidoctor-rfc` script using Ruby, and passing your
 AsciiDoc document file as the first argument.
 
 [source,console]
@@ -162,8 +162,8 @@ You can also use the asciidoctor executable, specifying this gem as a library:
 
 [source,console]
 ----
-$ asciidoctor -b rfc3 -r 'asciidoctor/rfc' a.adoc  # RFC XML v3 output
-$ asciidoctor -b rfc2 -r 'asciidoctor/rfc' a.adoc  # RFC XML v2 output
+$ asciidoctor -b rfc3 -r 'asciidoctor-rfc' a.adoc  # RFC XML v3 output
+$ asciidoctor -b rfc2 -r 'asciidoctor-rfc' a.adoc  # RFC XML v2 output
 ----
 
 When the script completes, you should see the RFC XML file `draft-example-00.xml` in the
@@ -1147,11 +1147,7 @@ asciidoctor commands:
 | RFC XML element                  | RFC XML v3 | RFC XML v2
 | `front/boilerplate`              | Not added  | N/A
 | `iref@primary`                   | N          | N
-| `reference/*` (and all children) | N/A        | N
-| `reference/front`                | N          | N
-| `reference/annotation`           | N          | N
-| `reference@quote-title`          | N          | N/A
-| `reference@target`               | N          | N
+| `reference` (and all children) 2+| Supported only as pass-through or through asciidoc-bibliography gem
 | `table/preamble`                 | Deprecated | N
 | `table/postamble`                | Deprecated | N
 | `artwork@width`                  | Only on images | Only on images
