@@ -154,6 +154,11 @@ $ ruby ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
 ----
 
 or alternate
+
+
+[source,console]
+----
+$ ruby ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
 ## WIP: bundle exec asciidoctor -b asciidoctor-rfc3 draft-example-00.adoc # RFC XML v3 output
 ## WIP: bundle exec asciidoctor -b asciidoctor-rfc2 draft-example-00.adoc # RFC XML v2 output
 ----
