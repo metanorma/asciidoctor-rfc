@@ -1,6 +1,6 @@
 = vCard Format Specification
 Simon Perreault <simon.perreault@viagenie.ca>
-:bibliography-database: refs-v2-database.xml
+:bibliography-database: refs-v3-database.xml
 :bibliography-passthrough: true
 :bibliography-prepend-empty: false
 :bibliography-hyperlinks: false
@@ -40,7 +40,7 @@ cite:info[RFC2119, text="<xref target='RFC2119'>RFC 2119</xref>"] 0
 cite:info[RFC2119, text="<xref format='counter' target='RFC2119'>RFC 2119</xref>"] 1
 cite:info[RFC2119, text="<relref displayFormat='comma' section='2.4' target='RFC2119'/>"] 2
 cite:info[RFC2119, text="<relref relative='section2_4' displayFormat='comma' section='2.4' target='RFC2119'/>"] 3
-
+cite:info[RFC3552_5226]
 
 [bibliography]
 == Normative References

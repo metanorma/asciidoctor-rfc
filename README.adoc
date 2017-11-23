@@ -1266,7 +1266,7 @@ bibliography::info[]
 asciidoctor-rfc invocation:
 ** `asciidoctor -b rfc2 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc'  spec/examples/refs-v2.adoc`
 ** `asciidoctor -b rfc3 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc'  spec/examples/refs-v3.adoc`
-
+. `referencegroup` citations are not currently supported by the asciidoctor-bibliography gem.
 
 == Examples
 
