@@ -1226,7 +1226,6 @@ the main document.
 `:bibliography-passthrough:` :: `citations`. This instructs the asciidoctor-bibliography gem to wrap the citations
 in an Asciidoctor passthrough block. If `true` is used, the references introduced through `cite` macros will also
 be treated as inline Asciidoctor passthrough text.
-TODO: May end up being `references` instead`
 `:bibliography-prepend-empty:` :: `true|false`. No current effect on file
 `:bibliography-hyperlinks:` :: `true|false` (default `true`): inserts bibliographic link around reference. Use `false`.
 `:bibliography-style:` :: The style of reference used in the references file; the recognised styles are `rfc-v2` and
@@ -1235,15 +1234,15 @@ TODO: May end up being `references` instead`
 
 . References to a normative reference are inserted with the macro `cite:norm[id]` instead of `<<id>>`, where `id` is
 the anchor of the reference.
-. References to an infomrative reference are inserted with the macro `cite:info[id]` instead of `<<id>>`, where `id` is
+. References to an informative reference are inserted with the macro `cite:info[id]` instead of `<<id>>`, where `id` is
 the anchor of the reference.
-.. Arbitrary text associated with a crossreference is inserted with a `text` attribute, and fragment references are
-inserted with a `locator` attribute. Using `cite:norm`:
-*** TODO: To be implemented next week
+.. Text may be prefixed or suffixed to the crossreference with the `prefix` and `suffix` attributes.
+.. Arbitrary text associated with a crossreference is inserted with a `text` attribute (with the citation itself in curly brackets), and fragment references are inserted with a `locator` attribute. 
+.. Formatted crossreferences and `relref` crossreferences are entered by inserting the reference as raw XML in the `text` attribute. Do not use the `{cite}` interpolation of the citation. Using `cite:norm`, the following equivalence obtain between normal Asciidoc treatment of crossreferences and asciidoc-bibliography macros:
 *** `<<id,words>>` = `cite:norm[id, text="words"]`
-*** `<<id,format=counter: words>>` (processed as a formatted crossreference) = `cite:norm[id, text="format=counter: words"]`
-*** `<<id,2.4 comma: words>>` (processed as relref) = `cite:norm[id, text="2.4 comma: words"]`
-*** `<<id#section2_4,2.4 comma: words>>` (processed as relref with a cross-document internal reference) = `cite:norm[id, text="2.4 comma: words" location="section2_4"]`
+*** `<<id,format=counter: words>>` (processed as a formatted crossreference) = `cite:norm[id, text="<xref format='counter' target='id'>words</xref>"]`
+*** `<<id,2.4 comma: words>>` (processed as relref) = `cite:norm[id, text="<relref displayFormat='comma' section='2.4' target='id'}/>"]`
+*** `<<id#section2_4,2.4 comma: words>>` (processed as relref with a cross-document internal reference) = `cite:norm[id, text="<relref relative='section2_4' displayFormat='comma' section='2.4' target='id'/>"]`
 . Normative and Informative References are inserted in the document through a macro, which occurs where the RFC XML
 references would be inserted
 +

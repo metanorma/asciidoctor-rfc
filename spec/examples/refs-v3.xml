@@ -7,7 +7,7 @@
 <?rfc tocdepth="4"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc ipr="trust200902" obsoletes="10, 120" updates="2010, 2120" submissionType="IETF" prepTime="2017-11-13T05:36:31Z" version="3">
+<rfc ipr="trust200902" obsoletes="10, 120" updates="2010, 2120" submissionType="IETF" prepTime="2017-11-23T09:23:03Z" version="3">
 <link href="http://example1.com"/><link href="http://example2.com" rel="author"/>
 <front>
   <title abbrev="IP Datagrams on Avian Carriers">vCard Format Specification</title>
@@ -31,16 +31,18 @@
   <keyword>this</keyword>
   <keyword>that</keyword>
 
-  </front><middle>
+</front><middle>
 <section anchor="_introduction" numbered="false">
   <name>Introduction</name>
   <t>The authors would like to thank Tim Howes, Mark Smith, and Frank
 Dawson, the original authors of <xref target="RFC2119"/> and <xref target="RFC2629"/>, Pete
 Resnick, who got this effort started and provided help along the way,
 as well as the following individuals who have participated in the
-drafting, review, and discussion of this memo:</t>
+drafting, review, and discussion of this memo:
+<xref format="counter" target="RFC2119">RFC 2119</xref> 1
+<relref displayFormat="comma" section="2.4" target="RFC2119"/> 2
+<relref relative="section2_4" displayFormat="comma" section="2.4" target="RFC2119"/> 3</t>
 </section>
-
 </middle><back>
 <references anchor="_normative_references">
   <name>Normative References</name>

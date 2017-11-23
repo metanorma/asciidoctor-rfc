@@ -34,7 +34,6 @@ module Asciidoctor
           }
 
           noko do |xml|
-            warn text
             xml.relref relref_contents, **attr_code(relref_attributes)
           end.join
         else

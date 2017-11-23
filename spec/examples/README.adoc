@@ -144,10 +144,10 @@ and definitions (`<vspace blankLines="1"/>`).
 --
 * The MMark has specified an external reference to a specific section by giving the section
 number in text: `Section 4.2 of RFC 2460 [@!RFC2460]`, rendered as
-`Section 4.2 of RFC 2460 <xref target="RFC2460"/>`. The asciidoc takes advantage of
+`Section 4.2 of <xref target="RFC2460"/>`. The asciidoc takes advantage of
 the `relref` construction of external section references, even though `relref` is a v3
 RFC XML feature: `<<RFC2460,4.2 of>>`, which is rendered in v2 RFC XML as
-`<xref target="RFC2460">Section 4.2 of [RFC2460]</xref>`.
+`Section 4.2 of <xref target="RFC2460"/>`.
 --
 
 == Kramdown
