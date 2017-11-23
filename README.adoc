@@ -1238,8 +1238,8 @@ the anchor of the reference.
 the anchor of the reference.
 .. Text may be prefixed or suffixed to the crossreference with the `prefix` and `suffix` attributes.
 .. Arbitrary text associated with a crossreference is inserted with a `text` attribute (with the citation itself in curly brackets), and fragment references are inserted with a `locator` attribute. 
-.. Formatted crossreferences and `relref` crossreferences are entered by inserting the reference as raw XML in the `text` attribute. Do not use the `{cite}` interpolation of the citation. Using `cite:norm`, the following equivalence obtain between normal Asciidoc treatment of crossreferences and asciidoc-bibliography macros:
-*** `<<id,words>>` = `cite:norm[id, text="words"]`
+.. Formatted crossreferences and `relref` crossreferences are entered by inserting the expected raw XML in the `text` attribute. Do not use the `{cite}` interpolation of the citation. Using `cite:norm`, the following equivalence obtain between normal Asciidoc treatment of crossreferences and asciidoc-bibliography macros:
+*** `<<id,words>>` = `cite:norm[id, text="<xref target='id'>words</xref>"]`
 *** `<<id,format=counter: words>>` (processed as a formatted crossreference) = `cite:norm[id, text="<xref format='counter' target='id'>words</xref>"]`
 *** `<<id,2.4 comma: words>>` (processed as relref) = `cite:norm[id, text="<relref displayFormat='comma' section='2.4' target='id'}/>"]`
 *** `<<id#section2_4,2.4 comma: words>>` (processed as relref with a cross-document internal reference) = `cite:norm[id, text="<relref relative='section2_4' displayFormat='comma' section='2.4' target='id'/>"]`
