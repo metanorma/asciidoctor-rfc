@@ -1,0 +1,805 @@
+<references>  
+  
+
+<reference anchor="CCITT.X520.1988">
+<front>
+<title>
+Information Technology - Open Systems
+           Interconnection - The Directory: Selected Attribute
+           Types
+</title>
+<author>
+<organization>International Telephone and Telegraph Consultative
+           Committee</organization>
+</author>
+<date year="1988" month="November"/>
+</front>
+<seriesInfo name="CCITT Recommendation" value="X.520"/>
+</reference>
+
+
+
+<reference anchor="IEEE.754.2008">
+<front>
+<title>
+Standard for Binary Floating-Point Arithmetic
+</title>
+<author>
+<organization>Institute of Electrical and Electronics Engineers</organization>
+</author>
+<date year="2008" month="August"/>
+</front>
+<seriesInfo name="IEEE Standard" value="754"/>
+</reference>
+
+
+
+<reference anchor="ISO.8601.2000">
+<front>
+<title>
+Data elements and interchange formats - Information interchange - Representation of dates and times
+</title>
+<author>
+<organization>International Organization for Standardization</organization>
+</author>
+<date year="2000" month="December"/>
+</front>
+<seriesInfo name="ISO Standard" value="8601"/>
+</reference>
+
+<reference anchor="ISO.8601.2004">
+<front>
+<title>
+Data elements and interchange formats - Information interchange - Representation of dates and times
+</title>
+<author>
+<organization>International Organization for Standardization</organization>
+</author>
+<date year="2004" month="December"/>
+</front>
+<seriesInfo name="ISO Standard" value="8601"/>
+</reference>
+
+
+
+<reference anchor="RFC2045" target="https://www.rfc-editor.org/info/rfc2045">
+<front>
+<title>
+Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies
+</title>
+<author initials="N." surname="Freed" fullname="N. Freed">
+<organization/>
+</author>
+<author initials="N." surname="Borenstein" fullname="N. Borenstein">
+<organization/>
+</author>
+<date year="1996" month="November"/>
+<abstract>
+<t>
+This initial document specifies the various headers used to describe the structure of MIME messages. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2045"/>
+<seriesInfo name="DOI" value="10.17487/RFC2045"/>
+</reference>
+
+
+<reference anchor="RFC2046" target="https://www.rfc-editor.org/info/rfc2046">
+<front>
+<title>
+Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types
+</title>
+<author initials="N." surname="Freed" fullname="N. Freed">
+<organization/>
+</author>
+<author initials="N." surname="Borenstein" fullname="N. Borenstein">
+<organization/>
+</author>
+<date year="1996" month="November"/>
+<abstract>
+<t>
+This second document defines the general structure of the MIME media typing system and defines an initial set of media types. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2046"/>
+<seriesInfo name="DOI" value="10.17487/RFC2046"/>
+</reference>
+
+<reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+<front>
+<title>
+Key words for use in RFCs to Indicate Requirement Levels
+</title>
+<author initials="S." surname="Bradner" fullname="S. Bradner">
+<organization/>
+</author>
+<date year="1997" month="March"/>
+<abstract>
+<t>
+In many standards track documents several words are used to signify the requirements in the specification. These words are often capitalized. This document defines these words as they should be interpreted in IETF documents. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+
+<reference anchor="RFC2739" target="https://www.rfc-editor.org/info/rfc2739">
+<front>
+<title>Calendar Attributes for vCard and LDAP</title>
+<author initials="T." surname="Small" fullname="T. Small">
+<organization/>
+</author>
+<author initials="D." surname="Hennessy" fullname="D. Hennessy">
+<organization/>
+</author>
+<author initials="F." surname="Dawson" fullname="F. Dawson">
+<organization/>
+</author>
+<date year="2000" month="January"/>
+<abstract>
+<t>
+This memo defines three mechanisms for obtaining a URI to a user's calendar and free/busy time. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2739"/>
+<seriesInfo name="DOI" value="10.17487/RFC2739"/>
+</reference>  
+
+<reference anchor="RFC3629" target="https://www.rfc-editor.org/info/rfc3629">
+<front>
+<title>UTF-8, a transformation format of ISO 10646</title>
+<author initials="F." surname="Yergeau" fullname="F. Yergeau">
+<organization/>
+</author>
+<date year="2003" month="November"/>
+<abstract>
+<t>
+ISO/IEC 10646-1 defines a large character set called the Universal Character Set (UCS) which encompasses most of the world's writing systems. The originally proposed encodings of the UCS, however, were not compatible with many current applications and protocols, and this has led to the development of UTF-8, the object of this memo. UTF-8 has the characteristic of preserving the full US-ASCII range, providing compatibility with file systems, parsers and other software that rely on US-ASCII values but are transparent to other values. This memo obsoletes and replaces RFC 2279.
+</t>
+</abstract>
+</front>
+<seriesInfo name="STD" value="63"/>
+<seriesInfo name="RFC" value="3629"/>
+<seriesInfo name="DOI" value="10.17487/RFC3629"/>
+</reference>
+
+<reference anchor="RFC3966" target="https://www.rfc-editor.org/info/rfc3966">
+<front>
+<title>The tel URI for Telephone Numbers</title>
+<author initials="H." surname="Schulzrinne" fullname="H. Schulzrinne">
+<organization/>
+</author>
+<date year="2004" month="December"/>
+<abstract>
+<t>
+This document specifies the URI (Uniform Resource Identifier) scheme "tel". The "tel" URI describes resources identified by telephone numbers. This document obsoletes RFC 2806. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="3966"/>
+<seriesInfo name="DOI" value="10.17487/RFC3966"/>
+</reference>
+
+<reference anchor="RFC3986" target="https://www.rfc-editor.org/info/rfc3986">
+<front>
+<title>Uniform Resource Identifier (URI): Generic Syntax</title>
+<author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
+<organization/>
+</author>
+<author initials="R." surname="Fielding" fullname="R. Fielding">
+<organization/>
+</author>
+<author initials="L." surname="Masinter" fullname="L. Masinter">
+<organization/>
+</author>
+<date year="2005" month="January"/>
+<abstract>
+<t>
+A Uniform Resource Identifier (URI) is a compact sequence of characters that identifies an abstract or physical resource. This specification defines the generic URI syntax and a process for resolving URI references that might be in relative form, along with guidelines and security considerations for the use of URIs on the Internet. The URI syntax defines a grammar that is a superset of all valid URIs, allowing an implementation to parse the common components of a URI reference without knowing the scheme-specific requirements of every possible identifier. This specification does not define a generative grammar for URIs; that task is performed by the individual specifications of each URI scheme. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="STD" value="66"/>
+<seriesInfo name="RFC" value="3986"/>
+<seriesInfo name="DOI" value="10.17487/RFC3986"/>
+</reference>
+
+<reference anchor="RFC4122" target="https://www.rfc-editor.org/info/rfc4122">
+<front>
+<title>
+A Universally Unique IDentifier (UUID) URN Namespace
+</title>
+<author initials="P." surname="Leach" fullname="P. Leach">
+<organization/>
+</author>
+<author initials="M." surname="Mealling" fullname="M. Mealling">
+<organization/>
+</author>
+<author initials="R." surname="Salz" fullname="R. Salz">
+<organization/>
+</author>
+<date year="2005" month="July"/>
+<abstract>
+<t>
+This specification defines a Uniform Resource Name namespace for UUIDs (Universally Unique IDentifier), also known as GUIDs (Globally Unique IDentifier). A UUID is 128 bits long, and can guarantee uniqueness across space and time. UUIDs were originally used in the Apollo Network Computing System and later in the Open Software Foundation\'s (OSF) Distributed Computing Environment (DCE), and then in Microsoft Windows platforms.
+</t>
+<t>
+This specification is derived from the DCE specification with the kind permission of the OSF (now known as The Open Group). Information from earlier versions of the DCE specification have been incorporated into this document. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="4122"/>
+<seriesInfo name="DOI" value="10.17487/RFC4122"/>
+</reference>
+
+<reference anchor="RFC4288" target="https://www.rfc-editor.org/info/rfc4288">
+<front>
+<title>
+Media Type Specifications and Registration Procedures
+</title>
+<author initials="N." surname="Freed" fullname="N. Freed">
+<organization/>
+</author>
+<author initials="J." surname="Klensin" fullname="J. Klensin">
+<organization/>
+</author>
+<date year="2005" month="December"/>
+<abstract>
+<t>
+This document defines procedures for the specification and registration of media types for use in MIME and other Internet protocols. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="4288"/>
+<seriesInfo name="DOI" value="10.17487/RFC4288"/>
+</reference>
+
+<reference anchor="RFC5234" target="https://www.rfc-editor.org/info/rfc5234">
+<front>
+<title>Augmented BNF for Syntax Specifications: ABNF</title>
+<author initials="D." surname="Crocker" fullname="D. Crocker" role="editor">
+<organization/>
+</author>
+<author initials="P." surname="Overell" fullname="P. Overell">
+<organization/>
+</author>
+<date year="2008" month="January"/>
+<abstract>
+<t>
+Internet technical specifications often need to define a formal syntax. Over the years, a modified version of Backus-Naur Form (BNF), called Augmented BNF (ABNF), has been popular among many Internet specifications. The current specification documents ABNF. It balances compactness and simplicity with reasonable representational power. The differences between standard BNF and ABNF involve naming rules, repetition, alternatives, order-independence, and value ranges. This specification also supplies additional rule definitions and encoding for a core lexical analyzer of the type common to several Internet specifications. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="STD" value="68"/>
+<seriesInfo name="RFC" value="5234"/>
+<seriesInfo name="DOI" value="10.17487/RFC5234"/>
+</reference>
+
+<reference anchor="RFC5322" target="https://www.rfc-editor.org/info/rfc5322">
+<front>
+<title>Internet Message Format</title>
+<author initials="P." surname="Resnick" fullname="P. Resnick" role="editor">
+<organization/>
+</author>
+<date year="2008" month="October"/>
+<abstract>
+<t>
+This document specifies the Internet Message Format (IMF), a syntax for text messages that are sent between computer users, within the framework of "electronic mail" messages. This specification is a revision of Request For Comments (RFC) 2822, which itself superseded Request For Comments (RFC) 822, "Standard for the Format of ARPA Internet Text Messages", updating it to reflect current practice and incorporating incremental changes that were specified in other RFCs. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5322"/>
+<seriesInfo name="DOI" value="10.17487/RFC5322"/>
+</reference>
+
+<reference anchor="RFC5545" target="https://www.rfc-editor.org/info/rfc5545">
+<front>
+<title>
+Internet Calendaring and Scheduling Core Object Specification (iCalendar)
+</title>
+<author initials="B." surname="Desruisseaux" fullname="B. Desruisseaux" role="editor">
+<organization/>
+</author>
+<date year="2009" month="September"/>
+<abstract>
+<t>
+This document defines the iCalendar data format for representing and exchanging calendaring and scheduling information such as events, to-dos, journal entries, and free/busy information, independent of any particular calendar service or protocol. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5545"/>
+<seriesInfo name="DOI" value="10.17487/RFC5545"/>
+</reference>
+
+<reference anchor="RFC5546" target="https://www.rfc-editor.org/info/rfc5546">
+<front>
+<title>
+iCalendar Transport-Independent Interoperability Protocol (iTIP)
+</title>
+<author initials="C." surname="Daboo" fullname="C. Daboo" role="editor">
+<organization/>
+</author>
+<date year="2009" month="December"/>
+<abstract>
+<t>
+This document specifies a protocol that uses the iCalendar object specification to provide scheduling interoperability between different calendaring systems. This is done without reference to a specific transport protocol so as to allow multiple methods of communication between systems. Subsequent documents will define profiles of this protocol that use specific, interoperable methods of communication between systems.
+</t>
+<t>
+The iCalendar Transport-Independent Interoperability Protocol (iTIP) complements the iCalendar object specification by adding semantics for group scheduling methods commonly available in current calendaring systems. These scheduling methods permit two or more calendaring systems to perform transactions such as publishing, scheduling, rescheduling, responding to scheduling requests, negotiating changes, or canceling. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5546"/>
+<seriesInfo name="DOI" value="10.17487/RFC5546"/>
+</reference>
+
+<reference anchor="RFC5646" target="https://www.rfc-editor.org/info/rfc5646">
+<front>
+<title>Tags for Identifying Languages</title>
+<author initials="A." surname="Phillips" fullname="A. Phillips" role="editor">
+<organization/>
+</author>
+<author initials="M." surname="Davis" fullname="M. Davis" role="editor">
+<organization/>
+</author>
+<date year="2009" month="September"/>
+<abstract>
+<t>
+This document describes the structure, content, construction, and semantics of language tags for use in cases where it is desirable to indicate the language used in an information object. It also describes how to register values for use in language tags and the creation of user-defined extensions for private interchange. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="47"/>
+<seriesInfo name="RFC" value="5646"/>
+<seriesInfo name="DOI" value="10.17487/RFC5646"/>
+</reference>
+
+<reference anchor="RFC5870" target="https://www.rfc-editor.org/info/rfc5870">
+<front>
+<title>
+A Uniform Resource Identifier for Geographic Locations ('geo' URI)
+</title>
+<author initials="A." surname="Mayrhofer" fullname="A. Mayrhofer">
+<organization/>
+</author>
+<author initials="C." surname="Spanring" fullname="C. Spanring">
+<organization/>
+</author>
+<date year="2010" month="June"/>
+<abstract>
+<t>
+This document specifies a Uniform Resource Identifier (URI) for geographic locations using the 'geo\' scheme name. A 'geo' URI identifies a physical location in a two- or three-dimensional coordinate reference system in a compact, simple, human-readable, and protocol-independent way. The default coordinate reference system used is the World Geodetic System 1984 (WGS-84). [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5870"/>
+<seriesInfo name="DOI" value="10.17487/RFC5870"/>
+</reference> 
+  
+<reference anchor="RFC6351" target="https://www.rfc-editor.org/info/rfc6351">
+<front>
+<title>xCard: vCard XML Representation</title>
+<author initials="S." surname="Perreault" fullname="S. Perreault">
+<organization/>
+</author>
+<date year="2011" month="August"/>
+<abstract>
+<t>
+This document defines the XML schema of the vCard data format. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="6351"/>
+<seriesInfo name="DOI" value="10.17487/RFC6351"/>
+</reference>
+
+<reference anchor="W3C.REC-xml-20081126" target="http://www.w3.org/TR/2008/REC-xml-20081126">
+<front>
+<title>Extensible Markup Language (XML) 1.0 (Fifth Edition)</title>
+<author initials="E." surname="Maler" fullname="E. Maler">
+<organization/>
+</author>
+<author initials="F." surname="Yergeau" fullname="F. Yergeau">
+<organization/>
+</author>
+<author initials="C." surname="Sperberg-McQueen" fullname="C. Sperberg-McQueen">
+<organization/>
+</author>
+<author initials="J." surname="Paoli" fullname="J. Paoli">
+<organization/>
+</author>
+<author initials="T." surname="Bray" fullname="T. Bray">
+<organization/>
+</author>
+<date year="2008" month="November"/>
+</front>
+<seriesInfo name="World Wide Web Consortium Recommendation" value="REC-xml-20081126"/>
+</reference>
+
+<reference anchor="IANA-TZ" target="http://gmpg.org/xfn/11">
+<front>
+<title>IANA Procedures for Maintaining the Timezone Database</title>
+<author initials="E." surname="Lear" fullname="E. Lear">
+<organization/>
+</author>
+<author initials="P." surname="Eggert" fullname="P. Eggert">
+<organization/>
+</author>
+<date year="2011" month="May"/>
+</front>
+</reference>
+
+<reference anchor="ISO9070">
+<front>
+<title>Information Processing - SGML support facilities - Registration Procedures for Public Text Owner Identifiers</title>
+<author>
+<organization>International Organization for Standardization</organization>
+</author>
+<date year="1991" month="April"/>
+</front>
+<seriesInfo name="ISO Standard" value="9070"/>
+</reference>
+
+
+
+<reference anchor="RFC1738" target="https://www.rfc-editor.org/info/rfc1738">
+<front>
+<title>Uniform Resource Locators (URL)</title>
+<author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
+<organization/>
+</author>
+<author initials="L." surname="Masinter" fullname="L. Masinter">
+<organization/>
+</author>
+<author initials="M." surname="McCahill" fullname="M. McCahill">
+<organization/>
+</author>
+<date year="1994" month="December"/>
+<abstract>
+<t>
+This document specifies a Uniform Resource Locator (URL), the syntax and semantics of formalized information for location and access of resources via the Internet. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="1738"/>
+<seriesInfo name="DOI" value="10.17487/RFC1738"/>
+</reference>  
+
+<reference anchor="RFC2397" target="https://www.rfc-editor.org/info/rfc2397">
+<front>
+<title>The "data" URL scheme</title>
+<author initials="L." surname="Masinter" fullname="L. Masinter">
+<organization/>
+</author>
+<date year="1998" month="August"/>
+<abstract>
+<t>
+A new URL scheme, "data", is defined. It allows inclusion of small data items as "immediate" data, as if it had been included externally. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2397"/>
+<seriesInfo name="DOI" value="10.17487/RFC2397"/>
+</reference>
+
+<reference anchor="RFC2397" target="https://www.rfc-editor.org/info/rfc2397">
+<front>
+<title>The "data" URL scheme</title>
+<author initials="L." surname="Masinter" fullname="L. Masinter">
+<organization/>
+</author>
+<date year="1998" month="August"/>
+<abstract>
+<t>
+A new URL scheme, "data", is defined. It allows inclusion of small data items as "immediate" data, as if it had been included externally. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2397"/>
+<seriesInfo name="DOI" value="10.17487/RFC2397"/>
+</reference>  
+  
+<reference anchor="RFC2425" target="https://www.rfc-editor.org/info/rfc2425">
+<front>
+<title>A MIME Content-Type for Directory Information</title>
+<author initials="T." surname="Howes" fullname="T. Howes">
+<organization/>
+</author>
+<author initials="M." surname="Smith" fullname="M. Smith">
+<organization/>
+</author>
+<author initials="F." surname="Dawson" fullname="F. Dawson">
+<organization/>
+</author>
+<date year="1998" month="September"/>
+<abstract>
+<t>
+This document defines a MIME Content-Type for holding directory information. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2425"/>
+<seriesInfo name="DOI" value="10.17487/RFC2425"/>
+</reference>
+
+<reference anchor="RFC2426" target="https://www.rfc-editor.org/info/rfc2426">
+<front>
+<title>vCard MIME Directory Profile</title>
+<author initials="F." surname="Dawson" fullname="F. Dawson">
+<organization/>
+</author>
+<author initials="T." surname="Howes" fullname="T. Howes">
+<organization/>
+</author>
+<date year="1998" month="September"/>
+<abstract>
+<t>
+This memo defines the profile of the MIME Content-Type for directory information for a white-pages person object, based on a vCard electronic business card. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2426"/>
+<seriesInfo name="DOI" value="10.17487/RFC2426"/>
+</reference>
+
+<reference anchor="RFC2616" target="https://www.rfc-editor.org/info/rfc2616">
+<front>
+<title>Hypertext Transfer Protocol -- HTTP/1.1</title>
+<author initials="R." surname="Fielding" fullname="R. Fielding">
+<organization/>
+</author>
+<author initials="J." surname="Gettys" fullname="J. Gettys">
+<organization/>
+</author>
+<author initials="J." surname="Mogul" fullname="J. Mogul">
+<organization/>
+</author>
+<author initials="H." surname="Frystyk" fullname="H. Frystyk">
+<organization/>
+</author>
+<author initials="L." surname="Masinter" fullname="L. Masinter">
+<organization/>
+</author>
+<author initials="P." surname="Leach" fullname="P. Leach">
+<organization/>
+</author>
+<author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
+<organization/>
+</author>
+<date year="1999" month="June"/>
+<abstract>
+<t>
+HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as "HTTP/1.1", and is an update to RFC 2068. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="2616"/>
+<seriesInfo name="DOI" value="10.17487/RFC2616"/>
+</reference>
+
+<reference anchor="RFC3282" target="https://www.rfc-editor.org/info/rfc3282">
+<front>
+<title>Content Language Headers</title>
+<author initials="H." surname="Alvestrand" fullname="H. Alvestrand">
+<organization/>
+</author>
+<date year="2002" month="May"/>
+<abstract>
+<t>
+This document defines a "Content-language:" header, for use in cases where one desires to indicate the language of something that has RFC 822-like headers, like MIME body parts or Web documents, and an "Accept-Language:" header for use in cases where one wishes to indicate one's preferences with regard to language. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="3282"/>
+<seriesInfo name="DOI" value="10.17487/RFC3282"/>
+</reference>
+
+<reference anchor="RFC3406" target="https://www.rfc-editor.org/info/rfc3406">
+<front>
+<title>
+Uniform Resource Names (URN) Namespace Definition Mechanisms
+</title>
+<author initials="L." surname="Daigle" fullname="L. Daigle">
+<organization/>
+</author>
+<author initials="D." surname="van Gulik" fullname="D. van Gulik">
+<organization/>
+</author>
+<author initials="R." surname="Iannella" fullname="R. Iannella">
+<organization/>
+</author>
+<author initials="P." surname="Faltstrom" fullname="P. Faltstrom">
+<organization/>
+</author>
+<date year="2002" month="October"/>
+<abstract>
+<t>
+This document lays out general definitions of and mechanisms for establishing Uniform Resource Names (URN) "namespaces". The URN WG has defined a syntax for URNs in RFC 2141, as well as some proposed mechanisms for their resolution and use in Internet applications in RFC 3401 and RFC 3405. The whole rests on the concept of individual "namespaces" within the URN structure. Apart from proof-of-concept namespaces, the use of existing identifiers in URNs has been discussed in RFC 2288. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="3406"/>
+<seriesInfo name="DOI" value="10.17487/RFC3406"/>
+</reference>
+
+
+<reference anchor="RFC3536" target="https://www.rfc-editor.org/info/rfc3536">
+<front>
+<title>
+Terminology Used in Internationalization in the IETF
+</title>
+<author initials="P." surname="Hoffman" fullname="P. Hoffman">
+<organization/>
+</author>
+<date year="2003" month="May"/>
+<abstract>
+<t>
+This document provides a glossary of terms used in the IETF when discussing internationalization. The purpose is to help frame discussions of internationalization in the various areas of the IETF and to help introduce the main concepts to IETF participants. This memo provides information for the Internet community.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="3536"/>
+<seriesInfo name="DOI" value="10.17487/RFC3536"/>
+</reference>
+
+<reference anchor="RFC4770" target="https://www.rfc-editor.org/info/rfc4770">
+<front>
+<title>vCard Extensions for Instant Messaging (IM)</title>
+<author initials="C." surname="Jennings" fullname="C. Jennings">
+<organization/>
+</author>
+<author initials="J." surname="Reschke" fullname="J. Reschke" role="editor">
+<organization/>
+</author>
+<date year="2007" month="January"/>
+<abstract>
+<t>
+This document describes an extension to vCard to support Instant Messaging (IM) and Presence Protocol (PP) applications. IM and PP are becoming increasingly common ways of communicating, and users want to save this contact information in their address books. It allows a URI that is associated with IM or PP to be specified inside a vCard. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="4770"/>
+<seriesInfo name="DOI" value="10.17487/RFC4770"/>
+</reference>
+
+<reference anchor="RFC4880" target="https://www.rfc-editor.org/info/rfc4880">
+<front>
+<title>OpenPGP Message Format</title>
+<author initials="J." surname="Callas" fullname="J. Callas">
+<organization/>
+</author>
+<author initials="L." surname="Donnerhacke" fullname="L. Donnerhacke">
+<organization/>
+</author>
+<author initials="H." surname="Finney" fullname="H. Finney">
+<organization/>
+</author>
+<author initials="D." surname="Shaw" fullname="D. Shaw">
+<organization/>
+</author>
+<author initials="R." surname="Thayer" fullname="R. Thayer">
+<organization/>
+</author>
+<date year="2007" month="November"/>
+<abstract>
+<t>
+This document is maintained in order to publish all necessary information needed to develop interoperable applications based on the OpenPGP format. It is not a step-by-step cookbook for writing an application. It describes only the format and methods needed to read, check, generate, and write conforming packets crossing any network. It does not deal with storage and implementation questions. It does, however, discuss implementation issues necessary to avoid security flaws.
+</t>
+<t>
+OpenPGP software uses a combination of strong public-key and symmetric cryptography to provide security services for electronic communications and data storage. These services include confidentiality, key management, authentication, and digital signatures. This document specifies the message formats used in OpenPGP. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="4880"/>
+<seriesInfo name="DOI" value="10.17487/RFC4880"/>
+</reference>
+
+<reference anchor="RFC5335bis" target="https://www.rfc-editor.org/info/rfc5335">
+<front>
+<title>Internationalized Email Headers</title>
+<author initials="A." surname="Yang" fullname="A. Yang" role="editor">
+<organization/>
+</author>
+<date year="2008" month="September"/>
+<abstract>
+<t>
+Full internationalization of electronic mail requires not only the capabilities to transmit non-ASCII content, to encode selected information in specific header fields, and to use non-ASCII characters in envelope addresses. It also requires being able to express those addresses and the information based on them in mail header fields. This document specifies an experimental variant of Internet mail that permits the use of Unicode encoded in UTF-8, rather than ASCII, as the base form for Internet email header field. This form is permitted in transmission only if authorized by an SMTP extension, as specified in an associated specification. This specification Updates section 6.4 of RFC 2045 to conform with the requirements. This memo defines an Experimental Protocol for the Internet community.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5335"/>
+<seriesInfo name="DOI" value="10.17487/RFC5335"/>
+</reference>
+
+<reference anchor="RFC5751" target="https://www.rfc-editor.org/info/rfc5751">
+<front>
+<title>
+Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.2 Message Specification
+</title>
+<author initials="B." surname="Ramsdell" fullname="B. Ramsdell">
+<organization/>
+</author>
+<author initials="S." surname="Turner" fullname="S. Turner">
+<organization/>
+</author>
+<date year="2010" month="January"/>
+<abstract>
+<t>
+This document defines Secure/Multipurpose Internet Mail Extensions (S/MIME) version 3.2. S/MIME provides a consistent way to send and receive secure MIME data. Digital signatures provide authentication, message integrity, and non-repudiation with proof of origin. Encryption provides data confidentiality. Compression can be used to reduce data size. This document obsoletes RFC 3851. [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="5751"/>
+<seriesInfo name="DOI" value="10.17487/RFC5751"/>
+</reference>
+
+<reference anchor="RFC6068" target="https://www.rfc-editor.org/info/rfc6068">
+<front>
+<title>The 'mailto' URI Scheme</title>
+<author initials="M." surname="Duerst" fullname="M. Duerst">
+<organization/>
+</author>
+<author initials="L." surname="Masinter" fullname="L. Masinter">
+<organization/>
+</author>
+<author initials="J." surname="Zawinski" fullname="J. Zawinski">
+<organization/>
+</author>
+<date year="2010" month="October"/>
+<abstract>
+<t>
+This document defines the format of Uniform Resource Identifiers (URIs) to identify resources that are reached using Internet mail. It adds better internationalization and compatibility with Internationalized Resource Identifiers (IRIs; RFC 3987) to the previous syntax of 'mailto' URIs (RFC 2368). [STANDARDS-TRACK]
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="6068"/>
+<seriesInfo name="DOI" value="10.17487/RFC6068"/>
+</reference>
+
+<reference anchor="TZ-DB" target="ftp://elsie.nci.nih.gov/pub/">
+<front>
+<title>Time zone code and data</title>
+<author initials="A." surname="Olson" fullname="A. Olson">
+<organization/>
+</author>
+<!-- date not in original -->
+<date year="2011" month="August"/>
+</front>
+</reference>
+
+<reference anchor="xfn" target="http://gmpg.org/xfn/11">
+<front>
+<title>XFN 1.1 profile</title>
+<author initials="T." surname="Celik" fullname="T. Celik">
+<organization/>
+</author>
+<author initials="M." surname="Mullenweg" fullname="M. Mullenweg">
+<organization/>
+</author>
+<author initials="E." surname="Meyer" fullname="E. Meyer">
+<organization/>
+</author>
+<!-- date not in original -->
+<date year="2003" month="October"/>
+</front>
+<seriesInfo name="DOI" value="10.17487/RFC6068"/>
+</reference>
+
+<reference anchor="vCard21">
+<front>
+<title>vCard - The Electronic Business Card Version 2.1</title>
+<author>
+<organization>Internet Mail Consortium</organization>
+</author>
+<date year="1996" month="September"/>
+</front>
+</reference>
+
+
+</references>
+
