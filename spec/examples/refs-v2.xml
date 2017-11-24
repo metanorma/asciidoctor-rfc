@@ -29,7 +29,7 @@
 </front><middle>
 <section anchor="_introduction" title="Introduction">
   <t>The authors would like to thank Tim Howes, Mark Smith, and Frank
-Dawson, the original authors of <xref target="RFC2119">[RFC2119]</xref> and <xref target="RFC2629">[RFC2629]</xref>, Pete
+Dawson, the original authors of <xref target="RFC2119"/> and <xref target="RFC2629"/>, Pete
 Resnick, who got this effort started and provided help along the way,
 as well as the following individuals who have participated in the
 drafting, review, and discussion of this memo.

@@ -13,10 +13,30 @@ def text_compare1(old_xml, new_xml)
 end
 
 def norm(text)
-  text.gsub(%r{<spanx style="strong">(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|RECOMMENDED|MAY|OPTIONAL)</spanx>}, "\\1")
+  text.gsub(%r{<spanx style="strong">(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|NOT RECOMMENDED|RECOMMENDED|MAY|OPTIONAL)</spanx>}, "\\1").
+    gsub(%r{<t hangText="([^"]+:) ">}, %Q{<t hangText="\\1">})
 end
 
+def remove_pages(text)
+  text.gsub(%r{\n+\S+     [^\n]+\[Page \d+\]\n.?\nRFC[^\n]+\n},"\n").gsub(%r{\n\n\n+}, "\n\n")
+end
+
+def text_compare2(old_xml, new_xml)
+  File.write("#{old_xml}.1", norm(File.read(old_xml, encoding: "utf-8")))
+  File.write("#{new_xml}.1", norm(File.read(new_xml, encoding: "utf-8")))
+  system("xml2rfc #{old_xml}.1 -o #{old_xml}.txt.1")
+  system("xml2rfc #{new_xml}.1 -o #{new_xml}.txt.1")
+  File.write("#{old_xml}.txt", remove_pages(File.read("#{old_xml}.txt.1", encoding: "utf-8")))
+  File.write("#{new_xml}.txt", remove_pages(File.read("#{new_xml}.txt.1", encoding: "utf-8")))
+end
+
+
 describe Asciidoctor::RFC::V2::Converter do
+  it "processes RFC 6350 RFC XML v2 example with bibliography preprocessing, with equivalent text" do
+    system("asciidoctor -b rfc2 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc' ./spec/examples/rfc6350.adoc -o spec/examples/rfc6350.xml")
+    text_compare2("spec/examples/rfc6350.xml", "spec/examples/rfc6350.xml")
+    expect(File.read("spec/examples/rfc6350.xml.txt")).to be_equivalent_to File.read("spec/examples/rfc6350.txt.orig")
+  end
   it "processes Davies template with equivalent text" do
     system("bin/asciidoctor-rfc2 spec/examples/davies-template-bare-06.adoc")
     text_compare("spec/examples/davies-template-bare-06.xml.orig", "spec/examples/davies-template-bare-06.xml")

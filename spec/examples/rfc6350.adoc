@@ -6,15 +6,17 @@ Simon Perreault <simon.perreault@viagenie.ca>
 :bibliography-hyperlinks: false
 :bibliography-style: rfc-v2
 :doctype: rfc
+:abbrev: vCard
 :obsoletes: 2425, 2426, 4770
 :updates: 2739
-:name: rfc-6350
-:revdate: 20110831
+:name: 6350
+:revdate: 2011-08
 :submission-type: IETF
 :status: standard
 :intended-series: full-standard 6350
 :fullname: Simon Perreault
 :lastname: Perreault
+:forename_initials: S.
 :organization: Viagenie
 :email: simon.perreault@viagenie.ca
 :street: 2875 Laurier, suite D2-630
@@ -24,7 +26,10 @@ Simon Perreault <simon.perreault@viagenie.ca>
 :phone: +1 418 656 9254
 :uri: http://www.viagenie.ca
 :link: urn:issn:2070-1721 item
-
+:rfcedstyle: yes
+:ipr: pre5378Trust200902
+:inline-definition-lists: true
+:comments: yes
 
 This document defines the vCard data format for representing and
 exchanging a variety of information about individuals and other
@@ -32,6 +37,7 @@ entities (e.g., formatted and structured name and delivery addresses,
 email address, multiple telephone numbers, photograph, logo, audio
 clips, etc.).  This document obsoletes RFCs 2425, 2426, and 4770, and
 updates RFC 2739.
+
 
 [[section1]]
 == Introduction
@@ -44,7 +50,7 @@ information normally stored within an address book or directory
 application.
 
 A high-level overview of the differences from RFCs 2425 and 2426 can
-be found in <<appendixA,Appendix A>>.
+be found in <<appendixA>>.
 
 [[section2]]
 == Conventions
@@ -74,7 +80,7 @@ this.  It is invalid to specify a value other than "UTF-8" in the
 ===  Line Delimiting and Folding
 
 Individual lines within vCard are delimited by the cite:norm[RFC5322] line
-break, which is a `CRLF` sequence (`U+000D` followed by `U+000A`).  Long
+break, which is a CRLF sequence (U+000D followed by U+000A).  Long
 logical lines of text can be split into a multiple-physical-line
 representation using the following folding technique.  Content lines
 [bcp14]#SHOULD# be folded to a maximum width of 75 octets, excluding the line
@@ -82,10 +88,10 @@ break.  Multi-octet characters [bcp14]#MUST# remain contiguous.  The rationale
 for this folding process can be found in cite:norm[RFC5322, suffix=", Section 2.1.1"].
 
 A logical line [bcp14]#MAY# be continued on the next physical line anywhere
-between two characters by inserting a `CRLF` immediately followed by a
-single white space character (space (`U+0020`) or horizontal tab
-(`U+0009`)).  The folded line [bcp14]#MUST# contain at least one character.  Any
-sequence of `CRLF` followed immediately by a single white space
+between two characters by inserting a CRLF immediately followed by a
+single white space character (space (U+0020) or horizontal tab
+(U+0009)).  The folded line [bcp14]#MUST# contain at least one character.  Any
+sequence of CRLF followed immediately by a single white space
 character is ignored (removed) when processing the content type.  For
 example, the line:
 
@@ -110,18 +116,18 @@ It could also be represented as:
 
 The process of moving from this folded multiple-line representation
 of a property definition to its single-line representation is called
-unfolding.  Unfolding is accomplished by regarding `CRLF` immediately
-followed by a white space character (namely, `HTAB` (U+0009) or `SPACE`
-(`U+0020`)) as equivalent to no characters at all (i.e., the `CRLF` and
+unfolding.  Unfolding is accomplished by regarding CRLF immediately
+followed by a white space character (namely, HTAB (U+0009) or SPACE
+(U+0020)) as equivalent to no characters at all (i.e., the CRLF and
 single white space character are removed).
 
-NOTE: It is possible for very simple implementations to generate
+Note: It is possible for very simple implementations to generate
 improperly folded lines in the middle of a UTF-8 multi-octet
 sequence.  For this reason, implementations [bcp14]#SHOULD# unfold lines in
 such a way as to properly restore the original sequence.
 
-NOTE: Unfolding is done differently than in cite:norm[RFC5322].  Unfolding
-in cite:norm[RFC5322] only removes the `CRLF`, not the space following it.
+Note: Unfolding is done differently than in cite:norm[RFC5322].  Unfolding
+in cite:norm[RFC5322] only removes the CRLF, not the space following it.
 
 Folding is done after any content encoding of a type value.
 Unfolding is done before any decoding of a type value in a content
@@ -131,7 +137,7 @@ line.
 === ABNF Format Definition
 
 The following ABNF uses the notation of cite:norm[RFC5234], which also defines
-`CRLF`, `WSP`, `DQUOTE`, `VCHAR`, `ALPHA`, and `DIGIT`.
+CRLF, WSP, DQUOTE, VCHAR, ALPHA, and DIGIT.
 
 [source,abnf]
 ----
@@ -182,7 +188,7 @@ param-value = *SAFE-CHAR / DQUOTE *QSAFE-CHAR DQUOTE
 any-param  = (iana-token / x-name) "=" param-value *("," param-value)
 
 NON-ASCII = UTF8-2 / UTF8-3 / UTF8-4
-  ; UTF8-{2,3,4} are defined in RFC3629
+  ; UTF8-{2,3,4} are defined in [RFC3629]
 
 QSAFE-CHAR = WSP / "!" / %x23-7E / NON-ASCII
   ; Any character except CTLs, DQUOTE
@@ -196,14 +202,14 @@ VALUE-CHAR = WSP / VCHAR / NON-ASCII
 
 A line that begins with a white space character is a continuation of
 the previous line, as described in <<section3_2>>.  The white space
-character and immediately preceeding `CRLF` should be discarded when
+character and immediately preceeding CRLF should be discarded when
 reconstructing the original line.  Note that this line-folding
 convention differs from that found in cite:norm[RFC5322], in that the sequence
-`<CRLF><WSP>` found anywhere in the content indicates a continued line
+<CRLF><WSP> found anywhere in the content indicates a continued line
 and should be removed.
 
 Property names and parameter names are case-insensitive (e.g., the
-property name `"fn"` is the same as `"FN"` and `"Fn"`).  Parameter values
+property name "fn" is the same as "FN" and "Fn").  Parameter values
 [bcp14]#MAY# be case-sensitive or case-insensitive, depending on their
 definition.  Parameter values that are not explicitly defined as
 being case-sensitive are case-insensitive.  Based on experience with
@@ -215,7 +221,7 @@ The group name is a syntactic convention used to indicate that all
 property names prefaced with the same group name [bcp14]#SHOULD# be grouped
 together when displayed by an application.  It has no other
 significance.  Implementations that do not understand or support
-grouping [bcp14]#MAY# simply strip off any text before a `"."` to the left of
+grouping [bcp14]#MAY# simply strip off any text before a "." to the left of
 the type name and present the types and values as normal.
 
 Property cardinalities are indicated using the following notation,
@@ -225,9 +231,9 @@ which is based on ABNF (see cite:norm[RFC5234, suffix=", Section 3.6"]):
 | Cardinality | Meaning                                         
 
 |      1      | Exactly one instance per vCard [bcp14]#MUST# be present.  
-|      *1     | Exactly one instance per vCard [bcp14]#MAY# be present.   |
-|      1*     | One or more instances per vCard [bcp14]#MUST# be present. |
-|      *      | One or more instances per vCard [bcp14]#MAY# be present.  |
+|      *1     | Exactly one instance per vCard [bcp14]#MAY# be present.   
+|      1*     | One or more instances per vCard [bcp14]#MUST# be present. 
+|      *      | One or more instances per vCard [bcp14]#MAY# be present.  
 |===
 
 Properties defined in a vCard instance may have multiple values
@@ -235,37 +241,37 @@ depending on the property cardinality.  The general rule for encoding
 multi-valued properties is to simply create a new content line for
 each value (including the property name).  However, it should be
 noted that some value types support encoding multiple values in a
-single content line by separating the values with a comma `","`.  This
+single content line by separating the values with a comma ",".  This
 approach has been taken for several of the content types defined
 below (date, time, integer, float).
 
 [[section3_4]]
 ===  Property Value Escaping
 
-Some properties may contain one or more values delimited by a `COMMA`
-character (`U+002C`).  Therefore, a `COMMA` character in a value [bcp14]#MUST# be
-escaped with a `BACKSLASH` character (`U+005C`), even for properties that
+Some properties may contain one or more values delimited by a COMMA
+character (U+002C).  Therefore, a COMMA character in a value [bcp14]#MUST# be
+escaped with a BACKSLASH character (U+005C), even for properties that
 don't allow multiple instances (for consistency).
 
-Some properties (e.g., `N` and `ADR`) comprise multiple fields delimited
-by a `SEMICOLON` character (`U+003B`).  Therefore, a `SEMICOLON` in a field
-of such a "compound" property [bcp14]#MUST# be escaped with a `BACKSLASH`
-character.  `SEMICOLON` characters in non-compound properties [bcp14]#MAY# be
-escaped.  On input, an escaped `SEMICOLON` character is never a field
-separator.  An unescaped `SEMICOLON` character may be a field
+Some properties (e.g., N and ADR) comprise multiple fields delimited
+by a SEMICOLON character (U+003B).  Therefore, a SEMICOLON in a field
+of such a "compound" property [bcp14]#MUST# be escaped with a BACKSLASH
+character.  SEMICOLON characters in non-compound properties [bcp14]#MAY# be
+escaped.  On input, an escaped SEMICOLON character is never a field
+separator.  An unescaped SEMICOLON character may be a field
 separator, depending on the property in which it appears.
 
 Furthermore, some fields of compound properties may contain a list of
-values delimited by a `COMMA` character.  Therefore, a `COMMA` character
-in one of a field's values [bcp14]#MUST# be escaped with a `BACKSLASH`
+values delimited by a COMMA character.  Therefore, a COMMA character
+in one of a field's values [bcp14]#MUST# be escaped with a BACKSLASH
 character, even for fields that don't allow multiple values (for
 consistency).  Compound properties allowing multiple instances [bcp14]#MUST NOT#
 be encoded in a single content line.
 
-Finally, `BACKSLASH` characters in values [bcp14]#MUST# be escaped with a
-`BACKSLASH` character.  `NEWLINE` (`U+000A`) characters in values [bcp14]#MUST# be
-encoded by two characters: a `BACKSLASH` followed by either an `'n'`
-(`U+006E`) or an `'N'` (`U+004E`).
+Finally, BACKSLASH characters in values [bcp14]#MUST# be escaped with a
+BACKSLASH character.  NEWLINE (U+000A) characters in values [bcp14]#MUST# be
+encoded by two characters: a BACKSLASH followed by either an 'n'
+(U+006E) or an 'N' (U+004E).
 
 In all other cases, escaping [bcp14]#MUST NOT# be used.
 
@@ -286,7 +292,7 @@ Standard value types are defined below.
         / boolean
         / integer-list
         / float-list
-        / URI               ; from Section 3 of RFC3986
+        / URI               ; from Section 3 of [RFC3986]
         / utc-offset
         / Language-Tag
         / iana-valuespec
@@ -350,7 +356,7 @@ Standard value types are defined below.
 
   utc-offset = sign hour [minute]
 
-  Language-Tag = <Language-Tag, defined in RFC5646, Section 2.1>
+  Language-Tag = <Language-Tag, defined in [RFC5646], Section 2.1>
 
   iana-valuespec = <value-spec, see Section 12>
                  ; a publicly defined valuetype format, registered
@@ -363,7 +369,7 @@ Standard value types are defined below.
 
 "text": The "text" value type should be used to identify values that
 contain human-readable text.  As for the language, it is controlled
-by the `LANGUAGE` property parameter defined in <<section5_1>>.
+by the LANGUAGE property parameter defined in <<section5_1>>.
 
 Examples for "text":
 
@@ -374,11 +380,11 @@ Examples for "text":
 ....
 
 A formatted text line break in a text value type [bcp14]#MUST# be represented
-as the character sequence backslash (`U+005C`) followed by a Latin
-small letter n (`U+006E`) or a Latin capital letter `N` (`U+004E`), that
-is, `"\n"` or `"\N"`.
+as the character sequence backslash (U+005C) followed by a Latin
+small letter n (U+006E) or a Latin capital letter N (U+004E), that
+is, "\n" or "\N".
 
-For example, a multiple line `NOTE` value of:
+For example, a multiple line NOTE value of:
 
 ....
     Mythical Manager
@@ -393,8 +399,8 @@ could be represented as:
      BabsCo\, Inc.\n
 ....
 
-demonstrating the `\n` literal formatted line break technique, the
-`CRLF`-followed-by-space line folding technique, and the backslash
+demonstrating the \n literal formatted line break technique, the
+CRLF-followed-by-space line folding technique, and the backslash
 escape technique.
 
 [[section4_2]]
@@ -430,12 +436,12 @@ Only the basic format is supported.
 
 A calendar date as specified in cite:norm[ISO.8601.2004, suffix=", Section 4.1.2"].
 
-Reduced accuracy, as specified in cite:norm[ISO.8601.2004, suffix=", Section 4.1.2.3"] a)
+Reduced accuracy, as specified in cite:norm[ISO.8601.2004, suffix=", Sections 4.1.2.3"] a)
 and b), but not c), is permitted.
 
 Expanded representation, as specified in cite:norm[ISO.8601.2004, suffix=", Section 4.1.4"], is forbidden.
 
-Truncated representation, as specified in cite:norm[ISO.8601.2000, suffix=", Section 5.2.1.3"] d), e), and f), is permitted.
+Truncated representation, as specified in cite:norm[ISO.8601.2000, suffix=", Sections 5.2.1.3"] d), e), and f), is permitted.
 
 Examples for "date":
 
@@ -445,11 +451,14 @@ Examples for "date":
           1985
           --0412
           ---12
+          
+          
+          
 ....
 
-Note the use of `YYYY-MM` in the second example above.  `YYYYMM` is
-disallowed to prevent confusion with `YYMMDD`.  Note also that
-`YYYY-MM-DD` is disallowed since we are using the basic format instead
+Note the use of YYYY-MM in the second example above.  YYYYMM is
+disallowed to prevent confusion with YYMMDD.  Note also that
+YYYY-MM-DD is disallowed since we are using the basic format instead
 of the extended format.
 
 [[section4_3_2]]
@@ -463,10 +472,10 @@ is permitted.
 Representation with decimal fraction, as specified in
 cite:norm[ISO.8601.2004, suffix=", Section 4.2.2.4"], is forbidden.
 
-The midnight hour is always represented by `00`, never `24` (see
+The midnight hour is always represented by 00, never 24 (see
 cite:norm[ISO.8601.2004, suffix=", Section 4.2.3"]).
 
-Truncated representation, as specified in cite:norm[ISO.8601.2000, suffix=", Section 5.3.1.4"] a), b), and c), is permitted.
+Truncated representation, as specified in cite:norm[ISO.8601.2000, suffix=", Sections 5.3.1.4"] a), b), and c), is permitted.
 
 Examples for "time":
 
@@ -498,8 +507,8 @@ Examples for "date-time":
 [[section4_3_4]]
 ====  DATE-AND-OR-TIME
 
-Either a `DATE-TIME`, a `DATE`, or a `TIME` value.  To allow unambiguous
-interpretation, a stand-alone `TIME` value is always preceded by a `"T"`.
+Either a DATE-TIME, a DATE, or a TIME value.  To allow unambiguous
+interpretation, a stand-alone TIME value is always preceded by a "T".
 
 Examples for "date-and-or-time":
 
@@ -542,8 +551,7 @@ Examples for "timestamp":
 "boolean": The "boolean" value type is used to express boolean
 values.  These values are case-insensitive.
 
-Examples:
-
+Examples: ::
 ....
     TRUE
     false
@@ -556,14 +564,13 @@ Examples:
 
 "integer": The "integer" value type is used to express signed
 integers in decimal format.  If sign is not specified, the value is
-assumed positive `"+"`.  Multiple "integer" values can be specified
+assumed positive "+".  Multiple "integer" values can be specified
 using the comma-separated notation.  The maximum value is
 9223372036854775807, and the minimum value is -9223372036854775808.
 These limits correspond to a signed 64-bit integer using two's-
 complement arithmetic.
 
-Examples:
-
+Examples: ::
 ....
     1234567890
     -1234556790
@@ -574,16 +581,15 @@ Examples:
 ===  FLOAT
 
 "float": The "float" value type is used to express real numbers.  If
-sign is not specified, the value is assumed positive `"+"`.  Multiple
+sign is not specified, the value is assumed positive "+".  Multiple
 "float" values can be specified using the comma-separated notation.
 Implementations [bcp14]#MUST# support a precision equal or better than that of
 the IEEE "binary64" format cite:norm[IEEE.754.2008].
 
-NOTE: Scientific notation is disallowed.  Implementers wishing to
-use their favorite language's `%f` formatting should be careful.
+Note: Scientific notation is disallowed.  Implementers wishing to
+use their favorite language's %f formatting should be careful.
 
-Examples:
-
+Examples: ::
 ....
     20.30
     1000000.0000001
@@ -595,13 +601,13 @@ Examples:
 
 "utc-offset": The "utc-offset" value type specifies that the property
 value is a signed offset from UTC.  This value type can be specified
-in the `TZ` property.
+in the TZ property.
 
 The value type is an offset from Coordinated Universal Time (UTC).
 It is specified as a positive or negative difference in units of
-hours and minutes (e.g., `+hhmm`).  The time is specified as a 24-hour
-clock.  Hour values are from `00` to `23`, and minute values are from `00`
-to `59`.  Hour and minutes are 2 digits with high-order zeroes required
+hours and minutes (e.g., +hhmm).  The time is specified as a 24-hour
+clock.  Hour values are from 00 to 23, and minute values are from 00
+to 59.  Hour and minutes are 2 digits with high-order zeroes required
 to maintain digit count.  The basic format for ISO 8601 UTC offsets
 [bcp14]#MUST# be used.
 
@@ -617,12 +623,12 @@ A property can have attributes associated with it.  These "property
 parameters" contain meta-information about the property or the
 property value.  In some cases, the property parameter can be multi-
 valued in which case the property parameter value elements are
-separated by a `COMMA` (`U+002C`).
+separated by a COMMA (U+002C).
 
-Property parameter value elements that contain the `COLON` (`U+003A`),
-`SEMICOLON` (`U+003B`), or `COMMA` (`U+002C`) character separators [bcp14]#MUST# be
+Property parameter value elements that contain the COLON (U+003A),
+SEMICOLON (U+003B), or COMMA (U+002C) character separators [bcp14]#MUST# be
 specified as quoted-string text values.  Property parameter values
-[bcp14]#MUST NOT# contain the `DQUOTE` (`U+0022`) character.  The `DQUOTE` character
+[bcp14]#MUST NOT# contain the DQUOTE (U+0022) character.  The DQUOTE character
 is used as a delimiter for parameter values that contain restricted
 characters or URI text.
 
@@ -632,40 +638,38 @@ recognize.
 [[section5_1]]
 === LANGUAGE
 
-The `LANGUAGE` property parameter is used to identify data in multiple
+The LANGUAGE property parameter is used to identify data in multiple
 languages.  There is no concept of "default" language, except as
 specified by any "Content-Language" MIME header parameter that is
 present cite:info[RFC3282].  The value of the LANGUAGE property parameter is a
 language tag as defined in cite:norm[RFC5646, prefix="Section 2 of "].
 
-Examples:
-
+Examples: ::
 ....
   ROLE;LANGUAGE=tr:hoca
 ....
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
         language-param = "LANGUAGE=" Language-Tag
           ; Language-Tag is defined in section 2.1 of RFC 5646
+          
 ----
 
 [[section5_2]]
 ===  VALUE
 
-The `VALUE` parameter is [bcp14]#OPTIONAL#, used to identify the value type
+The VALUE parameter is [bcp14]#OPTIONAL#, used to identify the value type
 (data type) and format of the value.  The use of these predefined
 formats is encouraged even if the value parameter is not explicitly
 used.  By defining a standard set of value types and their formats,
 existing parsing and processing code can be leveraged.  The
-predefined data type values [bcp14]#MUST NOT# be repeated in `COMMA`-separated
-value lists except within the `N`, `NICKNAME`, `ADR`, and `CATEGORIES`
+predefined data type values [bcp14]#MUST NOT# be repeated in COMMA-separated
+value lists except within the N, NICKNAME, ADR, and CATEGORIES
 properties.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
   value-param = "VALUE=" value-type
@@ -706,8 +710,7 @@ be interpreted on its own.
 This parameter [bcp14]#MAY# be applied to any property that allows multiple
 instances.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
         pref-param = "PREF=" (1*2DIGIT / "100")
@@ -718,26 +721,26 @@ ABNF:
 [[section5_4]]
 ===  ALTID
 
-The `ALTID` parameter is used to "tag" property instances as being
+The ALTID parameter is used to "tag" property instances as being
 alternative representations of the same logical property.  For
 example, translations of a property in multiple languages generates
-multiple property instances having different `LANGUAGE` (<<section5_1>>)
-parameter that are tagged with the same `ALTID` value.
+multiple property instances having different LANGUAGE (<<section5_1>>)
+parameter that are tagged with the same ALTID value.
 
 This parameter's value is treated as an opaque string.  Its sole
-purpose is to be compared for equality against other `ALTID` parameter
+purpose is to be compared for equality against other ALTID parameter
 values.
 
 Two property instances are considered alternative representations of
 the same logical property if and only if their names as well as the
-value of their `ALTID` parameters are identical.  Property instances
-without the `ALTID` parameter [bcp14]#MUST NOT# be considered an alternative
-representation of any other property instance.  Values for the `ALTID`
+value of their ALTID parameters are identical.  Property instances
+without the ALTID parameter [bcp14]#MUST NOT# be considered an alternative
+representation of any other property instance.  Values for the ALTID
 parameter are not globally unique: they [bcp14]#MAY# be reused for different
 property names.
 
-Property instances having the same `ALTID` parameter value count as 1
-toward cardinality.  Therefore, since `N` (<<section6_2_2>>) has
+Property instances having the same ALTID parameter value count as 1
+toward cardinality.  Therefore, since N (<<section6_2_2>>) has
 cardinality *1 and TITLE (<<section6_6_1>>) has cardinality *, these
 three examples would be legal:
 
@@ -763,42 +766,44 @@ while this one would not:
 ....
   N;ALTID=1;LANGUAGE=jp:<U+5C71><U+7530>;<U+592A><U+90CE>;;;
   N:Yamada;Taro;;;
+  (Two instances of the N property.)
 ....
-(Two instances of the `N` property.)
 
 and these three would be legal but questionable:
 
 ....
   TITLE;ALTID=1;LANGUAGE=fr:Patron
   TITLE;ALTID=2;LANGUAGE=en:Boss
+  (Should probably have the same ALTID value.)
 ....
-  (Should probably have the same `ALTID` value.)
 
 ....
   TITLE;ALTID=1;LANGUAGE=fr:Patron
   TITLE:LANGUAGE=en:Boss
+  (Second line should probably have ALTID=1.)
 ....
-  (Second line should probably have `ALTID=1`.)
 
 ....
   N;ALTID=1;LANGUAGE=jp:<U+5C71><U+7530>;<U+592A><U+90CE>;;;
   N;ALTID=1;LANGUAGE=en:Yamada;Taro;;;
   N;ALTID=1;LANGUAGE=en:Smith;John;;;
+  (The last line should probably have ALTID=2.  But that would be
+   illegal because N has cardinality *1.)
 ....
-(The last line should probably have `ALTID=2`.  But that would be
-illegal because N has cardinality *1.)
 
-The `ALTID` property [bcp14]#MAY# also be used in may contexts other than with
-the `LANGUAGE` parameter.  Here's an example with two representations
+The ALTID property [bcp14]#MAY# also be used in may contexts other than with
+the LANGUAGE parameter.  Here's an example with two representations
 of the same photo in different file formats:
 
 ....
   PHOTO;ALTID=1:data:image/jpeg;base64,...
   PHOTO;ALTID=1;data:image/jp2;base64,...
+  
+  
+  
 ....
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
         altid-param = "ALTID=" param-value
@@ -807,18 +812,17 @@ ABNF:
 [[section5_5]]
 ===  PID
 
-The `PID` parameter is used to identify a specific property among
-multiple instances.  It plays a role analogous to the `UID` property
+The PID parameter is used to identify a specific property among
+multiple instances.  It plays a role analogous to the UID property
 (<<section6_7_6>>) on a per-property instead of per-vCard basis.  It [bcp14]#MAY#
 appear more than once in a given property.  It [bcp14]#MUST NOT# appear on
 properties that may have only one instance per vCard.  Its value is
 either a single small positive integer or a pair of small positive
 integers separated by a dot.  Multiple values may be encoded in a
-single `PID` parameter by separating the values with a comma `","`.  See
+single PID parameter by separating the values with a comma ",".  See
 <<section7>> for more details on its usage.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
         pid-param = "PID=" pid-value *("," pid-value)
@@ -828,13 +832,13 @@ ABNF:
 [[section5_6]]
 ===  TYPE
 
-The `TYPE` parameter has multiple, different uses.  In general, it is a
+The TYPE parameter has multiple, different uses.  In general, it is a
 way of specifying class characteristics of the associated property.
 Most of the time, its value is a comma-separated subset of a
 predefined enumeration.  In this document, the following properties
-make use of this parameter: `FN`, `NICKNAME`, `PHOTO`, `ADR`, `TEL`, `EMAIL`,
-`IMPP`, `LANG`, `TZ`, `GEO`, `TITLE`, `ROLE`, `LOGO`, `ORG`, `RELATED`, `CATEGORIES`,
-`NOTE`, `SOUND`, `URL`, `KEY`, `FBURL`, `CALADRURI`, and `CALURI`.  The `TYPE`
+make use of this parameter: FN, NICKNAME, PHOTO, ADR, TEL, EMAIL,
+IMPP, LANG, TZ, GEO, TITLE, ROLE, LOGO, ORG, RELATED, CATEGORIES,
+NOTE, SOUND, URL, KEY, FBURL, CALADRURI, and CALURI.  The TYPE
 parameter [bcp14]#MUST NOT# be applied on other properties defined in this
 document.
 
@@ -843,11 +847,10 @@ that the property is related to an individual's work place, while the
 "home" value implies that the property is related to an individual's
 personal life.  When neither "work" nor "home" is present, it is
 implied that the property is related to both an individual's work
-place and personal life in the case that the `KIND` property's value is
+place and personal life in the case that the KIND property's value is
 "individual", or to none in other cases.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
        type-param = "TYPE=" type-value *("," type-value)
@@ -860,42 +863,42 @@ ABNF:
 [[section5_7]]
 ===  MEDIATYPE
 
-The `MEDIATYPE` parameter is used with properties whose value is a URI.
+The MEDIATYPE parameter is used with properties whose value is a URI.
 Its use is [bcp14]#OPTIONAL#.  It provides a hint to the vCard consumer
 application about the media type cite:norm[RFC2046] of the resource identified
 by the URI.  Some URI schemes do not need this parameter.  For
 example, the "data" scheme allows the media type to be explicitly
 indicated as part of the URI cite:info[RFC2397].  Another scheme, "http",
 provides the media type as part of the URI resolution process, with
-the Content-Type HTTP header cite:info[RFC2616].  The `MEDIATYPE` parameter is
+the Content-Type HTTP header cite:info[RFC2616].  The MEDIATYPE parameter is
 intended to be used with URI schemes that do not provide such
 functionality (e.g., "ftp" cite:info[RFC1738]).
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
   mediatype-param = "MEDIATYPE=" mediatype
   mediatype = type-name "/" subtype-name *( ";" attribute "=" value )
-    ; "attribute" and "value" are from cite:norm[RFC2045]
-    ; "type-name" and "subtype-name" are from cite:norm[RFC4288]
+    ; "attribute" and "value" are from [RFC2045]
+    ; "type-name" and "subtype-name" are from [RFC4288]
 ----
+
+cite:norm[RFC2045, text="<xref target='RFC2045' format='none'/>"] cite:norm[RFC4288, text="<xref target='RFC4288' format='none'/>"]
 
 [[section5_8]]
 ===  CALSCALE
 
-The `CALSCALE` parameter is identical to the `CALSCALE` property in
-iCalendar (see cite:norm[RFC5545, prefix="Section 3.7.1 of "]).  It is used to define the
+The CALSCALE parameter is identical to the CALSCALE property in
+iCalendar (see cite:norm[RFC5545, suffix=", Section 3.7.1"]).  It is used to define the
 calendar system in which a date or date-time value is expressed.  The
 only value specified by iCalendar is "gregorian", which stands for
 the Gregorian system.  It is the default when the parameter is
 absent.  Additional values may be defined in extension documents and
 registered with IANA (see <<section10_3_4>>).  A vCard implementation
-[bcp14]#MUST# ignore properties with a `CALSCALE` parameter value that it does
+[bcp14]#MUST# ignore properties with a CALSCALE parameter value that it does
 not understand.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
         calscale-param = "CALSCALE=" calscale-value
@@ -916,8 +919,7 @@ This parameter's value is a comma-separated list that [bcp14]#MUST# have as
 many or fewer elements as the corresponding property value has
 components.  This parameter's value is case-sensitive.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
   sort-as-param = "SORT-AS=" sort-as-value
@@ -926,7 +928,7 @@ ABNF:
 ----
 
 Examples: For the case of surname and given name sorting, the
-following examples define common sort string usage with the `N`
+following examples define common sort string usage with the N
 property.
 
 ....
@@ -984,12 +986,11 @@ If sorted by given name, the results would be:
 [[section5_10]]
 ===  GEO
 
-The `GEO` parameter can be used to indicate global positioning
+The GEO parameter can be used to indicate global positioning
 information that is specific to an address.  Its value is the same as
-that of the `GEO` property (see <<section6_5_2>>).
+that of the GEO property (see <<section6_5_2>>).
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
   geo-parameter = "GEO=" DQUOTE URI DQUOTE
@@ -998,15 +999,20 @@ ABNF:
 [[section5_11]]
 ===  TZ
 
-The `TZ` parameter can be used to indicate time zone information that
-is specific to an address.  Its value is the same as that of the `TZ`
+The TZ parameter can be used to indicate time zone information that
+is specific to an address.  Its value is the same as that of the TZ
 property.
 
-ABNF:
-
+ABNF: ::
 [source,abnf]
 ----
   tz-parameter = "TZ=" (param-value / DQUOTE URI DQUOTE)
+        
+        
+        
+        
+        
+        
 ----
 
 [[section6]]
@@ -1020,17 +1026,17 @@ What follows is an enumeration of the standard vCard properties.
 [[section6_1_1]]
 ====  BEGIN
 
-Purpose::  To denote the beginning of a syntactic entity within a
+Purpose: :: To denote the beginning of a syntactic entity within a
    text/vcard content-type.
 
-Value type::  text
+Value type: :: text
 
-Cardinality::  1
+Cardinality: :: 1
 
-Special notes::  The content entity [bcp14]#MUST# begin with the BEGIN property
-   with a value of `"VCARD"`.  The value is case-insensitive.
-
-The `BEGIN` property is used in conjunction with the `END` property to
+Special notes: :: The content entity [bcp14]#MUST# begin with the BEGIN property
+   with a value of "VCARD".  The value is case-insensitive.
++
+The BEGIN property is used in conjunction with the END property to
    delimit an entity containing a related set of properties within a
    text/vcard content-type.  This construct can be used instead of
    including multiple vCards as body parts inside of a multipart/
@@ -1039,16 +1045,16 @@ The `BEGIN` property is used in conjunction with the `END` property to
    the same text/vcard content-type or to define content that can be
    identifiable outside of a MIME environment.
 
-ABNF::
-
+ABNF: ::
++
 [source,abnf]
 ----
   BEGIN-param = 0" "  ; no parameter allowed
   BEGIN-value = "VCARD"
 ----
 
-Example:
-
+Example: ::
++
 ....
       BEGIN:VCARD
 ....
@@ -1056,17 +1062,17 @@ Example:
 [[section6_1_2]]
 ====  END
 
-Purpose::  To denote the end of a syntactic entity within a text/vcard
+Purpose: :: To denote the end of a syntactic entity within a text/vcard
    content-type.
 
-Value type::  text
+Value type: :: text
 
-Cardinality::  1
+Cardinality: :: 1
 
-Special notes::  The content entity [bcp14]#MUST# end with the `END` type with a
-   value of `"VCARD"`.  The value is case-insensitive.
+Special notes: :: The content entity [bcp14]#MUST# end with the END type with a
+   value of "VCARD".  The value is case-insensitive.
 +
-The `END` property is used in conjunction with the `BEGIN` property to
+The END property is used in conjunction with the BEGIN property to
    delimit an entity containing a related set of properties within a
    text/vcard content-type.  This construct can be used instead of or
    in addition to wrapping separate sets of information inside
@@ -1075,7 +1081,7 @@ The `END` property is used in conjunction with the `BEGIN` property to
    the same text/vcard content-type or to define content that can be
    identifiable outside of a MIME environment.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1083,8 +1089,7 @@ ABNF::
   END-value = "VCARD"
 ----
 
-Example::
-+
+Example: ::
 ....
       END:VCARD
 ....
@@ -1092,24 +1097,24 @@ Example::
 [[section6_1_3]]
 ====  SOURCE
 
-Purpose::  To identify the source of directory information contained
+Purpose: :: To identify the source of directory information contained
    in the content type.
 
-Value type::  uri
+Value type: :: uri
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  The `SOURCE` property is used to provide the means by
+Special notes: :: The SOURCE property is used to provide the means by
    which applications knowledgable in the given directory service
    protocol can obtain additional or more up-to-date information from
    the directory service.  It contains a URI as defined in cite:norm[RFC3986]
    and/or other information referencing the vCard to which the
    information pertains.  When directory information is available
    from more than one source, the sending entity can pick what it
-   considers to be the best source, or multiple `SOURCE` properties can
+   considers to be the best source, or multiple SOURCE properties can
    be included.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1118,10 +1123,13 @@ ABNF::
   SOURCE-value = URI
 ----
 
-Examples::
+Examples: ::
 +
 ....
   SOURCE:ldap://ldap.example.com/cn=Babs%20Jensen,%20o=Babsco,%20c=US
+....
++
+....
   SOURCE:http://directory.example.com/addressbooks/jdoe/
    Jean%20Dupont.vcf
 ....
@@ -1129,32 +1137,33 @@ Examples::
 [[section6_1_4]]
 ====  KIND
 
-Purpose:: To specify the kind of object the vCard represents.
+Purpose: :: To specify the kind of object the vCard represents.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-Special notes::  The value may be one of the following:
+Special notes: :: The value may be one of the following:
 +
-* "individual"  for a vCard representing a single person or entity.
+"individual" :: for a vCard representing a single person or entity.
       This is the default kind of vCard.
-* "group"  for a vCard representing a group of persons or entities.
+      
+"group" :: for a vCard representing a group of persons or entities.
       The group's member entities can be other vCards or other types
       of entities, such as email addresses or web sites.  A group
-      vCard will usually contain `MEMBER` properties to specify the
+      vCard will usually contain MEMBER properties to specify the
       members of the group, but it is not required to.  A group vCard
-      without `MEMBER` properties can be considered an abstract
+      without MEMBER properties can be considered an abstract
       grouping, or one whose members are known empirically (perhaps
       "IETF Participants" or "Republican U.S. Senators").
 +
 All properties in a group vCard apply to the group as a whole,
-      and not to any particular `MEMBER`.  For example, an `EMAIL`
+      and not to any particular MEMBER.  For example, an EMAIL
       property might specify the address of a mailing list associated
       with the group, and an IMPP property might refer to a group
       chat room.
-* "org"  for a vCard representing an organization.  An organization
-      vCard will not (in fact, [bcp14]#MUST NOT#) contain `MEMBER` properties,
+"org" :: for a vCard representing an organization.  An organization
+      vCard will not (in fact, [bcp14]#MUST NOT#) contain MEMBER properties,
       and so these are something of a cross between "individual" and
       "group".  An organization is a single entity, but not a person.
       It might represent a business or government, a department or
@@ -1163,28 +1172,29 @@ All properties in a group vCard apply to the group as a whole,
 +
 All properties in an organization vCard apply to the
       organization as a whole, as is the case with a group vCard.
-      For example, an `EMAIL` property might specify the address of a
-* "location"  for a named geographical place.  A location vCard will
-      usually contain a `GEO` property, but it is not required to.  A
-      location vCard without a `GEO` property can be considered an
+      For example, an EMAIL property might specify the address of a
+      contact point for the organization.
+      
+"location" :: for a named geographical place.  A location vCard will
+      usually contain a GEO property, but it is not required to.  A
+      location vCard without a GEO property can be considered an
       abstract location, or one whose definition is known empirically
       (perhaps "New England" or "The Seashore").
 +
 All properties in a location vCard apply to the location
       itself, and not with any entity that might exist at that
       location.  For example, in a vCard for an office building, an
-      `ADR` property might give the mailing address for the building,
-      and a `TEL` property might specify the telephone number of the
+      ADR property might give the mailing address for the building,
+      and a TEL property might specify the telephone number of the
       receptionist.
-* An x-name.  vCards [bcp14]#MAY# include private or experimental values for
-      `KIND`.  Remember that x-name values are not intended for general
+An x-name. :: vCards [bcp14]#MAY# include private or experimental values for
+      KIND.  Remember that x-name values are not intended for general
       use and are unlikely to interoperate.
-* An iana-token.  Additional values may be registered with IANA (see
+An iana-token. :: Additional values may be registered with IANA (see
       <<section10_3_4>>).  A new value's specification document [bcp14]#MUST#
       specify which properties make sense for that new kind of vCard
       and which do not.
 
-+
 Implementations [bcp14]#MUST# support the specific string values defined
    above.  If this property is absent, "individual" [bcp14]#MUST# be assumed
    as the default.  If this property is present but the
@@ -1192,11 +1202,11 @@ Implementations [bcp14]#MUST# support the specific string values defined
    x-name or iana-token that the implementation does not support),
    the implementation [bcp14]#SHOULD# act in a neutral way, which usually
    means treating the vCard as though its kind were "individual".
-   The presence of `MEMBER` properties [bcp14]#MAY#, however, be taken as an
+   The presence of MEMBER properties [bcp14]#MAY#, however, be taken as an
    indication that the unknown kind is an extension of "group".
 
 Clients often need to visually distinguish contacts based on what
-   they represent, and the `KIND` property provides a direct way for
+   they represent, and the KIND property provides a direct way for
    them to do so.  For example, when displaying contacts in a list,
    an icon could be displayed next to each one, using distinctive
    icons for the different kinds; a client might use an outline of a
@@ -1218,7 +1228,7 @@ When designing those sorts of visual and functional distinctions,
    specification to answer these questions, but these are things
    implementers need to consider.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1227,7 +1237,7 @@ ABNF::
              / iana-token / x-name
 ----
 
-Example::
+Example: ::
 +
 This represents someone named Jane Doe working in the marketing
    department of the North American division of ABC Inc.
@@ -1256,24 +1266,24 @@ Marketing.
 [[section6_1_5]]
 ====  XML
 
-Purpose::  To include extended XML-encoded vCard data in a plain
+Purpose: :: To include extended XML-encoded vCard data in a plain
    vCard.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  The content of this property is a single XML 1.0
+Special notes: :: The content of this property is a single XML 1.0
    cite:norm[W3C.REC-xml-20081126] element whose namespace [bcp14]#MUST# be explicitly
    specified using the xmlns attribute and [bcp14]#MUST NOT# be the vCard 4
-   namespace (`"urn:ietf:params:xml:ns:vcard-4.0"`).  (This implies
+   namespace ("urn:ietf:params:xml:ns:vcard-4.0").  (This implies
    that it cannot duplicate a standard vCard property.)  The element
    is to be interpreted as if it was contained in a <vcard> element,
    as defined in cite:norm[RFC6351].
 +
 The fragment is subject to normal line folding and escaping, i.e.,
-   replace all backslashes with `"\\"`, then replace all newlines with
-   `"\n"`, then fold long lines.
+   replace all backslashes with "\\", then replace all newlines with
+   "\n", then fold long lines.
 +
 Support for this property is [bcp14]#OPTIONAL#, but implementations of this
    specification [bcp14]#MUST# preserve instances of this property when
@@ -1282,7 +1292,7 @@ Support for this property is [bcp14]#OPTIONAL#, but implementations of this
 See cite:norm[RFC6351] for more information on the intended use of this
    property.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1299,18 +1309,18 @@ identification and naming of the entity associated with the vCard.
 [[section6_2_1]]
 ====  FN
 
-Purpose::  To specify the formatted text corresponding to the name of
+Purpose: :: To specify the formatted text corresponding to the name of
    the object the vCard represents.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  1*
+Cardinality: :: 1*
 
-Special notes::  This property is based on the semantics of the X.520
+Special notes: :: This property is based on the semantics of the X.520
    Common Name attribute cite:norm[CCITT.X520.1988].  The property [bcp14]#MUST# be
    present in the vCard object.
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1319,7 +1329,7 @@ ABNF:
   FN-value = text
 ----
 
-Example:
+Example: ::
 +
 ....
       FN:Mr. John Q. Public\, Esq.
@@ -1328,29 +1338,29 @@ Example:
 [[section6_2_2]]
 ====  N
 
-Purpose::  To specify the components of the name of the object the
+Purpose: :: To specify the components of the name of the object the
    vCard represents.
 
-Value type::  A single structured text value.  Each component can have
+Value type: :: A single structured text value.  Each component can have
    multiple values.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-Special note:: The structured property value corresponds, in
+Special note: :: The structured property value corresponds, in
    sequence, to the Family Names (also known as surnames), Given
    Names, Additional Names, Honorific Prefixes, and Honorific
-   Suffixes.  The text components are separated by the `SEMICOLON`
-   character (`U+003B`).  Individual text components can include
-   multiple text values separated by the `COMMA` character (`U+002C`).
+   Suffixes.  The text components are separated by the SEMICOLON
+   character (U+003B).  Individual text components can include
+   multiple text values separated by the COMMA character (U+002C).
    This property is based on the semantics of the X.520 individual
    name attributes cite:norm[CCITT.X520.1988].  The property [bcp14]#SHOULD# be present
    in the vCard object when the name of the object the vCard
    represents follows the X.520 model.
 +
-The `SORT-AS` parameter [bcp14]#MAY# be applied to this property.
+The SORT-AS parameter [bcp14]#MAY# be applied to this property.
 
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1359,7 +1369,7 @@ ABNF::
   N-value = list-component 4(";" list-component)
 ----
 
-Examples:
+Examples: ::
 +
 ....
           N:Public;John;Quinlan;Mr.;Esq.
@@ -1370,20 +1380,20 @@ Examples:
 [[section6_2_3]]
 ====  NICKNAME
 
-Purpose::  To specify the text corresponding to the nickname of the
+Purpose: :: To specify the text corresponding to the nickname of the
    object the vCard represents.
 
-Value type::  One or more text values separated by a `COMMA` character
-   (`U+002C`).
+Value type: :: One or more text values separated by a COMMA character
+   (U+002C).
 
-Cardinality::  *
+Cardinality: :: *
 
-Special note::  The nickname is the descriptive name given instead of
+Special note: :: The nickname is the descriptive name given instead of
    or in addition to the one belonging to the object the vCard
    represents.  It can also be used to specify a familiar form of a
    proper name specified by the FN or N properties.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1392,7 +1402,7 @@ ABNF::
   NICKNAME-value = text-list
 ----
 
-Examples:
+Examples: ::
 +
 ....
           NICKNAME:Robbie
@@ -1405,14 +1415,14 @@ Examples:
 [[section6_2_4]]
 ====  PHOTO
 
-Purpose::  To specify an image or photograph information that
+Purpose: :: To specify an image or photograph information that
    annotates some aspect of the object the vCard represents.
 
-Value type::  A single URI.
+Value type: :: A single URI.
 
-Cardinality::  *
+Cardinality: :: *
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1421,7 +1431,7 @@ ABNF::
   PHOTO-value = URI
 ----
 
-Examples::
+Examples: ::
 +
 ....
     PHOTO:http://www.example.com/pub/photos/jqpublic.gif
@@ -1435,21 +1445,21 @@ Examples::
 [[section6_2_5]]
 ====  BDAY
 
-Purpose::  To specify the birth date of the object the vCard
+Purpose: :: To specify the birth date of the object the vCard
    represents.
 
-Value type::  The default is a single date-and-or-time value.  It can
+Value type: :: The default is a single date-and-or-time value.  It can
    also be reset to a single text value.
 
-Cardinality:"  *1
+Cardinality: ::  *1
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
   BDAY-param = BDAY-param-date / BDAY-param-text
   BDAY-value = date-and-or-time / text
-    ; Value and parameter [bcp14]#MUST# match.
+    ; Value and parameter MUST match.
 
   BDAY-param-date = "VALUE=date-and-or-time"
   BDAY-param-text = "VALUE=text" / language-param
@@ -1459,7 +1469,7 @@ ABNF:
     ; date-and-or-time and actually contains a date or date-time.
 ----
 
-Examples::
+Examples: ::
 +
 ....
           BDAY:19960415
@@ -1471,28 +1481,28 @@ Examples::
 [[section6_2_6]]
 ====  ANNIVERSARY
 
-Purpose::  The date of marriage, or equivalent, of the object the
+Purpose: :: The date of marriage, or equivalent, of the object the
    vCard represents.
 
-Value type::  The default is a single date-and-or-time value.  It can
+Value type: :: The default is a single date-and-or-time value.  It can
    also be reset to a single text value.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
   ANNIVERSARY-param = "VALUE=" ("date-and-or-time" / "text")
   ANNIVERSARY-value = date-and-or-time / text
-    ; Value and parameter [bcp14]#MUST# match.
+    ; Value and parameter MUST match.
 
   ANNIVERSARY-param =/ altid-param / calscale-param / any-param
     ; calscale-param can only be present when ANNIVERSARY-value is
     ; date-and-or-time and actually contains a date or date-time.
 ----
 
-Examples:
+Examples: ::
 +
 ....
           ANNIVERSARY:19960415
@@ -1502,24 +1512,24 @@ Examples:
 [[section6_2_7]]
 ====  GENDER
 
-Purpose::  To specify the components of the sex and gender identity of
+Purpose: :: To specify the components of the sex and gender identity of
    the object the vCard represents.
 
-Value type::  A single structured value with two components.  Each
+Value type: :: A single structured value with two components.  Each
    component has a single text value.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-Special notes::  The components correspond, in sequence, to the sex
+Special notes: :: The components correspond, in sequence, to the sex
    (biological), and gender identity.  Each component is optional.
 
-Sex component:::  A single letter.  `M` stands for "male", `F` stands
-      for "female", `O` stands for "other", `N` stands for "none or not
-      applicable", `U` stands for "unknown".
+Sex component: ::: A single letter.  M stands for "male", F stands
+      for "female", O stands for "other", N stands for "none or not
+      applicable", U stands for "unknown".
 
-Gender identity component:::  Free-form text.
+Gender identity component: ::: Free-form text.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1529,7 +1539,7 @@ ABNF::
                 sex = "" / "M" / "F" / "O" / "N" / "U"
 ----
 
-Examples:
+Examples: ::
 +
 ....
   GENDER:M
@@ -1549,19 +1559,20 @@ addressing or label for the vCard object.
 [[section6_3_1]]
 ====  ADR
 
-Purpose::  To specify the components of the delivery address for the
+Purpose: :: To specify the components of the delivery address for the
    vCard object.
 
-Value type::  A single structured text value, separated by the
-   `SEMICOLON` character (`U+003B`).
+Value type: :: A single structured text value, separated by the
+   SEMICOLON character (U+003B).
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  The structured type value consists of a sequence of
+Special notes: :: The structured type value consists of a sequence of
    address components.  The component values [bcp14]#MUST# be specified in
    their corresponding position.  The structured type value
    corresponds, in sequence, to
 +
+[empty]
 * the post office box;
 * the extended address (e.g., apartment or suite number);
 * the street address;
@@ -1571,7 +1582,6 @@ Special notes::  The structured type value consists of a sequence of
 * the country name (full name in the language specified in
       <<section5_1>>).
 
-+
 When a component value is missing, the associated component
    separator [bcp14]#MUST# still be specified.
 
@@ -1580,24 +1590,24 @@ Experience with vCard 3 has shown that the first two components
    interoperability issues.  To ensure maximal interoperability,
    their values [bcp14]#SHOULD# be empty.
 
-The text components are separated by the `SEMICOLON` character
-   (`U+003B`).  Where it makes semantic sense, individual text
+The text components are separated by the SEMICOLON character
+   (U+003B).  Where it makes semantic sense, individual text
    components can include multiple text values (e.g., a "street"
-   component with multiple lines) separated by the `COMMA` character
-   (`U+002C`).
+   component with multiple lines) separated by the COMMA character
+   (U+002C).
 
-The property can include the `"PREF"` parameter to indicate the
+The property can include the "PREF" parameter to indicate the
    preferred delivery address when more than one address is
    specified.
 
-The `GEO` and `TZ` parameters [bcp14]#MAY# be used with this property.
+The GEO and TZ parameters [bcp14]#MAY# be used with this property.
 
-The property can also include a `"LABEL"` parameter to present a
+The property can also include a "LABEL" parameter to present a
    delivery address label for the address.  Its value is a plain-text
    string representing the formatted address.  Newlines are encoded
-   as `\n`, as they are for property values.
+   as \n, as they are for property values.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1620,7 +1630,7 @@ ABNF::
   ADR-component-country  = list-component
 ----
 
-Example:: In this example, the post office box and the extended
+Example: :: In this example, the post office box and the extended
 address are absent.
 +
 ....
@@ -1638,17 +1648,17 @@ the object the vCard represents.
 [[section6_4_1]]
 ====  TEL
 
-Purpose::  To specify the telephone number for telephony communication
+Purpose: :: To specify the telephone number for telephony communication
    with the object the vCard represents.
 
-Value type::  By default, it is a single free-form text value (for
+Value type: :: By default, it is a single free-form text value (for
    backward compatibility with vCard 3), but it [bcp14]#SHOULD# be reset to a
    URI value.  It is expected that the URI scheme will be "tel", as
    specified in cite:norm[RFC3966], but other schemes [bcp14]#MAY# be used.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  This property is based on the X.520 Telephone Number
+Special notes: :: This property is based on the X.520 Telephone Number
    attribute cite:norm[CCITT.X520.1988].
 +
 The property can include the "PREF" parameter to indicate a
@@ -1658,7 +1668,6 @@ The property can include the parameter "TYPE" to specify intended
    use for the telephone number.  The predefined values for the TYPE
    parameter are:
 
-<!-- can't nest tables in definition lists -->
 [cols="2"]
 |===
 | Value     | Description                                           
@@ -1674,24 +1683,24 @@ The property can include the parameter "TYPE" to specify intended
 |===
 
 The default type is "voice".  These type parameter values can be
-   specified as a parameter list (e.g., `TYPE=text;TYPE=voice`) or as a
-   value list (e.g., `TYPE="text,voice"`).  The default can be
+   specified as a parameter list (e.g., TYPE=text;TYPE=voice) or as a
+   value list (e.g., TYPE="text,voice").  The default can be
    overridden to another set of values by specifying one or more
    alternate values.  For example, the default TYPE of "voice" can be
-   reset to a `VOICE` and `FAX` telephone number by the value list
-   `TYPE="voice,fax"`.
+   reset to a VOICE and FAX telephone number by the value list
+   TYPE="voice,fax".
 
 If this property's value is a URI that can also be used for
-   instant messaging, the `IMPP` (<<section6_4_3>>) property [bcp14]#SHOULD# be
+   instant messaging, the IMPP (<<section6_4_3>>) property [bcp14]#SHOULD# be
    used in addition to this property.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
   TEL-param = TEL-text-param / TEL-uri-param
   TEL-value = TEL-text-value / TEL-uri-value
-    ; Value and parameter [bcp14]#MUST# match.
+    ; Value and parameter MUST match.
 
   TEL-text-param = "VALUE=text"
   TEL-text-value = text
@@ -1704,11 +1713,11 @@ ABNF::
 
   type-param-tel = "text" / "voice" / "fax" / "cell" / "video"
                  / "pager" / "textphone" / iana-token / x-name
-    ; type-param-tel [bcp14]#MUST NOT# be used with a property other than TEL.
+    ; type-param-tel MUST NOT be used with a property other than TEL.
 
 ----
 
-Example::
+Example: ::
 +
 ....
   TEL;VALUE=uri;PREF=1;TYPE="voice,home":tel:+1-555-555-5555;ext=5555
@@ -1718,14 +1727,14 @@ Example::
 [[section6_4_2]]
 ====  EMAIL
 
-Purpose::  To specify the electronic mail address for communication
+Purpose: :: To specify the electronic mail address for communication
    with the object the vCard represents.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  The property can include tye `"PREF"` parameter to
+Special notes: :: The property can include tye "PREF" parameter to
    indicate a preferred-use email address when more than one is
    specified.
 +
@@ -1735,7 +1744,7 @@ Even though the value is free-form UTF-8 text, it is likely to be
    of the current work toward internationalized email addresses
    cite:info[RFC5335bis].
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1744,7 +1753,7 @@ ABNF::
   EMAIL-value = text
 ----
 
-Example::
+Example: ::
 +
 ....
         EMAIL;TYPE=work:jqpublic@xyz.example.com
@@ -1755,25 +1764,25 @@ Example::
 [[section6_4_3]]
 ====  IMPP
 
-Purpose::  To specify the URI for instant messaging and presence
+Purpose: :: To specify the URI for instant messaging and presence
    protocol communications with the object the vCard represents.
 
-Value type::  A single URI.
+Value type: :: A single URI.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  The property may include the `"PREF"` parameter to
+Special notes: :: The property may include the "PREF" parameter to
    indicate that this is a preferred address and has the same
-   semantics as the `"PREF"` parameter in a `TEL` property.
+   semantics as the "PREF" parameter in a TEL property.
 +
-   If this property's value is a URI that can be used for voice
-   and/or video, the TEL property (<<section6_4_1>>) [bcp14]#SHOULD# be used in
-   addition to this property.
+If this property's value is a URI that can be used for voice
+and/or video, the TEL property (<<section6_4_1>>) [bcp14]#SHOULD# be used in
+addition to this property.
 +
 This property is adapted from cite:info[RFC4770], which is made obsolete by
    this document.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1782,7 +1791,7 @@ ABNF::
   IMPP-value = URI
 ----
 
-Example::
+Example: ::
 +
 ....
     IMPP;PREF=1:xmpp:alice@example.com
@@ -1791,14 +1800,14 @@ Example::
 [[section6_4_4]]
 ====  LANG
 
-Purpose::  To specify the language(s) that may be used for contacting
+Purpose: :: To specify the language(s) that may be used for contacting
    the entity associated with the vCard.
 
-Value type::  A single language-tag value.
+Value type: :: A single language-tag value.
 
-Cardinality::  *
+Cardinality: :: *
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1807,7 +1816,7 @@ ABNF::
   LANG-value = Language-Tag
 ----
 
-Example::
+Example: ::
 +
 ....
     LANG;TYPE=work;PREF=1:en
@@ -1825,15 +1834,15 @@ vCard represents.
 [[section6_5_1]]
 ====  TZ
 
-Purpose::  To specify information related to the time zone of the
+Purpose: :: To specify information related to the time zone of the
    object the vCard represents.
 
-Value type::  The default is a single text value.  It can also be
+Value type: :: The default is a single text value.  It can also be
    reset to a single URI or utc-offset value.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  It is expected that names from the public-domain
+Special notes: :: It is expected that names from the public-domain
    Olson database cite:info[TZ-DB] will be used, but this is not a
    restriction.  See also cite:info[IANA-TZ].
 +
@@ -1848,19 +1857,19 @@ Note that utc-offset values [bcp14]#SHOULD NOT# be used because the UTC
    regions will "re-base" their overall offset.  The actual offset
    may be +/- 1 hour (or perhaps a little more) than the one given.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
   TZ-param = "VALUE=" ("text" / "uri" / "utc-offset")
   TZ-value = text / URI / utc-offset
-    ; Value and parameter [bcp14]#MUST# match.
+    ; Value and parameter MUST match.
 
   TZ-param =/ altid-param / pid-param / pref-param / type-param
             / mediatype-param / any-param
 ----
 
-Examples::
+Examples: ::
 +
 ....
   TZ:Raleigh/North America
@@ -1872,18 +1881,18 @@ Examples::
 [[section6_5_2]]
 ====  GEO
 
-Purpose::  To specify information related to the global positioning of
+Purpose: :: To specify information related to the global positioning of
    the object the vCard represents.
 
-Value type::  A single URI.
+Value type: :: A single URI.
 
-Cardinality":  *
+Cardinality: ::  *
 
-Special notes::  The "geo" URI scheme cite:norm[RFC5870] is particularly well
+Special notes: :: The "geo" URI scheme cite:norm[RFC5870] is particularly well
    suited for this property, but other schemes [bcp14]#MAY# be used.
 
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1892,33 +1901,33 @@ ABNF::
   GEO-value = URI
 ----
 
-Example::
+Example: ::
 +
 ....
         GEO:geo:37.386013,-122.082932
 ....
 
 [[section6_6]]
-==  Organizational Properties
+===  Organizational Properties
 
 These properties are concerned with information associated with
 characteristics of the organization or organizational units of the
 object that the vCard represents.
 
 [[section6_6_1]]
-===  TITLE
+====  TITLE
 
-Purpose::  To specify the position or job of the object the vCard
+Purpose: :: To specify the position or job of the object the vCard
    represents.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
 Cardinality:  *
 
-Special notes::  This property is based on the X.520 Title attribute
+Special notes: :: This property is based on the X.520 Title attribute
    cite:norm[CCITT.X520.1988].
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1927,7 +1936,7 @@ ABNF::
   TITLE-value = text
 ----
 
-Example::
+Example: ::
 +
 ....
         TITLE:Research Scientist
@@ -1936,20 +1945,20 @@ Example::
 [[section6_6_2]]
 ====  ROLE
 
-Purpose::  To specify the function or part played in a particular
+Purpose: :: To specify the function or part played in a particular
    situation by the object the vCard represents.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  *
+Cardinality: :: *
 
 Special notes:  This property is based on the X.520 Business Category
    explanatory attribute cite:norm[CCITT.X520.1988].  This property is
    included as an organizational type to avoid confusion with the
-   semantics of the `TITLE` property and incorrect usage of that
+   semantics of the TITLE property and incorrect usage of that
    property when the semantics of this property is intended.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1958,7 +1967,7 @@ ABNF::
   ROLE-value = text
 ----
 
-Example::
+Example: ::
 +
 ....
         ROLE:Project Leader
@@ -1967,14 +1976,14 @@ Example::
 [[section6_6_3]]
 ====  LOGO
 
-Purpose::  To specify a graphic image of a logo associated with the
+Purpose: :: To specify a graphic image of a logo associated with the
    object the vCard represents.
 
-Value type::  A single URI.
+Value type: :: A single URI.
 
-Cardinality::  *
+Cardinality: :: *
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -1983,7 +1992,7 @@ ABNF::
   LOGO-value = URI
 ----
 
-Examples::
+Examples: ::
 +
 ....
   LOGO:http://www.example.com/pub/logos/abccorp.jpg
@@ -1997,22 +2006,22 @@ Examples::
 [[section6_6_4]]
 ====  ORG
 
-Purpose::  To specify the organizational name and units associated
+Purpose: :: To specify the organizational name and units associated
    with the vCard.
 
-Value type::  A single structured text value consisting of components
-   separated by the `SEMICOLON` character (`U+003B`).
+Value type: :: A single structured text value consisting of components
+   separated by the SEMICOLON character (U+003B).
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes:  The property is based on the X.520 Organization Name
+Special notes: ::  The property is based on the X.520 Organization Name
    and Organization Unit attributes cite:norm[CCITT.X520.1988].  The property
    value is a structured type consisting of the organization name,
    followed by zero or more levels of organizational unit names.
 +
 The SORT-AS parameter [bcp14]#MAY# be applied to this property.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2022,28 +2031,28 @@ ABNF::
   ORG-value = component *(";" component)
 ----
 
-Example: A property value consisting of an organizational name,
+Example: :: A property value consisting of an organizational name,
 organizational unit #1 name, and organizational unit #2 name.
 +
 ....
         ORG:ABC\, Inc.;North American Division;Marketing
 ....
 
-[[section6_6_5]
+[[section6_6_5]]
 ====  MEMBER
 
-Purpose::  To include a member in the group this vCard represents.
+Purpose: :: To include a member in the group this vCard represents.
 
-Value type::  A single URI.  It [bcp14]#MAY# refer to something other than a
+Value type: :: A single URI.  It [bcp14]#MAY# refer to something other than a
    vCard object.  For example, an email distribution list could
    employ the "mailto" URI scheme cite:info[RFC6068] for efficiency.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  This property [bcp14]#MUST NOT# be present unless the value of
-   the `KIND` property is "group".
+Special notes: :: This property [bcp14]#MUST NOT# be present unless the value of
+   the KIND property is "group".
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2052,7 +2061,7 @@ ABNF::
   MEMBER-value = URI
 ----
 
-Examples::
+Examples: ::
 +
 ....
   BEGIN:VCARD
@@ -2087,33 +2096,33 @@ Examples::
 [[section6_6_6]]
 ====  RELATED
 
-Purpose::  To specify a relationship between another entity and the
+Purpose: :: To specify a relationship between another entity and the
    entity represented by this vCard.
 
-Value type::  A single URI.  It can also be reset to a single text
+Value type: :: A single URI.  It can also be reset to a single text
    value.  The text value can be used to specify textual information.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  The TYPE parameter [bcp14]#MAY# be used to characterize the
+Special notes: :: The TYPE parameter [bcp14]#MAY# be used to characterize the
    related entity.  It contains a comma-separated list of values that
    are registered with IANA as described in <<section10_2>>.  The
    registry is pre-populated with the values defined in cite:norm[xfn].  This
    document also specifies two additional values:
 
-agent:::  an entity who may sometimes act on behalf of the entity
+agent: ::: an entity who may sometimes act on behalf of the entity
       associated with the vCard.
 
-emergency:::  indicates an emergency contact
+emergency: ::: indicates an emergency contact
 
 +
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
   RELATED-param = RELATED-param-uri / RELATED-param-text
   RELATED-value = URI / text
-    ; Parameter and value [bcp14]#MUST# match.
+    ; Parameter and value MUST match.
 
   RELATED-param-uri = "VALUE=uri" / mediatype-param
   RELATED-param-text = "VALUE=text" / language-param
@@ -2122,7 +2131,7 @@ ABNF::
                  / any-param
 
   type-param-related = related-type-value *("," related-type-value)
-    ; type-param-related [bcp14]#MUST NOT# be used with a property other than
+    ; type-param-related MUST NOT be used with a property other than
     ; RELATED.
 
   related-type-value = "contact" / "acquaintance" / "friend" / "met"
@@ -2133,7 +2142,7 @@ ABNF::
                      / "agent" / "emergency"
 ----
 
-Examples::
+Examples: ::
 +
 ....
 RELATED;TYPE=friend:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -2152,15 +2161,15 @@ vCard.
 [[section6_7_1]]
 ====  CATEGORIES
 
-Purpose::  To specify application category information about the
+Purpose: :: To specify application category information about the
    vCard, also known as "tags".
 
-Value type::  One or more text values separated by a `COMMA` character
-   (`U+002C`).
+Value type: :: One or more text values separated by a COMMA character
+   (U+002C).
 
-Cardinality::  *
+Cardinality: :: *
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2169,7 +2178,7 @@ ABNF:
   CATEGORIES-value = text-list
 ----
 
-Example::
+Example: ::
 +
 ....
         CATEGORIES:TRAVEL AGENT
@@ -2180,17 +2189,17 @@ Example::
 [[section6_7_2]]
 ====  NOTE
 
-Purpose::  To specify supplemental information or a comment that is
+Purpose: :: To specify supplemental information or a comment that is
    associated with the vCard.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  *
+Cardinality: :: *
 
 Special notes:  The property is based on the X.520 Description
    attribute cite:norm[CCITT.X520.1988].
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2199,7 +2208,7 @@ ABNF::
   NOTE-value = text
 ----
 
-Example::
+Example: ::
 +
 ....
         NOTE:This fax number is operational 0800 to 1715
@@ -2209,19 +2218,19 @@ Example::
 [[section6_7_3]]
 ====  PRODID
 
-Purpose::  To specify the identifier for the product that created the
+Purpose: :: To specify the identifier for the product that created the
    vCard object.
 
-Type value::  A single text value.
+Type value: :: A single text value.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-Special notes::  Implementations [bcp14]#SHOULD# use a method such as that
+Special notes: :: Implementations [bcp14]#SHOULD# use a method such as that
    specified for Formal Public Identifiers in cite:info[ISO9070] or for
    Universal Resource Names in cite:info[RFC3406] to ensure that the text
    value is unique.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2229,7 +2238,7 @@ ABNF::
   PRODID-value = text
 ----
 
-Example::
+Example: ::
 +
 ....
         PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN
@@ -2238,16 +2247,16 @@ Example::
 [[section6_7_4]]
 ====  REV
 
-Purpose::  To specify revision information about the current vCard.
+Purpose: :: To specify revision information about the current vCard.
 
-Value type::  A single timestamp value.
+Value type: :: A single timestamp value.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-Special notes::  The value distinguishes the current revision of the
+Special notes: :: The value distinguishes the current revision of the
    information in this vCard for other renditions of the information.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2255,7 +2264,7 @@ ABNF::
   REV-value = timestamp
 ----
 
-Example::
+Example: ::
 +
 ....
         REV:19951031T222710Z
@@ -2264,16 +2273,16 @@ Example::
 [[section6_7_5]]
 ====  SOUND
 
-Purpose::  To specify a digital sound content information that
+Purpose: :: To specify a digital sound content information that
    annotates some aspect of the vCard.  This property is often used
    to specify the proper pronunciation of the name property value of
    the vCard.
 
-Value type::  A single URI.
+Value type: :: A single URI.
 
-Cardinality":  *
+Cardinality: ::  *
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2283,7 +2292,7 @@ ABNF:
   SOUND-value = URI
 ----
 
-Example::
+Example: ::
 +
 ....
   SOUND:CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com
@@ -2297,26 +2306,26 @@ Example::
 [[section6_7_6]]
 ====  UID
 
-Purpose::  To specify a value that represents a globally unique
+Purpose: :: To specify a value that represents a globally unique
    identifier corresponding to the entity associated with the vCard.
 
-Value type::  A single URI value.  It [bcp14]#MAY# also be reset to free-form
+Value type: :: A single URI value.  It [bcp14]#MAY# also be reset to free-form
    text.
 
-Cardinality::  *1
+Cardinality: :: *1
 
-Special notes::  This property is used to uniquely identify the object
+Special notes: :: This property is used to uniquely identify the object
    that the vCard represents.  The "uuid" URN namespace defined in
    cite:norm[RFC4122] is particularly well suited to this task, but other URI
    schemes [bcp14]#MAY# be used.  Free-form text [bcp14]#MAY# also be used.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
   UID-param = UID-uri-param / UID-text-param
   UID-value = UID-uri-value / UID-text-value
-    ; Value and parameter [bcp14]#MUST# match.
+    ; Value and parameter MUST match.
 
   UID-uri-param = "VALUE=uri"
   UID-uri-value = URI
@@ -2327,7 +2336,7 @@ ABNF::
   UID-param =/ any-param
 ----
 
-Example::
+Example: ::
 +
 ....
         UID:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -2336,30 +2345,30 @@ Example::
 [[section6_7_7]]
 ====  CLIENTPIDMAP
 
-Purpose::  To give a global meaning to a local `PID` source identifier.
+Purpose: :: To give a global meaning to a local PID source identifier.
 
-Value type::  A semicolon-separated pair of values.  The first field
-   is a small integer corresponding to the second field of a `PID`
+Value type: :: A semicolon-separated pair of values.  The first field
+   is a small integer corresponding to the second field of a PID
    parameter instance.  The second field is a URI.  The "uuid" URN
    namespace defined in cite:norm[RFC4122] is particularly well suited to this
    task, but other URI schemes [bcp14]#MAY# be used.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  `PID` source identifiers (the source identifier is the
-   second field in a `PID` parameter instance) are small integers that
+Special notes: :: PID source identifiers (the source identifier is the
+   second field in a PID parameter instance) are small integers that
    only have significance within the scope of a single vCard
    instance.  Each distinct source identifier present in a vCard [bcp14]#MUST#
-   have an associated `CLIENTPIDMAP`.  See <<section7>> for more details
-   on the usage of `CLIENTPIDMAP`.
+   have an associated CLIENTPIDMAP.  See <<section7>> for more details
+   on the usage of CLIENTPIDMAP.
 +
-`PID` source identifiers [bcp14]#MUST# be strictly positive.  Zero is not
+PID source identifiers [bcp14]#MUST# be strictly positive.  Zero is not
    allowed.
 +
-As a special exception, the `PID` parameter [bcp14]#MUST NOT# be applied to
+As a special exception, the PID parameter [bcp14]#MUST NOT# be applied to
    this property.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2367,7 +2376,7 @@ ABNF::
   CLIENTPIDMAP-value = 1*DIGIT ";" URI
 ----
 
-Example::
+Example: ::
 +
 ....
   TEL;PID=3.1,4.2;VALUE=uri:tel:+1-555-555-5555
@@ -2376,18 +2385,19 @@ Example::
   CLIENTPIDMAP:2;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5
 ....
 
-6.7.8.  URL
+[[section6_7_8]]
+====  URL
 
-Purpose::  To specify a uniform resource locator associated with the
+Purpose: :: To specify a uniform resource locator associated with the
    object to which the vCard refers.  Examples for individuals
    include personal web sites, blogs, and social networking site
    identifiers.
 
-Cardinality::  *
+Cardinality: :: *
 
-Value type::  A single uri value.
+Value type: :: A single uri value.
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2396,7 +2406,7 @@ ABNF:
   URL-value = URI
 ----
 
-Example::
+Example: ::
 +
 ....
         URL:http://example.org/restaurant.french/~chezchic.html
@@ -2405,20 +2415,20 @@ Example::
 [[section6_7_9]]
 ====  VERSION
 
-Purpose::  To specify the version of the vCard specification used to
+Purpose: :: To specify the version of the vCard specification used to
    format this vCard.
 
-Value type::  A single text value.
+Value type: :: A single text value.
 
-Cardinality::  1
+Cardinality: :: 1
 
-Special notes:  This property [bcp14]#MUST# be present in the vCard object,
+Special notes: ::  This property [bcp14]#MUST# be present in the vCard object,
    and it must appear immediately after BEGIN:VCARD.  The value [bcp14]#MUST#
-   be `"4.0"` if the vCard corresponds to this specification.  Note
+   be "4.0" if the vCard corresponds to this specification.  Note
    that earlier versions of vCard allowed this property to be placed
    anywhere in the vCard object, or even to be absent.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2426,7 +2436,7 @@ ABNF::
   VERSION-value = "4.0"
 ----
 
-Example::
+Example: ::
 +
 ....
         VERSION:4.0
@@ -2441,20 +2451,20 @@ pathways or access to the vCard.
 [[section6_8_1]]
 ====  KEY
 
-Purpose::  To specify a public key or authentication certificate
+Purpose: :: To specify a public key or authentication certificate
    associated with the object that the vCard represents.
 
-Value type::  A single URI.  It can also be reset to a text value.
+Value type: :: A single URI.  It can also be reset to a text value.
 
-Cardinality::  *
+Cardinality: :: *
 
-ABNF:
+ABNF: ::
 +
 [source,abnf]
 ----
   KEY-param = KEY-uri-param / KEY-text-param
   KEY-value = KEY-uri-value / KEY-text-value
-    ; Value and parameter [bcp14]#MUST# match.
+    ; Value and parameter MUST match.
 
   KEY-uri-param = "VALUE=uri" / mediatype-param
   KEY-uri-value = URI
@@ -2466,7 +2476,7 @@ ABNF:
              / any-param
 ----
 
-Examples::
+Examples: ::
 +
 ....
   KEY:http://www.example.com/keys/jdoe.cer
@@ -2479,29 +2489,29 @@ Examples::
 ....
 
 [[section6_9]]
-====  Calendar Properties
+===  Calendar Properties
 
 These properties are further specified in cite:norm[RFC2739].
 
 [[secton6_9_1]]
 ====  FBURL
 
-Purpose::  To specify the URI for the busy time associated with the
+Purpose: :: To specify the URI for the busy time associated with the
    object that the vCard represents.
 
-Value type::  A single URI value.
+Value type: :: A single URI value.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  Where multiple `FBURL` properties are specified, the
-   default `FBURL` property is indicated with the `PREF` parameter.  The
-   `FTP` cite:info[RFC1738] or `HTTP` cite:info[RFC2616] type of URI points to an iCalendar
+Special notes: :: Where multiple FBURL properties are specified, the
+   default FBURL property is indicated with the PREF parameter.  The
+   FTP cite:info[RFC1738] or HTTP cite:info[RFC2616] type of URI points to an iCalendar
    cite:norm[RFC5545] object associated with a snapshot of the next few weeks
    or months of busy time data.  If the iCalendar object is
    represented as a file or document, its file extension should be
-   `".ifb"`.
+   ".ifb".
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2510,7 +2520,7 @@ ABNF::
   FBURL-value = URI
 ----
 
-Examples::
+Examples: ::
 +
 ....
   FBURL;PREF=1:http://www.example.com/busy/janedoe
@@ -2520,19 +2530,19 @@ Examples::
 [[section6_9_2]]
 ====  CALADRURI
 
-Purpose::  To specify the calendar user address cite:norm[RFC5545] to which a
+Purpose: :: To specify the calendar user address cite:norm[RFC5545] to which a
    scheduling request cite:norm[RFC5546] should be sent for the object
    represented by the vCard.
 
-Value type::  A single URI value.
+Value type: :: A single URI value.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes:  Where multiple `CALADRURI` properties are specified,
-   the default `CALADRURI` property is indicated with the `PREF`
+Special notes: ::  Where multiple CALADRURI properties are specified,
+   the default CALADRURI property is indicated with the PREF
    parameter.
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2541,7 +2551,7 @@ ABNF::
   CALADRURI-value = URI
 ----
 
-Example::
+Example: ::
 +
 ....
   CALADRURI;PREF=1:mailto:janedoe@example.com
@@ -2551,21 +2561,21 @@ Example::
 [[section6_9_3]]
 ====  CALURI
 
-Purpose::  To specify the URI for a calendar associated with the
+Purpose: :: To specify the URI for a calendar associated with the
    object represented by the vCard.
 
-Value type::  A single URI value.
+Value type: :: A single URI value.
 
-Cardinality::  *
+Cardinality: :: *
 
-Special notes::  Where multiple `CALURI` properties are specified, the
-   default `CALURI` property is indicated with the `PREF` parameter.  The
-   property should contain a URI pointing to an iCalendar cite:norm[RFC3986]
+Special notes: :: Where multiple CALURI properties are specified, the
+   default CALURI property is indicated with the PREF parameter.  The
+   property should contain a URI pointing to an iCalendar cite:norm[RFC5545]
    object associated with a snapshot of the user's calendar store.
    If the iCalendar object is represented as a file or document, its
-   file extension should be `".ics"`.
+   file extension should be ".ics".
 
-ABNF::
+ABNF: ::
 +
 [source,abnf]
 ----
@@ -2574,7 +2584,7 @@ ABNF::
   CALURI-value = URI
 ----
 
-Examples::
+Examples: ::
 +
 ....
   CALURI;PREF=1:http://cal.example.com/calA
@@ -2586,7 +2596,7 @@ Examples::
 
 The properties and parameters defined by this document can be
 extended.  Non-standard, private properties and parameters with a
-name starting with `"X-"` may be defined bilaterally between two
+name starting with "X-" may be defined bilaterally between two
 cooperating agents without outside registration or standardization.
 
 [[section7]]
@@ -2600,8 +2610,8 @@ aid this process.
 [[section7_1]]
 ===  Mechanisms
 
-Two mechanisms are available: the `UID` property is used to match
-multiple instances of the same vCard, while the `PID` parameter is used
+Two mechanisms are available: the UID property is used to match
+multiple instances of the same vCard, while the PID parameter is used
 to match multiple instances of the same property.
 
 The term "matching" is used here to mean recognizing that two
@@ -2626,19 +2636,19 @@ of the synchronization engine.
 
 Property instances belonging to unmatched vCards [bcp14]#MUST NOT# be matched.
 
-Property instances whose name (e.g., `EMAIL`, `TEL`, etc.) is not the
+Property instances whose name (e.g., EMAIL, TEL, etc.) is not the
 same [bcp14]#MUST NOT# be matched.
 
-Property instances whose name is `CLIENTPIDMAP` are handled separately
+Property instances whose name is CLIENTPIDMAP are handled separately
 and [bcp14]#MUST NOT# be matched.  The synchronization [bcp14]#MUST# ensure that there
-is consistency of `CLIENTPIDMAP`s among matched vCard instances.
+is consistency of CLIENTPIDMAPs among matched vCard instances.
 
 Property instances belonging to matched vCards, whose name is the
 same, and whose maximum cardinality is 1, [bcp14]#MUST# be matched.
 
 Property instances belonging to matched vCards, whose name is the
-same, and whose `PID` parameters match, [bcp14]#MUST# be matched.  See
-<<section7_1_3>> for details on `PID` matching.
+same, and whose PID parameters match, [bcp14]#MUST# be matched.  See
+<<section7_1_3>> for details on PID matching.
 
 In all other cases, property instances [bcp14]#MAY# be matched at the
 discretion of the synchronization engine.
@@ -2646,22 +2656,22 @@ discretion of the synchronization engine.
 [[section7_1_3]]
 ====  PID Matching
 
-Two `PID` values for which the first fields are equivalent represent
+Two PID values for which the first fields are equivalent represent
 the same local value.
 
-Two `PID` values representing the same local value and for which the
-second fields point to `CLIENTPIDMAP` properties whose second field
+Two PID values representing the same local value and for which the
+second fields point to CLIENTPIDMAP properties whose second field
 URIs are equivalent (as specified in cite:norm[RFC3986, suffix=", Section 6"]) also
 represent the same global value.
 
-`PID` parameters for which at least one pair of their values represent
+PID parameters for which at least one pair of their values represent
 the same global value [bcp14]#MUST# be matched.
 
-In all other cases, `PID` parameters [bcp14]#MAY# be matched at the discretion
+In all other cases, PID parameters [bcp14]#MAY# be matched at the discretion
 of the synchronization engine.
 
-For example, `PID` value `"5.1"`, in the first vCard below, and `PID` value
-`"5.2"`, in the second vCard below, represent the same global value.
+For example, PID value "5.1", in the first vCard below, and PID value
+"5.2", in the second vCard below, represent the same global value.
 
 
 ....
@@ -2702,19 +2712,19 @@ The following simple vCard is first created on a given device.
 ....
 
 This new vCard is assigned the UID
-`"urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1"` by the creating
-device.  The `FN` and `EMAIL` properties are assigned the same local
-value of `1`, and this value is given global context by associating it
-with `"urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"`, which
+"urn:uuid:4fbe8971-0bc3-424c-9c26-36c3e1eff6b1" by the creating
+device.  The FN and EMAIL properties are assigned the same local
+value of 1, and this value is given global context by associating it
+with "urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556", which
 represents the creating device.  We are at liberty to reuse the same
 local value since instances of different properties will never be
-matched.  The `N` property has no `PID` because it is forbidden by its
+matched.  The N property has no PID because it is forbidden by its
 maximum cardinality of 1.
 
 [[section7_2_2]]
 ====  Initial Sharing
 
-This vCard is shared with a second device.  Upon inspecting the `UID`
+This vCard is shared with a second device.  Upon inspecting the UID
 property, the second device understands that this is a new vCard
 (i.e., unmatched) and thus the synchronization results in a simple
 copy.
@@ -2738,28 +2748,28 @@ receives:
   END:VCARD
 ....
 
-Upon inspecting the `UID` property, the second device matches the vCard
+Upon inspecting the UID property, the second device matches the vCard
 it received to the vCard that it already has stored.  It then starts
 comparing the properties of the two vCards in same-named pairs.
 
-The FN properties are matched because the `PID` parameters have the
+The FN properties are matched because the PID parameters have the
 same global value.  Since the property value is the same, no update
 takes place.
 
-The `N` properties are matched automatically because their maximum
+The N properties are matched automatically because their maximum
 cardinality is 1.  Since the property value is the same, no update
 takes place.
 
-The `EMAIL` properties are matched because the `PID` parameters have the
+The EMAIL properties are matched because the PID parameters have the
 same global value.  Since the property value is the same, no update
 takes place.
 
-The `TEL` property in the new vCard is not matched to any in the stored
+The TEL property in the new vCard is not matched to any in the stored
 vCard because no property in the stored vCard has the same name.
 Therefore, this property is copied from the new vCard to the stored
 vCard.
 
-The `CLIENTPIDMAP` property is handled separately by the
+The CLIENTPIDMAP property is handled separately by the
 synchronization engine.  It ensures that it is consistent with the
 stored one.  If it was not, the results would be up to the
 synchronization engine, and thus undefined by this document.
@@ -2800,19 +2810,19 @@ happens.  Here are the vCards that are communicated to each other:
   END:VCARD
 ....
 
-On the first device, the same `PID` source identifier (1) is reused for
-the new `EMAIL` and `TEL` properties.  On the second device, a new source
-identifier (2) is generated, and a corresponding `CLIENTPIDMAP`
+On the first device, the same PID source identifier (1) is reused for
+the new EMAIL and TEL properties.  On the second device, a new source
+identifier (2) is generated, and a corresponding CLIENTPIDMAP
 property is created.  It contains the second device's identifier,
-`"urn:uuid:1f762d2b-03c4-4a83-9a03-75ff658a6eee"`.
+"urn:uuid:1f762d2b-03c4-4a83-9a03-75ff658a6eee".
 
-The new `EMAIL` properties are unmatched on both sides since the `PID`
+The new EMAIL properties are unmatched on both sides since the PID
 global value is new in both cases.  The sync thus results in a copy
 on both sides.
 
-Although the situation appears to be the same for the `TEL` properties,
+Although the situation appears to be the same for the TEL properties,
 in this case, the synchronization engine is particularly smart and
-matches the two new `TEL` properties even though their `PID` global
+matches the two new TEL properties even though their PID global
 values are different.  Note that in this case, the rules of
 <<section7_1_2>> state that two properties [bcp14]#MAY# be matched at the
 discretion of the synchronization engine.  Therefore, the two
@@ -2915,13 +2925,13 @@ investigating would be, in the author's opinion, worthwhile.
    cite:info[RFC5751], OpenPGP cite:info[RFC4880]).  In cases where the confidentiality
    or authenticity of information contained in vCard is a concern,
    the vCard [bcp14]#SHOULD# be transported using one of these secure
-   mechanisms.  The `KEY` property (<<section6_8_1>>) can be used to
+   mechanisms.  The KEY property (<<section6_8_1>>) can be used to
    transport the public key used by these mechanisms.
 
 *  The information in a vCard may become out of date.  In cases where
    the vitality of data is important to an originator of a vCard, the
-   `SOURCE` property (<<section6_1_3>>) [bcp14]#SHOULD# be specified.  In addition,
-   the `"REV"` type described in <<section6_7_4>> can be specified to
+   SOURCE property (<<section6_1_3>>) [bcp14]#SHOULD# be specified.  In addition,
+   the "REV" type described in <<section6_7_4>> can be specified to
    indicate the last time that the vCard data was updated.
 
 *  Many vCard properties may be used to transport URIs.  Please refer
@@ -2934,38 +2944,38 @@ investigating would be, in the author's opinion, worthwhile.
 ===  Media Type Registration
 
 IANA has registered the following Media Type (in
-<http://www.iana.org/[]>) and marked the text/directory Media Type as
+http://www.iana.org) and marked the text/directory Media Type as
 DEPRECATED.
 
-To::  ietf-types@iana.org
+To: :: \ietf-types@iana.org
 
-Subject::  Registration of media type text/vcard
+Subject: :: Registration of media type text/vcard
 
-Type name::  text
+Type name: :: text
 
-Subtype name::  vcard
+Subtype name: :: vcard
 
-Required parameters::  none
+Required parameters: :: none
 
-Optional parameters::  version
+Optional parameters: :: version
 +
 The "version" parameter is to be interpreted identically as the
-   `VERSION` vCard property.  If this parameter is present, all vCards
-   in a text/vcard body part [bcp14]#MUST# have a `VERSION` property with value
+   VERSION vCard property.  If this parameter is present, all vCards
+   in a text/vcard body part [bcp14]#MUST# have a VERSION property with value
    identical to that of this MIME parameter.
 +
 "charset": as defined for text/plain cite:norm[RFC2046]; encodings other
    than UTF-8 cite:norm[RFC3629] [bcp14]#MUST NOT# be used.
 
-Encoding considerations::  8bit
+Encoding considerations: :: 8bit
 
-Security considerations::  See <<section9>>.
+Security considerations: :: See <<section9>>.
 
-Interoperability considerations::  The text/vcard media type is
+Interoperability considerations: :: The text/vcard media type is
    intended to identify vCard data of any version.  There are older
    specifications of vCard cite:info[RFC2426] cite:info[vCard21] still in common use.
    While these formats are similar, they are not strictly compatible.
-   In general, it is necessary to inspect the value of the `VERSION`
+   In general, it is necessary to inspect the value of the VERSION
    property (see <<section6_7_9>>) for identifying the standard to which
    a given vCard object conforms.
 +
@@ -2977,31 +2987,31 @@ In addition, the following media types are known to have been used
 *  text/directory; profile=vcard
 *  text/x-vcard
 
-Published specification::  RFC 6350
+Published specification: :: RFC 6350
 
-Applications that use this media type::  They are numerous, diverse,
+Applications that use this media type: :: They are numerous, diverse,
    and include mail user agents, instant messaging clients, address
    book applications, directory servers, and customer relationship
    management software.
 
-Additional information:: 
+Additional information: :: 
 
-Magic number(s)::: 
+Magic number(s): ::: 
 
-File extension(s):::  .vcf .vcard
+File extension(s): ::: .vcf .vcard
 
-Macintosh file type code(s):::
+Macintosh file type code(s): :::
 
-Person & email address to contact for further information::  vCard
-   discussion mailing list <vcarddav@ietf.org>
+Person & email address to contact for further information: :: vCard
+   discussion mailing list <\vcarddav@ietf.org>
 
-Intended usage::  COMMON
+Intended usage: :: COMMON
 
-Restrictions on usage::  none
+Restrictions on usage: :: none
 
-Author::  Simon Perreault
+Author: :: Simon Perreault
 
-Change controller::  IETF
+Change controller: :: IETF
 
 [[section10_2]]
 ===  Registering New vCard Elements
@@ -3013,11 +3023,11 @@ values) with IANA.
 [[section10_2_1]]
 ====  Registration Procedure
 
-The IETF has created a mailing list, vcarddav@ietf.org, which can be
+The IETF has created a mailing list, \vcarddav@ietf.org, which can be
 used for public discussion of vCard element proposals prior to
 registration.  Use of the mailing list is strongly encouraged.  The
 IESG has appointed a designated expert who will monitor the
-vcarddav@ietf.org mailing list and review registrations.
+\vcarddav@ietf.org mailing list and review registrations.
 
 Registration of new vCard elements [bcp14]#MUST# be reviewed by the designated
 expert and published in an RFC.  A Standards Track RFC is [bcp14]#REQUIRED#
@@ -3027,8 +3037,8 @@ of vCard elements that modify vCard elements previously documented in
 a Standards Track RFC.
 
 The registration procedure begins when a completed registration
-template, defined in the sections below, is sent to vcarddav@ietf.org
-and iana@iana.org.  Within two weeks, the designated expert is
+template, defined in the sections below, is sent to \vcarddav@ietf.org
+and \iana@iana.org.  Within two weeks, the designated expert is
 expected to tell IANA and the submitter of the registration whether
 the registration is approved, approved with minor changes, or
 rejected with cause.  When a registration is rejected with cause, it
@@ -3065,13 +3075,13 @@ registered.  Changes to the specification will be made at their
 request, as discussed in subsequent sections.
 
 vCard elements belonging to the vendor namespace will be
-distinguished by the `"VND-"` prefix.  This is followed by an IANA-
+distinguished by the "VND-" prefix.  This is followed by an IANA-
 registered Private Enterprise Number (PEN), a dash, and a vCard
-element designation of the vendor's choosing (e.g., `"VND-123456-
-MUDPIE"`).
+element designation of the vendor's choosing (e.g., "VND-123456-
+MUDPIE").
 
 While public exposure and review of vCard elements to be registered
-in the vendor namespace are not required, using the vcarddav@ietf.org
+in the vendor namespace are not required, using the \vcarddav@ietf.org
 mailing list for review is strongly encouraged to improve the quality
 of those specifications.  Registrations in the vendor namespace may
 be submitted directly to the IANA.
@@ -3081,30 +3091,30 @@ be submitted directly to the IANA.
 
 A property is defined by completing the following template.
 
-Namespace::  Empty for the global namespace, `"VND-NNNN-"` for a vendor-
-   specific property (where `NNNN` is replaced by the vendor's PEN).
+Namespace: :: Empty for the global namespace, "VND-NNNN-" for a vendor-
+   specific property (where NNNN is replaced by the vendor's PEN).
 
-Property name::  The name of the property.
+Property name: :: The name of the property.
 
-Purpose::  The purpose of the property.  Give a short but clear
+Purpose: :: The purpose of the property.  Give a short but clear
    description.
 
-Value type::  Any of the valid value types for the property value
+Value type: :: Any of the valid value types for the property value
    needs to be specified.  The default value type also needs to be
    specified.
 
-Cardinality::  See <<section6>>.
+Cardinality: :: See <<section6>>.
 
-Property parameters::  Any of the valid property parameters for the
+Property parameters: :: Any of the valid property parameters for the
    property [bcp14]#MUST# be specified.
 
-Description::  Any special notes about the property, how it is to be
+Description: :: Any special notes about the property, how it is to be
    used, etc.
 
-Format definition::  The ABNF for the property definition needs to be
+Format definition: :: The ABNF for the property definition needs to be
    specified.
 
-Example(s)::  One or more examples of instances of the property need
+Example(s): :: One or more examples of instances of the property need
    to be specified.
 
 [[section10_2_4]]
@@ -3112,21 +3122,21 @@ Example(s)::  One or more examples of instances of the property need
 
 A parameter is defined by completing the following template.
 
-Namespace::  Empty for the global namespace, `"VND-NNNN-"` for a vendor-
-   specific property (where `NNNN` is replaced by the vendor's PEN).
+Namespace: :: Empty for the global namespace, "VND-NNNN-" for a vendor-
+   specific property (where NNNN is replaced by the vendor's PEN).
 
-Parameter name::  The name of the parameter.
+Parameter name: :: The name of the parameter.
 
-Purpose::  The purpose of the parameter.  Give a short but clear
+Purpose: :: The purpose of the parameter.  Give a short but clear
    description.
 
-Description::  Any special notes about the parameter, how it is to be
+Description: :: Any special notes about the parameter, how it is to be
    used, etc.
 
-Format definition::  The ABNF for the parameter definition needs to be
+Format definition: :: The ABNF for the parameter definition needs to be
    specified.
 
-Example(s)::  One or more examples of instances of the parameter need
+Example(s): :: One or more examples of instances of the parameter need
    to be specified.
 
 [[section10_2_5]]
@@ -3134,18 +3144,18 @@ Example(s)::  One or more examples of instances of the parameter need
 
 A value data type is defined by completing the following template.
 
-Value name::  The name of the value type.
+Value name: :: The name of the value type.
 
-Purpose::  The purpose of the value type.  Give a short but clear
+Purpose: :: The purpose of the value type.  Give a short but clear
    description.
 
-Description::  Any special notes about the value type, how it is to be
+Description: :: Any special notes about the value type, how it is to be
    used, etc.
 
-Format definition::  The ABNF for the value type definition needs to
+Format definition: :: The ABNF for the value type definition needs to
    be specified.
 
-Example(s)::  One or more examples of instances of the value type need
+Example(s): :: One or more examples of instances of the value type need
    to be specified.
 
 [[section10_2_6]]
@@ -3153,31 +3163,31 @@ Example(s)::  One or more examples of instances of the value type need
 
 A value is defined by completing the following template.
 
-Value::  The value literal.
+Value: :: The value literal.
 
-Purpose::  The purpose of the value.  Give a short but clear
+Purpose: :: The purpose of the value.  Give a short but clear
    description.
 
-Conformance::  The vCard properties and/or parameters that can take
+Conformance: :: The vCard properties and/or parameters that can take
    this value needs to be specified.
 
-Example(s)::  One or more examples of instances of the value need to
+Example(s): :: One or more examples of instances of the value need to
    be specified.
 
 The following is a fictitious example of a registration of a vCard
 value:
 
-Value::  supervisor
+Value: :: supervisor
 
-Purpose::  It means that the related entity is the direct hierarchical
+Purpose: :: It means that the related entity is the direct hierarchical
    superior (i.e., supervisor or manager) of the entity this vCard
    represents.
 
-Conformance::  This value can be used with the `"TYPE"` parameter
-   applied on the `"RELATED"` property.
+Conformance: :: This value can be used with the "TYPE" parameter
+   applied on the "RELATED" property.
 
 
-Example(s):"
+Example(s): ::
 +
 ....
 RELATED;TYPE=supervisor:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -3269,18 +3279,18 @@ registry.
 |===
 | Value Data Type  | Reference               
 
-| BOOLEAN          | RFC 6350, Section 4.4   |
-| DATE             | RFC 6350, Section 4.3.1 |
-| DATE-AND-OR-TIME | RFC 6350, Section 4.3.4 |
-| DATE-TIME        | RFC 6350, Section 4.3.3 |
-| FLOAT            | RFC 6350, Section 4.6   |
-| INTEGER          | RFC 6350, Section 4.5   |
-| LANGUAGE-TAG     | RFC 6350, Section 4.8   |
-| TEXT             | RFC 6350, Section 4.1   |
-| TIME             | RFC 6350, Section 4.3.2 |
-| TIMESTAMP        | RFC 6350, Section 4.3.5 |
-| URI              | RFC 6350, Section 4.2   |
-| UTC-OFFSET       | RFC 6350, Section 4.7   |
+| BOOLEAN          | RFC 6350, Section 4.4   
+| DATE             | RFC 6350, Section 4.3.1 
+| DATE-AND-OR-TIME | RFC 6350, Section 4.3.4 
+| DATE-TIME        | RFC 6350, Section 4.3.3 
+| FLOAT            | RFC 6350, Section 4.6   
+| INTEGER          | RFC 6350, Section 4.5   
+| LANGUAGE-TAG     | RFC 6350, Section 4.8   
+| TEXT             | RFC 6350, Section 4.1   
+| TIME             | RFC 6350, Section 4.3.2 
+| TIMESTAMP        | RFC 6350, Section 4.3.5 
+| URI              | RFC 6350, Section 4.2   
+| UTC-OFFSET       | RFC 6350, Section 4.7   
 |===
 
 [[section10_3_4]]
@@ -3292,14 +3302,14 @@ The following table is to be used to initialize the property values
 registry.
 
 |===
-| Property | Value      | Reference               |
+| Property | Value      | Reference               
 
-| BEGIN    | VCARD      | RFC 6350, Section 6.1.1 |
-| END      | VCARD      | RFC 6350, Section 6.1.2 |
-| KIND     | individual | RFC 6350, Section 6.1.4 |
-| KIND     | group      | RFC 6350, Section 6.1.4 |
-| KIND     | org        | RFC 6350, Section 6.1.4 |
-| KIND     | location   | RFC 6350, Section 6.1.4 |
+| BEGIN    | VCARD      | RFC 6350, Section 6.1.1 
+| END      | VCARD      | RFC 6350, Section 6.1.2 
+| KIND     | individual | RFC 6350, Section 6.1.4 
+| KIND     | group      | RFC 6350, Section 6.1.4 
+| KIND     | org        | RFC 6350, Section 6.1.4 
+| KIND     | location   | RFC 6350, Section 6.1.4 
 |===
 
 The following table has been used to initialize the parameter values
@@ -3434,7 +3444,7 @@ bibliography::info[]
 ++++
 
 [[appendixA]]
-== Appendix A.  Differences from RFCs 2425 and 2426
+== Differences from RFCs 2425 and 2426
 
 This appendix contains a high-level overview of the major changes
 that have been made in the vCard specification from RFCs 2425 and
@@ -3456,37 +3466,37 @@ that have been made in the vCard specification from RFCs 2425 and
 [[appendixA_2]]
 ===  Removed Features
 
-*  The `CONTEXT` and `CHARSET` parameters are no more.
+*  The CONTEXT and CHARSET parameters are no more.
 
-*  The `NAME`, `MAILER`, `LABEL`, and `CLASS` properties are no more.
+*  The NAME, MAILER, LABEL, and CLASS properties are no more.
 
-*  The "intl", "dom", "postal", and "parcel" `TYPE` parameter values
-   for the `ADR` property have been removed.
+*  The "intl", "dom", "postal", and "parcel" TYPE parameter values
+   for the ADR property have been removed.
 
-*  In-line vCards (such as the value of the `AGENT` property) are no
+*  In-line vCards (such as the value of the AGENT property) are no
    longer supported.
 
 [[appendixA_3]]
 ===  New Properties and Parameters
 
-*  The `KIND`, `GENDER`, `LANG`, `ANNIVERSARY`, `XML`, and `CLIENTPIDMAP`
+*  The KIND, GENDER, LANG, ANNIVERSARY, XML, and CLIENTPIDMAP
    properties have been added.
 
-*  cite:norm[RFC2739], which defines the `FBURL`, `CALADRURI`, `CAPURI`, and `CALURI`
+*  cite:norm[RFC2739], which defines the FBURL, CALADRURI, CAPURI, and CALURI
    properties, has been merged in.
 
-*  cite:info[RFC4770], which defines the `IMPP` property, has been merged in.
+*  cite:info[RFC4770], which defines the IMPP property, has been merged in.
 
-*  The "work" and "home" `TYPE` parameter values are now applicable to
+*  The "work" and "home" TYPE parameter values are now applicable to
    many more properties.
 
-*  The "pref" value of the `TYPE` parameter is now a parameter of its
+*  The "pref" value of the TYPE parameter is now a parameter of its
    own, with a positive integer value indicating the level of
    preference.
 
-*  The `ALTID` and `PID` parameters have been added.
+*  The ALTID and PID parameters have been added.
 
-*  The `MEDIATYPE` parameter has been added and replaces the `TYPE`
+*  The MEDIATYPE parameter has been added and replaces the TYPE
    parameter when it was used for indicating the media type of the
    property's content.
 

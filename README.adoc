@@ -1212,7 +1212,8 @@ as would be done for the informative and normative references normally. The refe
 references to be used
 in the file; the bibliography gem will select which references have actually been cited in the document. 
 .. Rather than hand crafting RFC XML references for RFC documents, you should download them from an authoritative
-source; e.g. http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml
+source; e.g. http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml . (The complete list of authoritative
+RFC XML bibliographies is available from https://xml2rfc.tools.ietf.org , online and in zipped form.)
 .. Unlike the case for RFC XML documents created manually, the references file does not recognise XML entities 
 and will not attempt to download them during processing. 
 Any references to http://xml.resource.org/public/rfc/bibxml/ will need to be downloaded and inserted into the references file.

@@ -62,7 +62,7 @@ Data elements and interchange formats - Information interchange - Representation
 
 
 
-<reference anchor="RFC2045" target="https://www.rfc-editor.org/info/rfc2045">
+<reference anchor="RFC2045">
 <front>
 <title>
 Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies
@@ -81,11 +81,10 @@ This initial document specifies the various headers used to describe the structu
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2045"/>
-<seriesInfo name="DOI" value="10.17487/RFC2045"/>
 </reference>
 
 
-<reference anchor="RFC2046" target="https://www.rfc-editor.org/info/rfc2046">
+<reference anchor="RFC2046">
 <front>
 <title>
 Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types
@@ -104,10 +103,9 @@ This second document defines the general structure of the MIME media typing syst
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2046"/>
-<seriesInfo name="DOI" value="10.17487/RFC2046"/>
 </reference>
 
-<reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+<reference anchor="RFC2119">
 <front>
 <title>
 Key words for use in RFCs to Indicate Requirement Levels
@@ -124,10 +122,9 @@ In many standards track documents several words are used to signify the requirem
 </front>
 <seriesInfo name="BCP" value="14"/>
 <seriesInfo name="RFC" value="2119"/>
-<seriesInfo name="DOI" value="10.17487/RFC2119"/>
 </reference>
 
-<reference anchor="RFC2739" target="https://www.rfc-editor.org/info/rfc2739">
+<reference anchor="RFC2739">
 <front>
 <title>Calendar Attributes for vCard and LDAP</title>
 <author initials="T." surname="Small" fullname="T. Small">
@@ -147,10 +144,9 @@ This memo defines three mechanisms for obtaining a URI to a user's calendar and 
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2739"/>
-<seriesInfo name="DOI" value="10.17487/RFC2739"/>
 </reference>  
 
-<reference anchor="RFC3629" target="https://www.rfc-editor.org/info/rfc3629">
+<reference anchor="RFC3629">
 <front>
 <title>UTF-8, a transformation format of ISO 10646</title>
 <author initials="F." surname="Yergeau" fullname="F. Yergeau">
@@ -165,10 +161,9 @@ ISO/IEC 10646-1 defines a large character set called the Universal Character Set
 </front>
 <seriesInfo name="STD" value="63"/>
 <seriesInfo name="RFC" value="3629"/>
-<seriesInfo name="DOI" value="10.17487/RFC3629"/>
 </reference>
 
-<reference anchor="RFC3966" target="https://www.rfc-editor.org/info/rfc3966">
+<reference anchor="RFC3966">
 <front>
 <title>The tel URI for Telephone Numbers</title>
 <author initials="H." surname="Schulzrinne" fullname="H. Schulzrinne">
@@ -182,10 +177,9 @@ This document specifies the URI (Uniform Resource Identifier) scheme "tel". The 
 </abstract>
 </front>
 <seriesInfo name="RFC" value="3966"/>
-<seriesInfo name="DOI" value="10.17487/RFC3966"/>
 </reference>
 
-<reference anchor="RFC3986" target="https://www.rfc-editor.org/info/rfc3986">
+<reference anchor="RFC3986">
 <front>
 <title>Uniform Resource Identifier (URI): Generic Syntax</title>
 <author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
@@ -206,10 +200,9 @@ A Uniform Resource Identifier (URI) is a compact sequence of characters that ide
 </front>
 <seriesInfo name="STD" value="66"/>
 <seriesInfo name="RFC" value="3986"/>
-<seriesInfo name="DOI" value="10.17487/RFC3986"/>
 </reference>
 
-<reference anchor="RFC4122" target="https://www.rfc-editor.org/info/rfc4122">
+<reference anchor="RFC4122">
 <front>
 <title>
 A Universally Unique IDentifier (UUID) URN Namespace
@@ -234,10 +227,9 @@ This specification is derived from the DCE specification with the kind permissio
 </abstract>
 </front>
 <seriesInfo name="RFC" value="4122"/>
-<seriesInfo name="DOI" value="10.17487/RFC4122"/>
 </reference>
 
-<reference anchor="RFC4288" target="https://www.rfc-editor.org/info/rfc4288">
+<reference anchor="RFC4288">
 <front>
 <title>
 Media Type Specifications and Registration Procedures
@@ -256,10 +248,9 @@ This document defines procedures for the specification and registration of media
 </abstract>
 </front>
 <seriesInfo name="RFC" value="4288"/>
-<seriesInfo name="DOI" value="10.17487/RFC4288"/>
 </reference>
 
-<reference anchor="RFC5234" target="https://www.rfc-editor.org/info/rfc5234">
+<reference anchor="RFC5234">
 <front>
 <title>Augmented BNF for Syntax Specifications: ABNF</title>
 <author initials="D." surname="Crocker" fullname="D. Crocker" role="editor">
@@ -277,10 +268,9 @@ Internet technical specifications often need to define a formal syntax. Over the
 </front>
 <seriesInfo name="STD" value="68"/>
 <seriesInfo name="RFC" value="5234"/>
-<seriesInfo name="DOI" value="10.17487/RFC5234"/>
 </reference>
 
-<reference anchor="RFC5322" target="https://www.rfc-editor.org/info/rfc5322">
+<reference anchor="RFC5322">
 <front>
 <title>Internet Message Format</title>
 <author initials="P." surname="Resnick" fullname="P. Resnick" role="editor">
@@ -294,10 +284,9 @@ This document specifies the Internet Message Format (IMF), a syntax for text mes
 </abstract>
 </front>
 <seriesInfo name="RFC" value="5322"/>
-<seriesInfo name="DOI" value="10.17487/RFC5322"/>
 </reference>
 
-<reference anchor="RFC5545" target="https://www.rfc-editor.org/info/rfc5545">
+<reference anchor="RFC5545">
 <front>
 <title>
 Internet Calendaring and Scheduling Core Object Specification (iCalendar)
@@ -313,10 +302,9 @@ This document defines the iCalendar data format for representing and exchanging 
 </abstract>
 </front>
 <seriesInfo name="RFC" value="5545"/>
-<seriesInfo name="DOI" value="10.17487/RFC5545"/>
 </reference>
 
-<reference anchor="RFC5546" target="https://www.rfc-editor.org/info/rfc5546">
+<reference anchor="RFC5546">
 <front>
 <title>
 iCalendar Transport-Independent Interoperability Protocol (iTIP)
@@ -335,10 +323,9 @@ The iCalendar Transport-Independent Interoperability Protocol (iTIP) complements
 </abstract>
 </front>
 <seriesInfo name="RFC" value="5546"/>
-<seriesInfo name="DOI" value="10.17487/RFC5546"/>
 </reference>
 
-<reference anchor="RFC5646" target="https://www.rfc-editor.org/info/rfc5646">
+<reference anchor="RFC5646">
 <front>
 <title>Tags for Identifying Languages</title>
 <author initials="A." surname="Phillips" fullname="A. Phillips" role="editor">
@@ -356,10 +343,9 @@ This document describes the structure, content, construction, and semantics of l
 </front>
 <seriesInfo name="BCP" value="47"/>
 <seriesInfo name="RFC" value="5646"/>
-<seriesInfo name="DOI" value="10.17487/RFC5646"/>
 </reference>
 
-<reference anchor="RFC5870" target="https://www.rfc-editor.org/info/rfc5870">
+<reference anchor="RFC5870">
 <front>
 <title>
 A Uniform Resource Identifier for Geographic Locations ('geo' URI)
@@ -378,10 +364,9 @@ This document specifies a Uniform Resource Identifier (URI) for geographic locat
 </abstract>
 </front>
 <seriesInfo name="RFC" value="5870"/>
-<seriesInfo name="DOI" value="10.17487/RFC5870"/>
 </reference> 
   
-<reference anchor="RFC6351" target="https://www.rfc-editor.org/info/rfc6351">
+<reference anchor="RFC6351">
 <front>
 <title>xCard: vCard XML Representation</title>
 <author initials="S." surname="Perreault" fullname="S. Perreault">
@@ -395,7 +380,6 @@ This document defines the XML schema of the vCard data format. [STANDARDS-TRACK]
 </abstract>
 </front>
 <seriesInfo name="RFC" value="6351"/>
-<seriesInfo name="DOI" value="10.17487/RFC6351"/>
 </reference>
 
 <reference anchor="W3C.REC-xml-20081126" target="http://www.w3.org/TR/2008/REC-xml-20081126">
@@ -447,7 +431,7 @@ This document defines the XML schema of the vCard data format. [STANDARDS-TRACK]
 
 
 
-<reference anchor="RFC1738" target="https://www.rfc-editor.org/info/rfc1738">
+<reference anchor="RFC1738">
 <front>
 <title>Uniform Resource Locators (URL)</title>
 <author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
@@ -467,10 +451,9 @@ This document specifies a Uniform Resource Locator (URL), the syntax and semanti
 </abstract>
 </front>
 <seriesInfo name="RFC" value="1738"/>
-<seriesInfo name="DOI" value="10.17487/RFC1738"/>
 </reference>  
 
-<reference anchor="RFC2397" target="https://www.rfc-editor.org/info/rfc2397">
+<reference anchor="RFC2397">
 <front>
 <title>The "data" URL scheme</title>
 <author initials="L." surname="Masinter" fullname="L. Masinter">
@@ -484,10 +467,9 @@ A new URL scheme, "data", is defined. It allows inclusion of small data items as
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2397"/>
-<seriesInfo name="DOI" value="10.17487/RFC2397"/>
 </reference>
 
-<reference anchor="RFC2397" target="https://www.rfc-editor.org/info/rfc2397">
+<reference anchor="RFC2397">
 <front>
 <title>The "data" URL scheme</title>
 <author initials="L." surname="Masinter" fullname="L. Masinter">
@@ -501,10 +483,9 @@ A new URL scheme, "data", is defined. It allows inclusion of small data items as
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2397"/>
-<seriesInfo name="DOI" value="10.17487/RFC2397"/>
 </reference>  
   
-<reference anchor="RFC2425" target="https://www.rfc-editor.org/info/rfc2425">
+<reference anchor="RFC2425">
 <front>
 <title>A MIME Content-Type for Directory Information</title>
 <author initials="T." surname="Howes" fullname="T. Howes">
@@ -524,10 +505,9 @@ This document defines a MIME Content-Type for holding directory information. [ST
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2425"/>
-<seriesInfo name="DOI" value="10.17487/RFC2425"/>
 </reference>
 
-<reference anchor="RFC2426" target="https://www.rfc-editor.org/info/rfc2426">
+<reference anchor="RFC2426">
 <front>
 <title>vCard MIME Directory Profile</title>
 <author initials="F." surname="Dawson" fullname="F. Dawson">
@@ -544,10 +524,9 @@ This memo defines the profile of the MIME Content-Type for directory information
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2426"/>
-<seriesInfo name="DOI" value="10.17487/RFC2426"/>
 </reference>
 
-<reference anchor="RFC2616" target="https://www.rfc-editor.org/info/rfc2616">
+<reference anchor="RFC2616">
 <front>
 <title>Hypertext Transfer Protocol -- HTTP/1.1</title>
 <author initials="R." surname="Fielding" fullname="R. Fielding">
@@ -579,10 +558,9 @@ HTTP has been in use by the World-Wide Web global information initiative since 1
 </abstract>
 </front>
 <seriesInfo name="RFC" value="2616"/>
-<seriesInfo name="DOI" value="10.17487/RFC2616"/>
 </reference>
 
-<reference anchor="RFC3282" target="https://www.rfc-editor.org/info/rfc3282">
+<reference anchor="RFC3282">
 <front>
 <title>Content Language Headers</title>
 <author initials="H." surname="Alvestrand" fullname="H. Alvestrand">
@@ -596,10 +574,9 @@ This document defines a "Content-language:" header, for use in cases where one d
 </abstract>
 </front>
 <seriesInfo name="RFC" value="3282"/>
-<seriesInfo name="DOI" value="10.17487/RFC3282"/>
 </reference>
 
-<reference anchor="RFC3406" target="https://www.rfc-editor.org/info/rfc3406">
+<reference anchor="RFC3406">
 <front>
 <title>
 Uniform Resource Names (URN) Namespace Definition Mechanisms
@@ -624,11 +601,10 @@ This document lays out general definitions of and mechanisms for establishing Un
 </abstract>
 </front>
 <seriesInfo name="RFC" value="3406"/>
-<seriesInfo name="DOI" value="10.17487/RFC3406"/>
 </reference>
 
 
-<reference anchor="RFC3536" target="https://www.rfc-editor.org/info/rfc3536">
+<reference anchor="RFC3536">
 <front>
 <title>
 Terminology Used in Internationalization in the IETF
@@ -644,10 +620,9 @@ This document provides a glossary of terms used in the IETF when discussing inte
 </abstract>
 </front>
 <seriesInfo name="RFC" value="3536"/>
-<seriesInfo name="DOI" value="10.17487/RFC3536"/>
 </reference>
 
-<reference anchor="RFC4770" target="https://www.rfc-editor.org/info/rfc4770">
+<reference anchor="RFC4770">
 <front>
 <title>vCard Extensions for Instant Messaging (IM)</title>
 <author initials="C." surname="Jennings" fullname="C. Jennings">
@@ -664,10 +639,9 @@ This document describes an extension to vCard to support Instant Messaging (IM) 
 </abstract>
 </front>
 <seriesInfo name="RFC" value="4770"/>
-<seriesInfo name="DOI" value="10.17487/RFC4770"/>
 </reference>
 
-<reference anchor="RFC4880" target="https://www.rfc-editor.org/info/rfc4880">
+<reference anchor="RFC4880">
 <front>
 <title>OpenPGP Message Format</title>
 <author initials="J." surname="Callas" fullname="J. Callas">
@@ -696,10 +670,9 @@ OpenPGP software uses a combination of strong public-key and symmetric cryptogra
 </abstract>
 </front>
 <seriesInfo name="RFC" value="4880"/>
-<seriesInfo name="DOI" value="10.17487/RFC4880"/>
 </reference>
 
-<reference anchor="RFC5335bis" target="https://www.rfc-editor.org/info/rfc5335">
+<reference anchor="RFC5335bis">
 <front>
 <title>Internationalized Email Headers</title>
 <author initials="A." surname="Yang" fullname="A. Yang" role="editor">
@@ -713,10 +686,9 @@ Full internationalization of electronic mail requires not only the capabilities 
 </abstract>
 </front>
 <seriesInfo name="RFC" value="5335"/>
-<seriesInfo name="DOI" value="10.17487/RFC5335"/>
 </reference>
 
-<reference anchor="RFC5751" target="https://www.rfc-editor.org/info/rfc5751">
+<reference anchor="RFC5751">
 <front>
 <title>
 Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.2 Message Specification
@@ -735,10 +707,9 @@ This document defines Secure/Multipurpose Internet Mail Extensions (S/MIME) vers
 </abstract>
 </front>
 <seriesInfo name="RFC" value="5751"/>
-<seriesInfo name="DOI" value="10.17487/RFC5751"/>
 </reference>
 
-<reference anchor="RFC6068" target="https://www.rfc-editor.org/info/rfc6068">
+<reference anchor="RFC6068">
 <front>
 <title>The 'mailto' URI Scheme</title>
 <author initials="M." surname="Duerst" fullname="M. Duerst">
@@ -758,7 +729,6 @@ This document defines the format of Uniform Resource Identifiers (URIs) to ident
 </abstract>
 </front>
 <seriesInfo name="RFC" value="6068"/>
-<seriesInfo name="DOI" value="10.17487/RFC6068"/>
 </reference>
 
 <reference anchor="TZ-DB" target="ftp://elsie.nci.nih.gov/pub/">
@@ -787,7 +757,6 @@ This document defines the format of Uniform Resource Identifiers (URIs) to ident
 <!-- date not in original -->
 <date year="2003" month="October"/>
 </front>
-<seriesInfo name="DOI" value="10.17487/RFC6068"/>
 </reference>
 
 <reference anchor="vCard21">
