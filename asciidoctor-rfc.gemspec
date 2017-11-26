@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = 'asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc.'
+  spec.summary       = "asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc."
   spec.description   = <<~DESCRIPTION
 asciidoctor-rfc lets you write Internet-Drafts and RFCs in a native
 "asciidoctor" syntax.

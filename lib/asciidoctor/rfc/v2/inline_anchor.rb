@@ -41,7 +41,7 @@ module Asciidoctor
           end
           unless matched[:text].empty?
             xref_contents = if xref_contents.empty?
-                              "#{matched[:text]}"
+                              matched[:text].to_s
                             else
                               "#{xref_contents}: #{matched[:text]}"
                             end

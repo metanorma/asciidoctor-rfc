@@ -114,7 +114,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </t>
     OUTPUT
   end
- 
+
   it "renders a nested list containing a comment" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
       [[id]]

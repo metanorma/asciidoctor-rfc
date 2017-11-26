@@ -99,7 +99,7 @@ module Asciidoctor
           xml.vspace
         end.join
       end
-      
+
       def inline_quoted(node)
         noko do |xml|
           case node.type
@@ -284,11 +284,11 @@ module Asciidoctor
         end
         # any instances of spanx must be stripped of any internal tags
         spanxs = xmldoc.xpath("//spanx[descendant::*]")
-        while spanxs.length > 0
+        while !spanxs.empty?
           spanx = spanxs[0]
           spanx_text = ""
-          spanx.traverse do |node| 
-            spanx_text = spanx_text + node.text.gsub(/<[^>]+>/,"") if node.text? 
+          spanx.traverse do |node|
+            spanx_text = spanx_text + node.text.gsub(/<[^>]+>/, "") if node.text?
           end
           spanx.children = spanx_text
           spanxs = xmldoc.xpath("//spanx[descendant::*]")
@@ -323,19 +323,16 @@ module Asciidoctor
         end
 
         counter = 0
-        while counter < nodes.size do
+        while counter < nodes.size
           if nodes[counter].name == "vspace"
             blankLines = 0
-            while counter < nodes.size && nodes[counter].name == "vspace" do
+            while counter < nodes.size && nodes[counter].name == "vspace"
+              blankLines += 1
               if nodes[counter][:blankLines].nil?
-                blankLines += 1
-              else
-                blankLines += nodes[counter][:blankLines].to_i + 1
+                blankLines += nodes[counter][:blankLines].to_i 
               end
-              if counter + 1 < nodes.size && nodes[counter + 1].text?
-                if nodes[counter + 1].text =~ /\A[\n ]+\Z/m
-                  counter += 1
-                end
+              if counter + 1 < nodes.size && nodes[counter + 1].text? && nodes[counter + 1].text =~ /\A[\n ]+\Z/m
+                counter += 1
               end
               counter += 1
             end
@@ -345,7 +342,6 @@ module Asciidoctor
             end.join
           else
             newnodes << merge_vspace(nodes[counter])
-            #nodes[counter].remove
             counter += 1
           end
         end

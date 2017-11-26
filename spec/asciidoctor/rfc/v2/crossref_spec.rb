@@ -48,7 +48,7 @@ describe Asciidoctor::RFC::V2::Converter do
 
       == Section 4
       See <<crossreference,format=counter: text>>
-     
+
       == Section 5
       See <<crossreference,format=title>>
     INPUT

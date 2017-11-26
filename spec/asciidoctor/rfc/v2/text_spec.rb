@@ -14,11 +14,11 @@ end
 
 def norm(text)
   text.gsub(%r{<spanx style="strong">(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|NOT RECOMMENDED|RECOMMENDED|MAY|OPTIONAL)</spanx>}, "\\1").
-    gsub(%r{<t hangText="([^"]+:) ">}, %Q{<t hangText="\\1">})
+    gsub(%r{<t hangText="([^"]+:) ">}, %q{<t hangText="\\1">})
 end
 
 def remove_pages(text)
-  text.gsub(%r{\n+\S+     [^\n]+\[Page \d+\]\n.?\nRFC[^\n]+\n},"\n").gsub(%r{\n\n\n+}, "\n\n")
+  text.gsub(%r{\n+\S+     [^\n]+\[Page \d+\]\n.?\nRFC[^\n]+\n}, "\n").gsub(%r{\n\n\n+}, "\n\n")
 end
 
 def text_compare2(old_xml, new_xml)
@@ -29,7 +29,6 @@ def text_compare2(old_xml, new_xml)
   File.write("#{old_xml}.txt", remove_pages(File.read("#{old_xml}.txt.1", encoding: "utf-8")))
   File.write("#{new_xml}.txt", remove_pages(File.read("#{new_xml}.txt.1", encoding: "utf-8")))
 end
-
 
 describe Asciidoctor::RFC::V2::Converter do
   it "processes RFC 6350 RFC XML v2 example with bibliography preprocessing, with equivalent text" do

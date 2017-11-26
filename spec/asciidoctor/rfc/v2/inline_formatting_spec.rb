@@ -186,7 +186,7 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
-    it "removes markup within spanx" do
+  it "removes markup within spanx" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       :abbrev: abbrev_value

@@ -177,7 +177,7 @@ describe Asciidoctor::RFC::V3::Converter do
          <seriesInfo name="" status="illegal" value="draft-xxx"/>
          <author fullname="Author"/>
          <date day="1" month="January" year="2000"/>
-    
+
        </front><middle>
        <section anchor="_section_1" numbered="false">
          <name>Section 1</name>

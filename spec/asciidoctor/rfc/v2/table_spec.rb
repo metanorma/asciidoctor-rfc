@@ -429,5 +429,4 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
-
 end

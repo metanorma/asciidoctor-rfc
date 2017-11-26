@@ -69,7 +69,7 @@ describe Asciidoctor::RFC::V3::Converter do
       = Document title
       Author
       :docName:
-     
+
       Abstract
 
       [NOTE]

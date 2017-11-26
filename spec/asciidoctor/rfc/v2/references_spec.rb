@@ -37,7 +37,7 @@ describe Asciidoctor::RFC::V2::Converter do
 
       [bibliography]
       == References
-     
+
       === Normative References
       ++++
       <reference anchor='ISO.IEC.10118-3' target='https://www.iso.org/standard/67116.html'>

@@ -147,7 +147,7 @@ describe Asciidoctor::RFC::V3::Converter do
       +
       --
       Note 2.
-     
+
       Note 3.
       --
     INPUT
@@ -189,7 +189,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Author
 
       == Section 1
-      Notes:: 
+      Notes::
     INPUT
       <section anchor="_section_1" numbered="false">
          <name>Section 1</name>

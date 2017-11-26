@@ -48,7 +48,7 @@ describe Asciidoctor::RFC::V2::Converter do
          <title>Document title</title>
          <author fullname="Author"/>
          <date day="1" month="January" year="2000"/>
-    
+
       </front><middle>
       <section anchor="_section_1" title="Section 1">
          <t>
