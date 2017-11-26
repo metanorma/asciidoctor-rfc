@@ -865,6 +865,8 @@ NOTE: The delimiters must occur within the one line; the following is invalid in
 PROBABLY*
 --
 
+Any formatting XML spans within `spanx` elements are stripped in postprocessing.
+
 === Paragraphs
 
 [source,asciidoc]

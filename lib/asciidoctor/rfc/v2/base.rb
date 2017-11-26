@@ -1,3 +1,4 @@
+require "pp"
 # coding: utf-8
 module Asciidoctor
   module RFC::V2
@@ -98,7 +99,7 @@ module Asciidoctor
           xml.vspace
         end.join
       end
-
+      
       def inline_quoted(node)
         noko do |xml|
           case node.type
@@ -191,7 +192,6 @@ module Asciidoctor
             elsif block.context == :pass
               # NOTE: references are assumed to be found in a single passthrough
               #   block containing <reference> tags.
-              # TODO: deprecate reflist.
 
               result << noko do |xml|
                 # xml.references **attr_code(references_attributes) do |xml_references|
@@ -282,6 +282,17 @@ module Asciidoctor
             end
           end
         end
+        # any instances of spanx must be stripped of any internal tags
+        spanxs = xmldoc.xpath("//spanx[descendant::*]")
+        while spanxs.length > 0
+          spanx = spanxs[0]
+          spanx_text = ""
+          spanx.traverse do |node| 
+            spanx_text = spanx_text + node.text.gsub(/<[^>]+>/,"") if node.text? 
+          end
+          spanx.children = spanx_text
+          spanxs = xmldoc.xpath("//spanx[descendant::*]")
+        end
 
         xmldoc.root = merge_vspace(xmldoc.root)
 
@@ -334,14 +345,13 @@ module Asciidoctor
             end.join
           else
             newnodes << merge_vspace(nodes[counter])
-            nodes[counter].remove
+            #nodes[counter].remove
             counter += 1
           end
-
-          node.children.remove
-          newnodes.each do |item|
-            node.add_child(item)
-          end
+        end
+        node.children.remove
+        newnodes.each do |item|
+          node.add_child(item)
         end
         node
       end

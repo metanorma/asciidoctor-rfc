@@ -186,4 +186,32 @@ describe Asciidoctor::RFC::V2::Converter do
       </section>
     OUTPUT
   end
+    it "removes markup within spanx" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+
+      == Section 1
+      `This is http://www.example.com _a_ *citation*`
+    INPUT
+    <?xml version="1.0" encoding="US-ASCII"?>
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+      <rfc
+               submissionType="IETF">
+      <front>
+         <title abbrev="abbrev_value">Document title</title>
+         <author fullname="Author"/>
+      <date day="1" month="January" year="2000"/>
+      </front><middle>
+
+      <section anchor="_section_1" title="Section 1">
+       <t><spanx style="verb">This is  a citation</spanx></t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
 end
