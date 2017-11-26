@@ -50,15 +50,30 @@ $ gem install asciidoctor-rfc
 ----
 
 
-== Quick Start
+== Quick Start / Template
+
+Clone the
+https://github.com/riboseinc/rfc-in-asciidoc-template[`rfc-in-asciidoc-template`]
+repository as a template, and populate it for your Asciidoc RFCs and
+Internet-Drafts:
+
+[source,console]
+----
+$ git clone https://github.com/riboseinc/rfc-in-asciidoc-template
+----
+
+See the https://github.com/riboseinc/rfc-in-asciidoc-template[README] of that document for
+more information.
+
+== Quick Example
 
 Illustrating with v2 RFC XML, and Internet Draft rather than RFC
 
 [source,asciidoc]
 ----
-=  A Standard for the Transmission of IP Datagrams on Avian Carriers
+= A Standard for the Transmission of IP Datagrams on Avian Carriers
 David Waitzman <dwaitzman@BBN.COM>
-:doctype: internet-draft 
+:doctype: internet-draft
 :abbrev: IP Datagrams on Avian Carriers
 :obsoletes: 10, 120
 :updates: 2010, 2120
@@ -87,7 +102,7 @@ IEEE802.3.  The carriers have an intrinsic collision avoidance
 system, which increases availability.  Unlike some network
 technologies, such as packet radio, communication is not limited to
 line-of-sight distance.  Connection oriented service is available in
-some cities, usually based upon a central hub topology. 
+some cities, usually based upon a central hub topology.
 
 NOTE: Yes, this is an April Fool's RFC.
 
@@ -141,29 +156,15 @@ typical MTU is 256 milligrams.  Some datagram padding may be needed.<<RFC7253>>
 ++++
 ----
 
+
 == Usage
 
 Converting your AsciiDoc to RFC XML is a simple as running the appropriate
 `./bin/asciidoctor-rfc` script using Ruby, and passing your
 AsciiDoc document file as the first argument.
 
-[source,console]
-----
-$ ruby ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
-$ ruby ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
-----
-
-or alternate
-
-
-[source,console]
-----
-$ ruby ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
-## WIP: bundle exec asciidoctor -b asciidoctor-rfc3 draft-example-00.adoc # RFC XML v3 output
-## WIP: bundle exec asciidoctor -b asciidoctor-rfc2 draft-example-00.adoc # RFC XML v2 output
-----
-
-You can also use the asciidoctor executable, specifying this gem as a library:
+Usually you would use the `asciidoctor` executable, specifying this gem as a
+library:
 
 [source,console]
 ----
@@ -171,19 +172,17 @@ $ asciidoctor -b rfc3 -r 'asciidoctor-rfc' a.adoc  # RFC XML v3 output
 $ asciidoctor -b rfc2 -r 'asciidoctor-rfc' a.adoc  # RFC XML v2 output
 ----
 
-When the script completes, you should see the RFC XML file `draft-example-00.xml` in the
-same directory.
-
-You can clone the `rfc-in-asciidoc-template` github repository as a template, 
-and populate it for your Asciidoc RFCs and Internet drafts:
+or through the included bin-stub:
 
 [source,console]
 ----
-$ git clone https://github.com/riboseinc/rfc-in-asciidoc-template.git
+$ ruby ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
+$ ruby ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
 ----
 
-See the https://github.com/riboseinc/rfc-in-asciidoc-template[Readme] of that document for
-more information.
+When the script completes, you should see the RFC XML file `draft-example-00.xml` in the
+same directory.
+
 
 == Syntax
 
@@ -203,7 +202,7 @@ not permit anchors for the `note` or `abstract` elements, while RFC XML v2
 uses anchors for much fewer block elements (e.g. `artwork`, `list`.)
 * Asciidoctor has a more restrctive block model: it regards elements such as
 admonitions, lists, and tables as blocks, and does not allow them to be nested
-within paragraphs. 
+within paragraphs.
 
 As a result, it may be necessary to postedit the RFC XML output, if the block
 model produced does not reflect the intended structure accurately.
@@ -211,8 +210,8 @@ model produced does not reflect the intended structure accurately.
 
 NOTE: The gem validates all RFC XML generated through the RELAXNG schema definitions
 of RFC XML. While the gem attempts to generate valid RFC XML, some Asciidoctor
-text may not align with the RFC XML document model, and any highlighted syntax 
-errors will also need to be rectified in postediting, before processing the 
+text may not align with the RFC XML document model, and any highlighted syntax
+errors will also need to be rectified in postediting, before processing the
 generated XML further.
 
 
@@ -233,7 +232,7 @@ Set the `doctype` attribute to set status of this document:
 * `rfc@number` will be set to the `:name:` attribute (in v2)
 
 
-=== Gem Options
+=== Global Options
 
 [cols="2", options="header"]
 |===
@@ -247,7 +246,7 @@ Override default assumption that boldface uppercase BCP14 word is to be rendered
 
 |`:smart-quotes:`
 |Optional. Default value `true`. Allowed values: `true`, `false`.
-Permit smart quotes, when they are specified explicitly in Asciidoc (as `"`...`"`, `'`...`'`.) 
+Permit smart quotes, when they are specified explicitly in Asciidoc (as `"`...`"`, `'`...`'`.)
 When disabled, smart quotes are rendered as straight quotes, and Asciidoc's default conversion
 of straight apostrophes to smart is undone.
 
@@ -344,11 +343,11 @@ metadata.
 === Processing Instructions
 The `xml2rfc` tool accepts processing instructions of the form `<?rfc keyword='value'?>`:
 see https://xml2rfc.tools.ietf.org/authoring/README.html#processing.instructions .
-(Of these, `sort-refs`, `sym-refs` and `toc-include`  are also present in the 
+(Of these, `sort-refs`, `sym-refs` and `toc-include`  are also present in the
 v3 RFC XML specifcation, as attributes of the
 root `rfc` element: <<v3documentattributes,v3-specific document attributes>>.)
-Those processing instructions which apply to the entire document can also be 
-specified for this gem as document options. 
+Those processing instructions which apply to the entire document can also be
+specified for this gem as document options.
 
 |===
 |keyword |meaning
@@ -418,8 +417,8 @@ When `doctype` is set to:
 
 Set the `status` attribute to set the current status of this document.
 
-The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, 
-`full-standard` (v3 only), `historic` (v2 only).  
+The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`,
+`full-standard` (v3 only), `historic` (v2 only).
 
 * In v3, this sets the first `front/seriesInfo` element with `@status` as one
   of: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
@@ -431,7 +430,7 @@ The following values are allowed: `standard`, `informational`, `experimental`, `
 Set the `intended-series` attribute to set the intended series of this
 document.
 
-The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`. 
+The following values are allowed: `standard`, `informational`, `experimental`, `bcp`, `fyi`, `full-standard`.
 
 When `doctype` is set to:
 
@@ -557,7 +556,7 @@ You will need to provide the following information.
 
 ==== Multiple Author Names
 
-Just like a normal AsciiDoc, you can provide author information in the author 
+Just like a normal AsciiDoc, you can provide author information in the author
 header (sample of 3 authors):
 
 [source,asciidoc]
@@ -983,7 +982,7 @@ sqrt(4) = 2
 --
 
 Mathematical examples are treated identically to literals, and are rendered as `artwork` in both v2 and v3;
-however their default alignment is set as `center`. As with inline stem expressions, they are treated identically 
+however their default alignment is set as `center`. As with inline stem expressions, they are treated identically
 to monospace expressions; they are not currently rendered as MathML or any other notation.
 
 === Unordered and Ordered Lists
@@ -1051,7 +1050,7 @@ paragraphs within v2 list items are replaced with `vspace` tages.
 === Tables
 
 The converter respects the AsciiDoc (horizontal) align attributes of cells (v2,
-v3), column widths (v2), and `colspan`, `rowspan` attributes (v3). 
+v3), column widths (v2), and `colspan`, `rowspan` attributes (v3).
 
 (Exceptionally,
 column widths specified for v2 as `"1,1,1,1,1,1...."` will be ignored, since Asciidoctor
@@ -1209,15 +1208,15 @@ references from the references file, and insert them in order into the normative
 
 Integration with the asciidoc-bibliography gem proceeds as follows:
 
-. Create an RFC XML references file, consisting of a `<references>` element with individual `<reference>` elements inserted, 
-as would be done for the informative and normative references normally. The references file will contain all possible 
+. Create an RFC XML references file, consisting of a `<references>` element with individual `<reference>` elements inserted,
+as would be done for the informative and normative references normally. The references file will contain all possible
 references to be used
-in the file; the bibliography gem will select which references have actually been cited in the document. 
+in the file; the bibliography gem will select which references have actually been cited in the document.
 .. Rather than hand crafting RFC XML references for RFC documents, you should download them from an authoritative
 source; e.g. http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml . (The complete list of authoritative
 RFC XML bibliographies is available from https://xml2rfc.tools.ietf.org , online and in zipped form.)
-.. Unlike the case for RFC XML documents created manually, the references file does not recognise XML entities 
-and will not attempt to download them during processing. 
+.. Unlike the case for RFC XML documents created manually, the references file does not recognise XML entities
+and will not attempt to download them during processing.
 Any references to http://xml.resource.org/public/rfc/bibxml/ will need to be downloaded and inserted into the references file.
 .. The RFC XML in the references file will need to be appropriate to the version of RFC XML used in the main document, as
 usual. Note that RFC XML v2 references are forward compatible with v3; v3 contains a couple of additional elements.
@@ -1240,7 +1239,7 @@ the anchor of the reference.
 . References to an informative reference are inserted with the macro `cite:info[id]` instead of `<<id>>`, where `id` is
 the anchor of the reference.
 .. Text may be prefixed or suffixed to the crossreference with the `prefix` and `suffix` attributes.
-.. Arbitrary text associated with a crossreference is inserted with a `text` attribute (with the citation itself in curly brackets), and fragment references are inserted with a `locator` attribute. 
+.. Arbitrary text associated with a crossreference is inserted with a `text` attribute (with the citation itself in curly brackets), and fragment references are inserted with a `locator` attribute.
 .. Formatted crossreferences and `relref` crossreferences are entered by inserting the expected raw XML in the `text` attribute. Do not use the `{cite}` interpolation of the citation. Using `cite:norm`, the following equivalence obtain between normal Asciidoc treatment of crossreferences and asciidoc-bibliography macros:
 *** `<<id,words>>` = `cite:norm[id, text="<xref target='id'>words</xref>"]`
 *** `<<id,format=counter: words>>` (processed as a formatted crossreference) = `cite:norm[id, text="<xref format='counter' target='id'>words</xref>"]`
