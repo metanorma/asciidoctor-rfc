@@ -81,34 +81,11 @@ module Asciidoctor
                    result.map { |e| e =~ /<\/front><middle1>/ ? "</front><middle>" : e }
                  end
         ret = result * "\n"
-        ret = set_pis(node, Nokogiri::XML(ret)).to_xml
-        ret = cleanup ret
-        Validate::validate(ret)
-        ret
-      end
-
-      def set_pis(node, doc)
-        # Below are generally applicable Processing Instructions (PIs)
-        # that most I-Ds might want to use. (Here they are set differently than
-        # their defaults in xml2rfc v1.32)
-        if node.attr("rfc2629xslt") == "true"
-
-          pi = Nokogiri::XML::ProcessingInstruction.new(doc, "xml-stylesheet",
-                                                        'type="text/xsl" href="rfc2629.xslt"')
-          doc.root.add_previous_sibling(pi)
-        end
-
-        rfc_pis = common_rfc_pis(node)
-
-        doc.create_internal_subset("rfc", nil, "rfc2629.dtd")
-        rfc_pis.each_pair do |k, v|
-          pi = Nokogiri::XML::ProcessingInstruction.new(doc,
-                                                        "rfc",
-                                                        "#{k}=\"#{v}\"")
-          doc.root.add_previous_sibling(pi)
-        end
-
-        doc
+        ret = cleanup(ret)
+        ret1 = Nokogiri::XML(ret)
+        Validate::validate(ret1)
+        ret1 = set_pis(node, ret1)
+        ret1
       end
 
       # Syntax:
