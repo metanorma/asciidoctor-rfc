@@ -58,6 +58,7 @@ module Asciidoctor
           'xml:lang':     node.attr("xml-lang"),
           prepTime:       preptime,
           version:        "3",
+          'xmlns:xi':        "http://www.w3.org/2001/XInclude",
         }
 
         rfc_open = noko { |xml| xml.rfc **attr_code(rfc_attributes) }.join.gsub(/\/>$/, ">")
@@ -85,8 +86,18 @@ module Asciidoctor
         ret1 = Nokogiri::XML(ret)
         Validate::validate(ret1)
         ret1 = set_pis(node, ret1)
+        ret1 = resolve_references(ret1)
         ret1
       end
+
+      def resolve_references(doc)
+        extract_entities(doc).each do |entity|
+          # TODO actual XML
+          entity[:node].replace("<xi:include href='#{entity[:url]}' parse='text'/>")
+        end
+        doc
+      end
+
 
       # Syntax:
       #   = Title

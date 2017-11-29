@@ -249,12 +249,6 @@ module Asciidoctor
         end
 
         doc.create_internal_subset("rfc", nil, "rfc2629.dtd")
-        extract_entities(doc).each do |entity|
-          Nokogiri::XML::EntityDecl::new(entity[:entity], doc, 
-                                         Nokogiri::XML::EntityDecl::EXTERNAL_GENERAL_PARSED, 
-                                         nil, entity[:url], nil)
-          entity[:node].replace(Nokogiri::XML::EntityReference.new(doc, entity[:entity]))
-        end
 
         rfc_pis = common_rfc_pis(node)
         rfc_pis.each_pair do |k, v|
