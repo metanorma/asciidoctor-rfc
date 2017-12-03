@@ -91,12 +91,12 @@ module Asciidoctor
         ret1 = Nokogiri::XML(ret)
         Validate::validate(ret1)
         ret1 = set_pis(node, ret1)
-        ret1 = resolve_references(ret1)
+        ret1 = resolve_references(node, ret1)
         ret1
       end
 
-      def resolve_references(doc)
-        extract_entities(doc).each do |entity|
+      def resolve_references(node, doc)
+        extract_entities(node, doc).each do |entity|
           Nokogiri::XML::EntityDecl::new(entity[:entity], doc,
                                          Nokogiri::XML::EntityDecl::EXTERNAL_GENERAL_PARSED,
                                          nil, entity[:url], nil)

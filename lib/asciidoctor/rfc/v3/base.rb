@@ -86,12 +86,12 @@ module Asciidoctor
         ret1 = Nokogiri::XML(ret)
         Validate::validate(ret1)
         ret1 = set_pis(node, ret1)
-        ret1 = resolve_references(ret1)
+        ret1 = resolve_references(node, ret1)
         ret1
       end
 
-      def resolve_references(doc)
-        extract_entities(doc).each do |entity|
+      def resolve_references(node, doc)
+        extract_entities(node, doc).each do |entity|
           # TODO actual XML
           entity[:node].replace("<xi:include href='#{entity[:url]}' parse='text'/>")
         end
@@ -106,7 +106,7 @@ module Asciidoctor
       def link(node)
         result = []
         result << noko do |xml|
-          links = (node.attr("link") || "").split(/,/)
+          links = (node.attr("link") || "").split(/,\s*/)
           links.each do |link|
             matched = /^(?<href>\S+)\s+(?<rel>\S+)$/.match link
             link_attributes = {

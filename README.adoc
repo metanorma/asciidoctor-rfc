@@ -176,8 +176,8 @@ or through the included bin-stub:
 
 [source,console]
 ----
-$ ruby ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
-$ ruby ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
+$ ./bin/asciidoctor-rfc3 draft-example-00.adoc  # RFC XML v3 output
+$ ./bin/asciidoctor-rfc2 draft-example-00.adoc  # RFC XML v2 output
 ----
 
 When the script completes, you should see the RFC XML file `draft-example-00.xml` in the
@@ -258,7 +258,23 @@ that definition terms be separated by a carriage return from the definition. Tha
 default inline definition lists are rendered as paragraphing definition lists. If the option is
 on, the additional `vspace` element is not added, and inline definition lists are left as is.
 
+|`:flush-biblio:`
+|Optional. Default value `false`. Allowed values: `true`, `false`.
+Delete and reload the cache of references to be included externally, during processing of this document.
+The cache is stored in `~/.asciidoc-rfc-biblio-cache.json`.
+
 |===
+
+Any of these global options can also be included in the command line call, for either
+the asciidoctor executable or the local bin-stubs, through the command line option `-a`;
+e.g.
+
+[source,console]
+----
+$ asciidoctor -a flush-biblio=true -b rfc3 -r 'asciidoctor-rfc' a.adoc  
+$ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc  
+----
+
 
 
 === Basic Document Attributes
@@ -528,8 +544,8 @@ formatter should use symbolic references (such as "`[RFC2119]`") or not
 formatter should contain a table of contents. Supported in v2 as a processing instruction.
 | `rfc@tocInclude`
 
-| `:link{_i_}: _URL_` or `:link{_i_}: _URL_ _REL_`
-a| Optional. A link to an external document related to this document.
+| `:link: _URL_, _URL_ _REL_`
+a| Optional. Comma-delimited links to an external document related to this document.
 
 There are 4 types of values:
 
@@ -996,7 +1012,7 @@ to monospace expressions; they are not currently rendered as MathML or any other
 ** Nested list <4>
 
 [[id]] <5>
-[spacing=compact,start=n,group=n,counter=token,hang-indent=n,format=List #%d,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
+[spacing=compact,empty=true,start=n,group=n,counter=token,hang-indent=n,format=List #%d,arabic|loweralpha|upperralpha|lowerroman|upperroman] <6>
 . A <7>
 . B <7>
 --
@@ -1005,7 +1021,7 @@ to monospace expressions; they are not currently rendered as MathML or any other
 <3> v2: `list[@style="symbols"]/t`; v3: ul/li
 <4> v2: `list[@style="symbols"]/t/list[@style="symbols"]/t`; v3: `ul/li/ul/li`
 <5> v3: `ol@anchor`; attribute only available in v3
-<6> v2: `list/counter`,  `list@hangIndent`, `list@style = format List #%d`, `list@style` (for arabic|loweralpha|upperralpha|lowerroman|upperroman) (`start`, `empty` and `group` not available) v3: `ol@empty`, `ol@start`, `ol@group`, `ol@type = "#%d", `ol@type` (for arabic|loweralpha|upperralpha|lowerroman|upperroman) (`counter`, `hangIndent` not available)
+<6> v2: `list/counter`,  `list@hangIndent`, `list@style = format List #%d`, `list@style` (for arabic|loweralpha|upperralpha|lowerroman|upperroman) (`spacing`, `start`, `empty` and `group` not available) v3: `ol@spacing`, `ol@empty`, `ol@start`, `ol@group`, `ol@type = "#%d", `ol@type` (for arabic|loweralpha|upperralpha|lowerroman|upperroman) (`counter`, `hangIndent` not available)
 <7> v2: `list/t`; v3: `ol/li`
 
 NOTE: Asciidoctor does not permit anchors on list items: the anchors in the following are ignored.
@@ -1127,6 +1143,9 @@ and must appear in sequence, before any appendices.
 <2> `back/displayreference@target`, `back/displayreference@to` (only in v3)
 <3> `back/references/reference`
 
+In postprocessing, bibliographic entries available from http://xml.resource.org/public/rfc are replaced
+with external references to that entry, using XML entities in RFC XML v2, and XML includes
+in RFC XML v3.
 
 === Appendices
 
@@ -1196,6 +1215,20 @@ These asciidoctor features are not supported in output of these formats:
 | Table: http://asciidoctor.org/docs/user-manual/#cell[Table cells: Asciidoctor formatting (blocks within cells)] | Ignored | Supported
 | Table: http://asciidoctor.org/docs/user-manual/#cols-format[Table columns: width] | Supported | Ignored
 |===
+
+== Lookup of external references
+
+In order to speed the lookup of references on the http://xml.resource.org/public/rfc website for external
+references, a cache of references is built the first time the gem is run, in the user's home directory:
+`~/.asciidoc-rfc-biblio-cache.json`. This maps all the canonical anchors for external references as defined
+by the IETF, such as `RFC2119` or `CCITT.E163.1988`, to the URLs that their RFC reference is stored on.
+References are detected for replacement in the Asciidoc document by matching the `references@anchor` 
+attribute to one of those canonical anchors; the content of the local RFC XML reference is not checked.
+
+The cache is not rebuilt daily, as it is with xml2rfc. If you want to refresh the cache, either delete
+your `~/.asciidoc-rfc-biblio-cache.json` file; insert the document attribute `:flush-biblio: true` into
+the header of the document being processed; or run the asciidoctor executable with option `-a flush-biblio=true`
+(which has the same effect).
 
 == asciidoc-bibliography integration
 
