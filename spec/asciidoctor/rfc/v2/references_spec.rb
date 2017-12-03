@@ -97,7 +97,7 @@ describe Asciidoctor::RFC::V2::Converter do
   end
 
   it "renders external RFC XML references as entities" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true).to_s).to be_equivalent_to <<~'OUTPUT'
 = The Holy Hand Grenade of Antioch
 Arthur Pendragon
 :doctype: internet-draft
@@ -141,7 +141,7 @@ In many standards track documents several words are used to signify the requirem
 <date month="August" day="22" year="2010"/>
 <abstract>
 <t>
-This document describes a simple HTTP state management mechanism, called cake, that lets HTTP servers maintain stateful sessions with HTTP user agents. This mechanism is harmonized with the same-origin security model and provides both confidentiality and integrity protection against active network attackers. In addition, the mechanism is robust to cross-site request forgery attacks.Editorial Note (To be removed by RFC Editor) If you have suggestions for improving this document, please send email to <mailto:http-state@ietf.org>. Further Working Group information is available from <https://tools.ietf.org/wg/httpstate/>.
+This document describes a simple HTTP state management mechanism, called cake, that lets HTTP servers maintain stateful sessions with HTTP user agents. This mechanism is harmonized with the same-origin security model and provides both confidentiality and integrity protection against active network attackers. In addition, the mechanism is robust to cross-site request forgery attacks.Editorial Note (To be removed by RFC Editor) If you have suggestions for improving this document, please send email to mailto:http-state@ietf.org. Further Working Group information is available from https://tools.ietf.org/wg/httpstate/.
 </t>
 </abstract>
 </front>
@@ -150,12 +150,43 @@ This document describes a simple HTTP state management mechanism, called cake, t
 </reference>
 ++++
     INPUT
-    xxx
+           <?xml version="1.0" encoding="US-ASCII"?>
+       <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+       <!ENTITY RFC2119 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+       <!ENTITY I-D.abarth-cake SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3//reference.I-D.draft-abarth-cake-00.xml">
+       ]>
+       <?rfc strict="yes"?>
+       <?rfc compact="yes"?>
+       <?rfc subcompact="no"?>
+       <?rfc toc="yes"?>
+       <?rfc tocdepth="4"?>
+       <?rfc symrefs="yes"?>
+       <?rfc sortrefs="yes"?>
+       <rfc submissionType="IETF">
+       <front>
+         <title>The Holy Hand Grenade of Antioch</title>
+         <author fullname="Arthur Pendragon" surname="Pendragon"/>
+         <date day="1" month="January" year="2000"/>
+     
+       </front><middle>
+       <section anchor="_hello" title="Hello">
+         <t>Hello</t>
+       </section>
+       </middle><back>
+       <references title="Normative References">
+         &RFC2119;
+       </references>
+       <references title="Informative References">
+         &I-D.abarth-cake;
+       </references>
+       </back>
+       </rfc>
+
     OUTPUT
   end
 
   it "renders skeletal external RFC XML references as entities" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true).to_s).to be_equivalent_to <<~'OUTPUT'
 = The Holy Hand Grenade of Antioch
 Arthur Pendragon
 :doctype: internet-draft
@@ -187,12 +218,43 @@ Hello
 </reference>
 ++++
     INPUT
-    xxx
+           <?xml version="1.0" encoding="US-ASCII"?>
+       <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+       <!ENTITY RFC2119 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+       <!ENTITY I-D.abarth-cake SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3//reference.I-D.abarth-cake.xml">
+       ]>
+       <?rfc strict="yes"?>
+       <?rfc compact="yes"?>
+       <?rfc subcompact="no"?>
+       <?rfc toc="yes"?>
+       <?rfc tocdepth="4"?>
+       <?rfc symrefs="yes"?>
+       <?rfc sortrefs="yes"?>
+       <rfc submissionType="IETF">
+       <front>
+         <title>The Holy Hand Grenade of Antioch</title>
+         <author fullname="Arthur Pendragon" surname="Pendragon"/>
+         <date day="1" month="January" year="2000"/>
+
+       </front><middle>
+       <section anchor="_hello" title="Hello">
+         <t>Hello</t>
+       </section>
+       </middle><back>
+       <references title="Normative References">
+         &RFC2119;
+       </references>
+       <references title="Informative References">
+         &I-D.abarth-cake;
+       </references>
+       </back>
+       </rfc>
+
     OUTPUT
   end
 
   it "renders skeletal external RFC XML references with drafts as entities" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true).to_s).to be_equivalent_to <<~'OUTPUT'
 = The Holy Hand Grenade of Antioch
 Arthur Pendragon
 :doctype: internet-draft
@@ -213,7 +275,34 @@ Hello
 </reference>
 ++++
     INPUT
-    xxx
+           <?xml version="1.0" encoding="US-ASCII"?>
+       <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+       <!ENTITY I-D.abarth-cake SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3//reference.I-D.draft-abarth-cake-00.xml">
+       ]>
+       <?rfc strict="yes"?>
+       <?rfc compact="yes"?>
+       <?rfc subcompact="no"?>
+       <?rfc toc="yes"?>
+       <?rfc tocdepth="4"?>
+       <?rfc symrefs="yes"?>
+       <?rfc sortrefs="yes"?>
+       <rfc submissionType="IETF">
+       <front>
+         <title>The Holy Hand Grenade of Antioch</title>
+         <author fullname="Arthur Pendragon" surname="Pendragon"/>
+         <date day="1" month="January" year="2000"/>
+
+       </front><middle>
+       <section anchor="_hello" title="Hello">
+         <t>Hello</t>
+       </section>
+       </middle><back>
+       <references title="Informative References">
+         &I-D.abarth-cake;
+       </references>
+       </back>
+       </rfc>
+
     OUTPUT
   end
 
