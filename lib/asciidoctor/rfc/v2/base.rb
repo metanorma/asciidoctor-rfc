@@ -89,9 +89,11 @@ module Asciidoctor
         ret = result * "\n"
         ret = cleanup(ret)
         ret1 = Nokogiri::XML(ret)
-        Validate::validate(ret1)
+        # Validate::validate(ret1)
         ret1 = set_pis(node, ret1)
+        Validate::validate(ret1)
         ret1 = resolve_references(node, ret1)
+        # Validate::validate(ret1)
         ret1
       end
 

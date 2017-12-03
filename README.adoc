@@ -1254,6 +1254,22 @@ but note that such a reference is invalid in the RFC XML schema, and the gem wil
 </reference>
 --
 
+If you wish to cite a specific version of an Internet-Draft, you will need to include the `seriesInfo` element
+in the reference that identifies the specific version; the anchor is the same for all internet drafts. For example:
+
+[source,xml]
+--
+<reference anchor="I-D.abarth-cake">
+  <front>
+    <title/>
+    <author/>
+    <date/>
+  </front>
+  <seriesInfo name="Internet-Draft" value="draft-abarth-cake-00"/>
+</reference>
+--
+
+
 == asciidoc-bibliography integration
 
 The https://github.com/riboseinc/asciidoctor-bibliography[asciidoc-bibliography] gem allows citations to be imported

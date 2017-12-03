@@ -4,6 +4,7 @@ require "htmlentities"
 require "json"
 require "pathname"
 require "open-uri"
+require "pp"
 
 module Asciidoctor
   module RFC::Common
@@ -257,10 +258,17 @@ module Asciidoctor
         biblio = cache_biblio(node)
         refs.each do |ref|
           next if ref.parent.name == "referencegroup"
-          if biblio.has_key? ref["anchor"]
-            ret << { entity: ref["anchor"], 
+          id = ref.at('.//seriesInfo[@name="Internet-Draft"]')
+          anchor = ref["anchor"]
+          if id.nil?
+            url = biblio[anchor]
+          else
+            url = biblio["I-D.#{id['value']}"] # the specific version reference
+          end
+          if biblio.has_key? anchor
+            ret << { entity: anchor,
                      node: ref,
-                     url: biblio[ref["anchor"]] }
+                     url: url }
           end 
         end
         ret
@@ -359,7 +367,7 @@ HERE
                  STDERR.puts "Reading references from #{url}..."
                  Kernel.open(url) do |f|
                    f.each_line do |line|
-                     line.scan(/a href="reference.(\d+).xml">/) do |w|
+                     line.scan(/a href="reference.(\S+).xml">/) do |w|
                        biblio[w[0]] = "#{url}/reference.#{w[0]}.xml"
                      end
                    end

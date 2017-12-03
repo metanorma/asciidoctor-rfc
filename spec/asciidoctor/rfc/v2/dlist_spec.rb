@@ -53,8 +53,8 @@ describe Asciidoctor::RFC::V2::Converter do
       <section anchor="_section_1" title="Section 1">
          <t>
          <list hangIndent="5" style="hanging">
-           <t hangText="A"><vspace blankLines="1"/>B</t>
-           <t hangText="C"><vspace blankLines="1"/>D</t>
+           <t hangText="A"><vspace blankLines="0"/>B</t>
+           <t hangText="C"><vspace blankLines="0"/>D</t>
          </list>
        </t>
       </section>
