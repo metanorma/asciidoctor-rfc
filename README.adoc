@@ -1145,7 +1145,8 @@ and must appear in sequence, before any appendices.
 
 In postprocessing, bibliographic entries available from http://xml.resource.org/public/rfc are replaced
 with external references to that entry, using XML entities in RFC XML v2, and XML includes
-in RFC XML v3.
+in RFC XML v3. Do not insert your own entities or XML includes into the references; the gem will have difficulty
+processing them.
 
 === Appendices
 
@@ -1216,6 +1217,7 @@ These asciidoctor features are not supported in output of these formats:
 | Table: http://asciidoctor.org/docs/user-manual/#cols-format[Table columns: width] | Supported | Ignored
 |===
 
+[[external-ref-lookup]]
 == Lookup of external references
 
 In order to speed the lookup of references on the http://xml.resource.org/public/rfc website for external
@@ -1229,6 +1231,28 @@ The cache is not rebuilt daily, as it is with xml2rfc. If you want to refresh th
 your `~/.asciidoc-rfc-biblio-cache.json` file; insert the document attribute `:flush-biblio: true` into
 the header of the document being processed; or run the asciidoctor executable with option `-a flush-biblio=true`
 (which has the same effect).
+
+Rather than hand crafting RFC XML references for RFC documents, or other references hosted at `http://xml.resource.org/public/rfc/`,
+you need only create a dummy `<reference>` element containing the IETF-defined anchor for that citation. In postprocessing, any
+references that are hosted at xml.resource.org will be identified by their anchor, and replaced by entities or XML includes,
+for RFC XML v2 and v3 respectively. (The complete list of authoritative
+RFC XML bibliographies is available from https://xml2rfc.tools.ietf.org , online and in zipped form.)
+
+Because the content of any externally defined `<reference>` element is overwritten with an entity or include,
+you do not need to provide a full reference. You can supply a minimal reference like `<reference anchor="RFC2119"/>`,
+but note that such a reference is invalid in the RFC XML schema, and the gem will report a missing element during processing.
+(The document will still be processed successfully.) To prevent any validation error reports, the minimal syntactically valid reference is:
+
+[source,xml]
+--
+<reference anchor="RFC2119">
+  <front>
+    <title/>
+    <author/>
+    <date/>
+  </front>
+</reference>
+--
 
 == asciidoc-bibliography integration
 
@@ -1245,12 +1269,10 @@ Integration with the asciidoc-bibliography gem proceeds as follows:
 as would be done for the informative and normative references normally. The references file will contain all possible
 references to be used
 in the file; the bibliography gem will select which references have actually been cited in the document.
-.. Rather than hand crafting RFC XML references for RFC documents, you should download them from an authoritative
-source; e.g. http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml . (The complete list of authoritative
-RFC XML bibliographies is available from https://xml2rfc.tools.ietf.org , online and in zipped form.)
-.. Unlike the case for RFC XML documents created manually, the references file does not recognise XML entities
-and will not attempt to download them during processing.
-Any references to http://xml.resource.org/public/rfc/bibxml/ will need to be downloaded and inserted into the references file.
+.. The caveats for <<external-ref-lookup,externally available references>> also apply to the references file.
+Unlike the case for RFC XML documents created manually, the references file does not recognise XML entities
+and will not attempt to download them during processing; postprocessing means you do not need to create your own
+XML entities anyway.
 .. The RFC XML in the references file will need to be appropriate to the version of RFC XML used in the main document, as
 usual. Note that RFC XML v2 references are forward compatible with v3; v3 contains a couple of additional elements.
 . Add the following header attributes to the main document:
