@@ -99,7 +99,6 @@ module Asciidoctor
         doc
       end
 
-
       # Syntax:
       #   = Title
       #   Author

@@ -260,20 +260,19 @@ module Asciidoctor
           next if ref.parent.name == "referencegroup"
           id = ref.at('.//seriesInfo[@name="Internet-Draft"]')
           anchor = ref["anchor"]
-          if id.nil?
-            url = biblio[anchor]
-          else
-            url = biblio["I-D.#{id['value']}"] # the specific version reference
-          end
+          url = if id.nil?
+                  biblio[anchor]
+                else
+                  biblio["I-D.#{id['value']}"] # the specific version reference
+                end
           if biblio.has_key? anchor
             ret << { entity: anchor,
                      node: ref,
                      url: url }
-          end 
+          end
         end
         ret
       end
-
 
       # if node contains blocks, flatten them into a single line
       def flatten(node)
@@ -296,10 +295,10 @@ module Asciidoctor
           node.lines.each do |x|
             result << if node.respond_to?(:context) && (node.context == :literal || node.context == :listing)
                         x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
-            else
-              # strip not only HTML tags <tag>, but also Asciidoc crossreferences <<xref>>
-              x.gsub(/<[^>]*>+/, "")
-            end
+                      else
+                        # strip not only HTML tags <tag>, but also Asciidoc crossreferences <<xref>>
+                        x.gsub(/<[^>]*>+/, "")
+                      end
           end
         elsif node.respond_to?(:text)
           result << node.text.gsub(/<[^>]*>+/, "")
@@ -346,12 +345,12 @@ HERE
         end
         # Is there already a biblio cache? If not, create it.
         biblio = {}
-        if Pathname.new(bibliocache_name).file? 
+        if Pathname.new(bibliocache_name).file?
           File.open(bibliocache_name, "r") do |f|
             biblio = JSON.parse(f.read)
           end
         else
-          File.open(bibliocache_name, "w") do |b| 
+          File.open(bibliocache_name, "w") do |b|
             STDERR.puts "Reading references from https://xml2rfc.tools.ietf.org/public/rfc/bibxml/..."
             Kernel.open("https://xml2rfc.tools.ietf.org/public/rfc/bibxml/") do |f|
               # I'm just working off the ls output
@@ -365,8 +364,8 @@ HERE
                "https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/",
                "https://xml2rfc.tools.ietf.org/public/rfc/bibxml5/"].each do |url|
                  STDERR.puts "Reading references from #{url}..."
-                 Kernel.open(url) do |f|
-                   f.each_line do |line|
+                 Kernel.open(url) do |f1|
+                   f1.each_line do |line|
                      line.scan(/a href="reference.(\S+).xml">/) do |w|
                        biblio[w[0]] = "#{url}/reference.#{w[0]}.xml"
                      end
@@ -379,8 +378,6 @@ HERE
         end
         biblio
       end
-
-
     end
   end
 end

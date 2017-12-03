@@ -196,7 +196,7 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 1
       `This is http://www.example.com _a_ *citation*`
     INPUT
-    <?xml version="1.0" encoding="US-ASCII"?>
+      <?xml version="1.0" encoding="US-ASCII"?>
       <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
       <rfc

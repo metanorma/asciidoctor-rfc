@@ -336,7 +336,6 @@ module Asciidoctor
           nodes << element
         end
 
-
         counter = 0
         while counter < nodes.size
           if nodes[counter].name == "vspace"
@@ -344,7 +343,7 @@ module Asciidoctor
             while counter < nodes.size && nodes[counter].name == "vspace"
               blankLines += 1
               if nodes[counter][:blankLines].nil?
-                blankLines += nodes[counter][:blankLines].to_i 
+                blankLines += nodes[counter][:blankLines].to_i
               end
               if counter + 1 < nodes.size && nodes[counter + 1].text? && nodes[counter + 1].text =~ /\A[\n ]+\Z/m
                 counter += 1

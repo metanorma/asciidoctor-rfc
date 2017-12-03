@@ -2261,6 +2261,7 @@ target='http://www.ietf.org/internet-drafts/draft-iab-rfc-framework-06.txt' />
 
 The IAB members at the time this memo was approved were (in alphabetical order):                                                       
 
+[spacing=compact]
 * Jari Arkko
 
 * Ralph Droms
