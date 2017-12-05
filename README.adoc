@@ -23,8 +23,12 @@ RFC XML output in both v3 and v2 formats:
 * v3 RFC XML (https://tools.ietf.org/html/rfc7991[RFC 7991])
 * v2 RFC XML (https://tools.ietf.org/html/rfc7749[RFC 7749])
 
-Its syntax is designed to be "`native-asciidoctor`":
-
+Its syntax is designed to be "`native-asciidoctor`" as much as possible, with some
+templated use of attributes to convey added information for RFC XML output.
+We refer to the version of Asciidoc markup processed by this gem as AsciiRFC.
+See also https://github.com/riboseinc/rfc-asciidoc-rfc for our Internet Draft
+documenting this use of Asciidoc; this Readme documents the markup used in full
+detail.
 
 == Installation
 
@@ -213,6 +217,10 @@ of RFC XML. While the gem attempts to generate valid RFC XML, some Asciidoctor
 text may not align with the RFC XML document model, and any highlighted syntax
 errors will also need to be rectified in postediting, before processing the
 generated XML further.
+
+NOTE: A summary guide to authoring RFC XML in Asciidoctor is also available at
+https://tools.ietf.org/html/draft-ribose-asciirfc-02 (with source at
+https://github.com/riboseinc/rfc-asciidoc-rfc ).
 
 
 === Document Type: `rfc` or `internet-draft` (Mandatory)
