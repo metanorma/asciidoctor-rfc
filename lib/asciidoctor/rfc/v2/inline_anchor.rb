@@ -12,7 +12,7 @@ module Asciidoctor
         when :ref
           inline_anchor_ref node
         else
-          warn %(asciidoctor: WARNING: unknown anchor type: #{node.type.inspect})
+          warn %(asciidoctor: WARNING (#{current_location(node)}): unknown anchor type: #{node.type.inspect})
         end
       end
 
@@ -100,7 +100,7 @@ module Asciidoctor
       end
 
       def inline_anchor_ref(node)
-        warn %(asciidoctor: WARNING: anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
+        warn %(asciidoctor: WARNING (#{current_location(node)}): anchor "#{node.id}" is not in a place where XML RFC will recognise it as an anchor attribute)
       end
     end
   end

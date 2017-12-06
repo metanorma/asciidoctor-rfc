@@ -139,7 +139,7 @@ module Asciidoctor
           cref_contents = node.blocks? ? flatten(node) : node.content
           cref_contents = [cref_contents].flatten.join("\n")
           warn <<~WARNING_MESSAGE if node.blocks?
-            asciidoctor: WARNING (#{node.lineno}): comment can not contain blocks of text in XML RFC:\n #{node.content}
+            asciidoctor: WARNING (#{current_location(node)}): comment can not contain blocks of text in XML RFC:\n #{node.content}
           WARNING_MESSAGE
 
           result << noko do |xml|
@@ -175,7 +175,7 @@ module Asciidoctor
       def example(node)
         node.blocks.each do |b|
           unless %i{listing image literal stem}.include? b.context
-            warn "asciidoctor: WARNING (#{b.lineno}): examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.lines}"
+            warn "asciidoctor: WARNING (#{current_location(b)}): examples (figures) should only contain listings (sourcecode), images (artwork), or literal (artwork):\n#{b.lines}"
           end
         end
 

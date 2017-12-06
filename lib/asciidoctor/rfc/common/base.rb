@@ -25,9 +25,9 @@ module Asciidoctor
 
       def skip(node, name = nil)
         if node.respond_to?(:lineno)
-          warn %(asciidoctor: WARNING (#{node.lineno}): converter missing for #{name || node.node_name} node in RFC backend)
+          warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in RFC backend)
         else
-          warn %(asciidoctor: WARNING: converter missing for #{name || node.node_name} node in RFC backend)
+          warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in RFC backend)
         end
         nil
       end
@@ -121,7 +121,7 @@ module Asciidoctor
           node.text + noko { |xml| xml.iref **attr_code(iref_attributes) }.join
         else
           terms = node.attr "terms"
-          warn %(asciidoctor: WARNING: only primary and secondary index terms supported: #{terms.join(': ')}) if terms.size > 2
+          warn %(asciidoctor: WARNING (#{current_location(node)}): only primary and secondary index terms supported: #{terms.join(': ')}) if terms.size > 2
           iref_attributes = {
             item: terms[0],
             subitem: (terms.size > 1 ? terms[1] : nil),
@@ -143,7 +143,7 @@ module Asciidoctor
             result << ref
           end
         else
-          warn %(asciidoctor: WARNING (#{node.lineno}): references are not raw XML: #{node.context})
+          warn %(asciidoctor: WARNING (#{current_location(node)}): references are not raw XML: #{node.context})
         end
         result
       end
@@ -171,6 +171,7 @@ module Asciidoctor
         # that most I-Ds might want to use, common to v2 and v3.
         # These are set only if explicitly specified, with the exception
         # of compact and subcompact
+pp node
         rfc_pis = {
           artworkdelimiter: node.attr("artworkdelimiter"),
           artworklines: node.attr("artworklines"),
@@ -335,6 +336,16 @@ HERE
         attributes.map do |k, v|
           [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
         end.to_h
+      end
+
+      def current_location(node)
+return "Line #{node.lineno}" if !node.lineno.nil? and !node.lineno.empty?
+return "ID #{node.id}" if !node.id.nil? 
+        while !node.nil? and node.level > 0 and node.context != :section
+node = node.parent
+return "Section: #{node.title}" if !node.nil? and node.context == :section
+end
+return "??"
       end
 
       def cache_biblio(node)

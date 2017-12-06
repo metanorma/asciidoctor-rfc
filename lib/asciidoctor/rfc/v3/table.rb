@@ -20,7 +20,7 @@ module Asciidoctor
             [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
               has_body = true if tblsec == :body
             end
-            warn "asciidoctor: WARNING (#{node.lineno}): tables must have at least one body row" unless has_body
+            warn "asciidoctor: WARNING (#{current_location(node)}): tables must have at least one body row" unless has_body
 
             xml_table.name node.title if node.title?
             table_head_body_and_foot node, xml_table
@@ -54,7 +54,7 @@ module Asciidoctor
                     thd << (cell.style == :asciidoc ? cell.content : cell.text)
                   end
                 end
-                warn "asciidoctor: WARNING (#{node.lineno}): row #{i} of table (count including header rows) is longer than 72 ascii characters" if rowlength > 72
+                warn "asciidoctor: WARNING (#{current_location(node)}): row #{i} of table (count including header rows) is longer than 72 ascii characters" if rowlength > 72
               end
             end
           end

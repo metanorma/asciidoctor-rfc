@@ -104,13 +104,13 @@ module Asciidoctor
         revdate = node.attr("revdate") || node.attr("date")
         if revdate.nil?
           revdate = DateTime.now.iso8601
-          warn %(asciidoctor: WARNING: revdate attribute missing from header, provided current date)
+          warn %(asciidoctor: WARNING (#{current_location(node)}): revdate attribute missing from header, provided current date)
         end
         unless revdate.nil?
           begin
             date1(revdate, xml)
           rescue ArgumentError # invalid date
-            warn %(asciidoctor: WARNING: invalid date in header, provided current date)
+            warn %(asciidoctor: WARNING (#{current_location(node)}): invalid date in header, provided current date)
             date1(DateTime.now.iso8601, xml)
           end
         end
