@@ -939,7 +939,12 @@ Any admonition inside the body of the text is a comment.
 
 === Source Code Listings
 
+In RFC XML, `sourcecode` (v3) and `artwork` (v2) elements only occur within a 
+`figure` wrapper; this gem supplies that wrapper if it is not provided
+explicitly.
+
 [source,asciidoc]
+.Without Figure Wrapper
 --
 [[id]] <1>
 .Source code listing title <2>
@@ -950,15 +955,83 @@ begin() {
 }
 ----
 --
-<1> v3: `figure/sourcecode@anchor`; v2: `figure/artwork@anchor`
+<1> v3: `figure/sourcecode@anchor`; v2: Not supported: use explicit figure wrapper
 <2> v3: `figure/sourcecode@name`; v2: `figure/artwork@name`
 <3> v3: `figure/sourcecode@type`; `figure/sourcecode@src` (`align` and `alt` not supported). If `src` is present, the listing is not expected to have any content: content is taken from the hyperlink in the attribute. v2: `figure/artwork@type`, `figure/artwork@src`, `figure/artwork@align`, `figure/artwork@alt`.
 <4> v3: `figure/sourcecode`; v2: `figure/artwork`
 
+[source,asciidoc]
+.With Figure Wrapper
+--
+[[id]] <1>
+[align,alt,suppress-title] <2>
+.Figure 1 <3>
+====
+Preamble text <4>
+
+[[id1]] <5>
+.Source code listing title <6>
+[source,type,src=uri,align,alt] <7>
+----
+begin() {
+  source code listing <8>
+}
+----
+
+Postamble text <9>
+====
+--
+<1> `figure@anchor`
+<2> v2 only: `figure/artwork@align`, `figure/artwork@alt`, `figure@suppress-title` (attributes only available in v2)
+<3> `figure/name`
+<4> v2 only: `figure/preamble` (only available in v2)
+<5> v3: `figure/sourcecode@anchor`; v2: Not supported: use `figure@anchor`
+<6> v3: `figure/sourcecode@name`; v2: `figure/artwork@name`
+<7> v3: `figure/sourcecode@type`; `figure/sourcecode@src` (`align` and `alt` not supported). If `src` is present, the listing is not expected to have any content: content is taken from the hyperlink in the attribute. v2: `figure/artwork@type`, `figure/artwork@src`, `figure/artwork@align`, `figure/artwork@alt`.
+<8> v3: `figure/sourcecode`; v2: `figure/artwork`
+<9> v2 only: `figure/postamble` (only available in v2)
+
 
 === ASCII Art and Images
 
+In RFC XML, `artwork` elements only occur within a 
+`figure` wrapper; this gem supplies that wrapper if it is not provided
+explicitly.
+
+
 [source,asciidoc]
+.Ascii-Art Without Figure Wrapper
+--
+[[id]] <1>
+.Figure2.jpg <2>
+[align=left|center|right,alt=Ascii Art,type=text/plain] <3>
+....
+------------------------
+|        Ascii Art     |
+------------------------ <4>
+....
+--
+<1> v3 only: `figure/artwork@anchor`; v2: Not supported: use explicit figure wrapper
+<2> `figure/artwork@name`
+<3> `figure/artwork@align`, `figure/artwork@alt`; `figure@type` (attribute only available in v2)
+<4> `figure/artwork`
+
+[source,asciidoc]
+.Image Without Figure Wrapper
+--
+[[id]] <1>
+.Figure2.jpg <2>
+[align=left|center|right,alt=alt_text,type=img/jpeg] <3>
+image::filename.jpg[alt_text,700,200] <4>
+--
+<1> v3 only: `figure/artwork@anchor`; v2: Not supported: use explicit figure wrapper
+<2> `figure/artwork@name`
+<3> `figure/artwork@align`, `figure/artwork@alt`; `figure/artwork@type` (only available in v2, intended to be a MIME type; v3: populated as either `svg` or `binary-art` depending on file suffix)
+<4> `figure/artwork@src`, `figure/artwork@alt`, `figure/artwork@width` (deprecated in v3), `figure/artwork@height` (deprecated in v3)
+
+
+[source,asciidoc]
+.With Figure Wrapper
 --
 [[id]] <1>
 [align,alt,suppress-title] <2>
@@ -968,14 +1041,16 @@ Preamble text <4>
 
 [[id]] <5>
 .Figure2.jpg <8>
-[align=left|center|right,alt=alt_text,type] <6>
+[align=left|center|right,alt=alt_text,type=text/plain] <6>
 ....
-Figures are only permitted to contain listings (sourcecode), images (artwork),
+Figures are 
+      only permitted to contain listings (sourcecode),  
+           images (artwork),
 or literal (artwork) <7>
 ....
 [[id]] <5>
 .Figure2.jpg <8>
-[align=left|center|right,alt=alt_text,type] <9>
+[align=left|center|right,alt=alt_text,type=img/jpeg] <9>
 image::filename.jpg[alt_text,700,200] <10>
 
 Postamble text <11>
@@ -985,7 +1060,7 @@ Postamble text <11>
 <2> v2 only: `figure/artwork@align`, `figure/artwork@alt`, `figure@suppress-title` (attributes only available in v2)
 <3> `figure/name`
 <4> v2 only: `figure/preamble` (only available in v2)
-<5> `figure/artwork@anchor`
+<5> v3 only: `figure/artwork@anchor`
 <6> `figure/artwork@align`, `figure/artwork@alt`; `figure@type` (attribute only available in v2)
 <7> `figure/artwork`
 <8> `figure/artwork@name`
@@ -994,6 +1069,8 @@ Postamble text <11>
 <11> v2 only: `figure/postamble` (only available in v2)
 
 === Mathematical examples
+
+In order for mathematical formatting to be recognised in Asciidoc, the document attribute `:stem:` needs to be set.
 
 [source,asciidoc]
 --
@@ -1007,7 +1084,7 @@ sqrt(4) = 2
 
 Mathematical examples are treated identically to literals, and are rendered as `artwork` in both v2 and v3;
 however their default alignment is set as `center`. As with inline stem expressions, they are treated identically
-to monospace expressions; they are not currently rendered as MathML or any other notation.
+to monospace expressions in the RFC XML output; they are not currently rendered as MathML or any other notation.
 
 === Unordered and Ordered Lists
 
@@ -1147,7 +1224,7 @@ and must appear in sequence, before any appendices.
 (raw XML) <2>
 ++++
 --
-<1> `back/references@anchor`
+<1> `back/references@anchor` (only in v3)
 <2> `back/displayreference@target`, `back/displayreference@to` (only in v3)
 <3> `back/references/reference`
 
