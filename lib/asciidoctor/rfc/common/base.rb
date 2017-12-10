@@ -67,12 +67,25 @@ module Asciidoctor
         result
       end
 
+      IETF_AREAS = ["art", "Applications and Real-Time",
+                    "gen", "General",
+                    "int", "Internet",
+                    "ops", "Operations and Management",
+                    "rtg", "Routing",
+                    "sec", "Security",
+                    "tsv", "Transport"].freeze
+
       # Syntax:
       #   = Title
       #   Author
       #   :area x, y
       def area(node, xml)
         node.attr("area")&.split(/, ?/)&.each do |ar|
+          if ar =~ / Area$/i
+            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Area" from area #{ar}) 
+            ar = ar.gsub(/ Area$/i, "")
+          end
+          warn %(asciidoctor: WARNING (#{current_location(node)}): unrecognised area #{ar}) unless IETF_AREAS.include?(ar)
           xml.area { |a| a << ar }
         end
       end
@@ -83,6 +96,14 @@ module Asciidoctor
       #   :workgroup x, y
       def workgroup(node, xml)
         node.attr("workgroup")&.split(/, ?/)&.each do |wg|
+          if wg =~ / (Working Group)$/i
+            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Working Group" from working group #{wg}) 
+            wg = wg.gsub(/ Working Group$/i, "")
+          end
+          if wg =~ / (Research Group)$/i
+            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Research Group" from working group #{wg}) 
+            wg = wg.gsub(/ Research Group$/i, "")
+          end
           xml.workgroup { |w| w << wg }
         end
       end
@@ -171,7 +192,6 @@ module Asciidoctor
         # that most I-Ds might want to use, common to v2 and v3.
         # These are set only if explicitly specified, with the exception
         # of compact and subcompact
-pp node
         rfc_pis = {
           artworkdelimiter: node.attr("artworkdelimiter"),
           artworklines: node.attr("artworklines"),
