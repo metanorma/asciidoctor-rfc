@@ -266,10 +266,11 @@ that definition terms be separated by a carriage return from the definition. Tha
 default inline definition lists are rendered as paragraphing definition lists. If the option is
 on, the additional `vspace` element is not added, and inline definition lists are left as is.
 
-|`:flush-biblio:`
+|`:flush-caches:`
 |Optional. Default value `false`. Allowed values: `true`, `false`.
-Delete and reload the cache of references to be included externally, during processing of this document.
-The cache is stored in `~/.asciidoc-rfc-biblio-cache.json`.
+Delete and reload the caches of references to be included externally, and of workgroups,
+during processing of this document.
+The caches are stored in `~/.asciidoc-rfc-biblio-cache.json` and `~/.asciidoc-rfc-workgroup-cache.json`.
 
 |===
 
@@ -283,7 +284,25 @@ $ asciidoctor -a flush-biblio=true -b rfc3 -r 'asciidoctor-rfc' a.adoc
 $ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc  
 ----
 
+[[caches]]
+==== Caches
 
+The cache of bibliographic information is built from screenscraping the contents of:
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml/
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml2/ 
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/ 
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml5/
+
+The cache of current workgroups is built from screenscraping the contents of:
+* https://tools.ietf.org/wg/
+
+The caches are not rebuilt daily, as the bibliographic cache is with xml2rfc. 
+If you want to refresh the caches, either delete
+your `~/.asciidoc-rfc-biblio-cache.json` and `~/.asciidoc-rfc-workgroup-cache.json` files; 
+insert the document attribute `:flush-caches: true` into
+the header of the document being processed; or run the asciidoctor executable with option `-a flush-caches=true`
+(which has the same effect).
 
 === Basic Document Attributes
 
@@ -1312,10 +1331,7 @@ by the IETF, such as `RFC2119` or `CCITT.E163.1988`, to the URLs that their RFC 
 References are detected for replacement in the Asciidoc document by matching the `references@anchor` 
 attribute to one of those canonical anchors; the content of the local RFC XML reference is not checked.
 
-The cache is not rebuilt daily, as it is with xml2rfc. If you want to refresh the cache, either delete
-your `~/.asciidoc-rfc-biblio-cache.json` file; insert the document attribute `:flush-biblio: true` into
-the header of the document being processed; or run the asciidoctor executable with option `-a flush-biblio=true`
-(which has the same effect).
+(For rebuilding the cache, see <<caches>>.)
 
 Rather than hand crafting RFC XML references for RFC documents, or other references hosted at `http://xml.resource.org/public/rfc/`,
 you need only create a dummy `<reference>` element containing the IETF-defined anchor for that citation. In postprocessing, any

@@ -95,6 +95,7 @@ module Asciidoctor
       #   Author
       #   :workgroup x, y
       def workgroup(node, xml)
+        workgroups = cache_workgroup(node)
         node.attr("workgroup")&.split(/, ?/)&.each do |wg|
           if wg =~ / (Working Group)$/i
             warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Working Group" from working group #{wg}) 
@@ -104,6 +105,7 @@ module Asciidoctor
             warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Research Group" from working group #{wg}) 
             wg = wg.gsub(/ Research Group$/i, "")
           end
+          warn %(asciidoctor: WARNING (#{current_location(node)}): unrecognised working group #{wg}) unless workgroups.include?(wg)
           xml.workgroup { |w| w << wg }
         end
       end
@@ -368,10 +370,38 @@ end
 return "??"
       end
 
+      def cache_workgroup(node)
+        wgcache_name = "#{Dir.home}/.asciidoc-rfc-workgroup-cache.json"
+        # If we are required to, clear the wg cache
+        if node.attr("flush-caches") == "true"
+          system("rm -f #{wgcache_name}")
+        end
+        # Is there already a wg cache? If not, create it.
+        wg = []
+        if Pathname.new(wgcache_name).file?
+          File.open(wgcache_name, "r") do |f|
+            wg = JSON.parse(f.read)
+          end
+        else
+          File.open(wgcache_name, "w") do |b|
+            STDERR.puts "Reading workgroups from https://tools.ietf.org/wg/..."
+            Kernel.open("https://tools.ietf.org/wg/") do |f|
+              f.each_line do |line|
+		line.scan(%r{<td width="50%" style='padding: 0 1ex'>([^<]+)</td>}) do |w|
+                  wg << w[0].gsub(/\s+$/, "").gsub(/Working Group$/, "")
+                end
+              end
+            end
+            b << wg.to_json
+          end
+        end
+        wg
+      end
+
       def cache_biblio(node)
         bibliocache_name = "#{Dir.home}/.asciidoc-rfc-biblio-cache.json"
         # If we are required to, clear the biblio cache
-        if node.attr("flush-biblio") == "true"
+        if node.attr("flush-caches") == "true"
           system("rm -f #{bibliocache_name}")
         end
         # Is there already a biblio cache? If not, create it.
