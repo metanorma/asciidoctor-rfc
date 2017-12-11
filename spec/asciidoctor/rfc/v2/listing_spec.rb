@@ -12,7 +12,7 @@ describe Asciidoctor::RFC::V2::Converter do
       end
       ----
     INPUT
-      <figure>
+      <figure anchor="literal-id">
         <artwork name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
         </artwork>
       </figure>
@@ -53,7 +53,7 @@ describe Asciidoctor::RFC::V2::Converter do
       end
       ----
     INPUT
-      <figure>
+      <figure anchor="literal-id">
       <artwork name="filename.rb" type="ruby">
       def listing(node)
         result = []

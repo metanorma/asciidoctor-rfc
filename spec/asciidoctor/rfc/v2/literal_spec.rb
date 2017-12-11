@@ -9,7 +9,7 @@ describe Asciidoctor::RFC::V2::Converter do
         Literal contents.
       ....
     INPUT
-      <figure>
+      <figure anchor="literal-id">
       <artwork align="left" name="filename" type="abnf" alt="alt_text">
         Literal contents.
       </artwork>
@@ -27,7 +27,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ....
       <1> This is a callout
     INPUT
-      <figure>
+      <figure anchor="literal-id">
       <artwork align="left" name="filename" alt="alt_text">
         Literal contents.
       </artwork>

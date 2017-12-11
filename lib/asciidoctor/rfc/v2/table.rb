@@ -10,8 +10,6 @@ module Asciidoctor
       #   |col | col
       #   |===
       def table(node)
-
-puts node.number
         has_body = false
         has_head = false
         style_value = case node.attr "grid"

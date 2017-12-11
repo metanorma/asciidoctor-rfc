@@ -974,7 +974,7 @@ begin() {
 }
 ----
 --
-<1> v3: `figure/sourcecode@anchor`; v2: Not supported: use explicit figure wrapper
+<1> v3: `figure/sourcecode@anchor`; v2: `figure@anchor` (moved into supplied wrapper: anchors not supported on `artwork`)
 <2> v3: `figure/sourcecode@name`; v2: `figure/artwork@name`
 <3> v3: `figure/sourcecode@type`; `figure/sourcecode@src` (`align` and `alt` not supported). If `src` is present, the listing is not expected to have any content: content is taken from the hyperlink in the attribute. v2: `figure/artwork@type`, `figure/artwork@src`, `figure/artwork@align`, `figure/artwork@alt`.
 <4> v3: `figure/sourcecode`; v2: `figure/artwork`
@@ -1030,7 +1030,7 @@ explicitly.
 ------------------------ <4>
 ....
 --
-<1> v3 only: `figure/artwork@anchor`; v2: Not supported: use explicit figure wrapper
+<1> v3 only: `figure/artwork@anchor`; v2: `figure@anchor` (moved into supplied wrapper: anchors not supported on `artwork`)
 <2> `figure/artwork@name`
 <3> `figure/artwork@align`, `figure/artwork@alt`; `figure@type` (attribute only available in v2)
 <4> `figure/artwork`
@@ -1043,7 +1043,7 @@ explicitly.
 [align=left|center|right,alt=alt_text,type=img/jpeg] <3>
 image::filename.jpg[alt_text,700,200] <4>
 --
-<1> v3 only: `figure/artwork@anchor`; v2: Not supported: use explicit figure wrapper
+<1> v3 only: `figure/artwork@anchor`; v2: `figure@anchor` (moved into supplied wrapper: anchors not supported on `artwork`)
 <2> `figure/artwork@name`
 <3> `figure/artwork@align`, `figure/artwork@alt`; `figure/artwork@type` (only available in v2, intended to be a MIME type; v3: populated as either `svg` or `binary-art` depending on file suffix)
 <4> `figure/artwork@src`, `figure/artwork@alt`, `figure/artwork@width` (deprecated in v3), `figure/artwork@height` (deprecated in v3)
@@ -1079,7 +1079,7 @@ Postamble text <11>
 <2> v2 only: `figure/artwork@align`, `figure/artwork@alt`, `figure@suppress-title` (attributes only available in v2)
 <3> `figure/name`
 <4> v2 only: `figure/preamble` (only available in v2)
-<5> v3 only: `figure/artwork@anchor`
+<5> v3: `figure/artwork@anchor`; v2: Not supported: use `figure@anchor`
 <6> `figure/artwork@align`, `figure/artwork@alt`; `figure@type` (attribute only available in v2)
 <7> `figure/artwork`
 <8> `figure/artwork@name`

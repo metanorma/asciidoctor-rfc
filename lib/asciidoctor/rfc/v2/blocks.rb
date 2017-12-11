@@ -34,7 +34,10 @@ module Asciidoctor
 
         ret = noko do |xml|
           if node.parent.context != :example
-            xml.figure do |xml_figure|
+            figure_attributes = {
+              anchor: node.id
+            }
+            xml.figure **attr_code(figure_attributes) do |xml_figure|
               xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
             end
           else
@@ -58,7 +61,10 @@ module Asciidoctor
 
         ret = noko do |xml|
           if node.parent.context != :example
-            xml.figure do |xml_figure|
+            figure_attributes = {
+              anchor: node.id
+            }
+            xml.figure **attr_code(figure_attributes) do |xml_figure|
               xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
             end
           else
@@ -200,7 +206,10 @@ module Asciidoctor
 
         noko do |xml|
           if node.parent.context != :example
-            xml.figure do |xml_figure|
+            figure_attributes = {
+              anchor: node.id
+            }
+            xml.figure **attr_code(figure_attributes) do |xml_figure|
               xml_figure.artwork sourcecode_content, **attr_code(sourcecode_attributes)
             end
           else

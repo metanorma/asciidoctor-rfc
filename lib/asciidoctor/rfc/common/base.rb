@@ -361,13 +361,13 @@ HERE
       end
 
       def current_location(node)
-return "Line #{node.lineno}" if !node.lineno.nil? and !node.lineno.empty?
-return "ID #{node.id}" if !node.id.nil? 
-        while !node.nil? and node.level > 0 and node.context != :section
-node = node.parent
-return "Section: #{node.title}" if !node.nil? and node.context == :section
-end
-return "??"
+        return "Line #{node.lineno}" if node.respond_to?(:lineno) and !node.lineno.nil? and !node.lineno.empty?
+        return "ID #{node.id}" if node.respond_to?(:id) and !node.id.nil? 
+        while !node.nil? and (!node.respond_to?(:level) || node.level > 0) and node.context != :section
+          node = node.parent
+          return "Section: #{node.title}" if !node.nil? and node.context == :section
+        end
+        return "??"
       end
 
       def cache_workgroup(node)
@@ -387,7 +387,7 @@ return "??"
             STDERR.puts "Reading workgroups from https://tools.ietf.org/wg/..."
             Kernel.open("https://tools.ietf.org/wg/") do |f|
               f.each_line do |line|
-		line.scan(%r{<td width="50%" style='padding: 0 1ex'>([^<]+)</td>}) do |w|
+                line.scan(%r{<td width="50%" style='padding: 0 1ex'>([^<]+)</td>}) do |w|
                   wg << w[0].gsub(/\s+$/, "").gsub(/Working Group$/, "")
                 end
               end
