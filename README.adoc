@@ -1,4 +1,4 @@
-= Writing Internet-Drafts and RFCs in AsciiDoc
+= AsciiRFC: Writing Internet-Drafts and RFCs in AsciiDoc
 :source-highlighter: coderay
 :icons: font
 
@@ -23,12 +23,16 @@ RFC XML output in both v3 and v2 formats:
 * v3 RFC XML (https://tools.ietf.org/html/rfc7991[RFC 7991])
 * v2 RFC XML (https://tools.ietf.org/html/rfc7749[RFC 7749])
 
-Its syntax is designed to be "`native-asciidoctor`" as much as possible, with some
-templated use of attributes to convey added information for RFC XML output.
+Its syntax is designed to be "`native-asciidoctor`" as much as possible, with
+some templated use of attributes to convey added information for RFC XML
+output.
+
 We refer to the version of Asciidoc markup processed by this gem as AsciiRFC.
-See also https://github.com/riboseinc/rfc-asciidoc-rfc for our Internet Draft
-documenting this use of Asciidoc; this Readme documents the markup used in full
-detail.
+
+This README documents the AsciiRFC markup in full detail. For further
+information about AsciiRFC, please refer to the 
+https://datatracker.ietf.org/doc/draft-ribose-asciirfc/[AsciiRFC IETF Internet-Draft].
+
 
 == Installation
 
