@@ -70,8 +70,7 @@ The Scenic Routing Option (SRO) is placed in the IPv6 Hop-by-Hop
 Options Header that must be examined by every node along a packet's
 delivery path <<RFC2460>>.
 
-The SRO can be included in any IPv6 datagram, but multiple SROs 
-**MUST NOT** be present in the same IPv6 datagram.  The SRO has no alignment
+The SRO can be included in any IPv6 datagram, but multiple SROs **MUST NOT** be present in the same IPv6 datagram.  The SRO has no alignment
 requirement.
 
 If the SRO is set for a packet, every node en route from the packet

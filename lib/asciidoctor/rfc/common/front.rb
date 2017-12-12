@@ -88,7 +88,7 @@ module Asciidoctor
         else
           d = Date.iso8601 revdate
           date_attributes = {
-            day: d.day,
+            day: d.day.to_s.gsub(/^0/,""),
             month: Date::MONTHNAMES[d.month],
             year: d.year,
           }

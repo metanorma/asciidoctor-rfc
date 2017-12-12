@@ -16,7 +16,7 @@ M. Crispin
 
 [align=center]
 ....
-    RANDOMLY-LOSE    256
+  RANDOMLY-LOSE    256
 ....
 
 == Command meanings

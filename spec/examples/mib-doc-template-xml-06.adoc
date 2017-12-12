@@ -6,9 +6,9 @@ Editor name <Editor email>
 :ipr: trust200902
 :abbrev: Your MIB Module document name
 :fullname: Editor name
+:lastname: name
 :forename_initials: Y
 :role: editor
-:surname: Name
 :organization: Editor affiliation
 :street: Editor affiliation address
 :city: Editor affiliation address
@@ -28,7 +28,7 @@ Editor name <Editor email>
 
 [abstract]
 
-(In RFC XML v2, an absract cannot begin with a note!)
+(In RFC XML v2, an abstract cannot begin with a note!)
 
 [[CREF1: This template is for authors of IETF specifications containing MIB
   modules.  This template can be used as a starting point to produce
@@ -66,9 +66,9 @@ For updated information on MIB module guidelines and templates, see
 <<RFC4181>> and the OPS Area web page and wiki.
 
 For information on writing internet drafts or RFCs, see
-http://www.ietf.org/ietf/1id-guidelines.txt and 
+\http://www.ietf.org/ietf/1id-guidelines.txt and 
 RFC2223(bis) <<RFC2223>>, and look
-at http://www.ietf.org/ID-Checklist.html for issues to note when writing
+at \http://www.ietf.org/ID-Checklist.html for issues to note when writing
 drafts.
 
 This template is not meant to be a complete list of everything
@@ -85,7 +85,7 @@ and IESG review processes.
 
 An XML2RFC template is also available. For information on XML2RFC, see
 RFC2629 <<RFC2629>>, and documentation available at
-http://xml.resource.org. The XML2RFC version includes
+\http://xml.resource.org. The XML2RFC version includes
 advice describing how to fill in each section of the template. XML2RFC generates the 
 actual internet-draft from your information, and automatically handles getting up-to-date 
 boilerplates, references, and it handles many idnits issues.
@@ -312,7 +312,7 @@ SET (change/create/delete) them.
 
 == IANA Considerations
 [[CREF22: [TEMPLATE TODO] In order to comply with IESG policy as set forth in
-http://www.ietf.org/ID-Checklist.html, every Internet-Draft that is
+\http://www.ietf.org/ID-Checklist.html, every Internet-Draft that is
 submitted to the IESG for publication MUST contain an IANA
 Considerations section. The requirements for this section vary depending
 what actions are required of the IANA. See "Guidelines for Writing an IANA 

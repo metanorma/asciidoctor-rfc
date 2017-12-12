@@ -663,7 +663,7 @@ an out-of-band channel.
 
 The notification protocol is closely modeled after XMPP's
 In-Band Bytestreams (IBB, see
-http://xmpp.org/extensions/xep-0047.html). Just replace the
+\http://xmpp.org/extensions/xep-0047.html). Just replace the
 namespace and insert the STuPiD Retrieval URI instead of the
 actual Base64 encoded data, see <<figxmpnots>>.
 (Note that the current proposal redundantly sends a sid and a
@@ -678,10 +678,10 @@ then this indicates that a notification has been lost. The
 recipient **MUST NOT** process such an out-of-sequence notification,
 nor any that follow it within the same session; instead, the
 recipient **MUST** consider the session invalid.  (Adapted from
-http://xmpp.org/extensions/xep-0047.html#send)
+\http://xmpp.org/extensions/xep-0047.html#send)
 
 Of course, other methods can be used for setup and teardown, such as Jingle
-(see http://xmpp.org/extensions/xep-0261.html).
+(see \http://xmpp.org/extensions/xep-0261.html).
 
 [#figxmpcri]
 .Creating a Bytestream: Initiator requests session

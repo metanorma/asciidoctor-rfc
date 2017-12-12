@@ -29,7 +29,7 @@ Chris Smith <chrissmith@example.com>; Kim Jones <jk@lmn.op>
 :inline-definition-lists: true
 :toc-include: false
 :compact: yes
-:subcompact: yes
+:subcompact: no
 :strict: yes
 :rfc2629xslt: true
 
