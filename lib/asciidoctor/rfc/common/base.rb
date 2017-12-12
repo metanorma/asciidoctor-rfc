@@ -5,6 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require "pp"
+require "set"
 
 module Asciidoctor
   module RFC::Common
@@ -439,6 +440,79 @@ HERE
         end
         biblio
       end
+
+      # insert bibliography based on anchors, references directory, and list of normatives in doc attribute
+      def insert_biblio(node, xmldoc)
+        # we want no references in this document, so we can ignore any anchors of references
+        xmldoc.xpath("//reference").each do |r|
+          r.remove
+        end
+        refs = Set.new
+        xmldoc.xpath("//xref").each do |r|
+          refs << r["target"]
+        end
+        xmldoc.xpath("//relref").each do |r|
+          refs << r["target"]
+        end
+        anchors = Set.new
+        # we have no references in this document, so any remaining anchors are internal cross-refs only
+        xmldoc.xpath("//@anchor").each do |r|
+          anchors << r.value
+        end
+        refs = refs - anchors
+
+        norm_refs_spec = Set.new(node.attr("normative").split(/,[ ]?/))
+        norm_refs = refs.intersection(norm_refs_spec)
+        info_refs = refs - norm_refs
+        seen_norm_refs = Set.new
+        seen_info_refs = Set.new
+        norm_refxml = []
+        info_refxml = []
+
+        bibliodir = node.attr("biblio-dir")
+        Dir.foreach bibliodir do |f|
+          next if f == '.' or f == '..'
+          text = File.read("#{bibliodir}/#{f}")
+          next unless text =~ /<reference/
+          text =~ /<reference[^>]*anchor=['"]([^'"]*)/
+          anchor = Regexp.last_match(1)
+          next if anchor.nil? or anchor.empty?
+          if norm_refs.include?(anchor)
+            norm_refxml << text
+            seen_norm_refs << anchor
+          else
+            info_refxml << text
+            seen_info_refs << anchor
+          end 
+        end
+
+        # Add shell references for any external references
+        biblio = cache_biblio(node)
+        pp norm_refs
+        pp seen_norm_refs
+        pp info_refs
+        pp seen_info_refs
+        (norm_refs - seen_norm_refs).each do |r|
+          if biblio.has_key?(r) 
+            norm_refxml << %Q{<reference anchor="#{r}"/>}
+          end
+        end
+        (info_refs - seen_info_refs).each do |r|
+          if biblio.has_key?(r) 
+            info_refxml << %Q{<reference anchor="#{r}"/>}
+          end
+        end
+
+        puts xmldoc.to_s
+        xml_location = xmldoc.at('//references[@title="Normative References"or name="Normative References"]')
+        xml_location.children = (Nokogiri::XML.fragment(norm_refxml.join)) unless xml_location.nil?
+        xml_location = xmldoc.at('//references[@title="Informative References"or name="Informative References"]')
+        xml_location.children = (Nokogiri::XML.fragment(info_refxml.join)) unless xml_location.nil?
+        puts xmldoc.to_s
+        xmldoc
+      end
+
+
     end
   end
 end
