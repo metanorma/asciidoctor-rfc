@@ -201,9 +201,7 @@ module Asciidoctor
             title: node.title,
           }
           if node.blocks.empty?
-            result << noko do |xml|
-                xml.references **references_attributes
-            end
+            result << noko { |xml| xml.references **references_attributes }
           end
           node.blocks.each do |block|
             if block.context == :section

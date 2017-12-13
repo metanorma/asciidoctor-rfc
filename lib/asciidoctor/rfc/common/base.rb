@@ -444,21 +444,14 @@ HERE
       # insert bibliography based on anchors, references directory, and list of normatives in doc attribute
       def insert_biblio(node, xmldoc)
         # we want no references in this document, so we can ignore any anchors of references
-        xmldoc.xpath("//reference").each do |r|
-          r.remove
-        end
+        xmldoc.xpath("//referencegroup").each { |r| r.remove }
+        xmldoc.xpath("//reference").each { |r| r.remove }
         refs = Set.new
-        xmldoc.xpath("//xref").each do |r|
-          refs << r["target"]
-        end
-        xmldoc.xpath("//relref").each do |r|
-          refs << r["target"]
-        end
+        xmldoc.xpath("//xref").each { |r| refs << r["target"] }
+        xmldoc.xpath("//relref").each { |r| refs << r["target"] }
         anchors = Set.new
         # we have no references in this document, so any remaining anchors are internal cross-refs only
-        xmldoc.xpath("//@anchor").each do |r|
-          anchors << r.value
-        end
+        xmldoc.xpath("//@anchor").each { |r| anchors << r.value }
         refs = refs - anchors
 
         norm_refs_spec = Set.new(node.attr("normative").split(/,[ ]?/))
