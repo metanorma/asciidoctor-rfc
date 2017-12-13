@@ -466,49 +466,53 @@ HERE
         info_refs = refs - norm_refs
         seen_norm_refs = Set.new
         seen_info_refs = Set.new
-        norm_refxml = []
-        info_refxml = []
+        norm_refxml_in = {}
+        info_refxml_in = {}
+        norm_refxml_out = []
+        info_refxml_out = []
 
         bibliodir = node.attr("biblio-dir")
         Dir.foreach bibliodir do |f|
           next if f == '.' or f == '..'
-          text = File.read("#{bibliodir}/#{f}")
+          text = File.read("#{bibliodir}/#{f}", encoding: "utf-8")
           next unless text =~ /<reference/
           text =~ /<reference[^>]*anchor=['"]([^'"]*)/
           anchor = Regexp.last_match(1)
           next if anchor.nil? or anchor.empty?
           if norm_refs.include?(anchor)
-            norm_refxml << text
+            norm_refxml_in[anchor] = text
             seen_norm_refs << anchor
           else
-            info_refxml << text
+            info_refxml_in[anchor] = text
             seen_info_refs << anchor
           end 
         end
 
-        # Add shell references for any external references
         biblio = cache_biblio(node)
-        pp norm_refs
-        pp seen_norm_refs
-        pp info_refs
-        pp seen_info_refs
-        (norm_refs - seen_norm_refs).each do |r|
-          if biblio.has_key?(r) 
-            norm_refxml << %Q{<reference anchor="#{r}"/>}
+        (norm_refs).each do |r|
+          if norm_refxml_in.has_key?(r)
+            # priority to on-disk references over skeleton references: they may contain draft information
+            norm_refxml_out << norm_refxml_in[r]
+          elsif biblio.has_key?(r)
+            norm_refxml_out << %Q{<reference anchor="#{r}"/>}
+          else 
+            warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
           end
         end
-        (info_refs - seen_info_refs).each do |r|
-          if biblio.has_key?(r) 
-            info_refxml << %Q{<reference anchor="#{r}"/>}
+        (info_refs).each do |r|
+          if info_refxml_in.has_key?(r)
+            info_refxml_out << info_refxml_in[r]
+          elsif biblio.has_key?(r) 
+            info_refxml_out << %Q{<reference anchor="#{r}"/>}
+          else 
+            warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
           end
         end
 
-        puts xmldoc.to_s
-        xml_location = xmldoc.at('//references[@title="Normative References"or name="Normative References"]')
-        xml_location.children = (Nokogiri::XML.fragment(norm_refxml.join)) unless xml_location.nil?
-        xml_location = xmldoc.at('//references[@title="Informative References"or name="Informative References"]')
-        xml_location.children = (Nokogiri::XML.fragment(info_refxml.join)) unless xml_location.nil?
-        puts xmldoc.to_s
+        xml_location = xmldoc.at('//references[@title="Normative References" or name="Normative References"]')
+        xml_location.children = (Nokogiri::XML.fragment(norm_refxml_out.join)) unless xml_location.nil?
+        xml_location = xmldoc.at('//references[@title="Informative References" or name="Informative References"]')
+        xml_location.children = (Nokogiri::XML.fragment(info_refxml_out.join)) unless xml_location.nil?
         xmldoc
       end
 

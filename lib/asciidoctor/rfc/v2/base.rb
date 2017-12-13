@@ -200,7 +200,11 @@ module Asciidoctor
           references_attributes = {
             title: node.title,
           }
-
+          if node.blocks.empty?
+            result << noko do |xml|
+                xml.references **references_attributes
+            end
+          end
           node.blocks.each do |block|
             if block.context == :section
               result << node.content
@@ -209,8 +213,6 @@ module Asciidoctor
               #   block containing <reference> tags.
 
               result << noko do |xml|
-                # xml.references **attr_code(references_attributes) do |xml_references|
-                #  xml_references << reflist(block).join("\n")
                 xml.references **references_attributes do |xml_references|
                   # NOTE: we're allowing the user to do more or less whathever
                   #   in the passthrough since the xpath below just fishes out ALL
