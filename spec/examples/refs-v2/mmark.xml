@@ -1,0 +1,9 @@
+<reference  anchor='mmark' target='https://github.com/miekg/mmark'>
+<front>
+<title>Using mmark to create I-Ds and RFCs</title>
+<author initials='R.' surname='Gieben' fullname='R. (Miek) Gieben'><organization /></author>
+<date year='2015' month='June' />
+<abstract><t>This document describes an markdown variant called mmark [mmark] that can be used to create RFC documents.  The aim of mmark is to make writing document as natural as possible, while providing a lot of power on how to structure and layout the document.</t></abstract>
+</front>
+</reference>
+

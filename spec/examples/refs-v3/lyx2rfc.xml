@@ -1,0 +1,8 @@
+<reference  anchor='lyx2rfc' target='https://github.com/nicowilliams/lyx2rfc'>
+<front>
+  <title>LyX to I-D/RFC export by way of Lyx export to XHTML and XSLT conversion to xml2rfc schema</title>
+<author initials='N.' surname='Williams' fullname='Nico Williams'><organization /></author>
+<date year='2014' />
+</front>
+</reference>
+

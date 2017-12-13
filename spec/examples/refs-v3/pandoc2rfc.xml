@@ -1,0 +1,8 @@
+<reference  anchor='pandoc2rfc' target='https://github.com/miekg/pandoc2rfc'>
+<front>
+<title>pandoc2rfc: Use pandoc to create XML suitable for xml2rfc</title>
+<author initials='R.' surname='Gieben' fullname='R. (Miek) Gieben'><organization /></author>
+<date year='2012' />
+</front>
+</reference>
+

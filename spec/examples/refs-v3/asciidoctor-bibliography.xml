@@ -1,0 +1,19 @@
+<reference  anchor='asciidoctor-bibliography' target='https://github.com/riboseinc/asciidoctor-bibliography/'>
+<front>
+  <title>Citations and Bibliography the 'asciidoctor-way'</title>
+    <author>
+      <organization>Ribose Inc.</organization>
+      <address>
+        <postal>
+          <street></street>
+          <country>Hong Kong</country>
+        </postal>
+        <email>open.source@ribose.com</email>
+        <uri>https://www.ribose.com</uri>
+      </address>
+    </author>
+<date year='2017' month='November' />
+</front>
+</reference>
+
+

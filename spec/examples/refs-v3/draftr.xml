@@ -1,0 +1,8 @@
+<reference  anchor='draftr' target='https://ipv.sx/draftr/'>
+<front>
+<title>draftr: an HTML front-end to pandoc2rfc</title>
+<author initials='R.' surname='Barnes' fullname='Richard Barnes'><organization /></author>
+<date year='2017' month='Nov' />
+</front>
+</reference>
+

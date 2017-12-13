@@ -1,0 +1,17 @@
+<reference anchor="I-D.abarth-cake">
+<front>
+<title>Simple HTTP State Management Mechanism</title>
+<author initials="A" surname="Barth" fullname="Adam Barth">
+<organization/>
+</author>
+<date month="August" day="22" year="2010"/>
+<abstract>
+<t>
+This document describes a simple HTTP state management mechanism, called cake, that lets HTTP servers maintain stateful sessions with HTTP user agents. This mechanism is harmonized with the same-origin security model and provides both confidentiality and integrity protection against active network attackers. In addition, the mechanism is robust to cross-site request forgery attacks.Editorial Note (To be removed by RFC Editor) If you have suggestions for improving this document, please send email to <mailto:http-state@ietf.org>. Further Working Group information is available from <https://tools.ietf.org/wg/httpstate/>.
+</t>
+</abstract>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-abarth-cake-00"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-abarth-cake-00.txt"/>
+</reference>
+

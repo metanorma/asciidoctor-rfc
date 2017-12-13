@@ -1,0 +1,11 @@
+<reference  anchor='Asciidoctor-Manual' target='http://asciidoctor.org/docs/user-manual/'>
+<front>
+  <title>Asciidoctor: A fast text processor &amp; publishing toolchain for converting AsciiDoc to HTML5, DocBook &amp; more.</title>
+<author initials='D.' surname='Allen' fullname='Dan Allen'><organization /></author>
+<author initials='R.' surname='Waldron' fullname='Ryan Waldron'><organization /></author>
+<author initials='S.' surname='White' fullname='Sarah White'><organization /></author>
+<date year='2017' month='November' />
+</front>
+</reference>
+
+
