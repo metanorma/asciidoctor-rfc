@@ -24,9 +24,12 @@ module Asciidoctor
           # render equivalent in v2
           matched = /(?<section>\S+)\s+(?<format>[a-z]+)(: )?(?<text>.*)$/.match node.text
 
-          target = node.target.gsub(/\..*$/, "").gsub(/^#/, "")
+          puts node.target
+            # fragment inserts file suffix, e.g. rfc2911#fragment becomes rfc2911.xml#fragment
+          target = node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1")
           reftarget = target
-          reftarget = "#{target}##{node.attributes['fragment']}" unless node.attributes["path"].nil?
+          warn %(asciidoctor: WARNING (#{current_location(node)}): fragments not supported on crossreferences in v2: #{node.target} #{node.text}) if node.target =~ /.#/
+          #reftarget = "#{target}##{node.attributes['fragment']}" unless node.attributes["path"].nil?
 
           xref_contents = ""
           case matched[:format]
@@ -48,7 +51,7 @@ module Asciidoctor
           end
 
           xref_attributes = {
-            target: reftarget,
+            target: target,
           }.reject { |_, value| value.nil? }
 
         else
@@ -61,8 +64,10 @@ module Asciidoctor
                           end
           matched ||= {}
 
+          warn %(asciidoctor: WARNING (#{current_location(node)}): fragments not supported on crossreferences in v2: #{node.target} #{node.text}) if node.target =~ /.#/
           xref_attributes = {
-            target: node.target.gsub(/^#/, ""),
+            # fragment inserts file suffix, e.g. rfc2911#fragment becomes rfc2911.xml#fragment
+            target: node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1"),
             format: matched[:format],
             align: node.attr("align"),
           }

@@ -30,7 +30,8 @@ module Asciidoctor
             relative: node.attributes["path"].nil? ? nil : node.attributes["fragment"],
             section: matched[:section],
             displayFormat: matched[:format],
-            target: node.target.gsub(/\..*$/, "").gsub(/^#/, ""),
+            # fragment inserts file suffix, e.g. rfc2911#fragment becomes rfc2911.xml#fragment
+            target: node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1")
           }
 
           noko do |xml|
@@ -38,18 +39,17 @@ module Asciidoctor
           end.join
         else
           xref_contents = node.text
-
           matched = /^format=(?<format>counter|title|none|default)(?<text>:\s*.*)?$/.match xref_contents
-
           xref_contents = if matched.nil?
                             xref_contents
                           else
                             matched[:text].nil? ? "" : matched[:text].gsub(/^:\s*/, "")
                           end
 
-          xref_attributes = {
+          warn %(asciidoctor: WARNING (#{current_location(node)}): fragments not supported on crossreferences in v3 without relref: #{node.target} #{node.text}) if node.target =~ /.#/
+            xref_attributes = {
             format: matched&.[](:format),
-            target: node.target.gsub(/^#/, ""),
+            target: node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1"),
           }
 
           noko do |xml|
@@ -60,7 +60,6 @@ module Asciidoctor
 
       def inline_anchor_link(node)
         eref_contents = node.target == node.text ? nil : node.text
-
         eref_attributes = {
           target: node.target,
         }
