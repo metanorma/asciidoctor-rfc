@@ -88,7 +88,7 @@ module Asciidoctor
         Validate::validate(ret1)
         ret1 = resolve_references(node, ret1)
         # Validate::validate(ret1)
-        ret1
+        ret1.to_xml
       end
 
       def resolve_references(node, doc)
