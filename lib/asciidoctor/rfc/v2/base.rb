@@ -91,7 +91,7 @@ module Asciidoctor
         ret1 = Nokogiri::XML(ret)
         # Validate::validate(ret1)
         ret1 = set_pis(node, ret1)
-        ret1 = insert_biblio(node, ret1) if node.attr("biblio-insert") == "true"
+        ret1 = insert_biblio(node, ret1) unless node.attr("biblio-dir").nil? || node.attr("biblio-dir").empty?
         Validate::validate(ret1)
         ret1 = resolve_references(node, ret1)
         # Validate::validate(ret1)

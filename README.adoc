@@ -276,6 +276,13 @@ Delete and reload the caches of references to be included externally, and of wor
 during processing of this document.
 The caches are stored in `~/.asciidoc-rfc-biblio-cache.json` and `~/.asciidoc-rfc-workgroup-cache.json`.
 
+|`:biblio-dir:`
+|Optional. Name of directory. If present, gives the name of a directory from which RFC XML references are to be read into the document, rather than assuming the references are already present in the document.
+
+|`:normative:`
+|Optional. Comma-delimited list of reference anchors. Used in conjunction with `:biblio-dir:`, which uses a single directory for all references: this attribute
+lists those references which are to be considered normative, and listed under the _Normative References_ heading.
+
 |===
 
 Any of these global options can also be included in the command line call, for either
@@ -291,14 +298,14 @@ $ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc
 [[caches]]
 ==== Caches
 
-The cache of bibliographic information is built from screenscraping the contents of:
+The cache of externally addressable bibliographic information is built from screenscraping the contents of:
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml/
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml2/ 
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/ 
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml5/
 
-The cache of current workgroups is built from screenscraping the contents of:
+The cache of current IETF workgroups is built from screenscraping the contents of:
 * https://tools.ietf.org/wg/
 
 The caches are not rebuilt daily, as the bibliographic cache is with xml2rfc. 
@@ -1222,7 +1229,7 @@ Sidebar <2>
 <2> `<aside>Sidebar</aside>`
 
 
-=== References
+=== References: Embedded in Document
 
 References are expected to be provided in raw RFC XML v2 format. For v3, a list of crossreferences may
 precede the block of references, with alternative text. This will not be rendered, but it will be used
@@ -1233,6 +1240,9 @@ and is rendered as `<displayreference target="ref1" to="alt1"/>`.
 RFC requires two separate bibliographies, one for normative and one for informative references;
 either can be omitted. All bibliography sections in the must be styled with the prefix `[bibliography]`,
 and must appear in sequence, before any appendices.
+
+By default, the references cited must be included as raw RFC XML, and separated
+into the normative and informative sections.
 
 [source,asciidoc]
 --
@@ -1259,6 +1269,55 @@ In postprocessing, bibliographic entries available from http://xml.resource.org/
 with external references to that entry, using XML entities in RFC XML v2, and XML includes
 in RFC XML v3. Do not insert your own entities or XML includes into the references; the gem will have difficulty
 processing them.
+
+[[external-directory-refs]]
+=== References: External Directory
+
+As an alternative, the document attribute `:biblio-dir:` can nominate a directory in which separate XML files can be placed, one for each reference to be included. (RFC XML v3 referencegroup elements will also be recognised as files.) The gem will read in from that directory only the files that have actually been cited, and insert them into the appropriate bibliography, without the references needing to be given under the bibliographies as above. (In fact, any XML already provided will be deleted.) By default, references will be considered informative; the document attribute `:normative:` can be used to specify a comma-delimited list of normative references.
+
+The gem will issue a warning if any cited reference is not included in the directory. However, external references do not have to be included in the directory: they will be recognised by comparing their anchors against the external bibliography cache, and referenced as entities or includes. However, particular drafts of Internet-Draft documents do still need to be included as separate documents (see <<external-ref-lookup>>.)
+
+For example:
+
+[source,asciidoc]
+--
+= The Holy Hand Grenade of Antioch
+Arthur Pendragon
+:doctype: internet-draft
+:workgroup: silly
+:biblio-dir: refs <1>
+:normative: RFC2119, AsciiDoc <1>
+
+[[xyz]]
+== Hello
+Hello
+
+* a <<RFC2119,2.3 of: See internet draft subsection>> <3>
+* b <<I-D.abarth-cake>>
+* b2 <<I-D.abarth-cake,what>>
+* b1 <<I-D.abarth-cake,2.3 of: See internet draft subsection>> <3>
+* c <<xyz,format=counter: xyzzy>> <4>
+* d <<biblio>> <4>
+* e <<AsciiDoc,AsciiDoctor>>
+* f <<mathrefs>>
+
+
+[[biblio]]
+=== Biblio
+See biblio
+
+[bibliography]
+== Normative References <5>
+
+[bibliography]
+== Informative References <6>
+--
+<1> The RFC XML references are included in the directory `./refs`, with one file per reference. For example, we would expect it to contain a file corresponding to the reference `mathrefs`. A file corresponding to `RFC2119` is optional, and in fact will be ignored, since the anchor is recognised as an external reference. A file corresponding to `I-D.abarth-cake` will not be ignored, if that file contains a `seriesInfo` element nominating a specific draft version.
+<2> The references in the `./refs` directory are by default considered informative; this attribute indicates that `RFC2119` and `AsciiDoc` are to be considered normative.
+<3> References are recognised in `relref` as well as `xref` elements.
+<4> The gem differentiates between bibliographic references and crossreferences to other anchors within the document.
+<5> The bibliographic headers need to be provided as above, and its titles are expected to be "Normative References" and "Informative References"; the gem will look for those titles specifically in order to insert the references it identifies from the file. However, no XML content is expected to be provided under each heading, and any XML content that is provided will be ignored.
+
 
 === Appendices
 
@@ -1378,9 +1437,13 @@ in the reference that identifies the specific version; the anchor is the same fo
 </reference>
 --
 
+As discussed under <<external-directory-refs>>, any citations of specific versions of an Internet-Draft need to be included as explicit files in an external directory of RFC XML references, since the seriesInfo draft information cannot be recovered by the anchor. However, any other external references do not require a corresponding directory file (although normative references do still need to be named in the `:normative:` document attribute.)
 
 == asciidoc-bibliography integration
 
+[TODO]
+
+////
 The https://github.com/riboseinc/asciidoctor-bibliography[asciidoc-bibliography] gem allows citations to be imported
 into asciidoc from BibTex or RFC XML files. The gem natively requires the user to provide the correct, presorted
 RFC XML references within asciidoc separately for normative and for informative references. Using the asciidoc-bibliography
@@ -1449,6 +1512,7 @@ asciidoctor-rfc invocation:
 ** `asciidoctor -b rfc2 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc'  spec/examples/refs-v2.adoc`
 ** `asciidoctor -b rfc3 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc'  spec/examples/refs-v3.adoc`
 . `referencegroup` citations are not currently supported by the asciidoctor-bibliography gem.
+////
 
 == Examples
 
