@@ -305,8 +305,9 @@ The cache of externally addressable bibliographic information is built from scre
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/ 
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml5/
 
-The cache of current IETF workgroups is built from screenscraping the contents of:
+The cache of current IETF and IRTF workgroups is built from screenscraping the contents of:
 * https://tools.ietf.org/wg/
+* https://irtf.org/groups
 
 The caches are not rebuilt daily, as the bibliographic cache is with xml2rfc. 
 If you want to refresh the caches, either delete
@@ -383,7 +384,7 @@ https://tools.ietf.org/html/rfc7991#section-2.4[here].
 | `front/area`
 
 | `:workgroup:`
-| Optional. Comma delimited text on which IETF workgroup or research group this
+| Optional. Comma delimited text on which IETF or IRTF workgroup or research group this
 document originates from. See https://tools.ietf.org/html/rfc7991#section-2.65[here].
 | `front/workgroup`
 
