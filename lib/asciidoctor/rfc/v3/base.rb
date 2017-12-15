@@ -85,6 +85,7 @@ module Asciidoctor
         ret = cleanup(ret)
         ret1 = Nokogiri::XML(ret)
         ret1 = set_pis(node, ret1)
+        ret1 = insert_biblio(node, ret1) if node.attr("biblio-insert") == "true"
         Validate::validate(ret1)
         ret1 = resolve_references(node, ret1)
         # Validate::validate(ret1)
@@ -92,7 +93,7 @@ module Asciidoctor
       end
 
       def resolve_references(node, doc)
-        extract_entities(node, doc).each do |entity|
+       extract_entities(node, doc).each do |entity|
           # TODO actual XML
           entity[:node].replace("<xi:include href='#{entity[:url]}' parse='text'/>")
         end
@@ -205,6 +206,13 @@ module Asciidoctor
             anchor: node.id,
           }
 
+          if node.blocks.empty?
+            result << noko do |xml| 
+              xml.references **references_attributes do |xml_references|
+                xml_references.name node.title unless node.title.nil?
+              end
+            end
+          end
           node.blocks.each do |block|
             if block.context == :section
               result << section(block)

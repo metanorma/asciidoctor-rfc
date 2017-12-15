@@ -1,0 +1,8 @@
+<reference  anchor='kramdown-rfc2629' target='https://github.com/cabo/kramdown-rfc2629'>
+<front>
+<title>kramdown-rfc2629: An RFC2629 (XML2RFC) backend for Thomas Leitner's kramdown markdown parser</title>
+<author initials='C.' surname='Bormann' fullname='Carsten Bormann'><organization /></author>
+<date year='2017' month='Nov' />
+</front>
+</reference>
+

@@ -1,0 +1,19 @@
+<referencegroup anchor='mathrefs'>
+<reference  anchor='AsciiMathML' target='http://asciimath.org'>
+<front>
+  <title>AsciiMath is an easy-to-write markup language for mathematics.</title>
+<author/>
+<date year='2017' month='November' />
+</front>
+</reference>
+
+  
+<reference  anchor='MathJax' target='https://www.mathjax.org'>
+<front>
+  <title>MathJax: A JavaScript display engine for mathematics that works in all browsers.</title>
+<author/>
+<date year='2017' month='November' />
+</front>
+</reference>
+
+</referencegroup>

@@ -1,0 +1,18 @@
+<reference  anchor='asciidoctor-rfc' target='https://github.com/riboseinc/asciidoctor-rfc/'>
+<front>
+  <title>asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc, the “asciidoctor-way”.</title>
+    <author>
+      <organization>Ribose Inc.</organization>
+      <address>
+        <postal>
+          <street></street>
+          <country>Hong Kong</country>
+        </postal>
+        <email>open.source@ribose.com</email>
+        <uri>https://www.ribose.com</uri>
+      </address>
+    </author>
+<date year='2017' month='November' />
+</front>
+</reference>
+

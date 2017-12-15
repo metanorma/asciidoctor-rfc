@@ -1,0 +1,29 @@
+= The Holy Hand Grenade of Antioch
+Arthur Pendragon
+:doctype: internet-draft
+:workgroup: silly
+:normative: RFC2119, AsciiDoc
+:biblio-insert: true
+:biblio-dir: refs-v2
+
+[[xyz]]
+== Hello
+Hello
+
+* a <<RFC2119,2.3 of: See internet draft subsection>>
+* b <<I-D.abarth-cake>>
+* c <<xyz,format=counter: xyzzy>>
+* d <<biblio>>
+* e <<AsciiDoc,AsciiDoctor>>
+
+
+[[biblio]]
+=== Biblio
+See biblio
+
+[bibliography]
+== Normative References
+
+[bibliography]
+== Informative References
+
