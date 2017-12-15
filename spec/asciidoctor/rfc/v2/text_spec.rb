@@ -15,10 +15,9 @@ end
 def norm(text)
   text.gsub(%r{<spanx style="strong">(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|NOT RECOMMENDED|RECOMMENDED|MAY|OPTIONAL)</spanx>}, "\\1").
     gsub(%r{<t hangText="([^"]+:) ">}, %q{<t hangText="\\1">}).
-    gsub(/Y\. name, Ed\./, "Y. Name, Ed.").
-    gsub(/name                      Expires/, "Name                      Expires").
-    gsub(/November 03, 2017/, "November 3, 2017").
-    gsub(/July 05, 2009/, "July 5, 2009")
+    gsub(%r{<date year="2009" month="July" day="05"/>}, %q{<date year="2009" month="July" day="5"/>}).
+    gsub(%r{<date year="2017" month="November" day="03"/>}, %q{<date year="2017" month="November" day="03"/>})
+    gsub(%r{<author fullname="Editor name"}, %q{<author fullname="Editor Name"})
 end
 
 def remove_pages(text)
