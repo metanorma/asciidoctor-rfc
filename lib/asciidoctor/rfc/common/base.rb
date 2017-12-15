@@ -99,14 +99,14 @@ module Asciidoctor
         workgroups = cache_workgroup(node)
         node.attr("workgroup")&.split(/, ?/)&.each do |wg|
           if wg =~ / (Working Group)$/i
-            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Working Group" from working group #{wg}) 
-            wg = wg.gsub(/ Working Group$/i, "")
+            warn %(asciidoctor: WARNING (#{current_location(node)}): suffix "Working Group" will be stripped in published RFC from #{wg}) 
+            wg_norm = wg.gsub(/ Working Group$/i, "")
           end
           if wg =~ / (Research Group)$/i
-            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Research Group" from working group #{wg}) 
-            wg = wg.gsub(/ Research Group$/i, "")
+            warn %(asciidoctor: WARNING (#{current_location(node)}): suffix "Research Group" will be stripped from working group #{wg}) 
+            wg_norm = wg.gsub(/ Research Group$/i, "")
           end
-          warn %(asciidoctor: WARNING (#{current_location(node)}): unrecognised working group #{wg}) unless workgroups.include?(wg)
+          warn %(asciidoctor: WARNING (#{current_location(node)}): unrecognised working group #{wg}) unless workgroups.include?(wg_norm)
           xml.workgroup { |w| w << wg }
         end
       end
