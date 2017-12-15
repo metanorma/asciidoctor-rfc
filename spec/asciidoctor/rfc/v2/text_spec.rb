@@ -34,11 +34,11 @@ def text_compare2(old_xml, new_xml)
 end
 
 describe Asciidoctor::RFC::V2::Converter do
-  it "processes RFC 6350 RFC XML v2 example with bibliography preprocessing, with equivalent text" do
-    system("asciidoctor -b rfc2 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc' ./spec/examples/rfc6350.adoc -o spec/examples/rfc6350.xml")
-    text_compare2("spec/examples/rfc6350.xml", "spec/examples/rfc6350.xml")
-    expect(File.read("spec/examples/rfc6350.xml.txt")).to eq(File.read("spec/examples/rfc6350.txt.orig"))
-  end
+  # it "processes RFC 6350 RFC XML v2 example with bibliography preprocessing, with equivalent text" do
+  #  system("asciidoctor -b rfc2 -r 'asciidoctor-bibliography' -r 'asciidoctor-rfc' ./spec/examples/rfc6350.adoc -o spec/examples/rfc6350.xml")
+  #  text_compare2("spec/examples/rfc6350.xml", "spec/examples/rfc6350.xml")
+  #  expect(File.read("spec/examples/rfc6350.xml.txt")).to eq(File.read("spec/examples/rfc6350.txt.orig"))
+  # end
   it "processes Davies template with equivalent text" do
     system("bin/asciidoctor-rfc2 spec/examples/davies-template-bare-06.adoc")
     text_compare("spec/examples/davies-template-bare-06.xml.orig", "spec/examples/davies-template-bare-06.xml")
