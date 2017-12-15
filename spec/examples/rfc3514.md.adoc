@@ -85,7 +85,7 @@ attack programs **MUST** use it.
 Multi-level insecure operating systems may have special levels for
 attack programs; the evil bit **MUST** be set by default on packets
 emanating from programs running at such levels.  However, the system
-*MAY* provide an API to allow it to be cleared for non-malicious
+_MAY_ provide an API to allow it to be cleared for non-malicious
 activity by users who normally engage in attack behavior.
 
 Fragments that by themselves are dangerous **MUST** have the evil bit

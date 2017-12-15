@@ -99,7 +99,7 @@ with conversation state that is better managed in the application
 layer.
 
 This specification defines a pair of CoAP options to enable 
-*block-wise* access to resource representations.
+_block-wise_ access to resource representations.
 The Block options provide a minimal way to transfer larger
 resource representations in a block-wise fashion.
 The overriding objective is to avoid

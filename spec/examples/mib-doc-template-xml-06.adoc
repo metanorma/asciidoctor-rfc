@@ -5,8 +5,8 @@ Editor name <Editor email>
 :name: Your MIB Document name here rev07
 :ipr: trust200902
 :abbrev: Your MIB Module document name
-:fullname: Editor name
-:lastname: name
+:fullname: Editor Name
+:lastname: Name
 :forename_initials: Y
 :role: editor
 :organization: Editor affiliation
@@ -27,8 +27,6 @@ Editor name <Editor email>
 :inline: yes
 
 [abstract]
-
-(In RFC XML v2, an abstract cannot begin with a note!)
 
 [[CREF1: This template is for authors of IETF specifications containing MIB
   modules.  This template can be used as a starting point to produce

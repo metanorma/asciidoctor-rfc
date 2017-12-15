@@ -13,10 +13,10 @@ def text_compare1(old_xml, new_xml)
 end
 
 def norm(text)
-  text.gsub(%r{<spanx style="strong">(MUST|MUST NOT|REQUIRED|SHALL|SHALL NOT|SHOULD|SHOULD NOT|NOT RECOMMENDED|RECOMMENDED|MAY|OPTIONAL)</spanx>}, "\\1").
+  text.gsub(%r{<spanx style="strong">(MUST|MUST\s+NOT|REQUIRED|SHALL|SHALL\s+NOT|SHOULD|SHOULD\s+NOT|NOT\s+RECOMMENDED|RECOMMENDED|MAY|OPTIONAL)</spanx>}m, "\\1").
     gsub(%r{<t hangText="([^"]+:) ">}, %q{<t hangText="\\1">}).
     gsub(%r{<date year="2009" month="July" day="05"/>}, %q{<date year="2009" month="July" day="5"/>}).
-    gsub(%r{<date year="2017" month="November" day="03"/>}, %q{<date year="2017" month="November" day="03"/>}).
+    gsub(%r{<date year="2017" month="November" day="03"/>}, %q{<date year="2017" month="November" day="3"/>}).
     gsub(%r{<author fullname="Editor name"}, %q{<author fullname="Editor Name"})
 end
 
