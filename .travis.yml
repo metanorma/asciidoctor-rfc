@@ -8,4 +8,4 @@ install:
   - curl -SL https://tools.ietf.org/tools/idnits/idnits-2.15.00.tgz | tar xzv
   - sudo mv idnits-2.15.00/idnits /usr/local/bin/
 script:
-  - bundle exec rspec
+  - bundle exec rspec --color --format documentation --require spec_helper --require rails_helper
