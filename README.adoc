@@ -867,6 +867,10 @@ The following represent the v3 relref element
 In v2, the relref style crossreferences are rendered as equivalent `xref` crossreferences,
 inserting section numbers as appropriate.
 
+Note that fragments (e.g. `crossreference#fragment`) are not supported on the `xref@target` attribute,
+in either v2 or v3: the RFC XML specification requires that the `xref@target` attribute equals
+the value of an anchor attribute elsewhere in the document.
+
 
 === Indexing
 
