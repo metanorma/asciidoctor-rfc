@@ -19,14 +19,19 @@ def norm(text)
     gsub(%r{<date year="2017" month="November" day="03"/>}, %q{<date year="2017" month="November" day="3"/>}).
     gsub(%r{<author fullname="Editor name"}, %q{<author fullname="Editor Name"}).
     gsub(%r{<t>(Tables use ttcol to define column headers and widths[^<]+)</t>(\s*<texttable[^>]+>)}m, %q{\\2<preamble>\\1</preamble>}).
+    gsub(%r{<t>(These are sometimes called "inert" gasses[^<]+)</t>(\s*<texttable[^>]+>)}m, %q{\\2<preamble>\\1</preamble>}).
     gsub(%r{(</texttable>\s*)<t>(which is a very simple example\.)</t>}, %q{<postamble>\\2</postamble>\\1}).
+    gsub(%r{(</texttable>\s*)<t>(Source: Chemistry 101)</t>}, %q{<postamble>\\2</postamble>\\1}).
     gsub(%r{(<t hangText="Option Type">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier of the type of option)}, %q{\\1\\2}).
     gsub(%r{(<t hangText="Option Length">\s*<vspace />\s*)<vspace/>\s*(8-bit unsigned integer\.  The length of the option)}, %q{\\1\\2}).
     gsub(%r{(<t hangText="SRO Param">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier indicating Scenic Routing parameters)}, %q{\\1\\2}).
     gsub(%r{<vspace blankLines="0"/>(The highest-order two bits)}, %q{\\1}).
     gsub(%r{<vspace blankLines="0"/>(The following BIT)}, %q{\\1}).
     gsub(%r{<vspace blankLines="0"/>(The following two bits)}, %q{\\1}).
-    gsub(%r{<vspace blankLines="0"/>(The lowest-order two bits)}, %q{\\1})
+    gsub(%r{<vspace blankLines="0"/>(The lowest-order two bits)}, %q{\\1}).
+    gsub(%r{ width="25%">Name</ttcol>}, %q{>Name</ttcol>}).
+    gsub(%r{ width="25%">Atomic Number</ttcol>}, %q{>Atomic Number</ttcol>}).
+    gsub(%r{&RFC6949;}, %q{<reference anchor="RFC6949"> <front> <title>RFC Series Format Requirements and Future Development</title> <author initials="H." surname="Flanagan" fullname="H. Flanagan"> <organization/></author> <author initials="N." surname="Brownlee" fullname="N. Brownlee"> <organization/></author> <date year="2013" month="May"/> </front> <seriesInfo name="RFC" value="6949"/> <annotation>This is a primary reference work.</annotation> </reference>})
 end
 
 def remove_pages(text)

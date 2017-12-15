@@ -28,7 +28,7 @@ Chris Smith <chrissmith@example.com>; Kim Jones <jk@lmn.op>
 :keyword: XML, Imagination
 :inline-definition-lists: true
 :toc-include: false
-:compact: yes
+:compact: no
 :subcompact: no
 :strict: yes
 :rfc2629xslt: true

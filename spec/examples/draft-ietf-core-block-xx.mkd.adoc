@@ -31,6 +31,7 @@ Carsten Bormann <cabo@tzi.org>; Zach Shelby <zach@sensinode.com>
 :email_2: zach@sensinode.com
 :inline-definition-lists: true
 :rfc2629xslt: true
+:compact: no
 
 [abstract]
 CoAP is a RESTful transfer protocol for constrained nodes and networks.
