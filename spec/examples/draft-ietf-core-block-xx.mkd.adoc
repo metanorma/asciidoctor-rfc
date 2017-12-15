@@ -772,8 +772,8 @@ Numbers registry of
 |===
 | Number | Name   | Reference 
 
-|     17 | Block2 | <<RFCXXXX>> 
-|     19 | Block1 | <<RFCXXXX>> 
+|     17 | Block2 | [RFCXXXX]
+|     19 | Block1 | [RFCXXXX]
 |===
 
 This draft adds the following response code to the CoAP Response Codes registry of
@@ -785,7 +785,7 @@ This draft adds the following response code to the CoAP Response Codes registry 
 |===
 | Code | Description                    | Reference 
 
-|  136 | 4.08 Request Entity Incomplete | <<RFCXXXX>> 
+|  136 | 4.08 Request Entity Incomplete | [RFCXXXX]
 |===
 
 
@@ -952,33 +952,6 @@ The Constrained Application Protocol (CoAP) is a specialized web transfer protoc
 <format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-core-coap-18.txt"/>
 </reference>
 
-<reference anchor="RFCXXXX" target="https://www.rfc-editor.org/info/rfc7959">
-<front>
-<title>
-Block-Wise Transfers in the Constrained Application Protocol (CoAP)
-</title>
-<author initials="C." surname="Bormann" fullname="C. Bormann">
-<organization/>
-</author>
-<author initials="Z." surname="Shelby" fullname="Z. Shelby" role="editor">
-<organization/>
-</author>
-<date year="2016" month="August"/>
-<abstract>
-<t>
-The Constrained Application Protocol (CoAP) is a RESTful transfer protocol for constrained nodes and networks. Basic CoAP messages work well for small payloads from sensors and actuators; however, applications will need to transfer larger payloads occasionally -- for instance, for firmware updates. In contrast to HTTP, where TCP does the grunt work of segmenting and resequencing, CoAP is based on datagram transports such as UDP or Datagram Transport Layer Security (DTLS). These transports only offer fragmentation, which is even more problematic in constrained nodes and networks, limiting the maximum size of resource representations that can practically be transferred.
-</t>
-<t>
-Instead of relying on IP fragmentation, this specification extends basic CoAP with a pair of "Block" options for transferring multiple blocks of information from a resource representation in multiple request-response pairs. In many important cases, the Block options enable a server to be truly stateless: the server can handle each block transfer separately, with no need for a connection setup or other server-side memory of previous block transfers. Essentially, the Block options provide a minimal way to transfer larger representations in a block-wise fashion.
-</t>
-<t>
-A CoAP implementation that does not support these options generally is limited in the size of the representations that can be exchanged, so there is an expectation that the Block options will be widely used in CoAP implementations. Therefore, this specification updates RFC 7252.
-</t>
-</abstract>
-</front>
-<seriesInfo name="RFC" value="7959"/>
-<seriesInfo name="DOI" value="10.17487/RFC7959"/>
-</reference>
 ++++
 
 [bibliography]

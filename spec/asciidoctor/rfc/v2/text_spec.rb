@@ -17,7 +17,16 @@ def norm(text)
     gsub(%r{<t hangText="([^"]+:) ">}, %q{<t hangText="\\1">}).
     gsub(%r{<date year="2009" month="July" day="05"/>}, %q{<date year="2009" month="July" day="5"/>}).
     gsub(%r{<date year="2017" month="November" day="03"/>}, %q{<date year="2017" month="November" day="3"/>}).
-    gsub(%r{<author fullname="Editor name"}, %q{<author fullname="Editor Name"})
+    gsub(%r{<author fullname="Editor name"}, %q{<author fullname="Editor Name"}).
+    gsub(%r{<t>(Tables use ttcol to define column headers and widths[^<]+)</t>(\s*<texttable[^>]+>)}m, %q{\\2<preamble>\\1</preamble>}).
+    gsub(%r{(</texttable>\s*)<t>(which is a very simple example\.)</t>}, %q{<postamble>\\2</postamble>\\1}).
+    gsub(%r{(<t hangText="Option Type">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier of the type of option)}, %q{\\1\\2}).
+    gsub(%r{(<t hangText="Option Length">\s*<vspace />\s*)<vspace/>\s*(8-bit unsigned integer\.  The length of the option)}, %q{\\1\\2}).
+    gsub(%r{(<t hangText="SRO Param">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier indicating Scenic Routing parameters)}, %q{\\1\\2}).
+    gsub(%r{<vspace blankLines="0"/>(The highest-order two bits)}, %q{\\1}).
+    gsub(%r{<vspace blankLines="0"/>(The following BIT)}, %q{\\1}).
+    gsub(%r{<vspace blankLines="0"/>(The following two bits)}, %q{\\1}).
+    gsub(%r{<vspace blankLines="0"/>(The lowest-order two bits)}, %q{\\1})
 end
 
 def remove_pages(text)
@@ -94,7 +103,7 @@ describe Asciidoctor::RFC::V2::Converter do
   it "processes skel from Kramdown with equivalent text" do
     # leaving out step of running ./kramdown
     system("bin/asciidoctor-rfc2 spec/examples/skel.mkd.adoc")
-    text_compare1("spec/examples/skel.xml.orig", "spec/examples/skel.mkd.xml")
+    text_compare("spec/examples/skel.xml.orig", "spec/examples/skel.mkd.xml")
     expect(File.read("spec/examples/skel.xml.orig.txt")).to eq(File.read("spec/examples/skel.mkd.xml.txt"))
   end
   it "processes stupid-s from Kramdown with equivalent text" do

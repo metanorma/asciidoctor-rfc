@@ -113,6 +113,7 @@ HEX         act  chg  rest
 ....
 ====
 
+{blank} +
 The highest-order two bits are set to 00 so any node not
     implementing Scenic Routing will skip over this option and
     continue processing the header.  The third-highest-order bit
@@ -123,7 +124,6 @@ The highest-order two bits are set to 00 so any node not
 Option Length:: 
 +
 --
-{blank}
 8-bit unsigned integer.  The length of the option in octets
     (excluding the Option Type and Option Length fields).  The value
     **MUST** be greater than 0.
@@ -132,7 +132,6 @@ Option Length::
 SRO Param::
 +
 --
-{blank}
 8-bit identifier indicating Scenic Routing parameters encoded as a bit string.
 
 [#fig-bit-string-layout]
