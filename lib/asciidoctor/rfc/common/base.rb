@@ -256,7 +256,7 @@ module Asciidoctor
         # that most I-Ds might want to use. (Here they are set differently than
         # their defaults in xml2rfc v1.32)
 
-        if node.attr("rfc2629xslt") == "true"
+        if node.attr("rfc2629xslt") != "false"
           pi = Nokogiri::XML::ProcessingInstruction.new(doc, "xml-stylesheet",
                                                         'type="text/xsl" href="rfc2629.xslt"')
           doc.root.add_previous_sibling(pi)
