@@ -2,7 +2,9 @@ sudo: true
 language: ruby
 rvm:
   - 2.4.0
-before_install: gem install bundler -v 1.16.0
+before_install: 
+  - gem install bundler -v 1.16.0
+  - bundle install
 install:
   - sudo pip install xml2rfc
   - curl -SL https://tools.ietf.org/tools/idnits/idnits-2.15.00.tgz | tar xzv
