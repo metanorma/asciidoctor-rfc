@@ -389,7 +389,16 @@ HERE
             Kernel.open("https://tools.ietf.org/wg/") do |f|
               f.each_line do |line|
                 line.scan(%r{<td width="50%" style='padding: 0 1ex'>([^<]+)</td>}) do |w|
-                  wg << w[0].gsub(/\s+$/, "").gsub(/Working Group$/, "")
+                  wg << w[0].gsub(/\s+$/, "").gsub(/ Working Group$/, "")
+                end
+              end
+            end
+            STDERR.puts "Reading workgroups from https://irtf.org/groups..."
+            Kernel.open("https://irtf.org/groups", {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) do |f|
+              f.each_line do |line|
+                line.scan(%r{<a title="([^"]+) Research Group"[^>]+>([^<]+)<}) do |w|
+                  wg << w[0].gsub(/\s+$/, "")
+                  wg << w[1].gsub(/\s+$/, "") # abbrev
                 end
               end
             end
