@@ -18,7 +18,7 @@ def norm(text)
     gsub(%r{<date year="2009" month="July" day="05"/>}, '<date year="2009" month="July" day="5"/>').
     gsub(%r{<date year="2017" month="November" day="03"/>}, '<date year="2017" month="November" day="3"/>').
     gsub(%r{<author fullname="Editor name"}, '<author fullname="Editor Name"').
-    gsub(%r{<t>(Tables use ttcol to define column headers and widths[^<]+)</t>(\s*<texttable[^>]+>)}m, "<postamble>\\2</postamble>\\1").
+    gsub(%r{<t>(Tables use ttcol to define column headers and widths[^<]+)</t>(\s*<texttable[^>]+>)}m, "<preamble>\\2</preamble>\\1").
     gsub(%r{<t>(These are sometimes called "inert" gasses[^<]+)</t>(\s*<texttable[^>]+>)}m, "\\2<preamble>\\1</preamble>").
     gsub(%r{(</texttable>\s*)<t>(which is a very simple example\.)</t>}, "<postamble>\\2</postamble>\\1").
     gsub(%r{(</texttable>\s*)<t>(Source: Chemistry 101)</t>}, "<postamble>\\2</postamble>\\1").
