@@ -313,23 +313,7 @@ module Asciidoctor
         end
 
         xmldoc.root = merge_vspace(xmldoc.root)
-
-        # smart quotes: handle smart apostrophe
-        unless $smart_quotes
-          xmldoc.traverse do |node|
-            if node.text?
-              node.content = node.content.tr("\u2019", "'")
-              node.content = node.content.gsub(/\&#8217;/, "'")
-              node.content = node.content.gsub(/\&#x2019;/, "'")
-            elsif node.element?
-              node.attributes.each do |k, v|
-                node.set_attribute(k, v.content.tr("\u2019", "'"))
-                node.set_attribute(k, v.content.gsub(/\&#8217;/, "'"))
-                node.set_attribute(k, v.content.gsub(/\&#x2019;/, "'"))
-              end
-            end
-          end
-        end
+        xmldoc = smart_quote_cleanup(xmldoc) unless $smart_quotes
         xmldoc.to_xml(encoding: "US-ASCII")
       end
 
