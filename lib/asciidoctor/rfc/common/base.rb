@@ -460,9 +460,9 @@ HERE
         norm_refs_spec = Set.new(node.attr("normative").split(/,[ ]?/))
         anchors["norm"] = refs.intersection(norm_refs_spec)
         anchors["info"] = refs - anchors["norm"]
-        seen_refs = {"norm": Set.new, "info": Set.new}
-        refxml_in = {"norm": {}, "info": {}}
-        refxml_out = {"norm": [], "info": []}
+        seen_refs = { "norm": Set.new, "info": Set.new }
+        refxml_in = { "norm": {}, "info": {} }
+        refxml_out = { "norm": [], "info": [] }
 
         bibliodir = node.attr("biblio-dir")
         Dir.foreach bibliodir do |f|
