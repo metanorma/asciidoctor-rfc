@@ -449,25 +449,20 @@ HERE
       # insert bibliography based on anchors, references directory, and list of normatives in doc attribute
       def insert_biblio(node, xmldoc)
         # we want no references in this document, so we can ignore any anchors of references
-        xmldoc.xpath("//referencegroup").each(&:remove)
-        xmldoc.xpath("//reference").each(&:remove)
+        xmldoc.xpath("//referencegroup | //reference").each(&:remove)
         refs = Set.new
-        xmldoc.xpath("//xref").each { |r| refs << r["target"] }
-        xmldoc.xpath("//relref").each { |r| refs << r["target"] }
+        xmldoc.xpath("//xref | //relref").each { |r| refs << r["target"] }
         anchors = Set.new
         # we have no references in this document, so any remaining anchors are internal cross-refs only
         xmldoc.xpath("//@anchor").each { |r| anchors << r.value }
         refs = refs - anchors
 
         norm_refs_spec = Set.new(node.attr("normative").split(/,[ ]?/))
-        norm_refs = refs.intersection(norm_refs_spec)
-        info_refs = refs - norm_refs
-        seen_norm_refs = Set.new
-        seen_info_refs = Set.new
-        norm_refxml_in = {}
-        info_refxml_in = {}
-        norm_refxml_out = []
-        info_refxml_out = []
+        anchors["norm"] = refs.intersection(norm_refs_spec)
+        anchors["info"] = refs - anchors["norm"]
+        seen_refs = {"norm": Set.new, "info": Set.new}
+        refxml_in = {"norm": {}, "info": {}}
+        refxml_out = {"norm": [], "info": []}
 
         bibliodir = node.attr("biblio-dir")
         Dir.foreach bibliodir do |f|
@@ -477,40 +472,33 @@ HERE
           text =~ /<reference[^>]*anchor=['"]([^'"]*)/
           anchor = Regexp.last_match(1)
           next if anchor.nil? || anchor.empty?
-          if norm_refs.include?(anchor)
-            norm_refxml_in[anchor] = text
-            seen_norm_refs << anchor
+          if anchors["norm"].include?(anchor)
+            refxml_in["norm"][anchor] = text
+            seen_refs["norm"] << anchor
           else
-            info_refxml_in[anchor] = text
-            seen_info_refs << anchor
+            refxml_in["info"][anchor] = text
+            seen_refs["info"] << anchor
           end
         end
 
         biblio = cache_biblio(node)
-        norm_refs.each do |r|
-          if norm_refxml_in.has_key?(r)
-            # priority to on-disk references over skeleton references: they may contain draft information
-            norm_refxml_out << norm_refxml_in[r]
-          elsif biblio.has_key?(r)
-            norm_refxml_out << %{<reference anchor="#{r}"/>}
-          else
-            warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
-          end
-        end
-        info_refs.each do |r|
-          if info_refxml_in.has_key?(r)
-            info_refxml_out << info_refxml_in[r]
-          elsif biblio.has_key?(r)
-            info_refxml_out << %{<reference anchor="#{r}"/>}
-          else
-            warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
+        ["norm", "info"].each do |reftype|
+          anchors[reftype].each do |r|
+            if refxml_in[reftype].has_key?(r)
+              # priority to on-disk references over skeleton references: they may contain draft information
+              refxml_out[reftype] << refxml_in[reftype][r]
+            elsif biblio.has_key?(r)
+              refxml_out[reftype] << %{<reference anchor="#{r}"/>}
+            else
+              warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
+            end
           end
         end
 
         xml_location = xmldoc.at('//references[@title="Normative References" or name="Normative References"]')
-        xml_location&.children = Nokogiri::XML.fragment(norm_refxml_out.join)
+        xml_location&.children = Nokogiri::XML.fragment(refxml_out["norm"].join)
         xml_location = xmldoc.at('//references[@title="Informative References" or name="Informative References"]')
-        xml_location&.children = Nokogiri::XML.fragment(info_refxml_out.join)
+        xml_location&.children = Nokogiri::XML.fragment(refxml_out["info"].join)
         xmldoc
       end
     end

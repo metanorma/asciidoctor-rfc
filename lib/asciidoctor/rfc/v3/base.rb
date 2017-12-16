@@ -183,6 +183,52 @@ module Asciidoctor
         result
       end
 
+      def ref_section(node)
+        result = []
+        $processing_reflist = true
+        references_attributes = {
+          anchor: node.id,
+        }
+
+        if node.blocks.empty?
+          result << noko do |xml|
+            xml.references **references_attributes do |xml_references|
+              xml_references.name node.title unless node.title.nil?
+            end
+          end
+        end
+        node.blocks.each do |block|
+          if block.context == :section
+            result << section(block)
+          elsif block.context == :pass
+            # we are assuming a single contiguous :pass block of XML
+            result << noko do |xml|
+              xml.references **references_attributes do |xml_references|
+                xml_references.name node.title unless node.title.nil?
+                # xml_references << reflist(block).join("\n")
+                # NOTE: we're allowing the user to do more or less whathever
+                #   in the passthrough since the xpath below just fishes out ALL
+                #   <reference>s in an unrooted fragment, regardless of structure.
+                Nokogiri::XML::DocumentFragment.
+                  parse(block.content).xpath(".//reference").
+                  each { |reference| xml_references << reference.to_xml }
+              end
+            end
+          elsif block.context == :ulist
+            block.items.each(&:text)
+            # we only process the item for its displayreferences
+          end
+        end
+
+        unless $xreftext.empty? || $seen_back_matter
+          result = result.unshift($xreftext.keys.map { |k| %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
+        end
+        result = result.unshift("</middle><back>") unless $seen_back_matter
+        $processing_reflist = false
+        $seen_back_matter = true
+        result
+      end
+
       # Syntax:
       #   :sectnums: (toggle)
       #   :sectnums!: (toggle)
@@ -197,52 +243,11 @@ module Asciidoctor
       #   * [[[ref1]]] Ref [must provide references as list]
       #   * [[[ref2]]] Ref
       def section(node)
-        result = []
         if node.attr("style") == "bibliography" ||
             node.parent.context == :section && node.parent.attr("style") == "bibliography"
-          $processing_reflist = true
-
-          references_attributes = {
-            anchor: node.id,
-          }
-
-          if node.blocks.empty?
-            result << noko do |xml|
-              xml.references **references_attributes do |xml_references|
-                xml_references.name node.title unless node.title.nil?
-              end
-            end
-          end
-          node.blocks.each do |block|
-            if block.context == :section
-              result << section(block)
-            elsif block.context == :pass
-              # we are assuming a single contiguous :pass block of XML
-              result << noko do |xml|
-                xml.references **references_attributes do |xml_references|
-                  xml_references.name node.title unless node.title.nil?
-                  # xml_references << reflist(block).join("\n")
-                  # NOTE: we're allowing the user to do more or less whathever
-                  #   in the passthrough since the xpath below just fishes out ALL
-                  #   <reference>s in an unrooted fragment, regardless of structure.
-                  Nokogiri::XML::DocumentFragment.
-                    parse(block.content).xpath(".//reference").
-                    each { |reference| xml_references << reference.to_xml }
-                end
-              end
-            elsif block.context == :ulist
-              block.items.each(&:text)
-              # we only process the item for its displayreferences
-            end
-          end
-
-          unless $xreftext.empty? || $seen_back_matter
-            result = result.unshift($xreftext.keys.map { |k| %(<displayreference target="#{k}" to="#{$xreftext[k]}"/>) })
-          end
-          result = result.unshift("</middle><back>") unless $seen_back_matter
-          $processing_reflist = false
-          $seen_back_matter = true
+          result = ref_section(node)
         else
+          result = []
           if node.attr("style") == "appendix"
             result << "</middle><back>" unless $seen_back_matter
             $seen_back_matter = true
