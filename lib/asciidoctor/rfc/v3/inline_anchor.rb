@@ -31,7 +31,7 @@ module Asciidoctor
             section: matched[:section],
             displayFormat: matched[:format],
             # fragment inserts file suffix, e.g. rfc2911#fragment becomes rfc2911.xml#fragment
-            target: node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1")
+            target: node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1"),
           }
 
           noko do |xml|
@@ -47,7 +47,7 @@ module Asciidoctor
                           end
 
           warn %(asciidoctor: WARNING (#{current_location(node)}): fragments not supported on crossreferences in v3 without relref: #{node.target} #{node.text}) if node.target =~ /.#/
-            xref_attributes = {
+          xref_attributes = {
             format: matched&.[](:format),
             target: node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1"),
           }

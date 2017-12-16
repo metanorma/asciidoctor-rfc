@@ -113,18 +113,16 @@ module Asciidoctor
                 xml_list.t **attr_code(t_attributes)
               else
                 xml_list.t **attr_code(t_attributes) do |xml_t|
-                  if !dd.nil?
-                    if dd.text?
-                      # This vspace element is extraneous to the RFC XML spec,
-                      # but is required by IDNITS
-                      xml_t.vspace(blankLines: "1") unless $inline_definition_lists
-                      xml_t << dd.text
-                    end
-                    if dd.blocks?
-                      # v2 does not support multi paragraph list items;
-                      # vspace is used to emulate them
-                      xml_t << para_to_vspace(dd.content)
-                    end
+                  if !dd.nil? && dd.text?
+                    # This vspace element is extraneous to the RFC XML spec,
+                    # but is required by IDNITS
+                    xml_t.vspace(blankLines: "1") unless $inline_definition_lists
+                    xml_t << dd.text
+                  end
+                  if !dd.nil? && dd.blocks?
+                    # v2 does not support multi paragraph list items;
+                    # vspace is used to emulate them
+                    xml_t << para_to_vspace(dd.content)
                   end
                 end
               end

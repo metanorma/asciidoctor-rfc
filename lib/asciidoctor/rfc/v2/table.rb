@@ -1,4 +1,3 @@
-require "pp" 
 module Asciidoctor
   module RFC::V2
     module Table

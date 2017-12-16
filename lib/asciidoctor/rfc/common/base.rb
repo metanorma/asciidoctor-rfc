@@ -25,11 +25,7 @@ module Asciidoctor
       end
 
       def skip(node, name = nil)
-        if node.respond_to?(:lineno)
-          warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in RFC backend)
-        else
-          warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in RFC backend)
-        end
+        warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in RFC backend)
         nil
       end
 
@@ -83,7 +79,7 @@ module Asciidoctor
       def area(node, xml)
         node.attr("area")&.split(/, ?/)&.each do |ar|
           if ar =~ / Area$/i
-            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Area" from area #{ar}) 
+            warn %(asciidoctor: WARNING (#{current_location(node)}): stripping suffix "Area" from area #{ar})
             ar = ar.gsub(/ Area$/i, "")
           end
           warn %(asciidoctor: WARNING (#{current_location(node)}): unrecognised area #{ar}) unless IETF_AREAS.include?(ar)
@@ -99,11 +95,11 @@ module Asciidoctor
         workgroups = cache_workgroup(node)
         node.attr("workgroup")&.split(/, ?/)&.each do |wg|
           if wg =~ / (Working Group)$/i
-            warn %(asciidoctor: WARNING (#{current_location(node)}): suffix "Working Group" will be stripped in published RFC from #{wg}) 
+            warn %(asciidoctor: WARNING (#{current_location(node)}): suffix "Working Group" will be stripped in published RFC from #{wg})
             wg_norm = wg.gsub(/ Working Group$/i, "")
           end
           if wg =~ / (Research Group)$/i
-            warn %(asciidoctor: WARNING (#{current_location(node)}): suffix "Research Group" will be stripped from working group #{wg}) 
+            warn %(asciidoctor: WARNING (#{current_location(node)}): suffix "Research Group" will be stripped from working group #{wg})
             wg_norm = wg.gsub(/ Research Group$/i, "")
           end
           warn %(asciidoctor: WARNING (#{current_location(node)}): unrecognised working group #{wg}) unless workgroups.include?(wg_norm)
@@ -362,13 +358,13 @@ HERE
       end
 
       def current_location(node)
-        return "Line #{node.lineno}" if node.respond_to?(:lineno) and !node.lineno.nil? and !node.lineno.empty?
-        return "ID #{node.id}" if node.respond_to?(:id) and !node.id.nil? 
-        while !node.nil? and (!node.respond_to?(:level) || node.level > 0) and node.context != :section
+        return "Line #{node.lineno}" if node.respond_to?(:lineno) && !node.lineno.nil? && !node.lineno.empty?
+        return "ID #{node.id}" if node.respond_to?(:id) && !node.id.nil?
+        while !node.nil? && (!node.respond_to?(:level) || node.level > 0) && node.context != :section
           node = node.parent
-          return "Section: #{node.title}" if !node.nil? and node.context == :section
+          return "Section: #{node.title}" if !node.nil? && node.context == :section
         end
-        return "??"
+        "??"
       end
 
       def cache_workgroup(node)
@@ -394,7 +390,7 @@ HERE
               end
             end
             STDERR.puts "Reading workgroups from https://irtf.org/groups..."
-            Kernel.open("https://irtf.org/groups", {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) do |f|
+            Kernel.open("https://irtf.org/groups", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE) do |f|
               f.each_line do |line|
                 line.scan(%r{<a title="([^"]+) Research Group"[^>]+>([^<]+)<}) do |w|
                   wg << w[0].gsub(/\s+$/, "")
@@ -453,8 +449,8 @@ HERE
       # insert bibliography based on anchors, references directory, and list of normatives in doc attribute
       def insert_biblio(node, xmldoc)
         # we want no references in this document, so we can ignore any anchors of references
-        xmldoc.xpath("//referencegroup").each { |r| r.remove }
-        xmldoc.xpath("//reference").each { |r| r.remove }
+        xmldoc.xpath("//referencegroup").each(&:remove)
+        xmldoc.xpath("//reference").each(&:remove)
         refs = Set.new
         xmldoc.xpath("//xref").each { |r| refs << r["target"] }
         xmldoc.xpath("//relref").each { |r| refs << r["target"] }
@@ -475,50 +471,48 @@ HERE
 
         bibliodir = node.attr("biblio-dir")
         Dir.foreach bibliodir do |f|
-          next if f == '.' or f == '..'
+          next if [".", ".."].include? f
           text = File.read("#{bibliodir}/#{f}", encoding: "utf-8")
           next unless text =~ /<reference/
           text =~ /<reference[^>]*anchor=['"]([^'"]*)/
           anchor = Regexp.last_match(1)
-          next if anchor.nil? or anchor.empty?
+          next if anchor.nil? || anchor.empty?
           if norm_refs.include?(anchor)
             norm_refxml_in[anchor] = text
             seen_norm_refs << anchor
           else
             info_refxml_in[anchor] = text
             seen_info_refs << anchor
-          end 
+          end
         end
 
         biblio = cache_biblio(node)
-        (norm_refs).each do |r|
+        norm_refs.each do |r|
           if norm_refxml_in.has_key?(r)
             # priority to on-disk references over skeleton references: they may contain draft information
             norm_refxml_out << norm_refxml_in[r]
           elsif biblio.has_key?(r)
-            norm_refxml_out << %Q{<reference anchor="#{r}"/>}
-          else 
+            norm_refxml_out << %{<reference anchor="#{r}"/>}
+          else
             warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
           end
         end
-        (info_refs).each do |r|
+        info_refs.each do |r|
           if info_refxml_in.has_key?(r)
             info_refxml_out << info_refxml_in[r]
-          elsif biblio.has_key?(r) 
-            info_refxml_out << %Q{<reference anchor="#{r}"/>}
-          else 
+          elsif biblio.has_key?(r)
+            info_refxml_out << %{<reference anchor="#{r}"/>}
+          else
             warn "Reference #{r} has not been includes in references directory, and is not a recognised external RFC reference"
           end
         end
 
         xml_location = xmldoc.at('//references[@title="Normative References" or name="Normative References"]')
-        xml_location.children = (Nokogiri::XML.fragment(norm_refxml_out.join)) unless xml_location.nil?
+        xml_location&.children = Nokogiri::XML.fragment(norm_refxml_out.join)
         xml_location = xmldoc.at('//references[@title="Informative References" or name="Informative References"]')
-        xml_location.children = (Nokogiri::XML.fragment(info_refxml_out.join)) unless xml_location.nil?
+        xml_location&.children = Nokogiri::XML.fragment(info_refxml_out.join)
         xmldoc
       end
-
-
     end
   end
 end

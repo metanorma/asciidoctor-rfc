@@ -93,7 +93,7 @@ module Asciidoctor
       end
 
       def resolve_references(node, doc)
-       extract_entities(node, doc).each do |entity|
+        extract_entities(node, doc).each do |entity|
           # TODO actual XML
           entity[:node].replace("<xi:include href='#{entity[:url]}' parse='text'/>")
         end
@@ -207,7 +207,7 @@ module Asciidoctor
           }
 
           if node.blocks.empty?
-            result << noko do |xml| 
+            result << noko do |xml|
               xml.references **references_attributes do |xml_references|
                 xml_references.name node.title unless node.title.nil?
               end
@@ -231,9 +231,8 @@ module Asciidoctor
                 end
               end
             elsif block.context == :ulist
-              block.items.each do |i|
-                i.text # we only process the item for its displayreferences
-              end
+              block.items.each(&:text)
+              # we only process the item for its displayreferences
             end
           end
 

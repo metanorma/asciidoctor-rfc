@@ -14,33 +14,33 @@ end
 
 def norm(text)
   text.gsub(%r{<spanx style="strong">(MUST|MUST\s+NOT|REQUIRED|SHALL|SHALL\s+NOT|SHOULD|SHOULD\s+NOT|NOT\s+RECOMMENDED|RECOMMENDED|MAY|OPTIONAL)</spanx>}m, "\\1").
-    gsub(%r{<t hangText="([^"]+:) ">}, %q{<t hangText="\\1">}).
-    gsub(%r{<date year="2009" month="July" day="05"/>}, %q{<date year="2009" month="July" day="5"/>}).
-    gsub(%r{<date year="2017" month="November" day="03"/>}, %q{<date year="2017" month="November" day="3"/>}).
-    gsub(%r{<author fullname="Editor name"}, %q{<author fullname="Editor Name"}).
-    gsub(%r{<t>(Tables use ttcol to define column headers and widths[^<]+)</t>(\s*<texttable[^>]+>)}m, %q{\\2<preamble>\\1</preamble>}).
-    gsub(%r{<t>(These are sometimes called "inert" gasses[^<]+)</t>(\s*<texttable[^>]+>)}m, %q{\\2<preamble>\\1</preamble>}).
-    gsub(%r{(</texttable>\s*)<t>(which is a very simple example\.)</t>}, %q{<postamble>\\2</postamble>\\1}).
-    gsub(%r{(</texttable>\s*)<t>(Source: Chemistry 101)</t>}, %q{<postamble>\\2</postamble>\\1}).
-    gsub(%r{(<t hangText="Option Type">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier of the type of option)}, %q{\\1\\2}).
-    gsub(%r{(<t hangText="Option Length">\s*<vspace />\s*)<vspace/>\s*(8-bit unsigned integer\.  The length of the option)}, %q{\\1\\2}).
-    gsub(%r{(<t hangText="SRO Param">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier indicating Scenic Routing parameters)}, %q{\\1\\2}).
-    gsub(%r{<vspace blankLines="0"/>(The highest-order two bits)}, %q{\\1}).
-    gsub(%r{<vspace blankLines="0"/>(The following BIT)}, %q{\\1}).
-    gsub(%r{<vspace blankLines="0"/>(The following two bits)}, %q{\\1}).
-    gsub(%r{<vspace blankLines="0"/>(The lowest-order two bits)}, %q{\\1}).
-    gsub(%r{ width="25%">Name</ttcol>}, %q{>Name</ttcol>}).
-    gsub(%r{ width="25%">Atomic Number</ttcol>}, %q{>Atomic Number</ttcol>}).
-    gsub(%r{&RFC6949;}, %q{<reference anchor="RFC6949"> <front> <title>RFC Series Format Requirements and Future Development</title> <author initials="H." surname="Flanagan" fullname="H. Flanagan"> <organization/></author> <author initials="N." surname="Brownlee" fullname="N. Brownlee"> <organization/></author> <date year="2013" month="May"/> </front> <seriesInfo name="RFC" value="6949"/> <annotation>This is a primary reference work.</annotation> </reference>}).
-    gsub(%r{ width="25%">Name</ttcol>}, %q{>Name</ttcol>}).
-  gsub(%r{ width="25%">Atomic Number</ttcol>}, %q{>Atomic Number</ttcol>}).
-  gsub(%r{title="IAB Members at the Time of Approval" numbered="no">}, %q{title="IAB Members at the Time of Approval">}).
-  gsub(%r{title="Acknowledgments" numbered="no">}, %q{title="Acknowledgments">}).
-  gsub(%r{target='http://www.rfc-editor.org/info/}, %q{target='https://www.rfc-editor.org/info/}).
-  gsub(%r{target="http://www.rfc-editor.org/info/}, %q{target="https://www.rfc-editor.org/info/}).
-  gsub(%r{<\?rfc subcompact="yes" \?>\s*<list>(\s*<t>Jari Arkko</t>)}m, %Q{<list style="symbols">\n\\1}).
-  gsub(%r{&W3C.REC-CSS2-20110607;}, %q{<reference anchor="W3C.REC-CSS2-20110607" target="http://www.w3.org/TR/2011/REC-CSS2-20110607"> <front> <title>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</title> <author initials="B." surname="Bos" fullname="Bert Bos"> <organization/> </author> <author initials="T." surname="Celik" fullname="Tantek Celik"> <organization/> </author> <author initials="I." surname="Hickson" fullname="Ian Hickson"> <organization/> </author> <author initials="H." surname="Lie" fullname="Hakon Wium Lie"> <organization/> </author> <date month="June" day="7" year="2011"/> </front> <seriesInfo name="World Wide Web Consortium Recommendation" value="REC-CSS2-20110607"/> <format type="HTML" target="http://www.w3.org/TR/2011/REC-CSS2-20110607"/> </reference>}).
-  gsub(%r{&W3C.REC-html5-20141028;}, %q{<reference anchor='W3C.REC-html5-20141028' target='http://www.w3.org/TR/2014/REC-html5-20141028'> <front> <title>HTML5</title> <author initials='I.' surname='Hickson' fullname='Ian Hickson'> <organization /> </author> <author initials='R.' surname='Berjon' fullname='Robin Berjon'> <organization /> </author> <author initials='S.' surname='Faulkner' fullname='Steve Faulkner'> <organization /> </author> <author initials='T.' surname='Leithead' fullname='Travis Leithead'> <organization /> </author> <author initials='E.' surname='Navara' fullname='Erika Doyle Navara'> <organization /> </author> <author initials='T.' surname='O&#039;Connor' fullname='Theresa O&#039;Connor'> <organization /> </author> <author initials='S.' surname='Pfeiffer' fullname='Silvia Pfeiffer'> <organization /> </author> <date month='October' day='28' year='2014' /> </front> <seriesInfo name='World Wide Web Consortium Recommendation' value='REC-html5-20141028' /> <format type='HTML' target='http://www.w3.org/TR/2014/REC-html5-20141028' /> </reference>})
+    gsub(%r{<t hangText="([^"]+:) ">}, '<t hangText="\\1">').
+    gsub(%r{<date year="2009" month="July" day="05"/>}, '<date year="2009" month="July" day="5"/>').
+    gsub(%r{<date year="2017" month="November" day="03"/>}, '<date year="2017" month="November" day="3"/>').
+    gsub(%r{<author fullname="Editor name"}, '<author fullname="Editor Name"').
+    gsub(%r{<t>(Tables use ttcol to define column headers and widths[^<]+)</t>(\s*<texttable[^>]+>)}m, "<postamble>\\2</postamble>\\1").
+    gsub(%r{<t>(These are sometimes called "inert" gasses[^<]+)</t>(\s*<texttable[^>]+>)}m, "\\2<preamble>\\1</preamble>").
+    gsub(%r{(</texttable>\s*)<t>(which is a very simple example\.)</t>}, "<postamble>\\2</postamble>\\1").
+    gsub(%r{(</texttable>\s*)<t>(Source: Chemistry 101)</t>}, "<postamble>\\2</postamble>\\1").
+    gsub(%r{(<t hangText="Option Type">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier of the type of option)}, "\\1\\2").
+    gsub(%r{(<t hangText="Option Length">\s*<vspace />\s*)<vspace/>\s*(8-bit unsigned integer\.  The length of the option)}, "\\1\\2").
+    gsub(%r{(<t hangText="SRO Param">\s*<vspace />\s*)<vspace/>\s*(8-bit identifier indicating Scenic Routing parameters)}, "\\1\\2").
+    gsub(%r{<vspace blankLines="0"/>(The highest-order two bits)}, "\\1").
+    gsub(%r{<vspace blankLines="0"/>(The following BIT)}, "\\1").
+    gsub(%r{<vspace blankLines="0"/>(The following two bits)}, "\\1").
+    gsub(%r{<vspace blankLines="0"/>(The lowest-order two bits)}, "\\1").
+    gsub(%r{ width="25%">Name</ttcol>}, ">Name</ttcol>").
+    gsub(%r{ width="25%">Atomic Number</ttcol>}, ">Atomic Number</ttcol>").
+    gsub(%r{&RFC6949;}, '<reference anchor="RFC6949"> <front> <title>RFC Series Format Requirements and Future Development</title> <author initials="H." surname="Flanagan" fullname="H. Flanagan"> <organization/></author> <author initials="N." surname="Brownlee" fullname="N. Brownlee"> <organization/></author> <date year="2013" month="May"/> </front> <seriesInfo name="RFC" value="6949"/> <annotation>This is a primary reference work.</annotation> </reference>').
+    gsub(%r{ width="25%">Name</ttcol>}, ">Name</ttcol>").
+    gsub(%r{ width="25%">Atomic Number</ttcol>}, ">Atomic Number</ttcol>").
+    gsub(%r{title="IAB Members at the Time of Approval" numbered="no">}, 'title="IAB Members at the Time of Approval">').
+    gsub(%r{title="Acknowledgments" numbered="no">}, 'title="Acknowledgments">').
+    gsub(%r{target='http://www.rfc-editor.org/info/}, "target='https://www.rfc-editor.org/info/").
+    gsub(%r{target="http://www.rfc-editor.org/info/}, 'target="https://www.rfc-editor.org/info/').
+    gsub(%r{<\?rfc subcompact="yes" \?>\s*<list>(\s*<t>Jari Arkko</t>)}m, %{<list style="symbols">\n\\1}).
+    gsub(%r{&W3C.REC-CSS2-20110607;}, '<reference anchor="W3C.REC-CSS2-20110607" target="http://www.w3.org/TR/2011/REC-CSS2-20110607"> <front> <title>Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</title> <author initials="B." surname="Bos" fullname="Bert Bos"> <organization/> </author> <author initials="T." surname="Celik" fullname="Tantek Celik"> <organization/> </author> <author initials="I." surname="Hickson" fullname="Ian Hickson"> <organization/> </author> <author initials="H." surname="Lie" fullname="Hakon Wium Lie"> <organization/> </author> <date month="June" day="7" year="2011"/> </front> <seriesInfo name="World Wide Web Consortium Recommendation" value="REC-CSS2-20110607"/> <format type="HTML" target="http://www.w3.org/TR/2011/REC-CSS2-20110607"/> </reference>').
+    gsub(%r{&W3C.REC-html5-20141028;}, "<reference anchor='W3C.REC-html5-20141028' target='http://www.w3.org/TR/2014/REC-html5-20141028'> <front> <title>HTML5</title> <author initials='I.' surname='Hickson' fullname='Ian Hickson'> <organization /> </author> <author initials='R.' surname='Berjon' fullname='Robin Berjon'> <organization /> </author> <author initials='S.' surname='Faulkner' fullname='Steve Faulkner'> <organization /> </author> <author initials='T.' surname='Leithead' fullname='Travis Leithead'> <organization /> </author> <author initials='E.' surname='Navara' fullname='Erika Doyle Navara'> <organization /> </author> <author initials='T.' surname='O&#039;Connor' fullname='Theresa O&#039;Connor'> <organization /> </author> <author initials='S.' surname='Pfeiffer' fullname='Silvia Pfeiffer'> <organization /> </author> <date month='October' day='28' year='2014' /> </front> <seriesInfo name='World Wide Web Consortium Recommendation' value='REC-html5-20141028' /> <format type='HTML' target='http://www.w3.org/TR/2014/REC-html5-20141028' /> </reference>")
 end
 
 def remove_pages(text)
