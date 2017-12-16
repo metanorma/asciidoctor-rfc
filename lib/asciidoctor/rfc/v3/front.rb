@@ -22,8 +22,13 @@ module Asciidoctor
         return if docname.nil? || docname&.empty?
         is_rfc = docname =~ /^rfc-?/i || node.attr("doctype") == "rfc"
 
-        name = is_rfc ? docname.gsub(/^rfc-?/i, "") : docname
-        nameattr = is_rfc ? "RFC" : "Internet-Draft"
+        if is_rfc
+          name = docname.gsub(/^rfc-?/i, "") 
+          nameattr = "RFC" 
+        else
+          name = docname
+          nameattr = "Internet-Draft"
+        end
         value = name.gsub(/\.[^\/]+$/, "")
 
         seriesInfo_attributes = {
@@ -55,12 +60,14 @@ module Asciidoctor
             rfcstatus = "info" if rfcstatus == "informational"
             warn %(asciidoctor: WARNING (#{current_location(node)}): disallowed value for intended-series in document header with no series number: #{rfcstatus}) unless rfcstatus =~ /^(info|exp|historic)$/
           else
-            warn %(asciidoctor: WARNING (#{current_location(node)}): disallowed value for intended-series in document header with series number: #{m[1]}) unless m[1] =~ /^(standard|full-standard|bcp)$/
+            rfcstatus = m[1]
+            value = m[2]
+            warn %(asciidoctor: WARNING (#{current_location(node)}): disallowed value for intended-series in document header with series number: #{rfcstatus}) unless rfcstatus =~ /^(standard|full-standard|bcp)$/
           end
           seriesInfo_attributes = {
             name: "",
-            status: m.nil? ? rfcstatus : m[1],
-            value: m.nil? ? value : m[2],
+            status: rfcstatus,
+            value: value,
           }
           xml.seriesInfo **attr_code(seriesInfo_attributes)
         end
