@@ -1543,7 +1543,7 @@
         <zeroOrMore>
           <text/>
         </zeroOrMore>
-        <ref name="svg"/>
+        <externalRef href='./svg.rng'/>
       </choice>
     </element>
   </define>

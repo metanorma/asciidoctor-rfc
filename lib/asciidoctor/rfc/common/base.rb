@@ -452,17 +452,18 @@ HERE
         xmldoc.xpath("//referencegroup | //reference").each(&:remove)
         refs = Set.new
         xmldoc.xpath("//xref | //relref").each { |r| refs << r["target"] }
-        anchors = Set.new
+        anchors1 = Set.new
         # we have no references in this document, so any remaining anchors are internal cross-refs only
-        xmldoc.xpath("//@anchor").each { |r| anchors << r.value }
-        refs = refs - anchors
+        xmldoc.xpath("//@anchor").each { |r| anchors1 << r.value }
+        refs = refs - anchors1
+        anchors = {}
 
         norm_refs_spec = Set.new(node.attr("normative").split(/,[ ]?/))
-        anchors["norm"] = refs.intersection(norm_refs_spec)
-        anchors["info"] = refs - anchors["norm"]
-        seen_refs = { "norm": Set.new, "info": Set.new }
-        refxml_in = { "norm": {}, "info": {} }
-        refxml_out = { "norm": [], "info": [] }
+        anchors[:norm] = refs.intersection(norm_refs_spec)
+        anchors[:info] = refs - anchors[:norm]
+        seen_refs = { norm: Set.new, info: Set.new }
+        refxml_in = { norm: {}, info: {} }
+        refxml_out = { norm: [], info: [] }
 
         bibliodir = node.attr("biblio-dir")
         Dir.foreach bibliodir do |f|
@@ -472,17 +473,17 @@ HERE
           text =~ /<reference[^>]*anchor=['"]([^'"]*)/
           anchor = Regexp.last_match(1)
           next if anchor.nil? || anchor.empty?
-          if anchors["norm"].include?(anchor)
-            refxml_in["norm"][anchor] = text
-            seen_refs["norm"] << anchor
+          if anchors[:norm].include?(anchor)
+            refxml_in[:norm][anchor] = text
+            seen_refs[:norm] << anchor
           else
-            refxml_in["info"][anchor] = text
-            seen_refs["info"] << anchor
+            refxml_in[:info][anchor] = text
+            seen_refs[:info] << anchor
           end
         end
 
         biblio = cache_biblio(node)
-        ["norm", "info"].each do |reftype|
+        [:norm, :info].each do |reftype|
           anchors[reftype].each do |r|
             if refxml_in[reftype].has_key?(r)
               # priority to on-disk references over skeleton references: they may contain draft information
@@ -496,9 +497,9 @@ HERE
         end
 
         xml_location = xmldoc.at('//references[@title="Normative References" or name="Normative References"]')
-        xml_location&.children = Nokogiri::XML.fragment(refxml_out["norm"].join)
+        xml_location&.children = Nokogiri::XML.fragment(refxml_out[:norm].join)
         xml_location = xmldoc.at('//references[@title="Informative References" or name="Informative References"]')
-        xml_location&.children = Nokogiri::XML.fragment(refxml_out["info"].join)
+        xml_location&.children = Nokogiri::XML.fragment(refxml_out[:info].join)
         xmldoc
       end
 
