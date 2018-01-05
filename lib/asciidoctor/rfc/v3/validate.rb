@@ -8,7 +8,7 @@ module Asciidoctor
         def validate(doc)
           # svg_location = File.join(File.dirname(__FILE__), "svg.rng")
           # schema = Nokogiri::XML::RelaxNG(File.read(File.join(File.dirname(__FILE__), "validate.rng")).
-           #                              gsub(%r{<ref name="svg"/>}, "<externalRef href='#{svg_location}'/>"))
+          #   gsub(%r{<ref name="svg"/>}, "<externalRef href='#{svg_location}'/>"))
 
           filename = File.join(File.dirname(__FILE__), "validate.rng")
           schema = Jing.new(filename)
@@ -20,10 +20,10 @@ module Asciidoctor
           end
 
           if errors.none?
-            $stderr.puts "[asciidoctor-rfc] Validation passed."
+            warn "[asciidoctor-rfc] Validation passed."
           else
             errors.each do |error|
-              $stderr.puts "[asciidoctor-rfc] #{error[:message]} @ #{error[:line]}:#{error[:column]}"
+              warn "[asciidoctor-rfc] #{error[:message]} @ #{error[:line]}:#{error[:column]}"
             end
           end
 

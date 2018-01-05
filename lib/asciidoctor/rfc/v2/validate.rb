@@ -18,10 +18,10 @@ module Asciidoctor
           end
 
           if errors.none?
-            $stderr.puts "[asciidoctor-rfc] Validation passed."
+            warn "[asciidoctor-rfc] Validation passed."
           else
             errors.each do |error|
-              $stderr.puts "[asciidoctor-rfc] #{error[:message]} @ #{error[:line]}:#{error[:column]}"
+              warn "[asciidoctor-rfc] #{error[:message]} @ #{error[:line]}:#{error[:column]}"
             end
           end
 
