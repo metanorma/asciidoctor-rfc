@@ -8,19 +8,23 @@ module Asciidoctor
         def validate(doc)
           filename = File.join(File.dirname(__FILE__), "validate2.rng")
           schema = Jing.new(filename)
+
           File.open(".tmp.xml", "w") { |f| f.write(doc.to_xml) }
+
           begin
             errors = schema.validate(".tmp.xml")
           rescue Jing::Error => e
-            abort "what what what #{e}"
+            abort "[asciidoctor-rfc] Validation error: #{e}"
           end
+
           if errors.none?
-            puts "Valid!"
+            $stderr.puts "[asciidoctor-rfc] Validation passed."
           else
             errors.each do |error|
-              puts "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
+              $stderr.puts "[asciidoctor-rfc] #{error[:message]} @ #{error[:line]}:#{error[:column]}"
             end
           end
+
         end
       end
     end
