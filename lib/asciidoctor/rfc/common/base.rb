@@ -174,7 +174,7 @@ module Asciidoctor
         result = []
         if node.role == "comment"
           return noko do |xml|
-            xml.comment [flatten_rawtext(node)].flatten.join("\n")
+            xml.comment [flatten_rawtext(node).map { |x| [x, ""] } ].flatten.join("\n")
           end
         end
 

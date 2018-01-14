@@ -345,15 +345,11 @@ describe Asciidoctor::RFC::V2::Converter do
 
       == Section 1
       [.comment]
-      This is a _paragraph comment_.
+      This is a 
+      _paragraph comment_.
     INPUT
       <section anchor="_section_1" title="Section 1">
-         <t>
-         <list style="hanging">
-           <t hangText="A"><vspace blankLines="1"/>B <!--This is a comment--> C D</t>
-           <t hangText="C "><vspace blankLines="1"/>D</t>
-         </list>
-       </t>
+      <!--This is a _paragraph comment_.-->
       </section>
     OUTPUT
   end
@@ -366,7 +362,8 @@ describe Asciidoctor::RFC::V2::Converter do
       == Section 1
       [.comment]
       --
-      This is a _paragraph comment_.
+      This is a 
+      _paragraph comment_.
 
       And the comment runs over
 
@@ -374,12 +371,13 @@ describe Asciidoctor::RFC::V2::Converter do
       --
     INPUT
       <section anchor="_section_1" title="Section 1">
-         <t>
-         <list style="hanging">
-           <t hangText="A"><vspace blankLines="1"/>B <!--This is a comment--> C D</t>
-           <t hangText="C "><vspace blankLines="1"/>D</t>
-         </list>
-       </t>
+      <!--This is a
+       _paragraph comment_.
+
+       And the comment runs over
+
+       several paragraphs.
+       -->
       </section>
     OUTPUT
   end
