@@ -965,9 +965,18 @@ they have the style attribute `[comment]`:
 
 [source,asciidoc]
 ----
+
+// This is an inline Asciidoctor comment, which will not be output to XML.
+
 [comment]
 This is a single paragraph Asciidoctor comment,
 which will not be output to XML.
+
+////
+This is a block Asciidoctor comment,
+
+which will not be output to XML.
+////
 
 [comment]
 --
@@ -982,16 +991,18 @@ Asciidoctor comment, which will not be output to XML.
 ==== XML comments
 
 XML inline comments may be introduced into XML through the `[comment]`
-macro: any such comments may not span more than one line.
+formatting macro: any such comments may not span more than one line.
 
 [source,asciidoc]
 --
 Text [comment]#This is a comment# Text
 --
 
+The foregoing will be rendered in RFC XML as:
+
 [source,xml]
 --
-Text <!-- This is a comment --> Text
+<t>Text <!-- This is a comment --> Text</t>
 --
 
 XML block comments are introduced through the role attribute

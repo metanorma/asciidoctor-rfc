@@ -334,7 +334,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Author
 
       == Section 1
-      [comment]
+      [.comment]
       This is a _paragraph comment_.
     INPUT
       <section anchor="_section_1" title="Section 1">
@@ -354,7 +354,7 @@ describe Asciidoctor::RFC::V3::Converter do
       Author
 
       == Section 1
-      [comment]
+      [.comment]
       --
       This is a _paragraph comment_.
 

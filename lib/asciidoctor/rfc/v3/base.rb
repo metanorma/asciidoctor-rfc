@@ -170,7 +170,7 @@ module Asciidoctor
       def paragraph(node)
         if node.role == "comment"
           return noko do |xml|
-            xml.comment node.text
+            xml.comment [flatten_rawtext(node)].flatten.join("\n")
           end.join("\n")
         end
 
