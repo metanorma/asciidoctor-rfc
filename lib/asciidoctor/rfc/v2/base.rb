@@ -137,7 +137,7 @@ module Asciidoctor
             if node.role == "bcp14"
               xml.spanx node.text.upcase, style: "strong"
             elsif node.role == "comment"
-              xml.comment node.text
+              xml.comment " " + node.text + " "
             else
               xml << node.text
             end
@@ -151,7 +151,7 @@ module Asciidoctor
       def paragraph(node)
         if node.role == "comment"
           return noko do |xml|
-            xml.comment [flatten_rawtext(node)].flatten.join("\n")
+            xml.comment " " + [flatten_rawtext(node)].flatten.join("\n") + " "
           end.join("\n")
         end
 
