@@ -339,6 +339,7 @@ describe Asciidoctor::RFC::V3::Converter do
       _paragraph comment_.
     INPUT
       <section anchor="_section_1" numbered="false">
+      <name>Section 1</name>
       <!--This is a 
       _paragraph comment_.-->
       </section>
