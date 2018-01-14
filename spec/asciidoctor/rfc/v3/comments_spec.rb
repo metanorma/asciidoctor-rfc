@@ -305,4 +305,74 @@ describe Asciidoctor::RFC::V3::Converter do
       </rfc>
     OUTPUT
   end
+  
+  it "renders inline XML comments" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc3)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      A:: B [comment]#This is a comment# C D
+      C [comment]#This is another comment#:: D
+    INPUT
+      <section anchor="_section_1" numbered="false">
+         <name>Section 1</name>
+         <dl>
+         <dt>A</dt>
+         <dd>B <!--This is a comment--> C D</dd>
+         <dt>C <!--This is another comment--></dt>
+         <dd>D</dd>
+       </dl>
+      </section>
+    OUTPUT
+  end
+
+
+  it "renders XML comment paragraphs" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [comment]
+      This is a _paragraph comment_.
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+         <t>
+         <list style="hanging">
+           <t hangText="A"><vspace blankLines="1"/>B <!--This is a comment--> C D</t>
+           <t hangText="C "><vspace blankLines="1"/>D</t>
+         </list>
+       </t>
+      </section>
+    OUTPUT
+  end
+
+  it "renders XML comment blocks" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      Author
+
+      == Section 1
+      [comment]
+      --
+      This is a _paragraph comment_.
+
+      And the comment runs over
+
+      several paragraphs.
+      --
+    INPUT
+      <section anchor="_section_1" title="Section 1">
+         <t>
+         <list style="hanging">
+           <t hangText="A"><vspace blankLines="1"/>B <!--This is a comment--> C D</t>
+           <t hangText="C "><vspace blankLines="1"/>D</t>
+         </list>
+       </t>
+      </section>
+    OUTPUT
+  end
+
+
 end

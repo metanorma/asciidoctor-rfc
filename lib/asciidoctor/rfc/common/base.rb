@@ -172,6 +172,12 @@ module Asciidoctor
         # open block is a container of multiple blocks, treated as a single block.
         # We append each contained block to its parent
         result = []
+        if node.role == "comment"
+          return noko do |xml|
+            xml.comment node.text
+          end
+        end
+
         if node.blocks?
           node.blocks.each do |b|
             result << send(b.context, b)

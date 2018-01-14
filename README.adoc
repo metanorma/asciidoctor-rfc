@@ -952,6 +952,73 @@ Quotation <3>
 
 === Comments
 
+==== Asciidoctor comments
+
+Asciidoctor implements both inline comments (prefixed with `\\`)
+and block comments (prefixed with `\\\\`). Both are ignored by
+the Asciidoctor processor, and are not rendered in any output,
+including RFC XML.
+
+Asciidoctor also permits paragraphs and open blocks (which can contain
+multiple paragraphs) to be treated as Asciidoctor comments, if
+they have the style attribute `[comment]`:
+
+[source,asciidoc]
+----
+[comment]
+This is a single paragraph Asciidoctor comment,
+which will not be output to XML.
+
+[comment]
+--
+This is a 
+
+multiple paragraph
+
+Asciidoctor comment, which will not be output to XML.
+--
+----
+
+==== XML comments
+
+XML inline comments may be introduced into XML through the `[comment]`
+macro: any such comments may not span more than one line.
+
+[source,asciidoc]
+--
+Text [comment]#This is a comment# Text
+--
+
+[source,xml]
+--
+Text <!-- This is a comment --> Text
+--
+
+XML block comments are introduced through the role attribute
+`[.comment]`, which can be prefied to a paragraph or an open
+block (which can contain multiple paragraphs):
+
+[source,asciidoc]
+----
+[.comment]
+This is a single paragraph XML comment.
+
+[.comment]
+--
+This is a 
+
+multiple paragraph
+
+XML comment.
+--
+----
+
+==== Text Comments 
+
+RFC XML provides for editorial comments which may optionally appear
+in the published text (subject to either the v3 `cref@display`
+attribute, or the `comments` processing instruction).
+
 In v2 RFC XML, comment text is stripped of all formatting.
 
 [source,asciidoc]

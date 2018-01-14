@@ -154,6 +154,8 @@ module Asciidoctor
             # [bcp14]#MUST NOT#
             if node.role == "bcp14"
               xml.bcp14 node.text.upcase
+            elsif node.role == "comment"
+              xml.comment node.text
             else
               xml << node.text
             end
@@ -166,21 +168,22 @@ module Asciidoctor
       #   [keepWithNext=true,keepWithPrevious=true] (optional)
       #   Text
       def paragraph(node)
-        result = []
+        if node.role == "comment"
+          return noko do |xml|
+            xml.comment node.text
+          end.join("\n")
+        end
 
         t_attributes = {
           anchor: node.id,
           keepWithNext: node.attr("keep-with-next"),
           keepWithPrevious: node.attr("keep-with-previous"),
         }
-
-        result << noko do |xml|
+        return noko do |xml|
           xml.t **attr_code(t_attributes) do |xml_t|
             xml_t << node.content
           end
-        end
-
-        result
+        end.join("\n")
       end
 
       def ref_section(node)
