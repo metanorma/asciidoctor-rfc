@@ -299,6 +299,7 @@ $ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc
 ==== Caches
 
 The cache of externally addressable bibliographic information is built from screenscraping the contents of:
+
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml/
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml2/ 
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/
@@ -306,6 +307,7 @@ The cache of externally addressable bibliographic information is built from scre
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml5/
 
 The cache of current IETF and IRTF workgroups is built from screenscraping the contents of:
+
 * https://tools.ietf.org/wg/
 * https://irtf.org/groups
 
