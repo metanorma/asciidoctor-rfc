@@ -312,10 +312,13 @@ The cache of current IETF and IRTF workgroups is built from screenscraping the c
 * https://irtf.org/groups
 
 The caches are not rebuilt daily, as the bibliographic cache is with xml2rfc. 
-If you want to refresh the caches, either delete
+If you want to refresh the caches, 
+
+* delete
 your `~/.asciidoc-rfc-biblio-cache.json` and `~/.asciidoc-rfc-workgroup-cache.json` files; 
-insert the document attribute `:flush-caches: true` into
-the header of the document being processed; or run the asciidoctor executable with option `-a flush-caches=true`
+* insert the document attribute `:flush-caches: true` into
+the header of the document being processed; or 
+* run the asciidoctor executable with option `-a flush-caches=true`
 (which has the same effect).
 
 === Basic Document Attributes
