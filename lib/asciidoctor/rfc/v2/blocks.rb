@@ -230,7 +230,7 @@ module Asciidoctor
         if node.attr("citetitle") || node.attr("attribution")
           cite = node.attr("attribution") || ""
           cite += ", " if node.attr("citetitle") && node.attr("attribution")
-          cite += node.attr("citetitle")
+          cite += (node.attr("citetitle") || "")
           cite = "-- " + cite
           result << "<t>#{cite}</t>"
         end
