@@ -6,7 +6,7 @@ describe Asciidoctor::RFC::V2::Converter do
       [quote, attribution="quote attribution", citetitle="http://www.foo.bar"]
       Text
     INPUT
-      <t anchor="verse-id">Text</t>
+      <t anchor="verse-id">Text</t><t>-- quote attribution, http://www.foo.bar</t>
     OUTPUT
   end
 

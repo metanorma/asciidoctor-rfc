@@ -217,6 +217,26 @@ module Asciidoctor
           end
         end
       end
+
+      def quote(node)
+        result = []
+        if node.blocks?
+          node.blocks.each do |b|
+            result << send(b.context, b)
+          end
+        else
+          result = paragraph(node)
+        end
+        if node.attr("citetitle") || node.attr("attribution")
+          cite = node.attr("attribution")
+          cite += ", " if node.attr("citetitle") && node.attr("attribution")
+          cite += node.attr("citetitle")
+          cite = "-- " + cite
+          result << "<t>#{cite}</t>"
+        end
+        result
+      end
+
     end
   end
 end
