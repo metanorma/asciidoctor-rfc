@@ -228,7 +228,7 @@ module Asciidoctor
           result = paragraph(node)
         end
         if node.attr("citetitle") || node.attr("attribution")
-          cite = node.attr("attribution")
+          cite = node.attr("attribution") || ""
           cite += ", " if node.attr("citetitle") && node.attr("attribution")
           cite += node.attr("citetitle")
           cite = "-- " + cite
