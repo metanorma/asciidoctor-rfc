@@ -32,6 +32,39 @@ describe Asciidoctor::RFC::V2::Converter do
     OUTPUT
   end
 
+  it "strips formatting in section titles" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+
+      [[id]]
+      == `Section` 1
+      Para 1
+
+      Para 2
+    INPUT
+      <?xml version="1.0" encoding="US-ASCII"?>
+      <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+      <rfc
+               submissionType="IETF">
+      <front>
+      <title abbrev="abbrev_value">Document title</title>
+      <author fullname="Author"/>
+      <date day="1" month="January" year="2000"/>
+      </front><middle>
+      <section anchor="id" title="Section 1">
+      <t>Para 1</t>
+      <t>Para 2</t>
+      </section>
+      </middle>
+      </rfc>
+    OUTPUT
+  end
+
+
   it "renders HTML entities and Non-ASCII characters and in section title attributes" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title

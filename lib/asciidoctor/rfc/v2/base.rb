@@ -239,7 +239,7 @@ module Asciidoctor
 
           section_attributes = {
             anchor: node.id,
-            title: node.title,
+            title: node.title.gsub(/<[^>]+>/, ""),
           }
 
           result << noko do |xml|
