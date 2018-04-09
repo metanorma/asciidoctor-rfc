@@ -68,9 +68,9 @@ describe Asciidoctor::RFC::V3::Converter do
       <li>Fenced code blocks</li>
       </ul>
       <figure>
-      <artwork type="ascii-art">
+      <artwork type="ascii-art"><![CDATA[
       Wha?
-      </artwork>
+      ]]></artwork>
       </figure>
       <t>Yep. AsciiDoc and Markdown share a lot of common syntax already.</t>
       </blockquote>

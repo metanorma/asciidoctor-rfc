@@ -30,15 +30,21 @@ module Asciidoctor
         }
 
         # NOTE: html escaping is performed by Nokogiri
-        artwork_content = node.lines.join("\n")
+        artwork_content = "\n" + node.lines.join("\n") + "\n"
 
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
+              # xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
+              xml_figure.artwork **attr_code(artwork_attributes) do |a|
+                a.cdata artwork_content
+              end
             end
           else
-            xml.artwork artwork_content, **attr_code(artwork_attributes)
+            # xml.artwork artwork_content, **attr_code(artwork_attributes)
+            xml.artwork **attr_code(artwork_attributes) do |a|
+              a.cdata artwork_content
+            end
           end
         end
       end
@@ -54,15 +60,21 @@ module Asciidoctor
         }
 
         # NOTE: html escaping is performed by Nokogiri
-        artwork_content = node.lines.join("\n")
+        artwork_content = "\n" + node.lines.join("\n") + "\n"
 
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
+              # xml_figure.artwork artwork_content, **attr_code(artwork_attributes)
+              xml_figure.artwork **attr_code(artwork_attributes) do |a|
+                a.cdata artwork_content
+              end
             end
           else
-            xml.artwork artwork_content, **attr_code(artwork_attributes)
+            # xml.artwork artwork_content, **attr_code(artwork_attributes)
+            xml.artwork **attr_code(artwork_attributes) do |a|
+              a.cdata artwork_content
+            end
           end
         end
       end
@@ -211,15 +223,21 @@ module Asciidoctor
 
         # NOTE: html escaping is performed by Nokogiri
         sourcecode_content =
-          sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+          sourcecode_attributes[:src].nil? ? "\n" + node.lines.join("\n") + "\n" : ""
 
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+              # xml_figure.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+              xml_figure.sourcecode **attr_code(sourcecode_attributes) do |a|
+                a.cdata sourcecode_content
+              end
             end
           else
-            xml.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+            # xml.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+            xml.sourcecode **attr_code(sourcecode_attributes) do |a|
+              a.cdata sourcecode_content
+            end
           end
         end
       end

@@ -15,16 +15,16 @@ describe Asciidoctor::RFC::V3::Converter do
       ....
       ****
     INPUT
-      <aside anchor="id">
-      <t>Sidebar</t>
+      <aside anchor="id"><t>Sidebar</t>
       <t>Another sidebar</t>
       <ul>
       <li>This is a list</li>
       </ul>
       <figure>
-      <artwork type="ascii-art">And this is ascii-art</artwork>
-      </figure>
-      </aside>
+        <artwork type="ascii-art"><![CDATA[
+      And this is ascii-art
+      ]]></artwork>
+      </figure></aside>
     OUTPUT
   end
 end
