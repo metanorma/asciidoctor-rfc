@@ -25,9 +25,9 @@ describe Asciidoctor::RFC::V3::Converter do
     INPUT
       <figure anchor="id">
       <name>Figure 1</name>
-      <artwork anchor="id2" name="figure1.txt" type="ascii-art">
+      <artwork anchor="id2" name="figure1.txt" type="ascii-art"><![CDATA[
       Figures are only permitted to contain listings (sourcecode), images (artwork), or literal (artwork)
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end

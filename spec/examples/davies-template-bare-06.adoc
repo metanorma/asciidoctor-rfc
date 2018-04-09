@@ -201,7 +201,6 @@ versions of xml2rfc.
 
 ----
 
-
 /**** an example C program */
 
 #include <stdio.h>
@@ -220,7 +219,6 @@ main(int argc, char *argv[])
 } /* main */
 
 /* end of file */
-
 
 ----
 ====

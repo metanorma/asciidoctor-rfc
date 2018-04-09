@@ -104,14 +104,16 @@ describe Asciidoctor::RFC::V2::Converter do
       <entry>
       ....
     INPUT
-      <t>
+           <t>
          <list style="symbols">
            <t>First</t>
            <t>Second<figure>
-         <artwork>&lt;entry&gt;</artwork>
+         <artwork><![CDATA[
+       <entry>
+       ]]></artwork>
        </figure></t>
          </list>
-      </t>
+       </t>
     OUTPUT
   end
 

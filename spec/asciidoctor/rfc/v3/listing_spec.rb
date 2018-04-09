@@ -13,8 +13,7 @@ describe Asciidoctor::RFC::V3::Converter do
       ----
     INPUT
       <figure>
-      <sourcecode anchor="literal-id" name="filename.rb" type="ruby" src="http://example.com/ruby.rb">
-      </sourcecode>
+      <sourcecode anchor="literal-id" name="filename.rb" type="ruby" src="http://example.com/ruby.rb"><![CDATA[]]></sourcecode>
       </figure>
     OUTPUT
   end
@@ -35,12 +34,12 @@ describe Asciidoctor::RFC::V3::Converter do
       ====
     INPUT
       <figure anchor="id">
-      <sourcecode anchor="literal-id" name="filename.rb" type="ruby">
+      <sourcecode anchor="literal-id" name="filename.rb" type="ruby"><![CDATA[
       def listing(node)
         result = []
-        result &lt;&lt; "&lt;figure&gt;" if node.parent.context != :example
+        result << "<figure>" if node.parent.context != :example
       end
-      </sourcecode>
+      ]]></sourcecode>
       </figure>
     OUTPUT
   end
@@ -58,12 +57,12 @@ describe Asciidoctor::RFC::V3::Converter do
       ----
     INPUT
       <figure>
-      <sourcecode anchor="literal-id" name="filename.rb" type="ruby">
+      <sourcecode anchor="literal-id" name="filename.rb" type="ruby"><![CDATA[
       def listing(node)
         result = []
-        result &lt;&lt; "&lt;figure&gt;" if node.parent.context != :example
+        result << "<figure>" if node.parent.context != :example
       end
-      </sourcecode>
+      ]]></sourcecode>
       </figure>
     OUTPUT
   end
@@ -75,10 +74,10 @@ describe Asciidoctor::RFC::V3::Converter do
       Notice that the monospace markup is preserved in the output.
     INPUT
       <figure>
-      <sourcecode>
+      <sourcecode><![CDATA[
       This is an example of a paragraph styled with `listing`.
       Notice that the monospace markup is preserved in the output.
-      </sourcecode>
+      ]]></sourcecode>
       </figure>
     OUTPUT
   end

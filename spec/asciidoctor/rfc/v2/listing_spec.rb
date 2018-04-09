@@ -13,8 +13,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ----
     INPUT
       <figure anchor="literal-id">
-        <artwork name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
-        </artwork>
+        <artwork name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text"><![CDATA[]]></artwork>
       </figure>
     OUTPUT
   end
@@ -35,8 +34,7 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <figure anchor="id">
-        <artwork name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text">
-        </artwork>
+        <artwork name="filename.rb" type="ruby" src="http://example.com/ruby.rb" alt="Alt Text"><![CDATA[]]></artwork>
       </figure>
     OUTPUT
   end
@@ -54,12 +52,12 @@ describe Asciidoctor::RFC::V2::Converter do
       ----
     INPUT
       <figure anchor="literal-id">
-      <artwork name="filename.rb" type="ruby">
+      <artwork name="filename.rb" type="ruby"><![CDATA[
       def listing(node)
         result = []
-        result &lt;&lt; "&lt;figure&gt;" if node.parent.context != :example
+        result << "<figure>" if node.parent.context != :example
       end
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end
@@ -71,10 +69,10 @@ describe Asciidoctor::RFC::V2::Converter do
       Notice that the monospace markup is preserved in the output.
     INPUT
       <figure>
-      <artwork>
+      <artwork><![CDATA[
       This is an example of a paragraph styled with `listing`.
       Notice that the monospace markup is preserved in the output.
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end

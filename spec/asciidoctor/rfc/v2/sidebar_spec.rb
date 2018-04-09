@@ -23,9 +23,9 @@ describe Asciidoctor::RFC::V2::Converter do
       </list>
       </t>
       <figure>
-      <artwork>
+      <artwork><![CDATA[
       And this is ascii-art
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end

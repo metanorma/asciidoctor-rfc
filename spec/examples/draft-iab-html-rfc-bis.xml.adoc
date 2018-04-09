@@ -1839,7 +1839,6 @@ attribute with value "title".
 ....
 <h1 id="title">HyperText Markup Language Request For
     Comments Format</h1>
-
 ....
 
 Inside a reference, the title is rendered as an HTML &lt;span&gt;
@@ -1914,7 +1913,6 @@ or
 
 ....
 [<a class="xref" href="#RFC1234">RFC1234</a>]
-
 ....
 
 [#element-svg]

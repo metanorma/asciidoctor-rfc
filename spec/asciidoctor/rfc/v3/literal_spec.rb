@@ -10,9 +10,9 @@ describe Asciidoctor::RFC::V3::Converter do
       ....
     INPUT
       <figure>
-      <artwork anchor="literal-id" align="left" name="filename" type="ascii-art" alt="alt_text">
+      <artwork anchor="literal-id" align="left" name="filename" type="ascii-art" alt="alt_text"><![CDATA[
         Literal contents.
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end
@@ -27,9 +27,9 @@ describe Asciidoctor::RFC::V3::Converter do
       <1> This is a callout
     INPUT
       <figure>
-      <artwork anchor="literal-id" align="left" name="filename" type="ascii-art" alt="alt_text">
+      <artwork anchor="literal-id" align="left" name="filename" type="ascii-art" alt="alt_text"><![CDATA[
         Literal contents.
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end
@@ -42,9 +42,9 @@ describe Asciidoctor::RFC::V3::Converter do
       ++++
     INPUT
       <figure>
-      <artwork type="ascii-art" align="center">
+      <artwork type="ascii-art" align="center"><![CDATA[
       sqrt(4) = 2
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end
@@ -61,9 +61,9 @@ describe Asciidoctor::RFC::V3::Converter do
       ====
     INPUT
       <figure anchor="id">
-      <artwork type="ascii-art" align="center">
+      <artwork type="ascii-art" align="center"><![CDATA[
       sqrt(4) = 2
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end

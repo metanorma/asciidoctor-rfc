@@ -14,9 +14,9 @@ describe Asciidoctor::RFC::V2::Converter do
       ====
     INPUT
       <figure anchor="id" align="left" alt="Alt Text" title="Figure 1" suppress-title="true">
-      <artwork name="figure1.txt">
+      <artwork name="figure1.txt"><![CDATA[
       Figures are only permitted to contain listings (sourcecode), images (artwork), or literal (artwork)
-      </artwork>
+      ]]></artwork>
       </figure>
     OUTPUT
   end
@@ -38,9 +38,9 @@ describe Asciidoctor::RFC::V2::Converter do
       <preamble>
       Preamble text
       </preamble>
-      <artwork name="figure1.txt">
+      <artwork name="figure1.txt"><![CDATA[
       Figures are only permitted to contain listings (sourcecode), images (artwork), or literal (artwork)
-      </artwork>
+      ]]></artwork>
       <postamble>
       Postamble text
       </postamble>
