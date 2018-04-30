@@ -884,6 +884,37 @@ Note that fragments (e.g. `crossreference#fragment`) are not supported on the `x
 in either v2 or v3: the RFC XML specification requires that the `xref@target` attribute equals
 the value of an anchor attribute elsewhere in the document.
 
+Internal crossreferences and bibliographic references are marked up in the same way; but
+bibliographic references are marked up separately from the main flow of Asciidoctor, and are
+processed later.
+
+NOTE: Asciidoctor will attempt to match a crossreference to a section title, if it does not find
+a matching anchor ID. (This behaviour will become optional in Asciidoctor 1.5.7.) 
+If you have a citation of a bibliographic item which is identical to a section title (e.g. you have a 
+bibliographic citation with the anchor "WHIRLPOOL", and a section with the title "WHIRLPOOL"),
+Asciidoctor will currently pick the latter as the target of the reference, even if that section
+has a different anchor ID:
+
+[source,asciidoc]
+----
+[[hash_whirlpool]]
+=== WHIRLPOOL
+
+The WHIRLPOOL hash function is defined in <<WHIRLPOOL>>.
+
+This section should actually be referenced as <<hash_whirlpool>>.
+...
+
+[bibliography]
+== Informative References
+++++
+<reference anchor='WHIRLPOOL' target='http://www.larc.usp.br/~pbarreto/WhirlpoolPage.html'>
+...
+++++
+----
+
+To prevent this, make sure that references have distinctive anchors that cannot be
+conflated with section titles.
 
 === Indexing
 
