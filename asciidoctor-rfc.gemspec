@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.add_dependency "asciidoctor", "~> 1.5.6"
+  spec.add_dependency "asciidoctor", "~> 1.5.7"
   spec.add_dependency "htmlentities", "~> 4.3.4"
   spec.add_dependency "nokogiri"
   spec.add_dependency "ruby-jing"

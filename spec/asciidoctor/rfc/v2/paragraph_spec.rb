@@ -43,7 +43,7 @@ describe Asciidoctor::RFC::V2::Converter do
         <author fullname="Author"/>
         <date day="1" month="January" year="2000"/>
       </front><middle>
-      <section anchor="_dante_s_revenge" title="Dante's Revenge">
+      <section anchor="_dantes_revenge" title="Dante's Revenge">
       <t>Don't panic!</t>
       </section>
       </rfc>
@@ -60,7 +60,7 @@ describe Asciidoctor::RFC::V2::Converter do
       == Dante's Revenge
       Don't panic!
     INPUT
-      <section anchor="_dante_s_revenge" title="Dante&#8217;s Revenge">
+      <section anchor="_dantes_revenge" title="Dante&#8217;s Revenge">
       <t>Don&#8217;t panic!</t>
       </section>
     OUTPUT
