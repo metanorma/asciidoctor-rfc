@@ -888,11 +888,11 @@ Internal crossreferences and bibliographic references are marked up in the same 
 bibliographic references are marked up separately from the main flow of Asciidoctor, and are
 processed later.
 
-NOTE: Asciidoctor will attempt to match a crossreference to a section title, if it does not find
-a matching anchor ID. (This behaviour will become optional in Asciidoctor 1.5.7.) 
-If you have a citation of a bibliographic item which is identical to a section title (e.g. you have a 
+NOTE: Normally, Asciidoctor attempts to match a crossreference to a section title, if it does not find
+a matching anchor ID. This behaviour has become optional as of Asciidoctor 1.5.7, and is suppressed in
+this gem. If you have a citation of a bibliographic item which is identical to a section title (e.g. you have a 
 bibliographic citation with the anchor "WHIRLPOOL", and a section with the title "WHIRLPOOL"),
-Asciidoctor will currently pick the latter as the target of the reference, even if that section
+this gem will correctly pick the former as the target of the reference, so long as that section
 has a different anchor ID:
 
 [source,asciidoc]
@@ -912,9 +912,6 @@ This section should actually be referenced as <<hash_whirlpool>>.
 ...
 ++++
 ----
-
-To prevent this, make sure that references have distinctive anchors that cannot be
-conflated with section titles.
 
 === Indexing
 

@@ -39,8 +39,7 @@ module Asciidoctor
 
       def initialize(backend, opts)
         super
-        # enable when asciidoctor 1.5.7 is released
-        #Asciidoctor::Compliance.natural_xrefs = false
+        Asciidoctor::Compliance.natural_xrefs = false
         basebackend "html"
         outfilesuffix ".xml"
       end

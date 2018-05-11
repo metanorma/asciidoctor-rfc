@@ -290,4 +290,46 @@ describe Asciidoctor::RFC::V2::Converter do
       </rfc>
     OUTPUT
   end
+
+  it "supresses natural cross-references" do
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :rfc2, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+      = Document title
+      :abbrev: abbrev_value
+      :docName:
+      Author
+
+      [[hash_whirlpool]]
+      === WHIRLPOOL
+
+      The WHIRLPOOL hash function is defined in <<WHIRLPOOL>>.
+
+      This section should actually be referenced as <<hash_whirlpool>>.
+      ...
+
+      [bibliography]
+      == Informative References
+      ++++
+      <reference anchor='WHIRLPOOL' target='http://www.larc.usp.br/~pbarreto/WhirlpoolPage.html'>
+      ...
+      ++++
+    INPUT
+           <rfc submissionType="IETF">
+       <front>
+         <title abbrev="abbrev_value">Document title</title>
+         <author fullname="Author"/>
+         <date day="1" month="January" year="2000"/>
+
+       </front><middle>
+       <section anchor="hash_whirlpool" title="WHIRLPOOL"><t>The WHIRLPOOL hash function is defined in <xref target="WHIRLPOOL"/>.</t>
+       <t>This section should actually be referenced as <xref target="hash_whirlpool"/>.
+       &#8230;&#8203;</t></section>
+       </middle><back>
+       <references title="Informative References">
+         <reference anchor="WHIRLPOOL" target="http://www.larc.usp.br/~pbarreto/WhirlpoolPage.html">
+       ...</reference>
+       </references>
+       </back>
+       </rfc>
+    OUTPUT
+  end
 end
