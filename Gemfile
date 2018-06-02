@@ -7,5 +7,5 @@ group :development, :test do
   gem "rspec-rails", "~> 3.0"
 end
 
-# Specify your gem"s dependencies in ribose.gemspec
+# Specify your gem's dependencies in asciidoctor-rfc.gemspec
 gemspec
