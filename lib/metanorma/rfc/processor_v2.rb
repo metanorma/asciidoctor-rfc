@@ -16,6 +16,10 @@ module Metanorma
         }
       end
 
+      def version
+        "Asciidoctor::Rfc2 #{Asciidoctor::RFC::VERSION}"
+      end
+
       def input_to_isodoc(file)
         Asciidoctor.convert(
           file,
