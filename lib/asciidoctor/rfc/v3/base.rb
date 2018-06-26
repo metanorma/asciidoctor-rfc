@@ -130,7 +130,8 @@ module Asciidoctor
 
       BCP_KEYWORDS = [
         "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL"
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+        "MAY", "OPTIONAL"
       ].freeze
 
       def inline_quoted(node)
