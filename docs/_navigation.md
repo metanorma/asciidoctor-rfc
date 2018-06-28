@@ -1,5 +1,6 @@
 ---
-- Introduction
-  - overview
-  - installation
+sections:
+  - Introduction
+    - overview
+    - installation
 ---
