@@ -86,6 +86,7 @@ module Asciidoctor
         ret1 = Nokogiri::XML(ret)
         ret1 = set_pis(node, ret1)
         ret1 = insert_biblio(node, ret1) unless node.attr("biblio-dir").nil? || node.attr("biblio-dir").empty?
+        output_dtd()
         Validate::validate(ret1)
         ret1 = resolve_references(node, ret1)
         # Validate::validate(ret1)
@@ -251,6 +252,9 @@ module Asciidoctor
           result = ref_section(node)
         else
           result = []
+          if $seen_back_matter && node.attr("style") != "appendix"
+            warn "Appendix not marked up with [appendix]!"
+          end
           if node.attr("style") == "appendix"
             result << "</middle><back>" unless $seen_back_matter
             $seen_back_matter = true

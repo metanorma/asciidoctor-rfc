@@ -526,6 +526,15 @@ HERE
         end
         xmldoc
       end
+
+      def output_dtd
+        filename = File.join(File.dirname(__FILE__), "../../../../rfc2629.dtd")
+        system "cp #{filename} ."
+        filename = File.join(File.dirname(__FILE__), "../../../../rfc2629-other.ent")
+        system "cp #{filename} ."
+        filename = File.join(File.dirname(__FILE__), "../../../../rfc2629-xhtml.ent")
+        system "cp #{filename} ."
+      end
     end
   end
 end
