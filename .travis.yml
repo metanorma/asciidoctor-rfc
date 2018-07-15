@@ -16,7 +16,7 @@ addons:
 before_install:
   - gem install bundler -v 1.16.1
   - unset _JAVA_OPTIONS
-  - pip install xml2rfc --user
+  - pip install --user xml2rfc
 matrix:
   allow_failures:
     - rvm: ruby-head
