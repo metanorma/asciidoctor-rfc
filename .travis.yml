@@ -1,11 +1,13 @@
-sudo: true
+dist: trusty
+sudo: false
 language: ruby
 rvm:
-  - 2.4.0
-before_install: 
-  - gem install bundler -v 1.16.0
-  - bundle install
-install:
-  - sudo pip install xml2rfc
-script:
-  - bundle exec rspec --color --format documentation --require spec_helper 
+  - 2.5
+  - 2.4
+  - ruby-head
+before_install:
+  - gem install bundler -v 1.16.1
+  - unset _JAVA_OPTIONS
+matrix:
+  allow_failures:
+    - rvm: ruby-head
