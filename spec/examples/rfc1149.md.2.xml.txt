@@ -1,0 +1,168 @@
+
+
+
+
+Network Working Group                                        D. Waitzman
+Internet-Draft                                                   BBN STC
+Intended status: Informational                             April 1, 1990
+Expires: October 3, 1990
+
+
+   A Standard for the Transmission of IP Datagrams on Avian Carriers
+                                rfc-1149
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on October 3, 1990.
+
+Copyright Notice
+
+   Copyright (c) 1990 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+
+
+
+
+Waitzman                 Expires October 3, 1990                [Page 1]
+
+Internet-Draft       IP Datagrams on Avian Carriers           April 1990
+
+
+Table of Contents
+
+   1.  Overview and Rational . . . . . . . . . . . . . . . . . . . .   2
+   2.  Frame Format  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .   2
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   3
+
+1.  Overview and Rational
+
+   Avian carriers can provide high delay, low throughput, and low
+   altitude service.  The connection topology is limited to a single
+   point-to-point path for each carrier, used with standard carriers,
+   but many carriers can be used without significant interference with
+   each other, outside of early spring.  This is because of the 3D ether
+   space available to the carriers, in contrast to the 1D ether used by
+   IEEE802.3.  The carriers have an intrinsic collision avoidance
+   system, which increases availability.  Unlike some network
+   technologies, such as packet radio, communication is not limited to
+   line-of-sight distance.  Connection oriented service is available in
+   some cities, usually based upon a central hub topology.
+
+2.  Frame Format
+
+   The IP datagram is printed, on a small scroll of paper, in
+   hexadecimal, with each octet separated by whitestuff and blackstuff.
+   The scroll of paper is wrapped around one leg of the avian carrier.
+   A band of duct tape is used to secure the datagram's edges.  The
+   bandwidth is limited to the leg length.  The MTU is variable, and
+   paradoxically, generally increases with increased carrier age.  A
+   typical MTU is 256 milligrams.  Some datagram padding may be needed.
+
+   Upon receipt, the duct tape is removed and the paper copy of the
+   datagram is optically scanned into a electronically transmittable
+   form.
+
+3.  Discussion
+
+   Multiple types of service can be provided with a prioritized pecking
+   order.  An additional property is built-in worm detection and
+   eradication.  Because IP only guarantees best effort delivery, loss
+   of a carrier can be tolerated.  With time, the carriers are self-
+   regenerating.  While broadcasting is not specified, storms can cause
+   data loss.  There is persistent delivery retry, until the carrier
+   drops.  Audit trails are automatically generated, and can often be
+   found on logs and cable trays.
+
+
+
+
+
+Waitzman                 Expires October 3, 1990                [Page 2]
+
+Internet-Draft       IP Datagrams on Avian Carriers           April 1990
+
+
+4.  Security Considerations
+
+   Security is not generally a problem in normal operation, but special
+   measures must be taken (such as data encryption) when avian carriers
+   are used in a tactical environment.
+
+Author's Address
+
+   David Waitzman
+   BBN STC
+   10 Moulton Street
+   Cambridge  MA 02238
+
+   Phone: (617) 873-4323
+   Email: dwaitzman@BBN.COM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Waitzman                 Expires October 3, 1990                [Page 3]

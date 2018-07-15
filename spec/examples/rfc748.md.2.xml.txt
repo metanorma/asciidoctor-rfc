@@ -1,0 +1,168 @@
+
+
+
+
+Network Working Group                                         M. Crispin
+Internet-Draft                                                     SU-AI
+Intended status: Informational                             April 1, 1978
+Expires: October 3, 1978
+
+
+                      TELNET RANDOMLY-LOSE Option
+                                rfc-748
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on October 3, 1978.
+
+Copyright Notice
+
+   Copyright (c) 1978 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+
+
+
+
+Crispin                  Expires October 3, 1978                [Page 1]
+
+Internet-Draft         TELNET RANDOMLY-LOSE Option            April 1978
+
+
+Table of Contents
+
+   1.  Command name and code . . . . . . . . . . . . . . . . . . . .   2
+   2.  Command meanings  . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Default . . . . . . . . . . . . . . . . . . . . . . . . . . .   2
+   4.  Motivation for the option . . . . . . . . . . . . . . . . . .   2
+   5.  Description of the option . . . . . . . . . . . . . . . . . .   3
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   3
+
+1.  Command name and code
+
+                           RANDOMLY-LOSE    256
+
+2.  Command meanings
+
+   IAC WILL RANDOMLY-LOSE:
+      The sender of this command REQUESTS permission to, or confirms
+      that it will, randomly lose.
+
+   IAC WON'T RANDOMLY-LOSE:
+      The sender of this command REFUSES to randomly lose.
+
+   IAC DO RANDOMLY-LOSE:
+      The sender of this command REQUESTS that the receiver, or grants
+      the receiver permission to, randomly lose.
+
+   IAC DON'T RANDOMLY-LOSE:
+      The command sender DEMANDS that the receiver not randomly lose.
+
+3.  Default
+
+       WON'T RANDOMLY-LOSE
+
+       DON'T RANDOMLY-LOSE
+
+   i.e., random lossage will not happen.
+
+4.  Motivation for the option
+
+   Several hosts appear to provide random lossage, such as system
+   crashes, lost data, incorrectly functioning programs, etc., as part
+   of their services.  These services are often undocumented and are in
+   general quite confusing to the novice user.  A general means is
+   needed to allow the user to disable these features.
+
+
+
+
+
+
+
+Crispin                  Expires October 3, 1978                [Page 2]
+
+Internet-Draft         TELNET RANDOMLY-LOSE Option            April 1978
+
+
+5.  Description of the option
+
+   The normal mode does not allow random lossage; therefore the system
+   is not allowed to crash, mung user files, etc.  If the server wants
+   to provide random lossage, it must first ask for permission from the
+   user by sending IAC WILL RANDOMLY-LOSE.
+
+   If the user wants to permit the server to randomly lose, it replys
+   with IAC DO RANDOMLY-LOSE.  Otherwise it sends IAC DONT RANDOMLY-
+   LOSE, and the server is forbidden from randomly losing.
+
+   Alternatively, the user could request the server to randomly lose, by
+   sending IAC DO RANDOMLY-LOSE, and the server will either reply with
+   IAC WILL RANDOMLY-LOSE, meaning that it will then proceed to do some
+   random lossage (garbaging disk files is recommended for an initial
+   implementation).  Or, it could send IAC WONT RANDOMLY-LOSE, meaning
+   that it insists upon being reliable.
+
+   Since this is implemented as a TELNET option, it is expected that
+   servers which do not implement this option will not randomly lose;
+   ie, they will provide 100% reliable uptime.
+
+Author's Address
+
+   M. Crispin
+   SU-AI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Crispin                  Expires October 3, 1978                [Page 3]
