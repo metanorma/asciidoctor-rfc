@@ -987,8 +987,8 @@ Quotation <3>
 
 ==== Asciidoctor comments
 
-Asciidoctor implements both inline comments (prefixed with `\\`)
-and block comments (prefixed with `\\\\`). Both are ignored by
+Asciidoctor implements both inline comments (prefixed with `//`)
+and block comments (prefixed with `////`). Both are ignored by
 the Asciidoctor processor, and are not rendered in any output,
 including RFC XML.
 

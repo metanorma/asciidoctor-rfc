@@ -6,6 +6,7 @@ python:
 rvm:
   - 2.5
   - 2.4
+  - 2.3
   - ruby-head
 addons:
   apt:
