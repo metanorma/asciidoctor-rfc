@@ -6,6 +6,7 @@ require "pathname"
 require "open-uri"
 require "pp"
 require "set"
+require "fileutils"
 
 module Asciidoctor
   module RFC::Common
@@ -528,12 +529,14 @@ HERE
       end
 
       def output_dtd
+        return if Dir.getwd == File.expand_path("../../../../..", __FILE__)
         filename = File.join(File.dirname(__FILE__), "../../../../rfc2629.dtd")
-        system "cp #{filename} ."
+        #system "cp #{filename} ."
+        FileUtils.cp filename, Dir.getwd
         filename = File.join(File.dirname(__FILE__), "../../../../rfc2629-other.ent")
-        system "cp #{filename} ."
+        FileUtils.cp filename, Dir.getwd
         filename = File.join(File.dirname(__FILE__), "../../../../rfc2629-xhtml.ent")
-        system "cp #{filename} ."
+        FileUtils.cp filename, Dir.getwd
       end
     end
   end
