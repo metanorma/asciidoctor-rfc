@@ -20,14 +20,8 @@ module Metanorma
         "Asciidoctor::Rfc2 #{Asciidoctor::RFC::VERSION}"
       end
 
-      def input_to_isodoc(file)
-        Asciidoctor.convert(
-          file,
-          to_file: false,
-          safe: :safe,
-          backend: @asciidoctor_backend,
-          header_footer: true
-        )
+      def input_to_isodoc(file, filename)
+        Metanorma::Input::Asciidoc.new.process(file, filename, @asciidoctor_backend)
       end
 
       def output(isodoc_node, outname, format, options={})

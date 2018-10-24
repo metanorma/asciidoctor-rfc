@@ -378,7 +378,7 @@ HERE
         wgcache_name = "#{Dir.home}/.asciidoc-rfc-workgroup-cache.json"
         # If we are required to, clear the wg cache
         if node.attr("flush-caches") == "true"
-          system("rm -f #{wgcache_name}")
+          FileUtils.rm_f wgcache_name
         end
         # Is there already a wg cache? If not, create it.
         wg = []
@@ -415,7 +415,7 @@ HERE
         bibliocache_name = "#{Dir.home}/.asciidoc-rfc-biblio-cache.json"
         # If we are required to, clear the biblio cache
         if node.attr("flush-caches") == "true"
-          system("rm -f #{bibliocache_name}")
+          FileUtils.rm_f bibliocache_name
         end
         # Is there already a biblio cache? If not, create it.
         biblio = {}
@@ -531,7 +531,6 @@ HERE
       def output_dtd
         return if Dir.getwd == File.expand_path("../../../../..", __FILE__)
         filename = File.join(File.dirname(__FILE__), "../../../../rfc2629.dtd")
-        #system "cp #{filename} ."
         FileUtils.cp filename, Dir.getwd
         filename = File.join(File.dirname(__FILE__), "../../../../rfc2629-other.ent")
         FileUtils.cp filename, Dir.getwd

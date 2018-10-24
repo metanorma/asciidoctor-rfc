@@ -21,13 +21,7 @@ module Metanorma
       end
 
       def input_to_isodoc(file)
-        Asciidoctor.convert(
-          file,
-          to_file: false,
-          safe: :safe,
-          backend: @asciidoctor_backend,
-          header_footer: true
-        )
+        Metanorma::Input::Asciidoc.new.process(file, filename, @asciidoctor_backend)
       end
 
       def output(isodoc_node, outname, format, options={})
