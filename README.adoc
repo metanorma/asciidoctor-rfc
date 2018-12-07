@@ -2,6 +2,11 @@
 :source-highlighter: coderay
 :icons: font
 
+WARNING: This gem has been subsumed into the https://www.metanorma.com[Metanorma]
+publishing framework. Development of AsciiRFC is continued at the
+https://github.com/riboseinc/metanorma-ietf[metanorma-ietf] gem. Please see
+the new repo for details on usage instructions. Thank you for your support.
+
 asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc, the
 "`http://asciidoctor.org/[asciidoctor]-way`".
 
@@ -30,7 +35,7 @@ output.
 We refer to the version of Asciidoc markup processed by this gem as AsciiRFC.
 
 This README documents the AsciiRFC markup in full detail. For further
-information about AsciiRFC, please refer to the 
+information about AsciiRFC, please refer to the
 https://datatracker.ietf.org/doc/draft-ribose-asciirfc/[AsciiRFC IETF Internet-Draft].
 
 
@@ -291,8 +296,8 @@ e.g.
 
 [source,console]
 ----
-$ asciidoctor -a flush-biblio=true -b rfc3 -r 'asciidoctor-rfc' a.adoc  
-$ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc  
+$ asciidoctor -a flush-biblio=true -b rfc3 -r 'asciidoctor-rfc' a.adoc
+$ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc
 ----
 
 [[caches]]
@@ -301,9 +306,9 @@ $ ./bin/asciidoctor-rfc2 -a smart-quotes=false draft-example-00.adoc
 The cache of externally addressable bibliographic information is built from screenscraping the contents of:
 
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml/
-* https://xml2rfc.tools.ietf.org/public/rfc/bibxml2/ 
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml2/
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/
-* https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/ 
+* https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/
 * https://xml2rfc.tools.ietf.org/public/rfc/bibxml5/
 
 The cache of current IETF and IRTF workgroups is built from screenscraping the contents of:
@@ -311,13 +316,13 @@ The cache of current IETF and IRTF workgroups is built from screenscraping the c
 * https://tools.ietf.org/wg/
 * https://irtf.org/groups
 
-The caches are not rebuilt daily, as the bibliographic cache is with xml2rfc. 
-If you want to refresh the caches, 
+The caches are not rebuilt daily, as the bibliographic cache is with xml2rfc.
+If you want to refresh the caches,
 
 * delete
-your `~/.asciidoc-rfc-biblio-cache.json` and `~/.asciidoc-rfc-workgroup-cache.json` files; 
+your `~/.asciidoc-rfc-biblio-cache.json` and `~/.asciidoc-rfc-workgroup-cache.json` files;
 * insert the document attribute `:flush-caches: true` into
-the header of the document being processed; or 
+the header of the document being processed; or
 * run the asciidoctor executable with option `-a flush-caches=true`
 (which has the same effect).
 
@@ -890,7 +895,7 @@ processed later.
 
 NOTE: Normally, Asciidoctor attempts to match a crossreference to a section title, if it does not find
 a matching anchor ID. This behaviour has become optional as of Asciidoctor 1.5.7, and is suppressed in
-this gem. If you have a citation of a bibliographic item which is identical to a section title (e.g. you have a 
+this gem. If you have a citation of a bibliographic item which is identical to a section title (e.g. you have a
 bibliographic citation with the anchor "WHIRLPOOL", and a section with the title "WHIRLPOOL"),
 this gem will correctly pick the former as the target of the reference, so long as that section
 has a different anchor ID:
@@ -1013,7 +1018,7 @@ which will not be output to XML.
 
 [comment]
 --
-This is a 
+This is a
 
 multiple paragraph
 
@@ -1049,7 +1054,7 @@ This is a single paragraph XML comment.
 
 [.comment]
 --
-This is a 
+This is a
 
 multiple paragraph
 
@@ -1057,7 +1062,7 @@ XML comment.
 --
 ----
 
-==== Text Comments 
+==== Text Comments
 
 RFC XML provides for editorial comments which may optionally appear
 in the published text (subject to either the v3 `cref@display`
@@ -1085,7 +1090,7 @@ Any admonition inside the body of the text is a comment.
 
 === Source Code Listings
 
-In RFC XML, `sourcecode` (v3) and `artwork` (v2) elements only occur within a 
+In RFC XML, `sourcecode` (v3) and `artwork` (v2) elements only occur within a
 `figure` wrapper; this gem supplies that wrapper if it is not provided
 explicitly.
 
@@ -1140,7 +1145,7 @@ Postamble text <9>
 
 === ASCII Art and Images
 
-In RFC XML, `artwork` elements only occur within a 
+In RFC XML, `artwork` elements only occur within a
 `figure` wrapper; this gem supplies that wrapper if it is not provided
 explicitly.
 
@@ -1189,8 +1194,8 @@ Preamble text <4>
 .Figure2.jpg <8>
 [align=left|center|right,alt=alt_text,type=text/plain] <6>
 ....
-Figures are 
-      only permitted to contain listings (sourcecode),  
+Figures are
+      only permitted to contain listings (sourcecode),
            images (artwork),
 or literal (artwork) <7>
 ....
@@ -1507,7 +1512,7 @@ In order to speed the lookup of references on the http://xml.resource.org/public
 references, a cache of references is built the first time the gem is run, in the user's home directory:
 `~/.asciidoc-rfc-biblio-cache.json`. This maps all the canonical anchors for external references as defined
 by the IETF, such as `RFC2119` or `CCITT.E163.1988`, to the URLs that their RFC reference is stored on.
-References are detected for replacement in the Asciidoc document by matching the `references@anchor` 
+References are detected for replacement in the Asciidoc document by matching the `references@anchor`
 attribute to one of those canonical anchors; the content of the local RFC XML reference is not checked.
 
 (For rebuilding the cache, see <<caches>>.)
