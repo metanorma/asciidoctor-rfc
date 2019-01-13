@@ -11,7 +11,7 @@ asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc, the
 "`http://asciidoctor.org/[asciidoctor]-way`".
 
 image:https://img.shields.io/gem/v/asciidoctor-rfc.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rfc"]
-image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-rfc"]
+image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.com/riboseinc/asciidoctor-rfc"]
 image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-rfc"]
 
 
