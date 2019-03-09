@@ -4,15 +4,15 @@
 
 WARNING: This gem has been subsumed into the https://www.metanorma.com[Metanorma]
 publishing framework. Development of AsciiRFC is continued at the
-https://github.com/riboseinc/metanorma-ietf[metanorma-ietf] gem. Please see
+https://github.com/metanorma/metanorma-ietf[metanorma-ietf] gem. Please see
 the new repo for details on usage instructions. Thank you for your support.
 
 asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc, the
 "`http://asciidoctor.org/[asciidoctor]-way`".
 
 image:https://img.shields.io/gem/v/asciidoctor-rfc.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rfc"]
-image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.com/riboseinc/asciidoctor-rfc"]
-image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-rfc"]
+image:https://img.shields.io/travis/metanorma/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.com/metanorma/asciidoctor-rfc"]
+image:https://codeclimate.com/github/metanorma/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/metanorma/asciidoctor-rfc"]
 
 
 == Introduction
@@ -66,16 +66,16 @@ $ gem install asciidoctor-rfc
 == Quick Start / Template
 
 Clone the
-https://github.com/riboseinc/rfc-in-asciidoc-template[`rfc-in-asciidoc-template`]
+https://github.com/metanorma/rfc-asciirfc-minimal[`rfc-asciirfc-minimal`]
 repository as a template, and populate it for your Asciidoc RFCs and
 Internet-Drafts:
 
 [source,console]
 ----
-$ git clone https://github.com/riboseinc/rfc-in-asciidoc-template
+$ git clone https://github.com/metanorma/rfc-asciirfc-minimal
 ----
 
-See the https://github.com/riboseinc/rfc-in-asciidoc-template[README] of that document for
+See the https://github.com/metanorma/rfc-asciirfc-minimal[README] of that document for
 more information.
 
 == Quick Example
@@ -229,7 +229,7 @@ generated XML further.
 
 NOTE: A summary guide to authoring RFC XML in Asciidoctor is also available at
 https://tools.ietf.org/html/draft-ribose-asciirfc-02 (with source at
-https://github.com/riboseinc/rfc-asciidoc-rfc ).
+https://github.com/metanorma/rfc-asciidoc-rfc ).
 
 
 === Document Type: `rfc` or `internet-draft` (Mandatory)
@@ -1673,7 +1673,7 @@ Clone the repository.
 
 [source,sh]
 ----
-git clone https://github.com/riboseinc/asciidoctor-rfc
+git clone https://github.com/metanorma/asciidoctor-rfc
 ----
 
 Setup your environment.
@@ -1700,7 +1700,7 @@ to use the contribution by all means.
 
 Here are a few technical guidelines to follow:
 
-. Open an https://github.com/riboseinc/asciidoctor-rfc/issues[issue] to discuss a new feature.
+. Open an https://github.com/metanorma/asciidoctor-rfc/issues[issue] to discuss a new feature.
 . Write tests to support your new feature.
 . Make sure the entire test suite passes locally and on CI.
 . Open a Pull Request.
