@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: [ '2.6', '2.5', '2.4' ]
+        ruby: [ '2.6', '2.5' ]
     steps:
       - uses: actions/checkout@master
       - name: Use Ruby
@@ -20,7 +20,7 @@ jobs:
           architecture: 'x64'
       - name: Update gems
         run: |
-          gem install bundler -v "~> 2"
+          gem install bundler -v "2.0.1"
           bundle install --jobs 4 --retry 3
       - name: Use Python
         uses: actions/setup-python@v1
