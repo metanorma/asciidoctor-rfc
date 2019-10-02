@@ -1,0 +1,36 @@
+# Auto-generated !!! Do not edit it manually
+# use ci-master https://github.com/metanorma/metanorma-build-scripts
+name: ubuntu
+
+on: [push]
+
+jobs:
+  test-linux:
+    name: Test on Ruby ${{ matrix.ruby }} Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [ '2.6', '2.5', '2.4' ]
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          architecture: 'x64'
+      - name: Update gems
+        run: |
+          gem install bundler -v "~> 2"
+          bundle install --jobs 4 --retry 3
+      - name: Use Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '2.7'
+          architecture: 'x64'
+      - name: Install xml2rfc
+        run: |
+          pip install --user xml2rfc
+      - name: Run specs
+        run: |
+          export PATH=$(python -c "import os,site; print os.path.join(site.USER_BASE, 'bin')"):$PATH
+          bundle exec rake
