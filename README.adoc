@@ -7,6 +7,11 @@ publishing framework. Development of AsciiRFC is continued at the
 https://github.com/metanorma/metanorma-ietf[metanorma-ietf] gem. Please see
 the new repo for details on usage instructions. Thank you for your support.
 
+WARNING: While the RFC XML v2 output of this gem is still valid, the RFC XML v3
+output of the gem will not work with the updated `xml2rfc` tool, as this gem'
+does not include the modifications to RFC XML v3 subsequent to RFC 7991.
+Use metanorma-ietf to generate valid RFC XML v3 output.
+
 asciidoctor-rfc lets you write Internet-Drafts and RFCs in AsciiDoc, the
 "`http://asciidoctor.org/[asciidoctor]-way`".
 
