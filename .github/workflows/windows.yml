@@ -2,15 +2,16 @@
 # use ci-master https://github.com/metanorma/metanorma-build-scripts
 name: windows
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test-windows:
     name: Test on Ruby ${{ matrix.ruby }} Windows
     runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
-        ruby: [ '2.6', '2.5' ]
+        ruby: [ '2.6', '2.5', '2.4' ]
     steps:
       - uses: actions/checkout@master
       - name: Use Ruby
@@ -24,7 +25,7 @@ jobs:
           gem install bundler -v "2.0.1"
           bundle config --local path vendor/bundle
           bundle update
-          bundle install --jobs 4 --retry 3 --verbose
+          bundle install --jobs 4 --retry 3
       - name: Use Python
         uses: actions/setup-python@v1
         with:
